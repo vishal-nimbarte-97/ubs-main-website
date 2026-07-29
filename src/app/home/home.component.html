@@ -1,0 +1,483 @@
+<!-- ============ TOP UTILITY BAR ============ -->
+<!-- <div class="top-bar">
+  <div class="wrap top-bar-inner">
+    <div class="countdown-chip">{{ countdownText }}</div>
+    <div class="top-bar-actions">
+      <button class="announce-btn" (click)="toggleAnnouncement()">
+        <i class="fa-solid fa-bullhorn"></i> Announcements <i class="fa-solid fa-angle-down"></i>
+      </button>
+      <a href="#apply" class="apply-btn">Apply Now</a>
+    </div>
+  </div>
+
+  <div class="announce-panel" *ngIf="announcementOpen">
+    <div class="wrap">
+      <button class="close-x" (click)="toggleAnnouncement()">✕</button>
+      <ul>
+        <li *ngFor="let a of announcements"><i class="fa-solid fa-arrow-right"></i> {{ a }}</li>
+      </ul>
+    </div>
+  </div>
+</div> -->
+
+<!-- ============ NAVBAR ============ -->
+<header class="site-header" [class.scrolled]="isScrolled" (window:scroll)="onWindowScroll()">
+
+  <nav class="wrap main-nav">
+
+    <a routerLink="/" class="logo-wrapper me-auto">
+
+      <img src="../../assets/ubs-logo.png" alt="UBS Logo" class="logo-img" />
+      <div class="logo-text">
+        <span class="logo-mark">UBS</span>
+        <span class="logo-sub">Union Biblical Seminary</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links" [class.open]="mobileMenuOpen">
+      <li><a href="#home" (click)="closeMobileMenu()">Home</a></li>
+
+      <li class="has-dropdown">
+        <a href="#about" (click)="closeMobileMenu()">About Us</a>
+        <ul class="dropdown">
+          <li><a href="#about" (click)="closeMobileMenu()">About</a></li>
+          <li><a href="#history" (click)="closeMobileMenu()">History</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#campus" (click)="closeMobileMenu()">Campus</a>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#administration" (click)="closeMobileMenu()">Administration</a>
+        <ul class="dropdown">
+          <li><a href="#faculty" (click)="closeMobileMenu()">Faculty</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#library" (click)="closeMobileMenu()">Library</a>
+      </li>
+
+
+      <li class="has-dropdown">
+        <a href="#admissions" (click)="closeMobileMenu()">Admissions</a>
+        <ul class="dropdown">
+          <li><a href="#tuition" (click)="closeMobileMenu()">Tuition</a></li>
+          <li><a href="#programmes" (click)="closeMobileMenu()">Residential Programmes</a></li>
+          <li><a href="#programmes" (click)="closeMobileMenu()">Non-Residential Programmes</a></li>
+          <li><a href="#faq" (click)="closeMobileMenu()">FAQ</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <a href="#student-zone" (click)="closeMobileMenu()">Student Zone</a>
+      </li>
+
+      <li>
+        <a href="#gallery" (click)="closeMobileMenu()">Gallery</a>
+      </li>
+
+      <li><a href="#apply" class="cta-link" (click)="closeMobileMenu()">Apply Now</a></li>
+    </ul>
+
+    <button class="burger" (click)="toggleMobileMenu()" aria-label="Toggle menu" [attr.aria-expanded]="mobileMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="home">
+  <!-- ============ HERO — video + tagline swapper ============ -->
+  <section class="hero">
+    <!-- <img class="hero-video" src="../assets/ubs-main-page-image-1.jpg" alt="UBS campus" /> -->
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="../../assets/home-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay">
+      <div class="tagline-swapper">
+        <h1 *ngFor="let group of taglineGroups; let i = index" [class.active]="i === activeTaglineIndex">
+          <span class="tagline-line">{{ group.join(' ') }}</span>
+        </h1>
+      </div>
+      <p class="hero-cta-line">
+        <a href="#apply">Admissions are open for the academic year 2026–2027</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ UBS UPDATES ============ -->
+  <section class="programmes-bar" id="programmes">
+    <div class="wrap">
+      <h2 class="heading-text">UBS <span>UPDATES</span></h2>
+
+      <div class="ubs-updates-copy">
+        <h3>Welcome</h3>
+        <p>
+          Union Biblical Seminary commits itself to train, equip, nurture and instill in those called by God,
+          a Christ-like lifestyle, Biblical teaching and holistic formation for becoming servant leaders
+          and scholar-saints in the church’s mission in the contemporary world. UBS represents evangelical
+          Christians from almost all the major Indian ethnic, linguistic and cultural groups, as well as from
+          other countries. Its faculty, staff and students come from various cultural, regional, language
+          backgrounds and church traditions.
+        </p>
+
+        <p>
+          The dynamic principle of 'unity in diversity' finds its expression in everyday experience based on the
+          solid foundation of the person of Jesus Christ, to whom every member of the UBS is committed. The
+          variegated character of the community provides rich opportunities for cultural interchange and
+          interdenominational understanding.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAMMES OFFERED BAR ============ -->
+  <!-- <section class="programmes-bar" id="programmes">
+    <div class="wrap">
+      <h2 class="heading-text">Programmes <span>Offered</span></h2>
+
+      <div class="programmes-bar-row">
+        <a href="#programmes" class="programme-btn"><i class="fa-solid fa-cross"></i> Residential</a>
+        <a href="#programmes" class="programme-btn"><i class="fa-solid fa-globe"></i> Non-Residential</a>
+        <a href="#programmes" class="programme-btn"><i class="fa-solid fa-child"></i> Short Term</a>
+
+        <div class="programme-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" [(ngModel)]="programmeSearch" placeholder="Search programmes..." />
+        </div>
+
+        <button class="programme-search-btn">
+          Search <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- ============ PROGRAMMES / CENTRES TOGGLE GRID ============ -->
+  <!-- <section class="tracks" id="academics">
+    <div class="wrap">
+      <div class="tracks-toggle">
+        <button [class.active]="activeTab === 'programmes'" (click)="setTab('programmes')">
+          Our Programmes
+        </button>
+        <button [class.active]="activeTab === 'centres'" (click)="setTab('centres')">
+          Our Centres
+        </button>
+      </div>
+
+      <div class="tracks-grid" *ngIf="activeTab === 'programmes'">
+        <article class="track-card" *ngFor="let t of programmeTracks" [style.backgroundImage]="'url(' + t.image + ')'">
+          <div class="track-overlay">
+            <div class="track-heading">
+              <span class="track-icon"><i class="fa-solid" [ngClass]="t.icon"></i></span>
+              <h3>{{ t.title }}</h3>
+            </div>
+            <div class="track-body">
+              <p>{{ t.description }}</p>
+              <a [href]="t.link" class="track-link">Read More</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="tracks-grid" *ngIf="activeTab === 'centres'">
+        <article class="track-card" *ngFor="let c of centres" [style.backgroundImage]="'url(' + c.image + ')'">
+          <div class="track-overlay">
+            <div class="track-heading">
+              <span class="track-icon"><i class="fa-solid" [ngClass]="c.icon"></i></span>
+              <h3>{{ c.title }}</h3>
+            </div>
+            <div class="track-body">
+              <p>{{ c.description }}</p>
+              <a [href]="c.link" class="track-link">Read More</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- ============ WHY UBS + COUNTERS ============ -->
+  <section class="why-ubs" id="about">
+    <div class="wrap">
+      <h1 class="heading-text">UBS prepares the servant leaders and scholar-saints</h1>
+
+      <div class="why-grid">
+        <div class="why-reasons">
+          <div class="why-reason" *ngFor="let r of whyReasons">
+            <span class="why-icon"><i class="fa-solid" [ngClass]="r.icon"></i></span>
+            <p>{{ r.text }}</p>
+          </div>
+        </div>
+
+        <div class="why-counters" #countersSection>
+          <div class="counter-item" *ngFor="let c of counters">
+            <span class="counter-value">{{ c.value }}{{ c.suffix }}</span>
+            <span class="counter-label">{{ c.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ ACCREDITATIONS ============ -->
+  <!-- <section class="accreditation" id="accreditation">
+    <div class="wrap accreditation-grid">
+      <h2 class="heading-text">Start your <span>Theological Journey</span></h2>
+
+    </div>
+  </section> -->
+
+  <section class="journey-section">
+    <div class="container">
+
+      <h2 class="section-title">Start your Theological Journey</h2>
+
+      <div class="course-grid">
+
+        <!-- Card 1 -->
+        <div class="course-card maroon">
+          <span class="badge">RESIDENTIAL</span>
+
+          <h3>Long Term <br> Courses</h3>
+
+          <div class="course-image">
+            <img src="assets/images/long-term.png" alt="Long Term">
+          </div>
+
+          <ul>
+            <li>Bachelor of Divinity</li>
+            <li>Master of Theology</li>
+            <li>Doctor of Theology</li>
+          </ul>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="course-card black">
+          <span class="badge">RESIDENTIAL</span>
+
+          <h3>Short Term <br> Courses</h3>
+
+          <div class="course-image">
+            <img src="assets/images/short-term.png" alt="Short Term">
+          </div>
+
+          <ul>
+            <li>Center for Children Ministry</li>
+            <li>Comprehensive Training</li>
+          </ul>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="course-card maroon">
+          <span class="badge">NON-RESIDENTIAL</span>
+
+          <h3>Distance <br> Courses</h3>
+
+          <div class="course-image">
+            <img src="assets/images/distance.png" alt="Distance">
+          </div>
+
+          <ul>
+            <li>Master of Divinity (ATA)</li>
+            <li>English, Hindi, Marathi</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ ACCREDITATIONS ============ -->
+  <section class="accreditation" id="accreditation">
+    <div class="wrap accreditation-grid">
+      <h2 class="heading-text">Accreditations & <span>Affiliations</span></h2>
+      <div class="logo-strip">
+        <img *ngFor="let logo of accreditationLogos" [src]="logo" alt="Accreditation logo" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARTNERSHIPS ============ -->
+  <section class="partnerships">
+    <div class="wrap accreditation-grid">
+      <h2 class="heading-text">Church & <span>Partner Institutions</span></h2>
+      <div class="logo-strip scrolling">
+        <img *ngFor="let logo of partnerLogos" [src]="logo" alt="Partner institution logo" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EVENTS CALENDAR + NEWS ============ -->
+  <section class="events-news" id="events">
+    <div class="wrap events-news-grid">
+      <!-- Calendar -->
+      <div class="events-col">
+        <h2 class="heading-text"><span>Events</span></h2>
+
+        <div class="calendar">
+          <div class="calendar-header">
+            <h3>{{ calendarMonthLabel }}</h3>
+            <div class="calendar-nav">
+              <button (click)="prevMonth()"><i class="fa-solid fa-angle-left"></i></button>
+              <button (click)="nextMonth()"><i class="fa-solid fa-angle-right"></i></button>
+            </div>
+          </div>
+          <div class="calendar-weekdays">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="calendar-grid">
+            <button *ngFor="let cell of calendarDays" class="calendar-cell" [class.empty]="!cell.date"
+              [class.has-event]="cell.hasEvent" [disabled]="!cell.date" (click)="selectDay(cell)">
+              {{ cell.date }}
+            </button>
+          </div>
+        </div>
+
+        <div class="event-info" *ngIf="selectedEvents.length">
+          <div class="event-info-header">
+            <h4>{{ selectedDateLabel }}</h4>
+            <button (click)="closeSelectedDay()">✕</button>
+          </div>
+          <div class="event-info-item" *ngFor="let e of selectedEvents">
+            <strong>{{ e.title }}</strong>
+            <p>{{ e.description }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- News -->
+      <div class="news-col">
+        <h2 class="heading-text">Ne<span>ws</span></h2>
+        <ul class="news-list">
+          <li *ngFor="let n of news">
+            <i class="fa-solid fa-angle-right"></i>
+            <div>
+              <h6>{{ n.title }}</h6>
+              <p>{{ n.excerpt }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BLOG CAROUSEL ============ -->
+  <section class="blog" id="blog">
+    <div class="wrap">
+      <h2 class="heading-text"><span>Blog</span></h2>
+
+      <div class="blog-carousel-wrap">
+        <button class="carousel-arrow prev" (click)="scrollBlog(-1)" [disabled]="blogScrollIndex === 0">‹</button>
+
+        <div class="blog-carousel-track"
+          [style.transform]="'translateX(calc(-' + blogScrollIndex + ' * (280px + 24px)))'">
+          <a class="blog-card" *ngFor="let post of blogPosts" [href]="post.link">
+            <div class="blog-image" [style.backgroundImage]="'url(' + post.image + ')'"></div>
+            <div class="blog-body">
+              <span class="blog-date">{{ post.date }}</span>
+              <h5>{{ post.title }}</h5>
+              <p>{{ post.excerpt }}</p>
+              <span class="blog-read-more">Read More <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <button class="carousel-arrow next" (click)="scrollBlog(1)"
+          [disabled]="blogScrollIndex >= blogPosts.length - 1">
+          ›
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="testimonials">
+    <div class="wrap">
+      <h2 class="heading-text">What our <span>Alumni Say</span></h2>
+
+      <div class="testimonial-card">
+        <span class="quote-mark"><i class="fa-solid fa-quote-left"></i></span>
+        <p>{{ testimonials[testimonialIndex].quote }}</p>
+        <h6>{{ testimonials[testimonialIndex].name }}</h6>
+
+        <div class="testimonial-nav">
+          <button (click)="prevTestimonial()">‹</button>
+          <button (click)="nextTestimonial()">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap footer-cta">
+    <h2>Find, Follow, and Fulfil Your <span>#GodGivenPurpose</span></h2>
+  </div>
+
+  <div class="wrap footer-grid">
+    <div class="footer-col footer-brand">
+      <span class="brand-mark">UBS</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/ubspune_officialpage" aria-label="Instagram"><i
+            class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@UnionbsMedia" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h5><i class="fa-solid fa-link"></i> Quick Links</h5>
+      <a href="#programmes">Programmes</a>
+      <a href="#apply">Admissions</a>
+      <a href="#blog">Blog</a>
+      <a href="#events">Events</a>
+      <a href="https://www.awmi.net/privacy/">Privacy Policy</a>
+    </div>
+
+    <div class="footer-col">
+      <h5><i class="fa-solid fa-envelope"></i> Contact</h5>
+      <a href="mailto:principal@ubs.ac.in">principal&#64;ubs.ac.in</a>
+      <a href="tel:7020993427">7020993427</a>
+      <p>Union Biblical Seminary, Pune, Maharashtra</p>
+    </div>
+  </div>
+
+  <div class="wrap footer-bottom">
+    <a href="https://www.awmi.net/privacy/">Privacy Policy</a>
+    <a href="https://www.awmi.net/terms/">Terms of Use</a>
+    <span>Copyright © 2026 Union Biblical Seminary. All Rights Reserved.</span>
+  </div>
+</footer>
+
+<!-- ============ FLOATING CALL BUTTON ============ -->
+<a class="floating-call" href="tel:7020993427">
+  <i class="fa-solid fa-phone"></i>
+  <span>7020993427</span>
+</a>
+
+
+<!-- ============ ROTATING ADMISSION ENQUIRY TAB ============ -->
+<div class="enquiry-tab" [class.open]="enquiryOpen">
+  <button class="enquiry-tab-toggle" (click)="toggleEnquiry()">Admission Enquiry</button>
+
+  <div class="enquiry-panel" *ngIf="enquiryOpen">
+    <button class="enquiry-close" (click)="toggleEnquiry()">✕</button>
+    <h4>Admission Enquiry</h4>
+
+    <form (ngSubmit)="submitEnquiry()" *ngIf="!enquirySubmitted">
+      <input type="text" placeholder="Full name" [(ngModel)]="enquiryName" name="enquiryName" required />
+      <input type="email" placeholder="Email address" [(ngModel)]="enquiryEmail" name="enquiryEmail" required />
+      <input type="tel" placeholder="Phone number" [(ngModel)]="enquiryPhone" name="enquiryPhone" />
+      <button type="submit" class="btn-gold">Submit Enquiry</button>
+    </form>
+
+    <p class="enquiry-success" *ngIf="enquirySubmitted">Thank you — we'll be in touch shortly.</p>
+  </div>
+</div>

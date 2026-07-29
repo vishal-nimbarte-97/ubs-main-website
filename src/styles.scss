@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+/* Prevent body scroll when mobile nav/menu is open */
+body.menu-open {
+	overflow: hidden;
+	touch-action: none;
+}
+
+/* Extra small screen tweaks */
+@media (max-width: 480px) {
+	.nav-links { width: 100% !important; }
+	.brand-name { font-size: 0.85rem; }
+	.brand-mark { padding: 6px 10px; font-size: 0.85rem; }
+	.programme-search { min-width: 140px; max-width: 220px; }
+}
