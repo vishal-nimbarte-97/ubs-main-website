@@ -79,32 +79,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private updateTransparency(): void {
-    if (!this.isBrowser) {
-      this.navbarTransparent = false;
-      return;
-    }
-
-    const currentUrl = this.router.url.split(/[?#]/)[0];
-    const onHomeRoute = currentUrl === '/' || currentUrl === '';
-    const heroElement = document.querySelector('.hero') as HTMLElement | null;
-    const heroHeight = heroElement?.clientHeight ?? 320;
-
-    // If the home hero contains a video, only make the navbar transparent while
-    // the viewport is over the hero/video area. Otherwise, fall back to the old
-    // heuristic based on hero height.
-    const heroHasVideo = !!heroElement?.querySelector('video');
-
-    if (onHomeRoute && heroElement && heroHasVideo) {
-      // Calculate hero top relative to the document and check if the page
-      // scroll position is before the bottom of the hero minus a small offset.
-      const heroTop = window.scrollY + heroElement.getBoundingClientRect().top;
-      const inHeroArea = window.scrollY < heroTop + heroHeight - 120;
-      this.navbarTransparent = inHeroArea;
-    } else {
-      // Non-video or missing hero: keep behaviour that shows transparent near
-      // the top of the page on the home route, otherwise opaque.
-      this.navbarTransparent = onHomeRoute && window.scrollY < Math.max(40, heroHeight - 120);
-    }
+    // Keep navbar always opaque and use the standard scrolled state for shadowing.
+    // This ensures the header background and text colors remain the same at all
+    // times regardless of the hero/video presence.
+    this.navbarTransparent = false;
   }
 
   private updateCountdown(): void {
