@@ -98,30 +98,13 @@
 }
 
 .site-header.transparent {
-  background: rgba(11, 37, 69, 0.22);
+  background: transparent;
   box-shadow: none;
-  backdrop-filter: blur(10px);
-}
-
-.site-header.transparent .logo-mark {
-  background: rgba(213, 211, 211, 0.18);
-  color: var(--white);
-}
-
-.site-header.transparent .logo-sub,
-.site-header.transparent .nav-links > li > a,
-.site-header.transparent .nav-links > a,
-.site-header.transparent .burger span {
-  color: var(--white);
 }
 
 .site-header.transparent .nav-links .cta-link {
   background: var(--gold);
   color: var(--navy) !important;
-}
-
-.site-header.transparent .burger span {
-  background: var(--white);
 }
 
 .main-nav {
