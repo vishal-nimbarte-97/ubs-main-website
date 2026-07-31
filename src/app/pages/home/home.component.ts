@@ -11,44 +11,20 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-interface ProgrammeTrack {
-  icon: string;
-  title: string;
-  image: string;
-  description: string;
-  link: string;
-}
-
-interface Counter {
-  label: string;
-  target: number;
-  value: number;
-  suffix: string;
-}
-
-interface CalendarEvent {
-  date: string; // yyyy-mm-dd
-  title: string;
-  description: string;
-}
-
-interface NewsItem {
-  title: string;
-  excerpt: string;
-}
-
-interface BlogPost {
-  image: string;
-  date: string;
-  title: string;
-  excerpt: string;
-  link: string;
-}
-
-interface Testimonial {
-  quote: string;
-  name: string;
-}
+import { ProgrammeTrack, Counter, CalendarEvent, CalendarCell } from '../../models';
+import {
+  ANNOUNCEMENTS,
+  PROGRAMME_TRACKS,
+  CENTRES,
+  WHY_REASONS,
+  COUNTERS,
+  ACCREDITATION_LOGOS,
+  PARTNER_LOGOS,
+  CALENDAR_EVENTS,
+  NEWS,
+  BLOG_POSTS,
+  TESTIMONIALS,
+} from '../../data';
 
 @Component({
   selector: 'app-home',
@@ -63,10 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   mobileMenuOpen = false;
   announcementOpen = false;
 
-  announcements = [
-    'Applications open for the 2026–27 academic year — Bachelor of Divinity, M.Th. & D.Th.',
-    'UBS Foundation Day Celebration — 12th September 2026',
-  ];
+  announcements = ANNOUNCEMENTS;
 
   /* ================= ADMISSION COUNTDOWN ================= */
   admissionDeadline = new Date('2026-09-30T23:59:59');
@@ -75,9 +48,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* ================= HERO — tagline swapper over video ================= */
   taglineGroups: string[][] = [
-    ['Welcome to UBS'], ['Servant-Leadership'],
-    ['Become part of the'],
-    ['71-Year Legacy of UBS'],
+    ['Welcome To UBS'], ['Servant-Leadership'],
+    ['Become Part Of The'],
+    ['71-Year Legacy Of UBS'],
   ];
   activeTaglineIndex = 0;
   private taglineTimer?: ReturnType<typeof setInterval>;
@@ -88,188 +61,38 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   /* ================= SCHOOLS / CENTRES TOGGLE ================= */
   activeTab: 'programmes' | 'centres' = 'programmes';
 
-  programmeTracks: ProgrammeTrack[] = [
-    {
-      icon: 'fa-book',
-      title: 'Long Term Courses (Residential)',
-      image: 'assets/img/track-longterm.jpg',
-      description:
-        'Bachelor of Divinity, Master of Theology, and Doctor of Theology — full-time residential formation combining biblical scholarship with spiritual and community life.',
-      link: '/programmes/long-term',
-    },
-    {
-      icon: 'fa-child',
-      title: 'Short Term Courses (Residential)',
-      image: 'assets/img/track-shortterm.jpg',
-      description:
-        'Centre for Children\u2019s Ministry and Comprehensive Training tracks, built for focused, intensive equipping in specific areas of ministry.',
-      link: '/programmes/short-term',
-    },
-    {
-      icon: 'fa-globe',
-      title: 'Distance Courses (Non-Residential)',
-      image: 'assets/img/track-distance.jpg',
-      description:
-        'Master of Divinity (ATA) offered in English, Hindi, and Marathi — theological training for those serving while studying from home.',
-      link: '/programmes/distance',
-    },
-  ];
-
-  centres: ProgrammeTrack[] = [
-    {
-      icon: 'fa-book',
-      title: 'Centre for Biblical Studies',
-      image: 'assets/img/centre-biblical.jpg',
-      description:
-        'Supports exegetical and biblical-language research across all UBS residential programmes.',
-      link: '/centres/biblical-studies',
-    },
-    {
-      icon: 'fa-users',
-      title: 'Centre for Children\u2019s Ministry',
-      image: 'assets/img/centre-children.jpg',
-      description:
-        'Trains practitioners for ministry with children, from curriculum design to hands-on field placement.',
-      link: '/centres/childrens-ministry',
-    },
-    {
-      icon: 'fa-hands-praying',
-      title: 'Centre for Contextual Mission',
-      image: 'assets/img/centre-mission.jpg',
-      description:
-        'Rural-bias mission training rooted in UBS\u2019s founding commitment to bibliocentric, contextually relevant ministry.',
-      link: '/centres/contextual-mission',
-    },
-  ];
+  programmeTracks: ProgrammeTrack[] = PROGRAMME_TRACKS;
+  centres: ProgrammeTrack[] = CENTRES;
 
   /* ================= WHY UBS + COUNTERS ================= */
-  whyReasons = [
-    { icon: 'fa-book', text: 'Bibliocentric, Christ-Centred Teaching' },
-    { icon: 'fa-users', text: 'Unity in Diversity Across India' },
-    { icon: 'fa-child', text: 'Holistic, Community-Rooted Formation' },
-    { icon: 'fa-book-open', text: 'Academic Excellence & Contextual Relevance' },
-  ];
+  whyReasons = WHY_REASONS;
 
-  counters: Counter[] = [
-    { label: 'Graduates', target: 10000, value: 0, suffix: '+' },
-    { label: 'Indian States Represented', target: 21, value: 0, suffix: '' },
-    { label: 'Years of Formation', target: 71, value: 0, suffix: '+' },
-    { label: 'Residential & Distance Tracks', target: 6, value: 0, suffix: '' },
-    { label: 'Nations Represented', target: 12, value: 0, suffix: '+' },
-    { label: 'Faculty & Staff', target: 40, value: 0, suffix: '+' },
-  ];
+  counters: Counter[] = COUNTERS;
   private countersAnimated = false;
   @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
   private countersObserver?: IntersectionObserver;
 
   /* ================= ACCREDITATION / PARTNER LOGO STRIPS ================= */
-  accreditationLogos = [
-    'assets/img/logo-senate-serampore.png',
-    'assets/img/logo-ata.png',
-    'assets/img/logo-ugc.png',
-  ];
-  partnerLogos = [
-    'assets/img/partner-1.png',
-    'assets/img/partner-2.png',
-    'assets/img/partner-3.png',
-    'assets/img/partner-4.png',
-    'assets/img/partner-5.png',
-  ];
+  accreditationLogos = ACCREDITATION_LOGOS;
+  partnerLogos = PARTNER_LOGOS;
 
   /* ================= EVENTS CALENDAR ================= */
   calendarDate = new Date();
-  calendarDays: { date: number | null; iso: string; hasEvent: boolean }[] = [];
+  calendarDays: CalendarCell[] = [];
   selectedEvents: CalendarEvent[] = [];
   selectedDateLabel = '';
 
-  events: CalendarEvent[] = [
-    {
-      date: this.isoInCurrentMonth(12),
-      title: 'UBS Foundation Day',
-      description: 'Chapel service and campus-wide celebration marking the seminary\u2019s founding.',
-    },
-    {
-      date: this.isoInCurrentMonth(20),
-      title: 'Convocation Ceremony',
-      description: 'Graduating class from residential and distance programmes commissioned for ministry.',
-    },
-    {
-      date: this.isoInCurrentMonth(25),
-      title: 'Open Day for Prospective Students',
-      description: 'Campus tours, faculty Q&A, and admissions guidance for the 2026\u201327 intake.',
-    },
-  ];
+  events: CalendarEvent[] = CALENDAR_EVENTS;
 
   /* ================= NEWS ================= */
-  news: NewsItem[] = [
-    {
-      title: 'UBS Convocation Welcomes New Graduating Class',
-      excerpt:
-        'Graduates commissioned for ministry across residential and distance programmes this academic year.',
-    },
-    {
-      title: 'Faculty Lecture Series on Contextual Theology',
-      excerpt:
-        'Visiting scholars joined UBS faculty for a series on holistic, contextually relevant ministry formation.',
-    },
-    {
-      title: 'Admissions Open for Residential Programmes',
-      excerpt:
-        'Applications now open for Bachelor of Divinity, Master of Theology, and Doctor of Theology tracks.',
-    },
-  ];
+  news = NEWS;
 
   /* ================= BLOG CAROUSEL ================= */
-  blogPosts: BlogPost[] = [
-    {
-      image: 'assets/img/blog-1.jpg',
-      date: 'Jul 2026',
-      title: 'What Does Servant-Leadership Actually Look Like in Ministry?',
-      excerpt: 'A look at how UBS\u2019s formation pillars shape graduates for real church contexts...',
-      link: '/blog/servant-leadership-in-ministry',
-    },
-    {
-      image: 'assets/img/blog-2.jpg',
-      date: 'Jun 2026',
-      title: 'Choosing Between Residential and Distance Theological Study',
-      excerpt: 'How to weigh the Master of Divinity (ATA) distance track against residential formation...',
-      link: '/blog/residential-vs-distance-study',
-    },
-    {
-      image: 'assets/img/blog-3.jpg',
-      date: 'May 2026',
-      title: 'Inside the Centre for Children\u2019s Ministry',
-      excerpt: 'Why hands-on field placement is central to UBS\u2019s short-term ministry training...',
-      link: '/blog/centre-for-childrens-ministry',
-    },
-    {
-      image: 'assets/img/blog-4.jpg',
-      date: 'Apr 2026',
-      title: '71 Years of Bibliocentric Teaching with a Rural Bias',
-      excerpt: 'Tracing UBS\u2019s founding vision from Dr. Frank Kline to today\u2019s faculty...',
-      link: '/blog/71-years-of-ubs',
-    },
-  ];
+  blogPosts = BLOG_POSTS;
   blogScrollIndex = 0;
 
   /* ================= TESTIMONIALS CAROUSEL ================= */
-  testimonials: Testimonial[] = [
-    {
-      quote:
-        'Studying at UBS shaped not just what I know, but who I am as a servant-leader. The community life formation was as formative as the classroom.',
-      name: 'B.D. Graduate, 2024',
-    },
-    {
-      quote:
-        'Unity in diversity isn\u2019t a slogan here — I studied alongside classmates from a dozen states and several countries, and it changed how I read Scripture.',
-      name: 'M.Th. Graduate, 2023',
-    },
-    {
-      quote:
-        'The distance M.Div. let me stay in ministry while studying. UBS met me where I was.',
-      name: 'M.Div. (ATA) Graduate',
-    },
-  ];
+  testimonials = TESTIMONIALS;
   testimonialIndex = 0;
   private testimonialTimer?: ReturnType<typeof setInterval>;
 
@@ -331,12 +154,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /* ---------- helpers ---------- */
-  private isoInCurrentMonth(day: number): string {
-    const d = new Date();
-    d.setDate(day);
-    return d.toISOString().slice(0, 10);
-  }
-
   onWindowScroll(): void {
     if (!this.isBrowser) return;
     this.isScrolled = window.scrollY > 40;
@@ -400,7 +217,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const eventDates = new Set(this.events.map((e) => e.date));
 
-    const cells: { date: number | null; iso: string; hasEvent: boolean }[] = [];
+    const cells: CalendarCell[] = [];
     for (let i = 0; i < firstDay; i++) cells.push({ date: null, iso: '', hasEvent: false });
     for (let d = 1; d <= daysInMonth; d++) {
       const iso = new Date(year, month, d).toISOString().slice(0, 10);
@@ -423,7 +240,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.buildCalendar();
   }
 
-  selectDay(cell: { date: number | null; iso: string; hasEvent: boolean }): void {
+  selectDay(cell: CalendarCell): void {
     if (!cell.date) return;
     this.selectedEvents = this.events.filter((e) => e.date === cell.iso);
     this.selectedDateLabel = new Date(cell.iso).toLocaleDateString('en-US', {

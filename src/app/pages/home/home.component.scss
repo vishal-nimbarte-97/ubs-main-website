@@ -24,15 +24,15 @@
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: 'Playfair Display', 'Georgia', serif;
-  line-height: 1.15;
-  margin: 0 0 0.5em;
-  color: var(--navy);
-}
+// h1,
+// h2,
+// h3,
+// h4 {
+//   font-family: 'Playfair Display', 'Georgia', serif;
+//   line-height: 1.15;
+//   margin: 0 0 0.5em;
+//   color: var(--navy);
+// }
 
 .wrap {
   max-width: 1200px;
@@ -1611,7 +1611,7 @@ body{
 
     position:relative;
 
-    background:url("../../assets/wall_image.png") center center/cover no-repeat;
+    background:url("../../../assets/wall_image.png") center center/cover no-repeat;
 
     padding:140px 0;
 
