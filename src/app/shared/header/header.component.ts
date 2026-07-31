@@ -79,10 +79,37 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private updateTransparency(): void {
-    // Keep navbar always opaque and use the standard scrolled state for shadowing.
-    // This ensures the header background and text colors remain the same at all
-    // times regardless of the hero/video presence.
-    this.navbarTransparent = false;
+    if (!this.isBrowser) {
+      this.navbarTransparent = false;
+      return;
+    }
+
+    const currentUrl = this.router.url.split(/[?#]/)[0];
+    const onHomeRoute = currentUrl === '/' || currentUrl === '';
+
+    if (!onHomeRoute) {
+      this.navbarTransparent = false;
+      return;
+    }
+
+    const heroElement = document.querySelector('.hero') as HTMLElement | null;
+    if (!heroElement) {
+      this.navbarTransparent = false;
+      return;
+    }
+
+    const heroHasVideo = !!heroElement.querySelector('video');
+    if (!heroHasVideo) {
+      this.navbarTransparent = false;
+      return;
+    }
+
+    const rect = heroElement.getBoundingClientRect();
+    const heroTopDoc = window.scrollY + rect.top;
+    const heroBottomDoc = heroTopDoc + rect.height;
+    const offset = 120; // leave some space before switching to opaque
+
+    this.navbarTransparent = window.scrollY < (heroBottomDoc - offset);
   }
 
   private updateCountdown(): void {
