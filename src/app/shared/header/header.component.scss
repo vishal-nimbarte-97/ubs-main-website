@@ -102,9 +102,28 @@
   box-shadow: none;
 }
 
+/* When transparent (over the hero/video), make navbar text and controls white
+   so they contrast against a dark video background. */
+.site-header.transparent .logo-mark {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+}
+
+.site-header.transparent .logo-sub,
+.site-header.transparent .nav-links > li > a,
+.site-header.transparent .nav-links > a {
+  color: var(--white);
+}
+
+.site-header.transparent .burger span {
+  background: var(--white);
+}
+
 .site-header.transparent .nav-links .cta-link {
-  background: var(--gold);
-  color: var(--navy) !important;
+  /* keep CTA visible on video: subtle translucent white background with white text */
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .main-nav {

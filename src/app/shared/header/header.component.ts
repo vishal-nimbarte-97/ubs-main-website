@@ -89,7 +89,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const heroElement = document.querySelector('.hero') as HTMLElement | null;
     const heroHeight = heroElement?.clientHeight ?? 320;
 
-    this.navbarTransparent = onHomeRoute && window.scrollY < Math.max(40, heroHeight - 120);
+    // If the home hero contains a video, only make the navbar transparent while
+    // the viewport is over the hero/video area. Otherwise, fall back to the old
+    // heuristic based on hero height.
+    const heroHasVideo = !!heroElement?.querySelector('video');
+
+    if (onHomeRoute && heroElement && heroHasVideo) {
+      // Calculate hero top relative to the document and check if the page
+      // scroll position is before the bottom of the hero minus a small offset.
+      const heroTop = window.scrollY + heroElement.getBoundingClientRect().top;
+      const inHeroArea = window.scrollY < heroTop + heroHeight - 120;
+      this.navbarTransparent = inHeroArea;
+    } else {
+      // Non-video or missing hero: keep behaviour that shows transparent near
+      // the top of the page on the home route, otherwise opaque.
+      this.navbarTransparent = onHomeRoute && window.scrollY < Math.max(40, heroHeight - 120);
+    }
   }
 
   private updateCountdown(): void {
