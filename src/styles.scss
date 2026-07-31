@@ -1,14 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
-/* Prevent body scroll when mobile nav/menu is open */
-body.menu-open {
-	overflow: hidden;
-	touch-action: none;
+/* =========================================================
+   DESIGN TOKENS
+   Palette: Ink Navy #0B2545 · Deep Navy #123B6B · Vesper Gold #C9962B
+            Parchment #F7F4EC · Ink #1B2430 · Slate #5B6675
+   Type: "Playfair Display" (display serif) + "Roboto" (body/UI)
+========================================================= */
+:root {
+  --navy: #0b2545;
+  --navy-2: #123b6b;
+  --gold: #c9962b;
+  --gold-light: #e7c877;
+  --parchment: #f7f4ec;
+  --ink: #1b2430;
+  --slate: #5b6675;
+  --white: #ffffff;
+  --radius: 6px;
 }
 
-/* Extra small screen tweaks */
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  color: var(--navy);
+}
+
+body.menu-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
 @media (max-width: 480px) {
-	.nav-links { width: 100% !important; }
-	.brand-name { font-size: 0.85rem; }
-	.brand-mark { padding: 6px 10px; font-size: 0.85rem; }
-	.programme-search { min-width: 140px; max-width: 220px; }
+  .brand-name {
+    font-size: 0.85rem;
+  }
+  .brand-mark {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
 }

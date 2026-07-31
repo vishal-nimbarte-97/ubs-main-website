@@ -1,0 +1,52 @@
+<div class="top-bar">
+  <div class="wrap top-bar-inner">
+    <div class="countdown-chip">{{ countdownText }}</div>
+    <div class="top-bar-actions">
+      <button class="announce-btn" (click)="toggleAnnouncement()">
+        <i class="fa-solid fa-bullhorn"></i>
+        Announcements
+        <i class="fa-solid fa-angle-down"></i>
+      </button>
+      <a routerLink="/admissions" class="apply-btn" (click)="closeMobileMenu()">Apply Now</a>
+    </div>
+  </div>
+
+  <div class="announce-panel" *ngIf="announcementOpen">
+    <div class="wrap">
+      <button class="close-x" (click)="toggleAnnouncement()">✕</button>
+      <ul>
+        <li *ngFor="let a of announcements">
+          <i class="fa-solid fa-arrow-right"></i>
+          {{ a }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<header class="site-header" [class.scrolled]="!navbarTransparent && isScrolled" [class.transparent]="navbarTransparent" (window:scroll)="onWindowScroll()">
+  <nav class="wrap main-nav">
+    <a routerLink="/" class="logo-wrapper me-auto" (click)="closeMobileMenu()">
+      <img src="../../assets/ubs-logo.png" alt="UBS Logo" class="logo-img" />
+      <div class="logo-text">
+        <span class="logo-mark">UBS</span>
+        <span class="logo-sub">Union Biblical Seminary</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" [class.open]="mobileMenuOpen">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobileMenu()">Home</a></li>
+      <li><a routerLink="/about" routerLinkActive="active" (click)="closeMobileMenu()">About</a></li>
+      <li><a routerLink="/programmes" routerLinkActive="active" (click)="closeMobileMenu()">Programmes</a></li>
+      <li><a routerLink="/admissions" routerLinkActive="active" (click)="closeMobileMenu()">Admissions</a></li>
+      <li><a routerLink="/events" routerLinkActive="active" (click)="closeMobileMenu()">Events</a></li>
+      <li><a routerLink="/blog" routerLinkActive="active" (click)="closeMobileMenu()">Blog</a></li>
+      <li><a routerLink="/gallery" routerLinkActive="active" (click)="closeMobileMenu()">Gallery</a></li>
+      <li><a routerLink="/admissions" class="cta-link" (click)="closeMobileMenu()">Apply Now</a></li>
+    </ul>
+
+    <button class="burger" (click)="toggleMobileMenu()" aria-label="Toggle menu" [attr.aria-expanded]="mobileMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>

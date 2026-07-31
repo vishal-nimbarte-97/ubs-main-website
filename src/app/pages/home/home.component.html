@@ -1,93 +1,3 @@
-<!-- ============ TOP UTILITY BAR ============ -->
-<!-- <div class="top-bar">
-  <div class="wrap top-bar-inner">
-    <div class="countdown-chip">{{ countdownText }}</div>
-    <div class="top-bar-actions">
-      <button class="announce-btn" (click)="toggleAnnouncement()">
-        <i class="fa-solid fa-bullhorn"></i> Announcements <i class="fa-solid fa-angle-down"></i>
-      </button>
-      <a href="#apply" class="apply-btn">Apply Now</a>
-    </div>
-  </div>
-
-  <div class="announce-panel" *ngIf="announcementOpen">
-    <div class="wrap">
-      <button class="close-x" (click)="toggleAnnouncement()">✕</button>
-      <ul>
-        <li *ngFor="let a of announcements"><i class="fa-solid fa-arrow-right"></i> {{ a }}</li>
-      </ul>
-    </div>
-  </div>
-</div> -->
-
-<!-- ============ NAVBAR ============ -->
-<header class="site-header" [class.scrolled]="isScrolled" (window:scroll)="onWindowScroll()">
-
-  <nav class="wrap main-nav">
-
-    <a routerLink="/" class="logo-wrapper me-auto">
-
-      <img src="../../assets/ubs-logo.png" alt="UBS Logo" class="logo-img" />
-      <div class="logo-text">
-        <span class="logo-mark">UBS</span>
-        <span class="logo-sub">Union Biblical Seminary</span>
-      </div>
-
-    </a>
-
-    <ul class="nav-links" [class.open]="mobileMenuOpen">
-      <li><a href="#home" (click)="closeMobileMenu()">Home</a></li>
-
-      <li class="has-dropdown">
-        <a href="#about" (click)="closeMobileMenu()">About Us</a>
-        <ul class="dropdown">
-          <li><a href="#about" (click)="closeMobileMenu()">About</a></li>
-          <li><a href="#history" (click)="closeMobileMenu()">History</a></li>
-        </ul>
-      </li>
-
-      <li class="has-dropdown">
-        <a href="#campus" (click)="closeMobileMenu()">Campus</a>
-      </li>
-
-      <li class="has-dropdown">
-        <a href="#administration" (click)="closeMobileMenu()">Administration</a>
-        <ul class="dropdown">
-          <li><a href="#faculty" (click)="closeMobileMenu()">Faculty</a></li>
-        </ul>
-      </li>
-
-      <li class="has-dropdown">
-        <a href="#library" (click)="closeMobileMenu()">Library</a>
-      </li>
-
-
-      <li class="has-dropdown">
-        <a href="#admissions" (click)="closeMobileMenu()">Admissions</a>
-        <ul class="dropdown">
-          <li><a href="#tuition" (click)="closeMobileMenu()">Tuition</a></li>
-          <li><a href="#programmes" (click)="closeMobileMenu()">Residential Programmes</a></li>
-          <li><a href="#programmes" (click)="closeMobileMenu()">Non-Residential Programmes</a></li>
-          <li><a href="#faq" (click)="closeMobileMenu()">FAQ</a></li>
-        </ul>
-      </li>
-
-      <li class="has-dropdown">
-        <a href="#student-zone" (click)="closeMobileMenu()">Student Zone</a>
-      </li>
-
-      <li>
-        <a href="#gallery" (click)="closeMobileMenu()">Gallery</a>
-      </li>
-
-      <li><a href="#apply" class="cta-link" (click)="closeMobileMenu()">Apply Now</a></li>
-    </ul>
-
-    <button class="burger" (click)="toggleMobileMenu()" aria-label="Toggle menu" [attr.aria-expanded]="mobileMenuOpen">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-</header>
 
 <main id="home">
   <!-- ============ HERO — video + tagline swapper ============ -->
@@ -244,7 +154,7 @@
 
   <!-- ============ Start Your Theological Journey ============ -->
 
-  <section class="journey-section">
+  <section class="journey-section" id="admissions">
     <div class="container">
 
       <h2 class="section-title">Start <span>Your </span>Theological<span> Journey</span></h2>
@@ -379,6 +289,19 @@
 
   </section>
 
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery-section" id="gallery">
+    <div class="wrap">
+      <h2 class="heading-text">Campus <span>Gallery</span></h2>
+      <div class="gallery-grid">
+        <img src="../../assets/ubs-main-page-image-1.jpg" alt="UBS campus" />
+        <img src="../../assets/Theological_1.png" alt="Residential ministry" />
+        <img src="../../assets/Theological_2.png" alt="Short term course" />
+        <img src="../../assets/Theological_3.png" alt="Distance course" />
+      </div>
+    </div>
+  </section>
+
   <!-- ============ ACCREDITATIONS ============ -->
   <section class="accreditation" id="accreditation">
     <div class="wrap accreditation-grid">
@@ -500,46 +423,6 @@
     </div>
   </section>
 </main>
-
-<!-- ============ FOOTER ============ -->
-<footer class="site-footer">
-  <div class="wrap footer-cta">
-    <h2>Find, Follow, and Fulfil Your <span>#GodGivenPurpose</span></h2>
-  </div>
-
-  <div class="wrap footer-grid">
-    <div class="footer-col footer-brand">
-      <span class="brand-mark">UBS</span>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/ubspune_officialpage" aria-label="Instagram"><i
-            class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.youtube.com/@UnionbsMedia" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-      </div>
-    </div>
-
-    <div class="footer-col">
-      <h5><i class="fa-solid fa-link"></i> Quick Links</h5>
-      <a href="#programmes">Programmes</a>
-      <a href="#apply">Admissions</a>
-      <a href="#blog">Blog</a>
-      <a href="#events">Events</a>
-      <a href="https://www.awmi.net/privacy/">Privacy Policy</a>
-    </div>
-
-    <div class="footer-col">
-      <h5><i class="fa-solid fa-envelope"></i> Contact</h5>
-      <a href="mailto:principal@ubs.ac.in">principal&#64;ubs.ac.in</a>
-      <a href="tel:7020993427">7020993427</a>
-      <p>Union Biblical Seminary, Pune, Maharashtra</p>
-    </div>
-  </div>
-
-  <div class="wrap footer-bottom">
-    <a href="https://www.awmi.net/privacy/">Privacy Policy</a>
-    <a href="https://www.awmi.net/terms/">Terms of Use</a>
-    <span>Copyright © 2026 Union Biblical Seminary. All Rights Reserved.</span>
-  </div>
-</footer>
 
 <!-- ============ FLOATING CALL BUTTON ============ -->
 <a class="floating-call" href="tel:7020993427">

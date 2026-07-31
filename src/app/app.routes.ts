@@ -1,4 +1,13 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 
-export const routes: Routes = [{ path: '', component: HomeComponent }];
+export const routes: Routes = [
+  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: 'about', component: HomeComponent },
+  { path: 'programmes', component: HomeComponent },
+  { path: 'admissions', component: HomeComponent },
+  { path: 'events', component: HomeComponent },
+  { path: 'blog', component: HomeComponent },
+  { path: 'gallery', component: HomeComponent },
+  { path: '**', redirectTo: '' },
+];

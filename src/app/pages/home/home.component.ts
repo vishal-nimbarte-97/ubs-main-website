@@ -10,10 +10,11 @@ import {
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 import { ProgrammeTrack, Counter, CalendarEvent, CalendarCell } from '../../models';
 import {
-  ANNOUNCEMENTS,
   PROGRAMME_TRACKS,
   CENTRES,
   WHY_REASONS,
@@ -34,21 +35,13 @@ import {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  /* ================= NAV ================= */
-  isScrolled = false;
-  mobileMenuOpen = false;
-  announcementOpen = false;
-
-  announcements = ANNOUNCEMENTS;
-
-  /* ================= ADMISSION COUNTDOWN ================= */
-  admissionDeadline = new Date('2026-09-30T23:59:59');
-  countdownText = '';
-  private countdownTimer?: ReturnType<typeof setInterval>;
+  private router = inject(Router);
+  private routerSubscription?: Subscription;
 
   /* ================= HERO — tagline swapper over video ================= */
   taglineGroups: string[][] = [
-    ['Welcome To UBS'], ['Servant-Leadership'],
+    ['Welcome To UBS'],
+    ['Servant-Leadership'],
     ['Become Part Of The'],
     ['71-Year Legacy Of UBS'],
   ];
@@ -109,8 +102,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private isBrowser = isPlatformBrowser(this.platformId);
 
   ngOnInit(): void {
-    // Date-only logic is safe on the server, so this always runs.
-    this.updateCountdown();
     this.buildCalendar();
 
     // Timers, scroll position, and observers only make sense in a real
@@ -118,13 +109,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // persistence on the server) or leak timers that never get cleared.
     if (!this.isBrowser) return;
 
-    this.countdownTimer = setInterval(() => this.updateCountdown(), 1000);
+    this.routerSubscription = this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => this.scrollToCurrentRouteSection());
 
     this.taglineTimer = setInterval(() => {
       this.activeTaglineIndex = (this.activeTaglineIndex + 1) % this.taglineGroups.length;
     }, 3200);
 
     this.testimonialTimer = setInterval(() => this.nextTestimonial(), 6000);
+
+    this.scrollToCurrentRouteSection();
   }
 
   ngAfterViewInit(): void {
@@ -147,45 +142,32 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.countdownTimer) clearInterval(this.countdownTimer);
+    this.routerSubscription?.unsubscribe();
     if (this.taglineTimer) clearInterval(this.taglineTimer);
     if (this.testimonialTimer) clearInterval(this.testimonialTimer);
     this.countersObserver?.disconnect();
   }
 
   /* ---------- helpers ---------- */
-  onWindowScroll(): void {
+  private scrollToCurrentRouteSection(): void {
     if (!this.isBrowser) return;
-    this.isScrolled = window.scrollY > 40;
-  }
 
-  toggleMobileMenu(): void {
-    this.mobileMenuOpen = !this.mobileMenuOpen;
-    if (!this.isBrowser) return;
-    try {
-      if (this.mobileMenuOpen) document.body.classList.add('menu-open');
-      else document.body.classList.remove('menu-open');
-    } catch (e) {
-      // ignore server-side or strict environments
-    }
-  }
+    const rawPath = this.router.url.split('?')[0].split('#')[0];
+    const section = rawPath.replace(/^\//, '') || 'home';
 
-  toggleAnnouncement(): void {
-    this.announcementOpen = !this.announcementOpen;
-  }
+    setTimeout(() => {
+      if (section === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
 
-  private updateCountdown(): void {
-    const now = new Date().getTime();
-    const distance = this.admissionDeadline.getTime() - now;
-    if (distance <= 0) {
-      this.countdownText = 'Admissions closed';
-      return;
-    }
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    this.countdownText = `Time left to apply: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      const target = document.getElementById(section);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 80);
   }
 
   setTab(tab: 'programmes' | 'centres'): void {
@@ -273,14 +255,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   /* ---------- enquiry ---------- */
   toggleEnquiry(): void {
     this.enquiryOpen = !this.enquiryOpen;
-  }
-
-  closeMobileMenu(): void {
-    if (!this.isBrowser) return;
-    this.mobileMenuOpen = false;
-    try {
-      document.body.classList.remove('menu-open');
-    } catch (e) { }
   }
 
   submitEnquiry(): void {
