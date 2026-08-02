@@ -331,10 +331,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       quote:
         'UBS was founded on the conviction that biblical scholarship and rural service are not opposites, but two halves of one calling.',
       gallery: [
-        'https://picsum.photos/seed/ubs-chapel-1/400/280',
-        'https://picsum.photos/seed/ubs-gate/400/280',
-        'https://picsum.photos/seed/ubs-altar/400/280',
-        'https://picsum.photos/seed/ubs-campus/400/280',
+        '../../assets/dr-frank-kline/image_1.png',
+        '../../assets/dr-frank-kline/image_2.png',
+        '../../assets/dr-frank-kline/image_3.png',
+        '../../assets/dr-frank-kline/image_4.png',
       ],
     },
   ];
