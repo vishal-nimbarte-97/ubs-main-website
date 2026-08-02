@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<header class="site-header" [class.scrolled]="!navbarTransparent && isScrolled" [class.transparent]="navbarTransparent" (window:scroll)="onWindowScroll()">
+<header class="site-header" [class.scrolled]="isScrolled" (window:scroll)="onWindowScroll()">
   <nav class="wrap main-nav">
     <a routerLink="/" class="logo-wrapper me-auto" (click)="closeMobileMenu()">
       <img src="../../assets/ubs-logo.png" alt="UBS Logo" class="logo-img" />

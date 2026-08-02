@@ -36,21 +36,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (!this.isBrowser) return;
 
     this.countdownTimer = setInterval(() => this.updateCountdown(), 1000);
-    this.routerSubscription = this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe(() => this.updateTransparency());
-    this.updateTransparency();
   }
 
   ngOnDestroy(): void {
     if (this.countdownTimer) clearInterval(this.countdownTimer);
-    this.routerSubscription?.unsubscribe();
   }
 
   onWindowScroll(): void {
     if (!this.isBrowser) return;
     this.isScrolled = window.scrollY > 40;
-    this.updateTransparency();
   }
 
   toggleMobileMenu(): void {
