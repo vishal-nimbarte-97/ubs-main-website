@@ -16,10 +16,10 @@
 }
 
 .countdown-chip {
-  background: var(--white);
+  background: #c9962b;
   color: var(--navy);
-  padding: 4px 12px;
-  border-radius: 999px;
+  padding: 12px 21px;
+  border-radius: 5px;
   font-weight: 700;
   font-size: 0.76rem;
   white-space: nowrap;
@@ -34,17 +34,25 @@
 }
 
 .announce-btn {
-  background: none;
-  border: none;
-  color: var(--white);
+  z-index: 1080;
+  background-color: rgba(106, 4, 15, 1);
+  color: white;
   cursor: pointer;
-  font-size: 0.82rem;
+  border-width: medium;
+  border-style: none;
+  border-color: currentcolor;
+  border-image: none;
+  border-radius: 5px;
+  font-size: 0.8rem;
+      font-weight: 700;
+    text-decoration: none;
+        padding: 12px 21px;
 }
 
 .apply-btn {
   background: var(--gold);
   color: var(--navy);
-  padding: 6px 16px;
+  padding: 12px 21px;
   border-radius: var(--radius);
   font-weight: 700;
   text-decoration: none;
@@ -151,16 +159,16 @@
   z-index: 10;
 }
 
-.nav-links > li > a,
-.nav-links > a {
+.nav-links>li>a,
+.nav-links>a {
   text-decoration: none;
   color: var(--navy);
   font-weight: 500;
   font-size: 0.9rem;
 }
 
-.nav-links > a.active,
-.nav-links > li > a.active {
+.nav-links>a.active,
+.nav-links>li>a.active {
   color: var(--gold);
 }
 
@@ -216,6 +224,13 @@
     display: flex;
   }
 
-  .nav-links > li { width: 100%; }
-  .nav-links > li > a { display: block; width: 100%; padding: 12px 0; }
+  .nav-links>li {
+    width: 100%;
+  }
+
+  .nav-links>li>a {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+  }
 }
