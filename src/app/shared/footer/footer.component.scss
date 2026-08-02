@@ -146,3 +146,35 @@
     align-items: flex-start;
   }
 }
+
+@media (max-width: 480px) {
+  .site-footer {
+    padding-top: 28px;
+  }
+
+  .footer-newsletter {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+
+    input,
+    button {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+
+  .footer-brand-text {
+    font-size: 1rem;
+  }
+
+  .footer-legal-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-bottom {
+    padding: 16px 20px 24px;
+    font-size: 0.8rem;
+  }
+}

@@ -27,6 +27,12 @@
   }
 }
 
+@media (max-width: 400px) {
+  :root {
+    --header-height: 118px; // top-bar row can wrap to two lines on very narrow phones
+  }
+}
+
 html {
   box-sizing: border-box;
 }
