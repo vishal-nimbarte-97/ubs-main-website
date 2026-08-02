@@ -36,15 +36,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (!this.isBrowser) return;
 
     this.countdownTimer = setInterval(() => this.updateCountdown(), 1000);
+
+    // Recalculate transparency whenever the route changes (e.g. home -> about)
+    this.routerSubscription = this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => {
+        // wait a tick so the new route's DOM (e.g. .hero) is actually rendered
+        setTimeout(() => this.updateTransparency(), 0);
+      });
+
+    // Initial check on first load
+    setTimeout(() => this.updateTransparency(), 0);
   }
 
   ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
     if (this.countdownTimer) clearInterval(this.countdownTimer);
   }
 
   onWindowScroll(): void {
     if (!this.isBrowser) return;
     this.isScrolled = window.scrollY > 40;
+    this.updateTransparency();
   }
 
   toggleMobileMenu(): void {
@@ -87,23 +100,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     const heroElement = document.querySelector('.hero') as HTMLElement | null;
-    if (!heroElement) {
-      this.navbarTransparent = false;
-      return;
-    }
+    const heroHasVideo = !!heroElement?.querySelector('video');
 
-    const heroHasVideo = !!heroElement.querySelector('video');
     if (!heroHasVideo) {
       this.navbarTransparent = false;
       return;
     }
 
-    const rect = heroElement.getBoundingClientRect();
-    const heroTopDoc = window.scrollY + rect.top;
-    const heroBottomDoc = heroTopDoc + rect.height;
-    const offset = 120; // leave some space before switching to opaque
-
-    this.navbarTransparent = window.scrollY < (heroBottomDoc - offset);
+    // Solid as soon as the user starts scrolling — tied to the same
+    // threshold as isScrolled so both states change together.
+    this.navbarTransparent = !this.isScrolled;
   }
 
   private updateCountdown(): void {

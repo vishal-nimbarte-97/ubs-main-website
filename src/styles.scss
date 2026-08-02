@@ -14,13 +14,26 @@
   --slate: #5b6675;
   --white: #ffffff;
   --radius: 6px;
+
+  /* Header height — must match the real rendered height of .site-header
+     (top-bar + main-nav combined). Used by app.component.scss to push
+     page content below the fixed header on non-home routes. */
+  --header-height: 108px;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --header-height: 96px; // nav wraps at this breakpoint, header gets taller/shorter — verify in devtools
+  }
 }
 
 html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -38,7 +51,10 @@ body {
   padding: 0 24px;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: 'Playfair Display', 'Georgia', serif;
   line-height: 1.15;
   margin: 0 0 0.5em;
@@ -54,6 +70,7 @@ body.menu-open {
   .brand-name {
     font-size: 0.85rem;
   }
+
   .brand-mark {
     padding: 6px 10px;
     font-size: 0.85rem;

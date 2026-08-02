@@ -44,9 +44,9 @@
   border-image: none;
   border-radius: 5px;
   font-size: 0.8rem;
-      font-weight: 700;
-    text-decoration: none;
-        padding: 12px 21px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 12px 21px;
 }
 
 .apply-btn {
@@ -97,12 +97,38 @@
 }
 
 .site-header {
-  position: sticky;
+  position: fixed; // was sticky — needs to be fixed to overlay the hero video
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 70;
   background: var(--white);
   box-shadow: 0 2px 16px rgba(11, 37, 69, 0.08);
-  transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  transition: background 0.35s ease, box-shadow 0.35s ease, color 0.35s ease;
+}
+
+.site-header.transparent {
+  background: transparent;
+  box-shadow: none;
+
+  .top-bar-inner,
+  .announce-panel {
+    background: transparent;
+  }
+
+  .logo-sub,
+  .nav-links>li>a {
+    color: var(--white);
+  }
+
+  .nav-links>a.active,
+  .nav-links>li>a.active {
+    color: var(--gold-light);
+  }
+
+  .burger span {
+    background: var(--white);
+  }
 }
 
 

@@ -1,0 +1,7 @@
+.page-content {
+  padding-top: var(--header-height, 96px); // pushes content below the fixed header on every non-home page
+}
+
+.page-content.is-home {
+  padding-top: 0; // home page's hero starts at y=0, sitting behind the transparent header
+}

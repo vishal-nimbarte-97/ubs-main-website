@@ -1,4 +1,5 @@
-<header class="site-header" [class.scrolled]="isScrolled" (window:scroll)="onWindowScroll()">
+<header class="site-header" [class.scrolled]="isScrolled" [class.transparent]="navbarTransparent"
+  (window:scroll)="onWindowScroll()">
   <div>
     <div class="wrap top-bar-inner">
       <div class="countdown-chip">{{ countdownText }}</div>
