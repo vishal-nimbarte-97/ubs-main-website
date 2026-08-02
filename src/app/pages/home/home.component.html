@@ -1,4 +1,3 @@
-
 <main id="home">
   <!-- ============ HERO — video + tagline swapper ============ -->
   <section class="hero">
@@ -289,8 +288,71 @@
 
   </section>
 
+  <!-- ============ THE GENESIS OF UBS — HISTORY TIMELINE ============ -->
+  <section class="legacy-section" id="legacy">
+    <div class="wrap">
+      <h2 class="section-title">The Genesis <span>of UBS</span></h2>
+      <p class="legacy-subtitle">A Bibliocentric Teaching with a Rural Bias</p>
+
+      <div class="legacy-grid">
+        <article class="legacy-card" *ngFor="let m of legacyMilestones" [class.portrait]="m.portrait">
+          <div class="legacy-photo">
+            <img [src]="m.image" [alt]="m.title" loading="lazy" />
+          </div>
+          <h4>{{ m.title }}</h4>
+          <p>{{ m.caption }}</p>
+        </article>
+      </div>
+
+      <button class="legacy-view-more" type="button">View More</button>
+    </div>
+  </section>
+
+  <!-- ============ CONNECT WITH US CTA BANNER ============ -->
+  <section class="connect-banner">
+    <div class="connect-banner-bg" [style.backgroundImage]="'url(' + connectBannerImage + ')'"></div>
+    <div class="connect-banner-overlay"></div>
+    <div class="connect-banner-content">
+      <h2>Connect with us</h2>
+      <p>We would love to help</p>
+      <div class="connect-banner-actions">
+        <a href="tel:7020993427" class="connect-pill"><i class="fa-solid fa-phone"></i> 7020993427</a>
+        <a href="mailto:principal@ubs.ac.in" class="connect-pill">
+          <i class="fa-solid fa-envelope"></i> principal&#64;ubs.ac.in
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEGACY VOICES — HISTORICAL QUOTE + GALLERY ============ -->
+  <section class="legacy-voices">
+    <div class="wrap">
+      <div class="legacy-voice-header">
+        <img [src]="legacyVoices[legacyVoiceIndex].avatar" [alt]="legacyVoices[legacyVoiceIndex].name"
+          class="legacy-voice-avatar" />
+        <div>
+          <h4>{{ legacyVoices[legacyVoiceIndex].name }}</h4>
+          <span>{{ legacyVoices[legacyVoiceIndex].role }}</span>
+        </div>
+      </div>
+
+      <p class="legacy-voice-quote">&ldquo;{{ legacyVoices[legacyVoiceIndex].quote }}&rdquo;</p>
+
+      <div class="legacy-voice-gallery">
+        <div class="legacy-voice-images">
+          <img *ngFor="let img of legacyVoices[legacyVoiceIndex].gallery" [src]="img" alt="UBS archive photo"
+            loading="lazy" />
+        </div>
+        <div class="legacy-voice-nav" *ngIf="legacyVoices.length > 1">
+          <button (click)="prevLegacyVoice()">‹</button>
+          <button (click)="nextLegacyVoice()">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ GALLERY ============ -->
-  <section class="gallery-section" id="gallery">
+  <!-- <section class="gallery-section" id="gallery">
     <div class="wrap">
       <h2 class="heading-text">Campus <span>Gallery</span></h2>
       <div class="gallery-grid">
@@ -300,32 +362,31 @@
         <img src="assets/img/Theological_3.png" alt="Distance course" />
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ============ ACCREDITATIONS ============ -->
-  <section class="accreditation" id="accreditation">
+  <!-- <section class="accreditation" id="accreditation">
     <div class="wrap accreditation-grid">
       <h2 class="heading-text">Accreditations & <span>Affiliations</span></h2>
       <div class="logo-strip">
         <img *ngFor="let logo of accreditationLogos" [src]="logo" alt="Accreditation logo" />
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ============ PARTNERSHIPS ============ -->
-  <section class="partnerships">
+  <!-- <section class="partnerships">
     <div class="wrap accreditation-grid">
       <h2 class="heading-text">Church & <span>Partner Institutions</span></h2>
       <div class="logo-strip scrolling">
         <img *ngFor="let logo of partnerLogos" [src]="logo" alt="Partner institution logo" />
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ============ EVENTS CALENDAR + NEWS ============ -->
-  <section class="events-news" id="events">
+  <!-- <section class="events-news" id="events">
     <div class="wrap events-news-grid">
-      <!-- Calendar -->
       <div class="events-col">
         <h2 class="heading-text"><span>Events</span></h2>
 
@@ -360,7 +421,6 @@
         </div>
       </div>
 
-      <!-- News -->
       <div class="news-col">
         <h2 class="heading-text">Ne<span>ws</span></h2>
         <ul class="news-list">
@@ -374,10 +434,10 @@
         </ul>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ============ BLOG CAROUSEL ============ -->
-  <section class="blog" id="blog">
+  <!-- <section class="blog" id="blog">
     <div class="wrap">
       <h2 class="heading-text"><span>Blog</span></h2>
 
@@ -403,10 +463,10 @@
         </button>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ============ TESTIMONIALS ============ -->
-  <section class="testimonials">
+  <!-- <section class="testimonials">
     <div class="wrap">
       <h2 class="heading-text">What our <span>Alumni Say</span></h2>
 
@@ -421,7 +481,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 </main>
 
 <!-- ============ FLOATING CALL BUTTON ============ -->

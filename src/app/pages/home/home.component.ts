@@ -268,4 +268,84 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.enquiryOpen = false;
     }, 2500);
   }
+
+  /* ================= LEGACY / GENESIS OF UBS ================= */
+  legacyMilestones = [
+    {
+      image: '../../assets/genesis-ubs/image_1.png',
+      title: 'The First Graduates of 1953',
+      caption: 'The Forerunners in Christian Ministry',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_2.png',
+      title: 'The First BD Class 1955-58',
+      caption: 'The First fruits of Academic Excellence',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_3.png',
+      title: 'Rev. V B Samudre',
+      caption: 'The First Indian Faculty and Director of Studies',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_4.png',
+      title: 'Miss Zoe Ann Alford',
+      caption: 'The First Librarian: A Gentle Facilitator',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_5.png',
+      title: 'The First Divine Service',
+      caption: 'Library Ground Floor, Pune',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_6.png',
+      title: 'Prayer of Dedication',
+      caption: "Students' wives for Joint-Venture with their partners",
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_6.png',
+      title: 'The First Divine Service',
+      caption: 'Library Ground Floor, Pune',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_6.png',
+      title: 'Prayer of Dedication',
+      caption: "Students' wives for Joint-Venture with their partners",
+      portrait: true,
+    },
+  ];
+
+  connectBannerImage = 'https://picsum.photos/seed/ubs-foliage/1600/700';
+
+  legacyVoices = [
+    {
+      avatar: 'https://picsum.photos/seed/frank-kline/160/160',
+      name: 'Dr. Frank Kline',
+      role: 'The First Principal, UBS',
+      quote:
+        'UBS was founded on the conviction that biblical scholarship and rural service are not opposites, but two halves of one calling.',
+      gallery: [
+        'https://picsum.photos/seed/ubs-chapel-1/400/280',
+        'https://picsum.photos/seed/ubs-gate/400/280',
+        'https://picsum.photos/seed/ubs-altar/400/280',
+        'https://picsum.photos/seed/ubs-campus/400/280',
+      ],
+    },
+  ];
+  legacyVoiceIndex = 0;
+
+  nextLegacyVoice(): void {
+    this.legacyVoiceIndex = (this.legacyVoiceIndex + 1) % this.legacyVoices.length;
+  }
+  prevLegacyVoice(): void {
+    this.legacyVoiceIndex =
+      (this.legacyVoiceIndex - 1 + this.legacyVoices.length) % this.legacyVoices.length;
+  }
+
 }

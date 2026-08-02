@@ -1,37 +1,35 @@
 <footer class="site-footer">
-  <div class="wrap footer-cta">
-    <h2>Find, Follow, and Fulfil Your <span>#GodGivenPurpose</span></h2>
+  <div class="wrap footer-top">
+    <a routerLink="/" class="footer-brand">
+      <img src="../../assets/img/ubs-logo.png" alt="UBS Logo" class="footer-logo" />
+      <span class="footer-brand-text">Union Biblical<br />Seminary</span>
+    </a>
+
+    <form class="footer-newsletter" (ngSubmit)="subscribeNewsletter()" *ngIf="!newsletterSubmitted">
+      <input type="text" name="newsletterName" placeholder="First Name" [(ngModel)]="newsletterName" required />
+      <input type="email" name="newsletterEmail" placeholder="Enter your email to join" [(ngModel)]="newsletterEmail"
+        required />
+      <button type="submit">Yes, Please <i class="fa-solid fa-arrow-right"></i></button>
+    </form>
+
+    <p class="footer-newsletter-success" *ngIf="newsletterSubmitted">Thanks for joining — check your inbox!</p>
   </div>
 
-  <div class="wrap footer-grid">
-    <div class="footer-col footer-brand">
-      <span class="brand-mark">UBS</span>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/ubspune_officialpage" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.youtube.com/@UnionbsMedia" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-      </div>
-    </div>
-
-    <div class="footer-col">
-      <h5><i class="fa-solid fa-link"></i> Quick Links</h5>
-      <a routerLink="/">Home</a>
-      <a routerLink="/about">About</a>
-      <a routerLink="/programmes">Programmes</a>
-      <a routerLink="/blog">Blog</a>
-      <a target="_blank" rel="noopener" href="https://www.awmi.net/privacy/">Privacy Policy</a>
-    </div>
-
-    <div class="footer-col">
-      <h5><i class="fa-solid fa-envelope"></i> Contact</h5>
-      <a href="mailto:principal@ubs.ac.in">principal&#64;ubs.ac.in</a>
-      <a href="tel:7020993427">7020993427</a>
-      <p>Union Biblical Seminary, Pune, Maharashtra</p>
-    </div>
-  </div>
+  <div class="wrap footer-divider"></div>
 
   <div class="wrap footer-bottom">
-    <a target="_blank" rel="noopener" href="https://www.awmi.net/privacy/">Privacy Policy</a>
-    <a target="_blank" rel="noopener" href="https://www.awmi.net/terms/">Terms of Use</a>
-    <span>Copyright © 2026 Union Biblical Seminary. All Rights Reserved.</span>
+    <div class="footer-social">
+      <span>Follow Us</span>
+      <a *ngFor="let s of socialLinks" [href]="s.url" target="_blank" rel="noopener" [attr.aria-label]="s.label">
+        <i [class]="s.icon"></i>
+      </a>
+    </div>
+
+    <div class="footer-legal-links">
+      <a routerLink="/privacy-policy">Privacy Policy</a>
+      <a routerLink="/terms-of-use">Terms Of Use</a>
+    </div>
+
+    <p class="footer-copyright">Copyright © {{ currentYear }} Union Biblical Seminary. All Rights Reserved.</p>
   </div>
 </footer>
