@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, PLATFORM_ID, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -60,6 +60,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.updateTransparency();
   }
 
+  // Guard against a stuck scroll-lock / open panel if the mobile menu was
+  // left open and the viewport is then resized/rotated past the 768px
+  // breakpoint into desktop layout.
+  onWindowResize(): void {
+    if (!this.isBrowser) return;
+    if (this.mobileMenuOpen && window.innerWidth >= 768) {
+      this.closeMobileMenu();
+    }
+  }
+
   toggleMobileMenu(): void {
     this.mobileMenuOpen = !this.mobileMenuOpen;
     if (!this.isBrowser) return;
@@ -69,6 +79,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } catch {
       // ignore server-side or strict environments
     }
+
+    // Accessibility: when opening, focus the first link inside the menu;
+    // when closing, return focus to the toggle button. Delay slightly to
+    // allow the CSS transition to complete before shifting focus.
+    if (this.mobileMenuOpen) {
+      setTimeout(() => {
+        try {
+          const firstLink = document.querySelector('#primary-nav-links a') as HTMLElement | null;
+          firstLink?.focus();
+        } catch {
+          // ignore
+        }
+      }, 350);
+    } else {
+      setTimeout(() => {
+        try {
+          const toggle = document.getElementById('mobile-menu-toggle') as HTMLElement | null;
+          toggle?.focus();
+        } catch {
+          // ignore
+        }
+      }, 0);
+    }
+  }
+
+  onEscapeKey(): void {
+    if (this.mobileMenuOpen) this.closeMobileMenu();
   }
 
   toggleAnnouncement(): void {
@@ -83,6 +120,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } catch {
       // ignore server-side or strict environments
     }
+
+    // Return focus to the toggle for keyboard users
+    setTimeout(() => {
+      try {
+        const toggle = document.getElementById('mobile-menu-toggle') as HTMLElement | null;
+        toggle?.focus();
+      } catch {
+        // ignore
+      }
+    }, 0);
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscape(_event: KeyboardEvent): void {
+    if (this.mobileMenuOpen) this.closeMobileMenu();
   }
 
   private updateTransparency(): void {

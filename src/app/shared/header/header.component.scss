@@ -47,6 +47,10 @@
   font-weight: 700;
   text-decoration: none;
   padding: 12px 21px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .apply-btn {
@@ -57,6 +61,9 @@
   font-weight: 700;
   text-decoration: none;
   font-size: 0.8rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .announce-panel {
@@ -71,12 +78,18 @@
 
 .close-x {
   position: absolute;
-  top: -2px;
-  right: 24px;
+  top: -12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   color: var(--white);
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .announce-panel ul {
@@ -128,6 +141,33 @@
 
   .burger span {
     background: var(--white);
+  }
+}
+
+/* When the mobile menu is open we want a solid navbar even if
+   the transparent flag is true (e.g., on the home hero). */
+.site-header.menu-open,
+.site-header.transparent.menu-open {
+  background: var(--white);
+  box-shadow: 0 2px 16px rgba(11, 37, 69, 0.08);
+
+  .top-bar-inner,
+  .announce-panel {
+    background: var(--white);
+  }
+
+  .logo-sub,
+  .nav-links>li>a {
+    color: var(--navy);
+  }
+
+  .nav-links>a.active,
+  .nav-links>li>a.active {
+    color: var(--gold);
+  }
+
+  .burger span {
+    background: var(--navy);
   }
 }
 
@@ -209,12 +249,17 @@
 .burger {
   display: none;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
+  width: 44px;
+  height: 44px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px;
+  padding: 0;
   z-index: 120;
+  flex-shrink: 0;
 }
 
 .burger span {
@@ -222,21 +267,54 @@
   height: 3px;
   background: var(--navy);
   border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
 }
 
-@media (max-width: 720px) {
+// Morph the three bars into an "X" when the mobile menu is open
+.burger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+// Full-screen dimmed backdrop behind the slide-in mobile menu.
+// Clicking it closes the menu ("click outside to close").
+.nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 37, 69, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 90; // below .nav-links (100) and .burger (120), above page content
+}
+
+// Mobile-first: styles below apply to everything under 836px (tablet+phone),
+// adjusted breakpoint to 836px per request so the toggle appears across
+// slightly larger viewports (e.g. tablets in portrait).
+@media (max-width: 836px) {
   .nav-links {
     position: fixed;
     top: 0;
     left: 0;
-    transform: translateX(100%);
+    /* keep the menu off-screen to the left when closed so it slides
+       in/out from the left side and doesn't leave visible gaps */
+    transform: translateX(-100%);
     height: 100vh;
     width: 78%;
+    max-width: 420px;
     background: var(--white);
     flex-direction: column;
     align-items: flex-start;
     padding: 90px 24px;
-    transition: transform 0.3s ease;
+    transition: transform 0.35s ease;
     box-shadow: -8px 0 24px rgba(11, 37, 69, 0.12);
     z-index: 100;
     overflow-y: auto;
@@ -250,14 +328,57 @@
     display: flex;
   }
 
+  .nav-backdrop.open {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+
   .nav-links>li {
     width: 100%;
   }
 
   .nav-links>li>a {
-    display: block;
+    display: flex;
+    align-items: center;
     width: 100%;
+    min-height: 44px; // comfortable tap target
     padding: 12px 0;
+  }
+}
+
+// Desktop (≥768px): the mobile menu machinery should never be reachable,
+// even if JS state was left "open" from a resize.
+@media (min-width: 768px) {
+  .nav-links {
+    position: static;
+    transform: none;
+    height: auto;
+    width: auto;
+    background: transparent;
+    flex-direction: row;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .burger {
+    display: none;
+  }
+
+  .nav-backdrop {
+    display: none !important;
+  }
+}
+
+// Comfortable breathing room on tablets/small laptops
+@media (min-width: 768px) and (max-width: 1024px) {
+  .nav-links {
+    gap: 14px;
+  }
+
+  .nav-links>li>a {
+    font-size: 0.85rem;
   }
 }
 

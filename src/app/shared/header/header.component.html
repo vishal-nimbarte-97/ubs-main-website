@@ -1,5 +1,5 @@
-<header class="site-header" [class.scrolled]="isScrolled" [class.transparent]="navbarTransparent"
-  (window:scroll)="onWindowScroll()">
+<header class="site-header" [class.scrolled]="isScrolled" [class.transparent]="navbarTransparent" [class.menu-open]="mobileMenuOpen"
+  (window:scroll)="onWindowScroll()" (window:resize)="onWindowResize()" (window:keydown.escape)="onEscapeKey()">
   <div>
     <div class="wrap top-bar-inner">
       <div class="countdown-chip">{{ countdownText }}</div>
@@ -35,7 +35,7 @@
       </div>
     </a>
 
-    <ul class="nav-links" [class.open]="mobileMenuOpen">
+    <ul id="primary-nav-links" class="nav-links" [class.open]="mobileMenuOpen" [attr.aria-hidden]="!mobileMenuOpen">
       <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeMobileMenu()">Home</a></li>
       <li><a routerLink="/about" routerLinkActive="active" (click)="closeMobileMenu()">About Us</a></li>
@@ -48,8 +48,19 @@
       </li>
     </ul>
 
-    <button class="burger" (click)="toggleMobileMenu()" aria-label="Toggle menu" [attr.aria-expanded]="mobileMenuOpen">
+    <button
+      id="mobile-menu-toggle"
+      class="burger"
+      [class.open]="mobileMenuOpen"
+      (click)="toggleMobileMenu()"
+      [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'"
+      [attr.aria-expanded]="mobileMenuOpen"
+      aria-controls="primary-nav-links"
+    >
       <span></span><span></span><span></span>
     </button>
   </nav>
+
+  <!-- Backdrop: click outside the open mobile menu to close it -->
+  <div class="nav-backdrop" [class.open]="mobileMenuOpen" (click)="closeMobileMenu()" aria-hidden="true"></div>
 </header>
