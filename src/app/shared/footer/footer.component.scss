@@ -1,38 +1,106 @@
 .site-footer {
-  background: var(--white);
-  border-top: 1px solid rgba(11, 37, 69, 0.1);
-  padding-top: 40px;
+  background: #07112a;
+  color: #d7e1f5;
+  padding: 56px 0 24px;
 }
 
-.footer-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 24px;
-  padding-bottom: 32px;
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
 }
 
-.footer-brand {
+.footer-column {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-brand .brand-link {
+  display: flex;
+  gap: 16px;
   text-decoration: none;
+  color: inherit;
+  align-items: flex-start;
 }
 
 .footer-logo {
-  width: 44px;
-  height: 44px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
 }
 
-.footer-brand-text {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
+.footer-brand h3 {
+  margin: 0;
   font-size: 1.15rem;
-  color: var(--navy);
-  line-height: 1.2;
-  // text-transform: lowercase;
+  color: #ffffff;
+}
+
+.footer-brand p {
+  margin: 0;
+  line-height: 1.8;
+  color: #b9c6e3;
+  max-width: 320px;
+}
+
+.footer-links h4,
+.footer-contact h4,
+.footer-address h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.footer-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.footer-links a,
+.footer-contact a,
+.footer-address address {
+  color: #b9c6e3;
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-contact a:hover {
+  color: #ffffff;
+}
+
+.footer-address address {
+  font-style: normal;
+  line-height: 1.8;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 18px 0 0;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: #93a3c4;
+  text-align: center;
+}
+
+@media (max-width: 1080px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom p {
+    text-align: left;
+  }
 }
 
 .footer-newsletter {

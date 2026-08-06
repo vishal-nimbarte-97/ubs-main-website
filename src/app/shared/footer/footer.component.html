@@ -1,35 +1,45 @@
 <footer class="site-footer">
-  <div class="wrap footer-top">
-    <a routerLink="/" class="footer-brand">
-      <img src="../../assets/img/ubs-logo.png" alt="UBS Logo" class="footer-logo" />
-      <span class="footer-brand-text">Union Biblical<br />Seminary</span>
-    </a>
-
-    <form class="footer-newsletter" (ngSubmit)="subscribeNewsletter()" *ngIf="!newsletterSubmitted">
-      <input type="text" name="newsletterName" placeholder="First Name" [(ngModel)]="newsletterName" required />
-      <input type="email" name="newsletterEmail" placeholder="Enter your email to join" [(ngModel)]="newsletterEmail"
-        required />
-      <button type="submit">Yes, Please <i class="fa-solid fa-arrow-right"></i></button>
-    </form>
-
-    <p class="footer-newsletter-success" *ngIf="newsletterSubmitted">Thanks for joining — check your inbox!</p>
-  </div>
-
-  <div class="wrap footer-divider"></div>
-
-  <div class="wrap footer-bottom">
-    <div class="footer-social">
-      <span>Follow Us</span>
-      <a *ngFor="let s of socialLinks" [href]="s.url" target="_blank" rel="noopener" [attr.aria-label]="s.label">
-        <i [class]="s.icon"></i>
+  <div class="wrap footer-grid">
+    <div class="footer-column footer-brand">
+      <a routerLink="/" class="brand-link">
+        <img src="../../assets/img/ubs-logo.png" alt="UBS Logo" class="footer-logo" />
+        <div>
+          <h3>Union Biblical Seminary</h3>
+          <p>Official single-window portal for accessing examination results and notifications securely.</p>
+        </div>
       </a>
     </div>
 
-    <div class="footer-legal-links">
-      <a routerLink="/privacy-policy">Privacy Policy</a>
-      <a routerLink="/terms-of-use">Terms Of Use</a>
+    <div class="footer-column footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/about">About Us</a></li>
+        <li><a routerLink="/campus">Campus</a></li>
+        <li><a routerLink="/administration">Administration</a></li>
+      </ul>
     </div>
 
-    <p class="footer-copyright">Copyright © {{ currentYear }} Union Biblical Seminary. All Rights Reserved.</p>
+    <div class="footer-column footer-contact">
+      <h4>Contact Us</h4>
+      <a href="tel:+916296908733">+91-6296908733</a>
+      <!-- <a href="mailto:support@ssconline.net.in">support@ssconline.net.in</a> -->
+    </div>
+
+    <div class="footer-column footer-address">
+      <h4>Address</h4>
+      <address>
+        Mac House Complex<br />
+        10 William Carey Road<br />
+        SERAMPORE, Dist. Hooghly<br />
+        West Bengal, India · Pin-712 201
+      </address>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="wrap">
+      <p>© {{ currentYear }} Union Biblical Seminary. All rights reserved.</p>
+    </div>
   </div>
 </footer>
