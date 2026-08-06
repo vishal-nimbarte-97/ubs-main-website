@@ -1,7 +1,6 @@
 import { Component, inject, OnDestroy, OnInit, PLATFORM_ID, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Router, RouterModule, NavigationEnd } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +11,8 @@ import { filter, Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isScrolled = false;
-  navbarTransparent = false;
   mobileMenuOpen = false;
   announcementOpen = false;
-
-  private router = inject(Router);
-  private routerSubscription?: Subscription;
 
   announcements = [
     'Applications open for the 2026–27 academic year — Bachelor of Divinity, M.Th. & D.Th.',
@@ -36,28 +31,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (!this.isBrowser) return;
 
     this.countdownTimer = setInterval(() => this.updateCountdown(), 1000);
-
-    // Recalculate transparency whenever the route changes (e.g. home -> about)
-    this.routerSubscription = this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe(() => {
-        // wait a tick so the new route's DOM (e.g. .hero) is actually rendered
-        setTimeout(() => this.updateTransparency(), 0);
-      });
-
-    // Initial check on first load
-    setTimeout(() => this.updateTransparency(), 0);
   }
 
   ngOnDestroy(): void {
-    this.routerSubscription?.unsubscribe();
     if (this.countdownTimer) clearInterval(this.countdownTimer);
   }
 
   onWindowScroll(): void {
     if (!this.isBrowser) return;
     this.isScrolled = window.scrollY > 40;
-    this.updateTransparency();
   }
 
   // Guard against a stuck scroll-lock / open panel if the mobile menu was
@@ -137,32 +119,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.mobileMenuOpen) this.closeMobileMenu();
   }
 
-  private updateTransparency(): void {
-    if (!this.isBrowser) {
-      this.navbarTransparent = false;
-      return;
-    }
-
-    const currentUrl = this.router.url.split(/[?#]/)[0];
-    const onHomeRoute = currentUrl === '/' || currentUrl === '';
-
-    if (!onHomeRoute) {
-      this.navbarTransparent = false;
-      return;
-    }
-
-    const heroElement = document.querySelector('.hero') as HTMLElement | null;
-    const heroHasVideo = !!heroElement?.querySelector('video');
-
-    if (!heroHasVideo) {
-      this.navbarTransparent = false;
-      return;
-    }
-
-    // Solid as soon as the user starts scrolling — tied to the same
-    // threshold as isScrolled so both states change together.
-    this.navbarTransparent = !this.isScrolled;
-  }
 
   private updateCountdown(): void {
     const now = new Date().getTime();

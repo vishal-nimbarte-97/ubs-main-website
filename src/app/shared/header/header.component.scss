@@ -110,44 +110,18 @@
 }
 
 .site-header {
-  position: fixed; // was sticky — needs to be fixed to overlay the hero video
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 70;
   background: var(--white);
   box-shadow: 0 2px 16px rgba(11, 37, 69, 0.08);
-  transition: background 0.35s ease, box-shadow 0.35s ease, color 0.35s ease;
+  transition: box-shadow 0.35s ease, color 0.35s ease;
 }
 
-.site-header.transparent {
-  background: transparent;
-  box-shadow: none;
-
-  .top-bar-inner,
-  .announce-panel {
-    background: transparent;
-  }
-
-  .logo-sub,
-  .nav-links>li>a {
-    color: var(--white);
-  }
-
-  .nav-links>a.active,
-  .nav-links>li>a.active {
-    color: var(--gold-light);
-  }
-
-  .burger span {
-    background: var(--white);
-  }
-}
-
-/* When the mobile menu is open we want a solid navbar even if
-   the transparent flag is true (e.g., on the home hero). */
-.site-header.menu-open,
-.site-header.transparent.menu-open {
+/* When the mobile menu is open we want a solid navbar. */
+.site-header.menu-open {
   background: var(--white);
   box-shadow: 0 2px 16px rgba(11, 37, 69, 0.08);
 
@@ -187,9 +161,18 @@
 }
 
 .logo-img {
-  width: 150%;
-  height: 100px;
-  object-fit: contain;
+  // width: auto;
+  max-width: 256px;
+  // height: auto;
+  // max-height: 56px;
+  // object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .logo-img {
+    max-width: 140px;
+    max-height: 48px;
+  }
 }
 
 .logo-text {
