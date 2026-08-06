@@ -2,10 +2,11 @@
   <!-- ============ HERO — video + tagline swapper ============ -->
   <section class="hero">
     <!-- <img class="hero-video" src="../assets/ubs-main-page-image-1.jpg" alt="UBS campus" /> -->
-    <video class="hero-video" autoplay muted loop playsinline>
+    <!-- <video class="hero-video" autoplay muted loop playsinline>
       <source src="../../assets/home-video.mp4" type="video/mp4">
       Your browser does not support the video tag.
-    </video>
+    </video> -->
+    <img class="hero-video" src="../../assets/img/home.png" alt="UBS campus" />
     <div class="hero-overlay">
       <div class="tagline-swapper">
         <h1 *ngFor="let group of taglineGroups; let i = index" [class.active]="i === activeTaglineIndex">
