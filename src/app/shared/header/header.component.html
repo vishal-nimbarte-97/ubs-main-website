@@ -1,6 +1,6 @@
 <header class="site-header" [class.scrolled]="isScrolled" [class.transparent]="navbarTransparent" [class.menu-open]="mobileMenuOpen"
   (window:scroll)="onWindowScroll()" (window:resize)="onWindowResize()" (window:keydown.escape)="onEscapeKey()">
-  <div>
+  <!-- <div>
     <div class="wrap top-bar-inner">
       <div class="countdown-chip">{{ countdownText }}</div>
       <div class="top-bar-actions">
@@ -24,7 +24,7 @@
         </ul>
       </div>
     </div>
-  </div>
+  </div> -->
   <nav class="wrap main-nav">
     <a routerLink="/" class="logo-wrapper me-auto" (click)="closeMobileMenu()">
       <img src="assets/img/ubs-logo.png" alt="UBS Logo" class="logo-img" />

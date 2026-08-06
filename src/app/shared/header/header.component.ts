@@ -152,9 +152,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     const heroElement = document.querySelector('.hero') as HTMLElement | null;
-    const heroHasVideo = !!heroElement?.querySelector('video');
+    const heroHasMedia = !!heroElement?.querySelector('video, img');
 
-    if (!heroHasVideo) {
+    if (!heroHasMedia) {
       this.navbarTransparent = false;
       return;
     }
