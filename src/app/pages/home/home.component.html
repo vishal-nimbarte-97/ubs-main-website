@@ -287,7 +287,7 @@
   </section>
 
   <!-- ============ THE GENESIS OF UBS — HISTORY TIMELINE ============ -->
-  <section class="legacy-section" id="legacy">
+  <!-- <section class="legacy-section" id="legacy">
     <div class="wrap">
       <h2 class="section-title">The Genesis <span>of UBS</span></h2>
       <p class="legacy-subtitle">A Bibliocentric Teaching with a Rural Bias</p>
@@ -304,7 +304,57 @@
 
       <button class="legacy-view-more" type="button">View More</button>
     </div>
+  </section> -->
+
+
+  <!-- ============ LEGACY VOICES — HISTORICAL QUOTE + GALLERY ============ -->
+  <section class="legacy-section">
+    <div class="container">
+
+      <br><br>
+      <h2 class="section-title">The Genesis <span>of UBS</span></h2>
+      <br>
+      <p class="legacy-subtitle">A Bibliocentric Teaching with a Rural Bias</p>
+      <br>
+
+      <div class="legacy-slider">
+
+        <button class="slider-btn left" (click)="prevLegacySlide()">
+          &#10094;
+        </button>
+
+        <div class="legacy-slider-window">
+
+          <div class="legacy-slider-track" [style.transform]="'translateX(-' + currentLegacySlide * 100 + '%)'">
+
+            <div class="legacy-slide" *ngFor="let group of legacySlides">
+
+              <div class="legacy-card" *ngFor="let item of group" [class.portrait]="item.portrait">
+
+                <div class="legacy-photo">
+                  <img [src]="item.image" [alt]="item.title">
+                </div>
+
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.caption }}</p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <button class="slider-btn right" (click)="nextLegacySlide()">
+          &#10095;
+        </button>
+
+      </div>
+
+    </div>
   </section>
+
 
   <!-- ============ CONNECT WITH US CTA BANNER ============ -->
   <section class="connect-banner">
@@ -318,33 +368,6 @@
         <a href="mailto:principal@ubs.ac.in" class="connect-pill">
           <i class="fa-solid fa-envelope"></i> principal&#64;ubs.ac.in
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ LEGACY VOICES — HISTORICAL QUOTE + GALLERY ============ -->
-  <section class="legacy-voices">
-    <div class="wrap">
-      <div class="legacy-voice-header">
-        <img [src]="legacyVoices[legacyVoiceIndex].avatar" [alt]="legacyVoices[legacyVoiceIndex].name"
-          class="legacy-voice-avatar" />
-        <div>
-          <h4>{{ legacyVoices[legacyVoiceIndex].name }}</h4>
-          <span>{{ legacyVoices[legacyVoiceIndex].role }}</span>
-        </div>
-      </div>
-
-      <p class="legacy-voice-quote">&ldquo;{{ legacyVoices[legacyVoiceIndex].quote }}&rdquo;</p>
-
-      <div class="legacy-voice-gallery">
-        <div class="legacy-voice-images">
-          <img *ngFor="let img of legacyVoices[legacyVoiceIndex].gallery" [src]="img" alt="UBS archive photo"
-            loading="lazy" />
-        </div>
-        <div class="legacy-voice-nav" *ngIf="legacyVoices.length > 1">
-          <button (click)="prevLegacyVoice()">‹</button>
-          <button (click)="nextLegacyVoice()">›</button>
-        </div>
       </div>
     </div>
   </section>

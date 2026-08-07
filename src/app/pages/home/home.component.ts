@@ -102,6 +102,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private isBrowser = isPlatformBrowser(this.platformId);
 
   ngOnInit(): void {
+
+
     this.buildCalendar();
 
     // Timers, scroll position, and observers only make sense in a real
@@ -120,6 +122,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.testimonialTimer = setInterval(() => this.nextTestimonial(), 6000);
 
     this.scrollToCurrentRouteSection();
+
+    this.createLegacySlides();
+
+    setInterval(() => {
+      this.nextLegacySlide();
+    }, 5000);
   }
 
   ngAfterViewInit(): void {
@@ -270,56 +278,99 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /* ================= LEGACY / GENESIS OF UBS ================= */
-  legacyMilestones = [
-    {
-      image: '../../assets/genesis-ubs/image_1.png',
-      title: 'The First Graduates of 1953',
-      caption: 'The Forerunners in Christian Ministry',
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_2.png',
-      title: 'The First BD Class 1955-58',
-      caption: 'The First fruits of Academic Excellence',
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_3.png',
-      title: 'Rev. V B Samudre',
-      caption: 'The First Indian Faculty and Director of Studies',
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_4.png',
-      title: 'Miss Zoe Ann Alford',
-      caption: 'The First Librarian: A Gentle Facilitator',
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_5.png',
-      title: 'The First Divine Service',
-      caption: 'Library Ground Floor, Pune',
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_6.png',
-      title: 'Prayer of Dedication',
-      caption: "Students' wives for Joint-Venture with their partners",
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_6.png',
-      title: 'The First Divine Service',
-      caption: 'Library Ground Floor, Pune',
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_6.png',
-      title: 'Prayer of Dedication',
-      caption: "Students' wives for Joint-Venture with their partners",
-      portrait: true,
-    },
-  ];
+legacyMilestones = [
+  {
+    image: '../../assets/genesis-ubs/image_1.png',
+    title: 'The First Graduates of 1953',
+    caption: 'The Forerunners in Christian Ministry',
+    portrait: true,
+  },
+  {
+    image: '../../assets/genesis-ubs/image_2.png',
+    title: 'The First BD Class 1955-58',
+    caption: 'The First fruits of Academic Excellence',
+    portrait: true,
+  },
+  {
+    image: '../../assets/genesis-ubs/image_3.png',
+    title: 'Rev. V B Samudre',
+    caption: 'The First Indian Faculty and Director of Studies',
+    portrait: true,
+  },
+  {
+    image: '../../assets/genesis-ubs/image_4.png',
+    title: 'Miss Zoe Ann Alford',
+    caption: 'The First Librarian: A Gentle Facilitator',
+    portrait: true,
+  },
+  {
+    image: '../../assets/genesis-ubs/image_5.png',
+    title: 'The First Divine Service',
+    caption: 'Library Ground Floor, Pune',
+    portrait: true,
+  },
+  {
+    image: '../../assets/genesis-ubs/image_6.png',
+    title: 'Prayer of Dedication',
+    caption: "Students' wives for Joint-Venture with their partners",
+    portrait: true,
+  },
+  {
+    image: '../../assets/genesis-ubs/image_6.png',
+    title: 'Historic Gathering',
+    caption: 'Founding Members',
+    portrait: true,
+  },
+  {
+    image: '../../assets/genesis-ubs/image_6.png',
+    title: 'Campus Prayer',
+    caption: 'Faith & Fellowship',
+    portrait: true,
+  },
+  {
+    image: '../../assets/genesis-ubs/image_6.png',
+    title: 'Campus Prayer',
+    caption: 'Faith & Fellowship',
+    portrait: true,
+  },
+];
+
+  legacySlides: any[] = [];
+
+  currentLegacySlide = 0;
+
+  // ngOnInit() {
+
+
+
+  // }
+
+  createLegacySlides() {
+
+    this.legacySlides = [];
+
+    for (let i = 0; i < this.legacyMilestones.length; i += 3) {
+      this.legacySlides.push(
+        this.legacyMilestones.slice(i, i + 3)
+      );
+    }
+
+  }
+
+  nextLegacySlide() {
+
+    this.currentLegacySlide =
+      (this.currentLegacySlide + 1) % this.legacySlides.length;
+
+  }
+
+  prevLegacySlide() {
+
+    this.currentLegacySlide =
+      (this.currentLegacySlide - 1 + this.legacySlides.length) %
+      this.legacySlides.length;
+
+  }
 
   connectBannerImage = 'https://picsum.photos/seed/ubs-foliage/1600/700';
 
