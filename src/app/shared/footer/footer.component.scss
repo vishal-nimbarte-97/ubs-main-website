@@ -31,9 +31,12 @@
 }
 
 .footer-brand h3 {
-  margin: 0;
-  font-size: 1.15rem;
+  // margin: 0;
+  // font-size: 1.15rem;
   color: #ffffff;
+   white-space: nowrap;
+  margin: 0;
+  font-size: 1.4rem; /* Adjust if needed */
 }
 
 .footer-brand p {

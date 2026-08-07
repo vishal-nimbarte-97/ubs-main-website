@@ -101,6 +101,77 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
 
+  @ViewChild('typeSection')
+  typeSection!: ElementRef;
+
+  title =
+    'Welcome';
+
+  paragraph1 =
+    `Union Biblical Seminary commits itself to train, equip, nurture and instill in those called by God,
+    a Christ-like lifestyle, Biblical teaching and holistic formation for becoming servant leaders
+    and scholar-saints in the church’s mission in the contemporary world. UBS represents evangelical
+    Christians from almost all the major Indian ethnic, linguistic and cultural groups, as well as from
+    other countries. Its faculty, staff and students come from various cultural, regional, language
+    backgrounds and church traditions.`;
+
+  paragraph2 =
+    `The dynamic principle of 'unity in diversity' finds its expression in everyday experience based on the
+    solid foundation of the person of Jesus Christ, to whom every member of the UBS is committed.
+    The variegated character of the community provides rich opportunities for cultural interchange and
+    interdenominational understanding.`;
+
+  displayedTitle = '';
+  displayedParagraph1 = '';
+  displayedParagraph2 = '';
+
+  started = false;
+
+  // ngAfterViewInit() {
+
+
+
+  // }
+
+  async startTyping() {
+
+    await this.typeText(this.title, value => {
+      this.displayedTitle = value;
+    });
+
+    await this.typeText(this.paragraph1, value => {
+      this.displayedParagraph1 = value;
+    });
+
+    await this.typeText(this.paragraph2, value => {
+      this.displayedParagraph2 = value;
+    });
+
+  }
+
+  typeText(text: string, callback: (value: string) => void): Promise<void> {
+
+    return new Promise(resolve => {
+
+      let index = 0;
+
+      const timer = setInterval(() => {
+
+        callback(text.substring(0, index + 1));
+
+        index++;
+
+        if (index >= text.length) {
+          clearInterval(timer);
+          resolve();
+        }
+
+      }, 5); // typing speed
+
+    });
+
+  }
+
   ngOnInit(): void {
 
 
@@ -147,6 +218,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       );
       this.countersObserver.observe(this.countersSection.nativeElement);
     }
+    const observer = new IntersectionObserver(
+      entries => {
+
+        if (entries[0].isIntersecting && !this.started) {
+
+          this.started = true;
+          this.startTyping();
+
+        }
+
+      },
+      {
+        threshold: 0.4
+      }
+    );
+
+    observer.observe(this.typeSection.nativeElement);
   }
 
   ngOnDestroy(): void {
@@ -278,62 +366,62 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /* ================= LEGACY / GENESIS OF UBS ================= */
-legacyMilestones = [
-  {
-    image: '../../assets/genesis-ubs/image_1.png',
-    title: 'The First Graduates of 1953',
-    caption: 'The Forerunners in Christian Ministry',
-    portrait: true,
-  },
-  {
-    image: '../../assets/genesis-ubs/image_2.png',
-    title: 'The First BD Class 1955-58',
-    caption: 'The First fruits of Academic Excellence',
-    portrait: true,
-  },
-  {
-    image: '../../assets/genesis-ubs/image_3.png',
-    title: 'Rev. V B Samudre',
-    caption: 'The First Indian Faculty and Director of Studies',
-    portrait: true,
-  },
-  {
-    image: '../../assets/genesis-ubs/image_4.png',
-    title: 'Miss Zoe Ann Alford',
-    caption: 'The First Librarian: A Gentle Facilitator',
-    portrait: true,
-  },
-  {
-    image: '../../assets/genesis-ubs/image_5.png',
-    title: 'The First Divine Service',
-    caption: 'Library Ground Floor, Pune',
-    portrait: true,
-  },
-  {
-    image: '../../assets/genesis-ubs/image_6.png',
-    title: 'Prayer of Dedication',
-    caption: "Students' wives for Joint-Venture with their partners",
-    portrait: true,
-  },
-  {
-    image: '../../assets/genesis-ubs/image_6.png',
-    title: 'Historic Gathering',
-    caption: 'Founding Members',
-    portrait: true,
-  },
-  {
-    image: '../../assets/genesis-ubs/image_6.png',
-    title: 'Campus Prayer',
-    caption: 'Faith & Fellowship',
-    portrait: true,
-  },
-  {
-    image: '../../assets/genesis-ubs/image_6.png',
-    title: 'Campus Prayer',
-    caption: 'Faith & Fellowship',
-    portrait: true,
-  },
-];
+  legacyMilestones = [
+    {
+      image: '../../assets/genesis-ubs/image_1.png',
+      title: 'The First Graduates of 1953',
+      caption: 'The Forerunners in Christian Ministry',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_2.png',
+      title: 'The First BD Class 1955-58',
+      caption: 'The First fruits of Academic Excellence',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_3.png',
+      title: 'Rev. V B Samudre',
+      caption: 'The First Indian Faculty and Director of Studies',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_4.png',
+      title: 'Miss Zoe Ann Alford',
+      caption: 'The First Librarian: A Gentle Facilitator',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_5.png',
+      title: 'The First Divine Service',
+      caption: 'Library Ground Floor, Pune',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_6.png',
+      title: 'Prayer of Dedication',
+      caption: "Students' wives for Joint-Venture with their partners",
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_6.png',
+      title: 'Historic Gathering',
+      caption: 'Founding Members',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_6.png',
+      title: 'Campus Prayer',
+      caption: 'Faith & Fellowship',
+      portrait: true,
+    },
+    {
+      image: '../../assets/genesis-ubs/image_6.png',
+      title: 'Campus Prayer',
+      caption: 'Faith & Fellowship',
+      portrait: true,
+    },
+  ];
 
   legacySlides: any[] = [];
 
