@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   typeSection!: ElementRef;
 
   title =
-    'Welcome';
+    'Welcome to ubs';
 
   paragraph1 =
     `Union Biblical Seminary commits itself to train, equip, nurture and instill in those called by God,
