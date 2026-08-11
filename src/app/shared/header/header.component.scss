@@ -161,24 +161,35 @@
 }
 
 .logo-img {
-  // width: auto;
-  max-width: 256px;
-  // height: auto;
-  // max-height: 56px;
-  // object-fit: contain;
+  width: 60px;
+  height: 55px;
+  max-width: 60px;
+  max-height: 60px;
+  object-fit: contain;
 }
 
 @media (max-width: 768px) {
   .logo-img {
-    max-width: 140px;
+    width: 48px;
+    height: 48px;
+    max-width: 48px;
     max-height: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-img {
+    width: 42px;
+    height: 42px;
+    max-width: 42px;
+    max-height: 42px;
   }
 }
 
 .logo-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .logo-mark {
@@ -189,6 +200,30 @@
   padding: 8px 12px;
   border-radius: var(--radius);
   font-size: 1.3rem;
+}
+
+.logo-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--navy);
+  text-transform: lowercase;
+}
+
+.logo-tagline {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 600px) {
+  .logo-name {
+    font-size: 0.85rem;
+  }
+  .logo-tagline {
+    font-size: 0.6rem;
+  }
 }
 
 .logo-sub {
@@ -384,7 +419,13 @@
   }
 
   .main-nav {
-    padding: 10px 16px;
+    padding: 8px 24px; // was 12px 24px
+  }
+  
+  @media (max-width: 600px) {
+    .main-nav {
+      padding: 6px 16px; // was 10px 16px
+    }
   }
 
   .logo-img {
