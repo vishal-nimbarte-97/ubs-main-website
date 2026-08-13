@@ -101,19 +101,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
 
-  @ViewChild('typeSection')
-  typeSection!: ElementRef;
+  @ViewChild('aboutIntroSection')
+  aboutIntroSection!: ElementRef;
+  introInView = false;
 
   title =
     'Welcome to ubs';
-  paragraph1 =
+    paragraph1 =
     `Union Biblical Seminary commits itself to train, equip, nurture and instill in those called by God,
     a Christ-like lifestyle, Biblical teaching and holistic formation for becoming servant leaders
-    and scholar-saints in the church’s mission in the contemporary world. UBS represents evangelical
+    and scholar-saints in the church's mission in the contemporary world. UBS represents evangelical
     Christians from almost all the major Indian ethnic, linguistic and cultural groups, as well as from
     other countries. Its faculty, staff and students come from various cultural, regional, language
     backgrounds and church traditions.`;
-
+  
   paragraph2 =
     `The dynamic principle of 'unity in diversity' finds its expression in everyday experience based on the
     solid foundation of the person of Jesus Christ, to whom every member of the UBS is committed.
@@ -202,7 +203,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
-
+  
     if (this.countersSection && 'IntersectionObserver' in window) {
       this.countersObserver = new IntersectionObserver(
         (entries) => {
@@ -217,23 +218,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       );
       this.countersObserver.observe(this.countersSection.nativeElement);
     }
-    const observer = new IntersectionObserver(
-      entries => {
-
-        if (entries[0].isIntersecting && !this.started) {
-
-          this.started = true;
-          this.startTyping();
-
-        }
-
-      },
-      {
-        threshold: 0.4
-      }
-    );
-
-    observer.observe(this.typeSection.nativeElement);
+  
+    if (this.aboutIntroSection && 'IntersectionObserver' in window) {
+      const introObserver = new IntersectionObserver(
+        (entries, obs) => {
+          if (entries[0].isIntersecting) {
+            this.introInView = true;
+            obs.disconnect(); // fires once, then the section stays revealed
+          }
+        },
+        { threshold: 0.25 }
+      );
+      introObserver.observe(this.aboutIntroSection.nativeElement);
+    }
   }
 
   ngOnDestroy(): void {

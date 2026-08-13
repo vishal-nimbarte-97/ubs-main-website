@@ -19,14 +19,36 @@
     </div>
   </section>
 
-  <section class="programmes-bar">
-
-    <div class="ubs-updates-copy" #typeSection>
-      <h3 class="typed-heading">{{ displayedTitle }}</h3>
-      <p>{{ displayedParagraph1 }}</p>
-      <p>{{ displayedParagraph2 }}</p>
+  <section class="about-intro-section" #aboutIntroSection>
+    <div class="wrap about-intro-grid">
+  
+      <div class="about-intro-left" [class.in-view]="introInView">
+        <span class="about-label">— About Union Biblical Seminary</span>
+        <h2 class="about-heading">
+          Formation for a life of <span>faithful</span>
+          <span>service.</span>
+        </h2>
+        <p class="about-desc">{{ paragraph1 }}</p>
+        <p class="about-desc">{{ paragraph2 }}</p>
+      </div>
+  
+      <div class="about-intro-right" [class.in-view]="introInView">
+        <p class="about-side-note">
+          A community where diverse histories and churches are gathered around
+          Scripture, study, prayer and the work of serving people.
+        </p>
+  
+        <div class="about-quote-box">
+          <span class="quote-mark">&#8221;</span>
+          <p class="about-quote">
+            "Speaking the Truth in Love" is not only a motto; it is the posture
+            we hope to practise together.
+          </p>
+          <span class="about-quote-source">Union Biblical Seminary</span>
+        </div>
+      </div>
+  
     </div>
-
   </section>
 
   <section class="campus-life-section">
