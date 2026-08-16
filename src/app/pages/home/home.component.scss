@@ -2650,17 +2650,17 @@ body {
    MAIN GRID
    ========================================================= */
 
-.updates-grid {
-  width: 100%;
-  max-width: 1140px;
-  margin: 0 auto;
-
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-  gap: 30px;
-
-  align-items: start;
-}
+   .updates-grid {
+    width: 100%;
+    max-width: 640px;        // was implicitly 2-col width; now sized for one card
+    margin: 0 auto;
+  
+    display: grid;
+    grid-template-columns: 1fr;   // was: minmax(0, 1.6fr) minmax(0, 1fr)
+    gap: 30px;
+  
+    align-items: start;
+  }
 
 
 /* =========================================================
