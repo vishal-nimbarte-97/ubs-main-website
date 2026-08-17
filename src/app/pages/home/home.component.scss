@@ -383,13 +383,13 @@
 
 @media (min-width: 981px) {
   .hero-video {
-    object-position: center 42%;  // was 75%
+    object-position: center 92%;  // was 75%
   }
 }
 
 @media (max-width: 720px) {
   .hero-video {
-    object-position: center 32%;  // was 55% — mobile crop is taller/narrower, needs to go up more
+    object-position: center 100%;  // was 55% — mobile crop is taller/narrower, needs to go up more
   }
 }
 
