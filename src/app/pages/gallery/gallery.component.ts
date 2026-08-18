@@ -8,3 +8,4 @@ import { CommonModule } from '@angular/common';
   templateUrl: './gallery.component.html',
 })
 export class GalleryComponent {}
+ 
