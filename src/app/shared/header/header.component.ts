@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 export class HeaderComponent implements OnInit, OnDestroy {
   isScrolled = false;
   mobileMenuOpen = false;
+  openDropdown: 'about' | 'administration' | null = null;
   announcementOpen = false;
 
   announcements = [
@@ -43,11 +44,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   // Guard against a stuck scroll-lock / open panel if the mobile menu was
-  // left open and the viewport is then resized/rotated past the 768px
+  // left open and the viewport is then resized/rotated past the 836px
   // breakpoint into desktop layout.
   onWindowResize(): void {
     if (!this.isBrowser) return;
-    if (this.mobileMenuOpen && window.innerWidth >= 768) {
+    if (this.mobileMenuOpen && window.innerWidth >= 837) {
       this.closeMobileMenu();
     }
   }
@@ -86,6 +87,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+  openDropdownMenu(menu: 'about' | 'administration'): void {
+    this.openDropdown = menu;
+  }
+
+  closeDropdownMenu(menu: 'about' | 'administration'): void {
+    if (this.openDropdown === menu) this.openDropdown = null;
+  }
+
   onEscapeKey(): void {
     if (this.mobileMenuOpen) this.closeMobileMenu();
   }
@@ -95,8 +104,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   closeMobileMenu(): void {
-    if (!this.isBrowser) return;
     this.mobileMenuOpen = false;
+    this.openDropdown = null;
+    if (!this.isBrowser) return;
     try {
       document.body.classList.remove('menu-open');
     } catch {
