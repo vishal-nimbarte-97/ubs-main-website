@@ -1,327 +1,227 @@
 <!-- ============================================================
-  CAMPUS PAGE — v3
-  Brings back the real photography and alternating image/text
-  blocks from the legacy site (feature circles, chapel/hostel
-  photos, events circles, gallery, testimonial portrait),
-  restyled in the new navy/gold + Playfair/Roboto system.
-
-  NOTE: image src values below point at the OLD site's asset
-  host (ubs.ac.in/Admin/assets/img/...) as placeholders so the
-  real photos show up immediately. Before launch, download these
-  and re-host them under the new site's own /assets/img/ folder.
+  CAMPUS PAGE — v5
+  Revisions from v4 feedback:
+  1. Day strip → zigzag timeline (rail + alternating stops),
+     not uniform cards. Swapped in photos that actually render.
+  2. Facilities → click-driven tabs with a crossfading video+photo
+     stage, replacing the sticky-scroll panel (which broke on
+     zoom/short viewports — no longer scroll-dependent at all).
+  3. Events → 3 distinct cards, no duplicated loop, staggered
+     entrance animation + hover motion instead of a static row.
+  4. Testimonial → its own full section with a real-sized portrait
+     and large pull-quote, split out of the CTA banner.
 ============================================================ -->
 
-<main class="campus-page">
+<main class="campus">
 
-  <!-- ============ PAGE HERO ============ -->
-  <section class="campus-hero">
-    <div class="wrap">
-      <span class="about-label">— Campus Life at UBS</span>
-      <h1 class="about-heading">
-        Where Study, Worship And
-        <span>Community</span> Meet
+  <!-- ============ HERO — full-bleed video ============ -->
+  <section class="hero">
+    <video class="hero__video" autoplay muted loop playsinline
+           poster="https://ubs.ac.in/Admin/assets/img/Banner.JPG">
+      <source src="https://ubs.ac.in/Admin/assets/img/1761798989_video.mp4" type="video/mp4">
+    </video>
+    <div class="hero__scrim"></div>
+
+    <div class="hero__content wrap">
+      <span class="eyebrow eyebrow--light">Bibwewadi, Pune</span>
+      <h1 class="hero__title">
+        A campus built for<br>
+        <span>study, worship</span> and everyday life
       </h1>
-      <p class="about-desc">
-        Set in Bibwewadi, Pune, the UBS campus is shaped by nature and the rhythm of shared life —
-        a place for focused study, unhurried worship, and everyday community, held together by
-        green grounds and modern learning spaces.
+      <p class="hero__sub">
+        Green grounds, a working chapel and hostel life shared by every class
+        that has called this seminary home — walk through it below.
+      </p>
+    </div>
+
+    <div class="hero__scroll-cue">
+      <span></span>
+      <small>Scroll</small>
+    </div>
+  </section>
+
+  <!-- ============ A DAY ON CAMPUS — zigzag rail timeline ============ -->
+  <section class="day-strip">
+    <div class="wrap day-strip__head">
+      <span class="eyebrow">— The Rhythm of a Day</span>
+      <h2 class="section-title">From 6 a.m. chapel to evening sport</h2>
+    </div>
+
+    <div class="day-strip__track">
+      <div class="day-strip__rail"></div>
+
+      <div class="day-stop"
+           *ngFor="let moment of dayMoments; let i = index"
+           [class.day-stop--down]="i % 2 === 1"
+           [style.--i]="i">
+
+        <div class="day-stop__card">
+          <span class="day-stop__time">{{ moment.time }}</span>
+          <h3 class="day-stop__title">{{ moment.title }}</h3>
+          <p class="day-stop__desc">{{ moment.desc }}</p>
+        </div>
+
+        <div class="day-stop__anchor">
+          <div class="day-stop__photo" [style.backgroundImage]="'url(' + moment.img + ')'"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIFE AT UBS — click-through tabs, crossfading stage ============ -->
+  <section class="facilities">
+    <div class="wrap facilities__head">
+      <span class="eyebrow">— Life at UBS</span>
+      <h2 class="section-title">Everything within a five-minute walk</h2>
+    </div>
+
+    <div class="wrap facilities__panel">
+
+      <div class="facilities__tabs" role="tablist">
+        <button
+          type="button"
+          class="facilities__tab"
+          role="tab"
+          *ngFor="let group of facilityGroups; let i = index"
+          [class.is-active]="i === activeFacilityIndex"
+          [attr.aria-selected]="i === activeFacilityIndex"
+          (click)="selectFacility(i)"
+          (mouseenter)="pauseAutoplay()"
+          (mouseleave)="resumeAutoplay()">
+          <span class="facilities__tab-index">0{{ i + 1 }}</span>
+          <span class="facilities__tab-label">{{ group.label }}</span>
+        </button>
+      </div>
+
+      <div class="facilities__stage"
+           (mouseenter)="pauseAutoplay()"
+           (mouseleave)="resumeAutoplay()">
+
+        <div class="facilities__media">
+          <video class="facilities__video" autoplay muted loop playsinline>
+            <source src="https://ubs.ac.in/Admin/assets/img/1761798989_video.mp4" type="video/mp4">
+          </video>
+          <div class="facilities__media-scrim"></div>
+
+          <div class="facilities__thumb"
+               *ngFor="let group of facilityGroups; let i = index"
+               [class.is-active]="i === activeFacilityIndex">
+            <img [src]="group.img" [alt]="group.heading" loading="lazy">
+          </div>
+        </div>
+
+        <div class="facilities__copy">
+          <div class="facilities__entry"
+               *ngFor="let group of facilityGroups; let i = index"
+               [class.is-active]="i === activeFacilityIndex">
+            <h3>{{ group.heading }}</h3>
+            <p>{{ group.blurb }}</p>
+            <ul>
+              <li *ngFor="let item of group.items">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ COMMUNITY STATEMENT ============ -->
+  <section class="statement" #communitySection>
+    <div class="wrap statement__inner" [class.in-view]="communityInView">
+      <span class="eyebrow">— Community Life</span>
+      <p class="statement__text">
+        A family, before it is an institution — students, faculty and staff
+        sharing meals, responsibilities and friendships that carry on well
+        past graduation, under a shared commitment to keep that life safe
+        and welcoming for everyone on campus.
       </p>
     </div>
   </section>
 
-  <!-- ============ FEATURE CIRCLES ============ -->
-  <section class="feature-circles">
-    <div class="wrap feature-circles-grid">
+  <!-- ============ EVENTS — three distinct cards, staggered reveal ============ -->
+  <section class="events" #eventsSection>
+    <div class="wrap events__head">
+      <span class="eyebrow">— On the Calendar</span>
+      <h2 class="section-title">Our Events</h2>
+    </div>
 
-      <div class="feature-circle">
-        <div class="feature-circle-photo">
-          <img src="https://ubs.ac.in/Admin/assets/img/Untitled_design_(2).png" alt="Serene, plant-filled corner of the UBS campus" loading="lazy">
+    <div class="wrap events__grid" [class.in-view]="eventsInView">
+      <figure class="events__card"
+              *ngFor="let event of eventItems; let i = index"
+              [style.--i]="i">
+        <div class="events__photo">
+          <img [src]="event.img" [alt]="event.title" loading="lazy">
         </div>
-        <h3>Serene Environment</h3>
-        <p>A lush, eco-friendly campus where nature and learning flourish together.</p>
-      </div>
-
-      <div class="feature-circle">
-        <div class="feature-circle-photo">
-          <img src="https://ubs.ac.in/Admin/assets/img/Untitled_design_(6).png" alt="Modern classroom space at UBS" loading="lazy">
-        </div>
-        <h3>Modern Facilities</h3>
-        <p>Blending tradition with technology to create a dynamic learning space.</p>
-      </div>
-
-      <div class="feature-circle">
-        <div class="feature-circle-photo">
-          <img src="https://ubs.ac.in/Admin/assets/img/Untitled_design_(4).png" alt="Students at UBS" loading="lazy">
-        </div>
-        <h3>Student Life</h3>
-        <p>A strong faith-based community to encourage your growth.</p>
-      </div>
-
+        <span class="events__ribbon">{{ event.title }}</span>
+      </figure>
     </div>
   </section>
 
-  <!-- ============ COMMUNITY LIFE (reveal grid) ============ -->
-  <section class="about-intro-section" #communitySection>
-    <div class="wrap about-intro-grid">
-
-      <div class="about-intro-left" [class.in-view]="communityInView">
-        <span class="about-label">— Community Life</span>
-        <h2 class="about-heading">
-          A <span>family</span>,<br>
-          before it is an institution.
-        </h2>
-        <p class="about-desc">
-          Students, faculty and staff share more than classrooms here — meals, responsibilities,
-          and friendships that carry on well past graduation. It's a close-knit rhythm of learning,
-          fellowship and service.
-        </p>
-        <p class="about-desc">
-          Growth at UBS is holistic. Everyday campus duties and environmental care sit alongside the
-          curriculum, building teamwork and stewardship as much as scholarship. Shared guidelines keep
-          that life together safe, respectful and welcoming for everyone on campus.
-        </p>
+  <!-- ============ VISION — asymmetric statement + photo ============ -->
+  <section class="vision">
+    <div class="wrap vision__grid">
+      <div class="vision__text">
+        <span class="eyebrow">— Our Vision</span>
+        <blockquote class="vision__quote">
+          Built to enrich the social, intellectual, cultural and spiritual
+          development of every student — the knowledge, attitude and skills
+          for mature, independent study.
+        </blockquote>
       </div>
-
-      <div class="about-intro-right" [class.in-view]="communityInView">
-        <p class="about-side-note">
-          A rhythm of study, worship, friendship and life — shared by every class that has
-          called this campus home.
-        </p>
-
-        <div class="about-quote-box">
-          <span class="quote-mark">&#8221;</span>
-          <p class="about-quote">
-            Dr. Annie describes campus life as a kind of saturation — hours spent under the Word
-            each day, friendships forming alongside it, until scripture soaks in almost by osmosis.
-          </p>
-          <span class="about-quote-source">Dr. W.S. Annie, Principal</span>
-        </div>
+      <div class="vision__photo">
+        <img src="https://ubs.ac.in/Admin/assets/img/1760382742_image1.jpg" alt="UBS campus entrance" loading="lazy">
       </div>
-
     </div>
   </section>
 
-  <!-- ============ COMMUNITY ACTIVITIES ============ -->
-  <section class="campus-activities">
+  <!-- ============ GALLERY — mosaic ============ -->
+  <section class="mosaic">
     <div class="wrap">
-      <span class="about-label">— Community Activities</span>
-      <h2 class="about-heading">Life outside the classroom</h2>
-
-      <p class="about-desc">
-        Evenings on campus mean the sports ground, most days from 5–7&nbsp;p.m. On Independence Day
-        and Republic Day, the flag-hoisting gives way to friendly matches that pull the whole
-        community outdoors. The student council, guided by faculty mentors, coordinates everything
-        social and cultural, keeping campus life vibrant and inclusive for every class.
-      </p>
-
-      <ul class="campus-tag-list" aria-label="Recurring campus events">
-        <li>Independence Day</li>
-        <li>Republic Day</li>
-        <li>Cultural Nights</li>
-        <li>Literary Debates</li>
-        <li>Singspiration Evenings</li>
-        <li>Christmas &amp; Music Fest</li>
-      </ul>
+      <h2 class="section-title section-title--center">Campus <span>Gallery</span></h2>
+      <div class="mosaic__grid">
+        <img *ngFor="let src of galleryImages" [src]="src" alt="UBS campus" loading="lazy">
+      </div>
     </div>
   </section>
 
-  <!-- ============ STUDENT LIFE (list + photo) ============ -->
-  <section class="split-photo-block">
-    <div class="wrap split-photo-grid">
-
-      <div class="split-photo-text">
-        <span class="about-label">— On Campus</span>
-        <h3 class="about-heading">Student Life</h3>
-        <ul class="index-list">
-          <li>Modern classrooms</li>
-          <li>A dedicated, well-structured chapel</li>
-          <li>Private study cubicles</li>
-          <li>Hostels — shared washrooms (B.D.)</li>
-          <li>Hostels — attached washrooms (M.Th.)</li>
-          <li>Football ground</li>
-          <li>Outdoor badminton &amp; basketball courts</li>
-          <li>Volleyball court</li>
-          <li>Children's playground</li>
-          <li>Prayer huts</li>
-          <li>Eco-friendly campus grounds</li>
-          <li>A campus studio</li>
-        </ul>
+  <!-- ============ PRINCIPAL'S NOTE — its own full-weight section ============ -->
+  <section class="principal">
+    <div class="wrap principal__grid">
+      <div class="principal__photo">
+        <img src="https://ubs.ac.in/Admin/assets/img/Dr__Annie.jpg" alt="Dr. W.S. Annie, Principal" loading="lazy">
       </div>
-
-      <div class="split-photo-image">
-        <img src="https://ubs.ac.in/Admin/assets/img/1_Chapel.jpg" alt="The UBS chapel" loading="lazy">
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ HEALTH & WELL-BEING (photo + list) ============ -->
-  <section class="split-photo-block split-photo-block--reverse alt-bg">
-    <div class="wrap split-photo-grid">
-
-      <div class="split-photo-image">
-        <img src="https://ubs.ac.in/Admin/assets/img/Student_Housing_Render_Outside_Wide.jpg" alt="UBS student housing" loading="lazy">
-      </div>
-
-      <div class="split-photo-text">
-        <span class="about-label">— Well-being</span>
-        <h3 class="about-heading">Health &amp; Well-being</h3>
-        <ul class="index-list">
-          <li><strong>Weekly doctor visit</strong> — every Wednesday, 5:30–6:30&nbsp;p.m.</li>
-          <li><strong>First aid</strong> on campus for everyday needs</li>
-          <li><strong>Hospital referral</strong> close by, when it's needed</li>
-          <li><strong>Counselling care</strong> — pastoral and professional support</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ SURROUNDING COMMUNITY (list + photo) ============ -->
-  <section class="split-photo-block">
-    <div class="wrap split-photo-grid">
-
-      <div class="split-photo-text">
-        <span class="about-label">— Nearby</span>
-        <h3 class="about-heading">Surrounding Community</h3>
-        <ul class="index-list">
-          <li>Kine Memorial School</li>
-          <li>Tyrannus Hall</li>
-          <li>The quiet, peaceful streets of Ramyanagari Society</li>
-        </ul>
-      </div>
-
-      <div class="split-photo-image">
-        <img src="https://ubs.ac.in/Admin/assets/img/Caden_Ainsley_smithson_(1).jpg" alt="Streets near the UBS campus" loading="lazy">
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ STUDENT HOUSING (photo + list) ============ -->
-  <section class="split-photo-block split-photo-block--reverse alt-bg">
-    <div class="wrap split-photo-grid">
-
-      <div class="split-photo-image">
-        <img src="https://ubs.ac.in/Admin/assets/img/baaf6089c10bc72c9a52ff0a957f0c97.jpg" alt="Student housing exterior" loading="lazy">
-      </div>
-
-      <div class="split-photo-text">
-        <span class="about-label">— Housing</span>
-        <h3 class="about-heading">Student Housing</h3>
-        <ul class="index-list">
-          <li>Furnished rooms</li>
-          <li>Common kitchen</li>
-          <li>On-site washing machines</li>
-          <li>In-room refrigerator</li>
-          <li>A community lounge to unwind</li>
-          <li>24/7 security with camera coverage</li>
-          <li>Round-the-clock water supply</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ OUR EVENTS (circles) ============ -->
-  <section class="feature-circles">
-    <div class="wrap">
-      <h2 class="section-title" style="text-align:center;">Our <span>Events</span></h2>
-
-      <div class="feature-circles-grid" style="margin-top:2.5rem;">
-
-        <div class="feature-circle">
-          <div class="feature-circle-photo">
-            <img src="https://ubs.ac.in/Admin/assets/img/1.png" alt="Fete Day at UBS" loading="lazy">
+      <div class="principal__copy">
+        <span class="principal__mark">&#8220;</span>
+        <blockquote class="principal__quote">
+          You sit under the Word four hours a day, establish friendships,
+          and sit in on conferences — a saturation effect where it soaks
+          in to a different degree.
+        </blockquote>
+        <div class="principal__byline">
+          <span class="principal__rule"></span>
+          <div>
+            <strong>Dr. W.S. Annie</strong>
+            <span>Principal, Union Biblical Seminary</span>
           </div>
-          <h3>Fete Day</h3>
         </div>
-
-        <div class="feature-circle">
-          <div class="feature-circle-photo">
-            <img src="https://ubs.ac.in/Admin/assets/img/Untitled_design_(8).png" alt="Literary Day at UBS" loading="lazy">
-          </div>
-          <h3>Literary Day</h3>
-        </div>
-
-        <div class="feature-circle">
-          <div class="feature-circle-photo">
-            <img src="https://ubs.ac.in/Admin/assets/img/2.png" alt="Theme Presentation at UBS" loading="lazy">
-          </div>
-          <h3>Theme Presentation</h3>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============ VISION (text + photo) ============ -->
-  <section class="split-photo-block">
-    <div class="wrap split-photo-grid">
+  <!-- ============ VISIT — CTA banner ============ -->
+  <section class="visit">
+    <div class="visit__bg" style="background-image:url('https://ubs.ac.in/Admin/assets/img/Banner.JPG')"></div>
+    <div class="visit__scrim"></div>
 
-      <div class="split-photo-text">
-        <span class="about-label">— Our Vision</span>
-        <h3 class="about-heading">The UBS Vision</h3>
-        <p class="about-desc">
-          The seminary implements, enriches and supports its educational programmes, contributing
-          to the social, intellectual, cultural and spiritual development of every student — building
-          the knowledge, attitude and skills needed for mature, independent study.
-        </p>
-      </div>
-
-      <div class="split-photo-image">
-        <img src="https://ubs.ac.in/Admin/assets/img/1760382742_image1.jpg" alt="UBS campus entrance wall" loading="lazy">
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ GALLERY ============ -->
-  <section class="gallery-section">
-    <div class="wrap">
-      <h2 class="heading-text">Campus <span>Gallery</span></h2>
-      <div class="gallery-grid">
-        <img src="https://ubs.ac.in/Admin/assets/img/baaf6089c10bc72c9a52ff0a957f0c97.jpg" alt="Campus flowers" loading="lazy" />
-        <img src="https://ubs.ac.in/Admin/assets/img/de0a3da350631c57856c5e2a4b2e730d.jpg" alt="Campus greenery" loading="lazy" />
-        <img src="https://ubs.ac.in/Admin/assets/img/c59fff473aaa506fd8270edc71a82690.jpg" alt="UBS chapel spire" loading="lazy" />
-        <img src="https://ubs.ac.in/Admin/assets/img/cd793155f49d7cb81deba9c27adc428c.jpg" alt="UBS chapel tower" loading="lazy" />
-        <img src="https://ubs.ac.in/Admin/assets/img/33012bd8c201b2b57e3fd4d1b106ca73.jpg" alt="Main campus building" loading="lazy" />
-        <img src="https://ubs.ac.in/Admin/assets/img/1a5e2363eb91e2fbbbb35c99826e7f88.jpg" alt="Campus grounds in morning light" loading="lazy" />
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CONNECT / CTA BANNER ============ -->
-  <section class="connect-banner">
-    <div class="connect-banner-bg" style="background-image:url('https://ubs.ac.in/Admin/assets/img/Banner.JPG')"></div>
-    <div class="connect-banner-overlay"></div>
-    <div class="connect-banner-content">
+    <div class="visit__content wrap">
       <h2>Come see it for yourself</h2>
       <p>Ramyanagari Housing Society, Bibwewadi, Pune – 411037, Maharashtra, India</p>
-      <div class="connect-banner-actions">
-        <a href="tel:7020993427" class="connect-pill"><i class="fa-solid fa-phone"></i> 7020993427</a>
-        <a href="mailto:principal@ubs.ac.in" class="connect-pill">
+      <div class="visit__actions">
+        <a href="tel:7020993427" class="pill"><i class="fa-solid fa-phone"></i> 7020993427</a>
+        <a href="mailto:principal@ubs.ac.in" class="pill">
           <i class="fa-solid fa-envelope"></i> principal&#64;ubs.ac.in
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PRINCIPAL TESTIMONIAL ============ -->
-  <section class="testimonial-band">
-    <div class="wrap wrap--narrow">
-      <span class="quote-mark quote-mark--lg">&#8220;</span>
-      <p class="testimonial-quote">
-        God has blessed us with one of the most beautiful places around. You sit under the Word
-        four hours a day, establish friendships, and sit in on conferences. It is a saturation
-        effect where the Word of God soaks in to a different degree.
-      </p>
-      <div class="testimonial-person">
-        <img src="https://ubs.ac.in/Admin/assets/img/Dr__Annie.jpg" alt="Dr. W.S. Annie, Principal" loading="lazy">
-        <div>
-          <strong>Dr. W.S. Annie</strong>
-          <span>Principal</span>
-        </div>
       </div>
     </div>
   </section>
