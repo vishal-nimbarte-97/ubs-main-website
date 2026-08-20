@@ -50,6 +50,9 @@ export class CampusComponent implements AfterViewInit, OnDestroy {
   eventsInView = false;
   private eventsObserver?: IntersectionObserver;
 
+  @ViewChild('heroVideoRef') heroVideoRef?: ElementRef<HTMLVideoElement>;
+  @ViewChild('facilitiesVideoRef') facilitiesVideoRef?: ElementRef<HTMLVideoElement>;
+
   // ---- facilities tabs ----
   activeFacilityIndex = 0;
   private autoplayTimer?: ReturnType<typeof setInterval>;
@@ -136,6 +139,15 @@ export class CampusComponent implements AfterViewInit, OnDestroy {
     this.setupCommunityObserver();
     this.setupEventsObserver();
     this.startAutoplay();
+  
+    [this.heroVideoRef, this.facilitiesVideoRef].forEach(ref => {
+      if (ref) {
+        const video = ref.nativeElement;
+        video.muted = true;
+        video.defaultMuted = true;
+        video.play().catch(() => {});
+      }
+    });
   }
 
   selectFacility(index: number): void {

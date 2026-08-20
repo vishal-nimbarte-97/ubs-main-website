@@ -16,10 +16,10 @@
 
   <!-- ============ HERO — full-bleed video ============ -->
   <section class="hero">
-    <video class="hero__video" autoplay muted loop playsinline
-           poster="https://ubs.ac.in/Admin/assets/img/Banner.JPG">
-      <source src="https://ubs.ac.in/Admin/assets/img/1761798989_video.mp4" type="video/mp4">
-    </video>
+    <video class="hero__video" #heroVideoRef autoplay muted defaultMuted loop playsinline
+    poster="https://ubs.ac.in/Admin/assets/img/Banner.JPG">
+<source src="../../../assets/video/video_1.mp4" type="video/mp4">
+</video>
     <div class="hero__scrim"></div>
 
     <div class="hero__content wrap">
@@ -50,10 +50,8 @@
     <div class="day-strip__track">
       <div class="day-strip__rail"></div>
 
-      <div class="day-stop"
-           *ngFor="let moment of dayMoments; let i = index"
-           [class.day-stop--down]="i % 2 === 1"
-           [style.--i]="i">
+      <div class="day-stop" *ngFor="let moment of dayMoments; let i = index" [class.day-stop--down]="i % 2 === 1"
+        [style.--i]="i">
 
         <div class="day-stop__card">
           <span class="day-stop__time">{{ moment.time }}</span>
@@ -85,35 +83,29 @@
           *ngFor="let group of facilityGroups; let i = index"
           [class.is-active]="i === activeFacilityIndex"
           [attr.aria-selected]="i === activeFacilityIndex"
-          (click)="selectFacility(i)"
-          (mouseenter)="pauseAutoplay()"
-          (mouseleave)="resumeAutoplay()">
+          (click)="selectFacility(i)">
           <span class="facilities__tab-index">0{{ i + 1 }}</span>
           <span class="facilities__tab-label">{{ group.label }}</span>
         </button>
       </div>
 
-      <div class="facilities__stage"
-           (mouseenter)="pauseAutoplay()"
-           (mouseleave)="resumeAutoplay()">
+      <div class="facilities__stage" (mouseenter)="pauseAutoplay()" (mouseleave)="resumeAutoplay()">
 
         <div class="facilities__media">
-          <video class="facilities__video" autoplay muted loop playsinline>
-            <source src="https://ubs.ac.in/Admin/assets/img/1761798989_video.mp4" type="video/mp4">
+          <video class="facilities__video" #facilitiesVideoRef autoplay muted defaultMuted loop playsinline
+            preload="metadata">
+            <source src="../../../assets/video/video_1.mp4" type="video/mp4">
           </video>
           <div class="facilities__media-scrim"></div>
 
-          <div class="facilities__thumb"
-               *ngFor="let group of facilityGroups; let i = index"
-               [class.is-active]="i === activeFacilityIndex">
+          <div class="facilities__thumb" *ngFor="let group of facilityGroups; let i = index"
+            [class.is-active]="i === activeFacilityIndex">
             <img [src]="group.img" [alt]="group.heading" loading="lazy">
           </div>
         </div>
-
         <div class="facilities__copy">
-          <div class="facilities__entry"
-               *ngFor="let group of facilityGroups; let i = index"
-               [class.is-active]="i === activeFacilityIndex">
+          <div class="facilities__entry" *ngFor="let group of facilityGroups; let i = index"
+            [class.is-active]="i === activeFacilityIndex">
             <h3>{{ group.heading }}</h3>
             <p>{{ group.blurb }}</p>
             <ul>
@@ -147,9 +139,7 @@
     </div>
 
     <div class="wrap events__grid" [class.in-view]="eventsInView">
-      <figure class="events__card"
-              *ngFor="let event of eventItems; let i = index"
-              [style.--i]="i">
+      <figure class="events__card" *ngFor="let event of eventItems; let i = index" [style.--i]="i">
         <div class="events__photo">
           <img [src]="event.img" [alt]="event.title" loading="lazy">
         </div>

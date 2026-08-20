@@ -38,6 +38,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private router = inject(Router);
   private routerSubscription?: Subscription;
 
+  @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
+@ViewChild('campusVideoRef') campusVideoRef?: ElementRef<HTMLVideoElement>;
+
   /* ================= HERO — tagline swapper over video ================= */
   taglineGroups: string[][] = [
     ['Welcome To UBS'],
@@ -62,7 +65,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   counters: Counter[] = COUNTERS;
   private countersAnimated = false;
-  @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
   private countersObserver?: IntersectionObserver;
 
   /* ================= ACCREDITATION / PARTNER LOGO STRIPS ================= */
@@ -224,12 +226,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         (entries, obs) => {
           if (entries[0].isIntersecting) {
             this.introInView = true;
-            obs.disconnect(); // fires once, then the section stays revealed
+            obs.disconnect();
           }
         },
         { threshold: 0.25 }
       );
       introObserver.observe(this.aboutIntroSection.nativeElement);
+    }
+  
+    if (this.campusVideoRef) {
+      const video = this.campusVideoRef.nativeElement;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.play().catch(() => {});
     }
   }
 
