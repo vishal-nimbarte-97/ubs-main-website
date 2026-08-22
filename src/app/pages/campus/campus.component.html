@@ -1,15 +1,13 @@
 <!-- ============================================================
-  CAMPUS PAGE — v5
-  Revisions from v4 feedback:
-  1. Day strip → zigzag timeline (rail + alternating stops),
-     not uniform cards. Swapped in photos that actually render.
-  2. Facilities → click-driven tabs with a crossfading video+photo
-     stage, replacing the sticky-scroll panel (which broke on
-     zoom/short viewports — no longer scroll-dependent at all).
-  3. Events → 3 distinct cards, no duplicated loop, staggered
-     entrance animation + hover motion instead of a static row.
-  4. Testimonial → its own full section with a real-sized portrait
-     and large pull-quote, split out of the CTA banner.
+  CAMPUS PAGE — v6
+  Revisions from v5 feedback:
+  1. Life at UBS (01–04) → click-to-open popup cards, each opening
+     a modal with a multi-image gallery, replacing the single
+     crossfading tab stage.
+  2. Events section removed — its photos now live in the Gallery.
+  3. Principal's note moved to the top of the page, right after
+     the hero.
+  4. "Come see it for yourself" CTA banner removed.
 ============================================================ -->
 
 <main class="campus">
@@ -40,142 +38,7 @@
     </div>
   </section>
 
-  <!-- ============ A DAY ON CAMPUS — zigzag rail timeline ============ -->
-  <section class="day-strip">
-    <div class="wrap day-strip__head">
-      <span class="eyebrow">— The Rhythm of a Day</span>
-      <h2 class="section-title">From 6 a.m. chapel to evening sport</h2>
-    </div>
-
-    <div class="day-strip__track">
-      <div class="day-strip__rail"></div>
-
-      <div class="day-stop" *ngFor="let moment of dayMoments; let i = index" [class.day-stop--down]="i % 2 === 1"
-        [style.--i]="i">
-
-        <div class="day-stop__card">
-          <span class="day-stop__time">{{ moment.time }}</span>
-          <h3 class="day-stop__title">{{ moment.title }}</h3>
-          <p class="day-stop__desc">{{ moment.desc }}</p>
-        </div>
-
-        <div class="day-stop__anchor">
-          <div class="day-stop__photo" [style.backgroundImage]="'url(' + moment.img + ')'"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ LIFE AT UBS — click-through tabs, crossfading stage ============ -->
-  <section class="facilities">
-    <div class="wrap facilities__head">
-      <span class="eyebrow">— Life at UBS</span>
-      <h2 class="section-title">Everything within a five-minute walk</h2>
-    </div>
-
-    <div class="wrap facilities__panel">
-
-      <div class="facilities__tabs" role="tablist">
-        <button
-          type="button"
-          class="facilities__tab"
-          role="tab"
-          *ngFor="let group of facilityGroups; let i = index"
-          [class.is-active]="i === activeFacilityIndex"
-          [attr.aria-selected]="i === activeFacilityIndex"
-          (click)="selectFacility(i)">
-          <span class="facilities__tab-index">0{{ i + 1 }}</span>
-          <span class="facilities__tab-label">{{ group.label }}</span>
-        </button>
-      </div>
-
-      <div class="facilities__stage" (mouseenter)="pauseAutoplay()" (mouseleave)="resumeAutoplay()">
-
-        <div class="facilities__media">
-          <video class="facilities__video" #facilitiesVideoRef autoplay muted defaultMuted loop playsinline
-            preload="metadata">
-            <source src="../../../assets/video/video_1.mp4" type="video/mp4">
-          </video>
-          <div class="facilities__media-scrim"></div>
-
-          <div class="facilities__thumb" *ngFor="let group of facilityGroups; let i = index"
-            [class.is-active]="i === activeFacilityIndex">
-            <img [src]="group.img" [alt]="group.heading" loading="lazy">
-          </div>
-        </div>
-        <div class="facilities__copy">
-          <div class="facilities__entry" *ngFor="let group of facilityGroups; let i = index"
-            [class.is-active]="i === activeFacilityIndex">
-            <h3>{{ group.heading }}</h3>
-            <p>{{ group.blurb }}</p>
-            <ul>
-              <li *ngFor="let item of group.items">{{ item }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ COMMUNITY STATEMENT ============ -->
-  <section class="statement" #communitySection>
-    <div class="wrap statement__inner" [class.in-view]="communityInView">
-      <span class="eyebrow">— Community Life</span>
-      <p class="statement__text">
-        A family, before it is an institution — students, faculty and staff
-        sharing meals, responsibilities and friendships that carry on well
-        past graduation, under a shared commitment to keep that life safe
-        and welcoming for everyone on campus.
-      </p>
-    </div>
-  </section>
-
-  <!-- ============ EVENTS — three distinct cards, staggered reveal ============ -->
-  <section class="events" #eventsSection>
-    <div class="wrap events__head">
-      <span class="eyebrow">— On the Calendar</span>
-      <h2 class="section-title">Our Events</h2>
-    </div>
-
-    <div class="wrap events__grid" [class.in-view]="eventsInView">
-      <figure class="events__card" *ngFor="let event of eventItems; let i = index" [style.--i]="i">
-        <div class="events__photo">
-          <img [src]="event.img" [alt]="event.title" loading="lazy">
-        </div>
-        <span class="events__ribbon">{{ event.title }}</span>
-      </figure>
-    </div>
-  </section>
-
-  <!-- ============ VISION — asymmetric statement + photo ============ -->
-  <section class="vision">
-    <div class="wrap vision__grid">
-      <div class="vision__text">
-        <span class="eyebrow">— Our Vision</span>
-        <blockquote class="vision__quote">
-          Built to enrich the social, intellectual, cultural and spiritual
-          development of every student — the knowledge, attitude and skills
-          for mature, independent study.
-        </blockquote>
-      </div>
-      <div class="vision__photo">
-        <img src="https://ubs.ac.in/Admin/assets/img/1760382742_image1.jpg" alt="UBS campus entrance" loading="lazy">
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ GALLERY — mosaic ============ -->
-  <section class="mosaic">
-    <div class="wrap">
-      <h2 class="section-title section-title--center">Campus <span>Gallery</span></h2>
-      <div class="mosaic__grid">
-        <img *ngFor="let src of galleryImages" [src]="src" alt="UBS campus" loading="lazy">
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PRINCIPAL'S NOTE — its own full-weight section ============ -->
+  <!-- ============ PRINCIPAL'S NOTE — moved to top ============ -->
   <section class="principal">
     <div class="wrap principal__grid">
       <div class="principal__photo">
@@ -199,19 +62,134 @@
     </div>
   </section>
 
-  <!-- ============ VISIT — CTA banner ============ -->
-  <section class="visit">
-    <div class="visit__bg" style="background-image:url('https://ubs.ac.in/Admin/assets/img/Banner.JPG')"></div>
-    <div class="visit__scrim"></div>
+  <!-- ============ A DAY ON CAMPUS — auto-advancing moment timeline ============ -->
+  <section class="day-strip">
+    <div class="wrap day-strip__head">
+      <span class="eyebrow eyebrow--light">— The Rhythm of a Day</span>
+      <h2 class="section-title section-title--light">From 6 a.m. chapel to evening sport</h2>
+    </div>
 
-    <div class="visit__content wrap">
-      <h2>Come see it for yourself</h2>
-      <p>Ramyanagari Housing Society, Bibwewadi, Pune – 411037, Maharashtra, India</p>
-      <div class="visit__actions">
-        <a href="tel:7020993427" class="pill"><i class="fa-solid fa-phone"></i> 7020993427</a>
-        <a href="mailto:principal@ubs.ac.in" class="pill">
-          <i class="fa-solid fa-envelope"></i> principal&#64;ubs.ac.in
-        </a>
+    <div class="wrap day-strip__stage" (mouseenter)="pauseDayAutoplay()" (mouseleave)="resumeDayAutoplay()">
+
+      <div class="day-strip__hero">
+        <div class="day-strip__hero-photo" *ngFor="let moment of dayMoments; let i = index"
+          [class.is-active]="i === activeDayIndex" [style.backgroundImage]="'url(' + moment.heroImg + ')'"></div>
+        <div class="day-strip__hero-glow"></div>
+        <div class="day-strip__hero-scrim"></div>
+      </div>
+
+      <div class="day-strip__card">
+        <div class="day-strip__card-photo"
+          [style.backgroundImage]="'url(' + dayMoments[activeDayIndex].img + ')'"></div>
+        <div class="day-strip__card-body">
+          <span class="day-strip__card-time">{{ dayMoments[activeDayIndex].time }} &nbsp;|&nbsp;
+            {{ dayMoments[activeDayIndex].title }}</span>
+          <p class="day-strip__card-desc" [class.is-collapsed]="!dayExpanded">
+            {{ dayMoments[activeDayIndex].desc }}
+          </p>
+          <button type="button" class="day-strip__more" (click)="dayExpanded = !dayExpanded">
+            {{ dayExpanded ? 'Show less' : 'Show more' }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="wrap day-strip__timeline">
+      <div class="day-strip__track"></div>
+      <button type="button" class="day-strip__point" *ngFor="let moment of dayMoments; let i = index"
+        [class.is-active]="i === activeDayIndex" (click)="selectDayMoment(i)">
+        <span class="day-strip__point-dot"></span>
+        <span class="day-strip__point-time">{{ moment.time }}</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ LIFE AT UBS — popup cards with multi-image galleries ============ -->
+  <section class="facilities">
+    <div class="wrap facilities__head">
+      <span class="eyebrow">— Life at UBS</span>
+      <h2 class="section-title">Everything within a five-minute walk</h2>
+    </div>
+
+    <div class="wrap facilities__grid">
+      <button
+        type="button"
+        class="facilities__card"
+        *ngFor="let group of facilityGroups; let i = index"
+        [style.--i]="i"
+        (click)="openFacility(group)">
+        <span class="facilities__card-index">0{{ i + 1 }}</span>
+        <div class="facilities__card-photo">
+          <img [src]="group.images[0]" [alt]="group.heading" loading="lazy">
+        </div>
+        <span class="facilities__card-label">{{ group.label }}</span>
+        <span class="facilities__card-heading">{{ group.heading }}</span>
+        <span class="facilities__card-cta">View gallery <i class="fa-solid fa-arrow-right"></i></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Facility popup modal -->
+  <div class="facility-modal" *ngIf="activeFacility" (click)="closeFacility()">
+    <div class="facility-modal__panel" (click)="$event.stopPropagation()">
+      <button type="button" class="facility-modal__close" (click)="closeFacility()" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="facility-modal__gallery">
+        <div class="facility-modal__photo" *ngFor="let img of activeFacility.images">
+          <img [src]="img" [alt]="activeFacility.heading" loading="lazy">
+        </div>
+      </div>
+
+      <div class="facility-modal__copy">
+        <span class="eyebrow">— {{ activeFacility.label }}</span>
+        <h3>{{ activeFacility.heading }}</h3>
+        <p>{{ activeFacility.blurb }}</p>
+        <ul>
+          <li *ngFor="let item of activeFacility.items">{{ item }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ COMMUNITY STATEMENT ============ -->
+  <section class="statement" #communitySection>
+    <div class="wrap statement__inner" [class.in-view]="communityInView">
+      <span class="eyebrow">— Community Life</span>
+      <p class="statement__text">
+        A family, before it is an institution — students, faculty and staff
+        sharing meals, responsibilities and friendships that carry on well
+        past graduation, under a shared commitment to keep that life safe
+        and welcoming for everyone on campus.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ VISION — asymmetric statement + photo ============ -->
+  <section class="vision">
+    <div class="wrap vision__grid">
+      <div class="vision__text">
+        <span class="eyebrow">— Our Vision</span>
+        <blockquote class="vision__quote">
+          Built to enrich the social, intellectual, cultural and spiritual
+          development of every student — the knowledge, attitude and skills
+          for mature, independent study.
+        </blockquote>
+      </div>
+      <div class="vision__photo">
+        <img src="https://ubs.ac.in/Admin/assets/img/1760382742_image1.jpg" alt="UBS campus entrance" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY — mosaic (now also holds former event photos) ============ -->
+  <section class="mosaic">
+    <div class="wrap">
+      <h2 class="section-title section-title--center">Campus <span>Gallery</span></h2>
+      <div class="mosaic__grid">
+        <img *ngFor="let src of galleryImages" [src]="src" alt="UBS campus" loading="lazy">
       </div>
     </div>
   </section>

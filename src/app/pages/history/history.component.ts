@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import {
     AfterViewInit,
-    Component
+    Component,
+    OnDestroy
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -28,7 +29,7 @@ interface HistoryGallery {
     templateUrl: './history.component.html',
     styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent implements AfterViewInit {
+export class HistoryComponent implements AfterViewInit, OnDestroy {
 
     /* =========================================================
        MAIN HISTORY TIMELINE
@@ -237,10 +238,54 @@ export class HistoryComponent implements AfterViewInit {
 
 
     /* =========================================================
+       OUR JOURNEY — auto-advancing stage (5s delay, pause on hover)
+    ========================================================= */
+
+    activeTimelineIndex = 0;
+    timelineExpanded = false;
+
+    private timelineAutoplayTimer?: ReturnType<typeof setInterval>;
+    private timelineAutoplayPaused = false;
+    private readonly timelineAutoplayDelayMs = 5000;
+
+    selectTimelineItem(index: number): void {
+        this.activeTimelineIndex = index;
+        this.timelineExpanded = false;
+        this.restartTimelineAutoplay();
+    }
+
+    pauseTimelineAutoplay(): void {
+        this.timelineAutoplayPaused = true;
+    }
+
+    resumeTimelineAutoplay(): void {
+        this.timelineAutoplayPaused = false;
+    }
+
+    private startTimelineAutoplay(): void {
+        if (typeof window === 'undefined') return;
+
+        this.timelineAutoplayTimer = setInterval(() => {
+            if (this.timelineAutoplayPaused) return;
+            this.activeTimelineIndex =
+                (this.activeTimelineIndex + 1) % this.historyTimeline.length;
+            this.timelineExpanded = false;
+        }, this.timelineAutoplayDelayMs);
+    }
+
+    private restartTimelineAutoplay(): void {
+        if (this.timelineAutoplayTimer) clearInterval(this.timelineAutoplayTimer);
+        this.startTimelineAutoplay();
+    }
+
+
+    /* =========================================================
        SCROLL ANIMATION
     ========================================================= */
 
     ngAfterViewInit(): void {
+
+        this.startTimelineAutoplay();
 
         if (typeof IntersectionObserver === 'undefined') {
             return;
@@ -277,6 +322,10 @@ export class HistoryComponent implements AfterViewInit {
             observer.observe(element);
         });
 
+    }
+
+    ngOnDestroy(): void {
+        if (this.timelineAutoplayTimer) clearInterval(this.timelineAutoplayTimer);
     }
 
 }
