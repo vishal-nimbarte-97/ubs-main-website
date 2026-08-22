@@ -1,0 +1,712 @@
+<div class="history-page">
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="history-hero">
+
+    <div class="history-hero-overlay"></div>
+
+    <div class="history-container hero-inner">
+
+      <div class="hero-content">
+
+        <span class="hero-label">
+          UNION BIBLICAL SEMINARY
+        </span>
+
+        <h1>
+          A History of
+          <span>Faith & Vision</span>
+        </h1>
+
+        <p>
+          From a vision in Yeotmal to a growing ministry in Pune,
+          discover the people, milestones and stories that shaped
+          Union Biblical Seminary.
+        </p>
+
+        <a
+          href="#history-timeline"
+          class="hero-cta"
+        >
+          Explore Our Journey
+          <span>↓</span>
+        </a>
+
+      </div>
+
+      <div class="hero-scroll">
+        <span>SCROLL TO EXPLORE</span>
+        <div class="scroll-line"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       INTRO
+  ====================================================== -->
+
+  <section class="history-introduction">
+
+    <div class="history-container intro-layout">
+
+      <div class="intro-index">
+
+        <span>01</span>
+
+        <small>
+          OUR BEGINNING
+        </small>
+
+      </div>
+
+      <div class="intro-content">
+
+        <span class="section-label">
+          THE FIRST CHAPEL
+        </span>
+
+        <h2>
+          A story built on
+          <span>vision and faith.</span>
+        </h2>
+
+        <p>
+          The history of Union Biblical Seminary is a story of
+          theological education, dedication, service and a continuing
+          commitment to Christ's mission.
+        </p>
+
+        <p>
+          From the Seminary's early years in Yeotmal to its relocation
+          to Pune and its expanding ministry, every generation has
+          contributed to the UBS story.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MAIN TIMELINE
+  ====================================================== -->
+
+  <section
+    class="timeline-section"
+    id="history-timeline"
+  >
+
+    <div class="history-container">
+
+      <div class="section-header">
+
+        <span class="section-label">
+          OUR JOURNEY
+        </span>
+
+        <h2>
+          Milestones that
+          <span>shaped UBS</span>
+        </h2>
+
+        <p>
+          Explore the major seasons of growth, leadership,
+          academic development and ministry in the history of UBS.
+        </p>
+
+      </div>
+
+
+      <div class="timeline">
+
+        <div
+          class="timeline-row history-reveal"
+          *ngFor="
+            let item of historyTimeline;
+            let i = index
+          "
+          [class.timeline-right]="i % 2 !== 0"
+        >
+
+          <!-- CARD -->
+
+          <div class="timeline-card-wrapper">
+
+            <article class="timeline-card">
+
+              <div class="timeline-image">
+
+                <img
+                  [src]="item.image"
+                  [alt]="item.title"
+                  loading="lazy"
+                />
+
+                <div class="timeline-image-label">
+                  UBS ARCHIVES
+                </div>
+
+              </div>
+
+              <div class="timeline-card-header">
+
+                <span class="timeline-number">
+                  {{ item.number }}
+                </span>
+
+                <span class="timeline-year">
+                  {{ item.year }}
+                </span>
+
+              </div>
+
+              <h3>
+                {{ item.title }}
+              </h3>
+
+              <p>
+                {{ item.description }}
+              </p>
+
+            </article>
+
+          </div>
+
+
+          <!-- CENTER -->
+
+          <div class="timeline-marker">
+
+            <div class="timeline-dot">
+
+              <span></span>
+
+            </div>
+
+          </div>
+
+
+          <!-- EMPTY -->
+
+          <div class="timeline-space"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       40TH ANNIVERSARY
+  ====================================================== -->
+
+  <section class="anniversary-section">
+
+    <div class="history-container">
+
+      <div class="anniversary-grid">
+
+        <div class="anniversary-content">
+
+          <span class="section-label">
+            MILESTONE
+          </span>
+
+          <span class="anniversary-year">
+            1993
+          </span>
+
+          <h2>
+            The Celebration of
+            the 40th Anniversary
+          </h2>
+
+          <p>
+            The celebration of the 40th anniversary was a milestone
+            in the history of UBS. Two full days, 8–9 March 1993,
+            were set apart by the UBS Alumni Association (UBSAA)
+            to recall and celebrate the goodness of the Lord in
+            the existence of UBS.
+          </p>
+
+          <p>
+            One hundred and twenty graduates, some with their
+            families, came to UBS with a deep sense of gratitude
+            for God's abiding faithfulness.
+          </p>
+
+          <p>
+            The two-day programme was arranged around three main
+            focuses:
+          </p>
+
+          <div class="anniversary-points">
+
+            <div>
+              <span>01</span>
+              <strong>Looking Back</strong>
+              <small>Alumni Reflection</small>
+            </div>
+
+            <div>
+              <span>02</span>
+              <strong>Looking into the Present</strong>
+              <small>UBS Today</small>
+            </div>
+
+            <div>
+              <span>03</span>
+              <strong>Looking Forward</strong>
+              <small>Issues before us</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="anniversary-gallery">
+
+          <div
+            class="anniversary-photo"
+            *ngFor="
+              let image of anniversaryImages;
+              let i = index
+            "
+            [class.photo-main]="i === 0"
+          >
+
+            <img
+              [src]="image"
+              alt="UBS 40th Anniversary"
+              loading="lazy"
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       HISTORICAL GALLERY
+  ====================================================== -->
+
+  <section class="archive-section">
+
+    <div class="history-container">
+
+      <div class="archive-heading">
+
+        <div>
+
+          <span class="section-label">
+            UBS ARCHIVES
+          </span>
+
+          <h2>
+            Moments from
+            <span>our history</span>
+          </h2>
+
+        </div>
+
+        <p>
+          Places, people and memories that became part of
+          the UBS journey.
+        </p>
+
+      </div>
+
+
+      <div class="archive-grid">
+
+        <article
+          class="archive-card history-reveal" 
+          *ngFor="
+            let item of historicalGallery
+          "
+          [class.archive-large]="item.large"
+        >
+
+          <img
+            [src]="item.image"
+            [alt]="item.title"
+            loading="lazy"
+          />
+
+          <div class="archive-overlay">
+
+            <span>
+              {{ item.year }}
+            </span>
+
+            <h3 style="color: #eeeeee;">
+              {{ item.title }}
+            </h3>
+
+            <p>
+              {{ item.subtitle }}
+            </p>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       VISION
+  ====================================================== -->
+
+  <section class="vision-section">
+
+    <div class="history-container vision-grid">
+
+      <div class="vision-image">
+
+        <img
+          src="../../../../assets/history/image.png"
+          alt="Union Biblical Seminary"
+          loading="lazy"
+        />
+
+        <div class="vision-badge">
+
+          <strong>UBS</strong>
+
+          <span>
+            Faithful to the mission
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="vision-content">
+
+        <span class="section-label">
+          OUR VISION
+        </span>
+
+        <h2>
+          The Union Biblical
+          <span>Seminary Vision</span>
+        </h2>
+
+        <p>
+          The seminary implements, enriches, and supports the
+          educational programmes.
+        </p>
+
+        <p>
+          It also contributes to the social, intellectual, cultural
+          and spiritual development of students and helps them to
+          acquire the knowledge, attitude and skills essential for
+          a mature and independent study.
+        </p>
+
+        <div class="vision-quote">
+
+          <span class="quote-mark">
+            “
+          </span>
+
+          <p>
+            Developing knowledge, character and skills
+            for mature and independent study.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CAMPUS DEVELOPMENT
+  ====================================================== -->
+
+  <section class="development-section">
+
+    <div class="history-container">
+
+      <div class="development-header">
+
+        <div>
+
+          <span class="section-label">
+            LOOKING AHEAD
+          </span>
+
+          <h2>
+            UBS Campus
+            <span>Development</span>
+          </h2>
+
+        </div>
+
+        <p>
+          As the ministry expands, UBS continues to envision
+          new spaces and opportunities for theological education,
+          community development and ministry.
+        </p>
+
+      </div>
+
+
+      <!-- DEVELOPMENT CARDS -->
+
+      <div class="development-grid">
+
+        <article
+          class="development-card history-reveal"
+          *ngFor="
+            let item of campusDevelopment
+          "
+        >
+
+          <div class="development-top">
+
+            <span class="development-number">
+              {{ item.number }}
+            </span>
+
+            <span class="development-icon">
+              {{ item.icon }}
+            </span>
+
+          </div>
+
+          <h3>
+            {{ item.title }}
+          </h3>
+
+          <p>
+            {{ item.description }}
+          </p>
+
+          <span class="development-arrow">
+            →
+          </span>
+
+        </article>
+
+      </div>
+
+
+      <!-- COMMUNITY STORY -->
+
+      <div class="community-section">
+
+        <div class="community-content">
+
+          <span class="section-label">
+            COMMUNITY DEVELOPMENT PROJECT
+          </span>
+
+          <h2>
+            Theology that reaches
+            <span>the community.</span>
+          </h2>
+
+          <p>
+            UBS has trained many girls and women from nearby slums,
+            giving them skills in income-generating activities.
+            The Seminary seeks to extend this project to meet the
+            needs of young men as well.
+          </p>
+
+          <p>
+            A new building is being planned for this purpose,
+            with support made possible through World Hope.
+          </p>
+
+        </div>
+
+        <div class="community-number">
+
+          <strong>
+            WORD
+          </strong>
+
+          <span>&</span>
+
+          <strong>
+            DEED
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRIMARY SCHOOL -->
+
+      <div class="primary-school-section">
+
+        <div class="primary-school-image">
+
+          <img
+            src="assets/images/history/1760374971_image1.jpg"
+            alt="UBS Campus Development"
+            loading="lazy"
+          />
+
+        </div>
+
+        <div class="primary-school-content">
+
+          <span class="section-label">
+            PRIMARY SCHOOL INITIATIVE
+          </span>
+
+          <h2>
+            Preparing the
+            <span>whole church.</span>
+          </h2>
+
+          <p>
+            The ground breaking ceremony was held for starting
+            a primary school for poor children.
+          </p>
+
+          <p>
+            In today's world, theological education must go beyond
+            training pastors and evangelists. We must prepare the
+            whole church to participate in the whole of society
+            in "word and deed".
+          </p>
+
+          <div class="school-highlight">
+            <span>01</span>
+            <p>
+              Serving children and strengthening the wider community.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- TYRANNUS -->
+
+      <div class="tyrannus-section">
+
+        <div class="tyrannus-content">
+
+          <span class="section-label">
+            COMMUNITY PARTNERSHIP
+          </span>
+
+          <h2>
+            Tyrannus Hall
+            <span>International</span>
+          </h2>
+
+          <p>
+            Another way of reaching out to the community around
+            UBS is the relationship forged with Tyrannus Hall
+            International.
+          </p>
+
+          <p>
+            This ministry gives hostel facilities to students
+            studying in colleges and universities while nurturing
+            them in the love of Jesus Christ.
+          </p>
+
+          <p>
+            It is a discipling ministry with a hope to equip them
+            to become fruitful witnesses in their places of work
+            in future.
+          </p>
+
+        </div>
+
+        <div class="tyrannus-visual">
+
+          <div class="tyrannus-circle">
+
+            <span>UBS</span>
+
+            <small>
+              COMMUNITY
+              <br>
+              MINISTRY
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CLOSING
+  ====================================================== -->
+
+  <section class="history-closing">
+
+    <div class="history-container">
+
+      <span class="closing-label">
+        OUR STORY CONTINUES
+      </span>
+
+      <h2 style="color: #eeeeee;">
+        Faithful to the past.
+        <br>
+        Ready for the future.
+      </h2>
+
+      <p>
+        The story of Union Biblical Seminary continues through
+        every student, teacher, ministry and community touched
+        by its mission.
+      </p>
+
+      <a
+        routerLink="/about"
+        class="closing-button"
+      >
+        Discover UBS
+        <span>→</span>
+      </a>
+
+    </div>
+
+  </section>
+
+</div>

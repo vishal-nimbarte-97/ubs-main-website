@@ -8,6 +8,7 @@ import { LibraryComponent } from './pages/library/library.component';
 import { AdmissionsComponent } from './pages/admissions/admissions.component';
 import { StudentZoneComponent } from './pages/student-zone/student-zone.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
+import { HistoryComponent } from './pages/history/history.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'admissions', component: AdmissionsComponent },
   { path: 'student-zone', component: StudentZoneComponent },
   { path: 'gallery', component: GalleryComponent },
+  { path: 'history', component: HistoryComponent },
   { path: '**', redirectTo: '' },
 ];
