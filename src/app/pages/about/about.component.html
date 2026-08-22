@@ -150,6 +150,34 @@
 
       </div>
 
+      <div class="journey-heading">
+        <span class="section-label">OUR JOURNEY</span>
+        <h3>A legacy that <span>continues</span></h3>
+        <p>From a small beginning in Yavatmal to a diverse theological community in Pune.</p>
+      </div>
+
+      <div class="journey-timeline">
+        <article class="journey-item" *ngFor="let event of timeline; let i = index">
+          <div class="journey-marker">{{ event.year }}</div>
+          <div class="journey-card">
+            <div class="journey-card-content">
+              <span>{{ event.year }}</span>
+              <h4>{{ event.title }}</h4>
+              <p>{{ event.description }}</p>
+            </div>
+            <button
+              type="button"
+              class="journey-image-button"
+              [attr.aria-label]="'Read more about ' + event.title"
+              (click)="openTimelineEvent(event)"
+            >
+              <img [src]="event.image" [alt]="event.title" loading="lazy" />
+              <span>Read the story <b aria-hidden="true">+</b></span>
+            </button>
+          </div>
+        </article>
+      </div>
+
     </div>
 
   </section>
@@ -158,7 +186,7 @@
   <!-- =========================
        FOUNDERS
   ========================== -->
-  <section class="founders-section section">
+  <section class="founders-foundation-section section">
 
     <div class="container">
 
@@ -238,18 +266,6 @@
 
       </div>
 
-    </div>
-
-  </section>
-
-
-  <!-- =========================
-       EFI SECTION
-  ========================== -->
-  <section class="efi-section section">
-
-    <div class="container">
-
       <div class="efi-card">
 
         <div class="efi-logo">
@@ -318,8 +334,7 @@
 
       <div class="pioneers-grid">
 
-        <article class="pioneer-card" *ngFor="let pioneer of pioneers; let i = index"
-          [class.featured]="pioneer.featured">
+        <article class="pioneer-card" *ngFor="let pioneer of pioneers">
 
           <div class="pioneer-image">
 
@@ -357,71 +372,11 @@
 
 
   <!-- =========================
-       TIMELINE
-  ========================== -->
-  <section class="timeline-section section">
-
-    <div class="container">
-
-      <div class="section-heading centered">
-
-        <span class="section-label">
-          OUR JOURNEY
-        </span>
-
-        <h2>
-          A legacy that
-          <span>continues</span>
-        </h2>
-
-        <p>
-          From a small beginning in Yavatmal to a diverse
-          theological community in Pune.
-        </p>
-
-      </div>
-
-
-      <div class="timeline">
-
-        <div class="timeline-item" *ngFor="let event of timeline; let i = index" [class.timeline-right]="i % 2 !== 0">
-
-          <div class="timeline-marker">
-            {{ event.year }}
-          </div>
-
-          <div class="timeline-card">
-
-            <span>
-              {{ event.year }}
-            </span>
-
-            <h3>
-              {{ event.title }}
-            </h3>
-
-            <p>
-              {{ event.description }}
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================
        DIVERSITY SECTION
   ========================== -->
   <section class="diversity-section section">
 
-    <div class="container">
-
+    <div style="width: min(1300px, calc(100% - 40px)); margin: 0 auto;" >
       <div class="diversity-card">
 
         <div class="diversity-number">
@@ -475,10 +430,9 @@
           THE UBS VISION
         </span>
 
-        <h2>
+        <h2><span>
           Preparing servant leaders
-          <br>
-          <span>for God's mission</span>
+          for God's mission</span>
         </h2>
 
         <p>
@@ -496,5 +450,23 @@
     </div>
 
   </section>
+
+  <div class="timeline-dialog-backdrop" *ngIf="selectedTimelineEvent" (click)="closeTimelineEvent()">
+    <section
+      class="timeline-dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="selectedTimelineEvent.title"
+      (click)="$event.stopPropagation()"
+    >
+      <button type="button" class="dialog-close" aria-label="Close story" (click)="closeTimelineEvent()">&times;</button>
+      <img [src]="selectedTimelineEvent.image" [alt]="selectedTimelineEvent.title" />
+      <div>
+        <span>{{ selectedTimelineEvent.year }}</span>
+        <h2>{{ selectedTimelineEvent.title }}</h2>
+        <p>{{ selectedTimelineEvent.description }}</p>
+      </div>
+    </section>
+  </div>
 
 </div>
