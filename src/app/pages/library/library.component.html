@@ -10,7 +10,7 @@
   <section class="hero">
 
     <div class="hero-image">
-      <img src="assets/library/library-banner.jpg" alt="UBS Library" />
+      <img [src]="images.hero" alt="Shelves of books in a library" />
     </div>
 
     <div class="hero-overlay"></div>
@@ -192,7 +192,7 @@
 
           <div class="card-image">
 
-            <img src="assets/library/books.jpg" alt="UBS Library Books" />
+            <img [src]="images.books" alt="Library book collection" loading="lazy" />
 
             <div class="card-number">
               01
@@ -226,7 +226,7 @@
 
           <div class="card-image">
 
-            <img src="assets/library/cubicle.jpg" alt="Personal Cubicles" />
+            <img [src]="images.studySpace" alt="Quiet study space" loading="lazy" />
 
             <div class="card-number">
               02
@@ -259,7 +259,7 @@
 
           <div class="card-image">
 
-            <img src="assets/library/torah.jpg" alt="Torah Scroll" />
+            <img [src]="images.rareBooks" alt="Rare books in the reference collection" loading="lazy" />
 
             <div class="card-number">
               03
@@ -320,6 +320,7 @@
           <img
             [src]="zone.image"
             [alt]="zone.title"
+            loading="lazy"
           />
         </div>
 
@@ -351,7 +352,7 @@
       <div class="vision-image">
 
         <img
-          src="assets/library/union-biblical-vision.jpg"
+          [src]="images.vision"
           alt="Union Biblical Vision"
         />
 
@@ -373,7 +374,7 @@
 
       <div class="librarian-image">
 
-        <img src="assets/library/librarian.jpg" alt="UBS Librarian" />
+        <img [src]="images.librarian" alt="Librarian in a reading space" loading="lazy" />
 
         <div class="image-caption">
           <span>UBS LIBRARY</span>
@@ -605,7 +606,7 @@
 
         <div class="collection-image">
 
-          <img src="assets/library/reference.jpg" alt="Reference Collection" />
+          <img [src]="images.reference" alt="Reference books on a desk" loading="lazy" />
 
           <div class="floating-label">
             <strong>REFERENCE</strong>
@@ -632,7 +633,7 @@
 
         <div class="archives-image">
 
-          <img src="assets/library/archive.jpg" alt="UBS Archives" />
+          <img [src]="images.archives" alt="Historical books in the archives" loading="lazy" />
 
           <div class="archive-badge">
             ARCHIVES

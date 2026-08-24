@@ -26,6 +26,20 @@ export class LibraryComponent {
 
   activePolicy: number = 0;
 
+  readonly images = {
+    hero: 'assets/library/hero-library.jpg',
+    books: 'assets/library/books.jpg',
+    studySpace: 'assets/library/study-space.jpg',
+    rareBooks: 'assets/library/rare-books.jpg',
+    vision: 'assets/library/vision.jpg',
+    librarian: 'assets/library/librarian.jpg',
+    reference: 'assets/library/reference.jpg',
+    archives: 'assets/library/archives.jpg',
+    newspaperZone: 'assets/library/newspaper-zone.jpg',
+    journalZone: 'assets/library/journal-zone.jpg',
+    coffeeTableZone: 'assets/library/coffee-table-zone.jpg',
+  };
+
   policies: LibraryPolicy[] = [
 
     {
@@ -140,15 +154,15 @@ export class LibraryComponent {
   readingZones: ReadingZone[] = [
     {
       title: 'Newspaper Reading Area',
-      image: 'assets/library/newspaper-reading-area.jpg'
+      image: this.images.newspaperZone
     },
     {
       title: 'Journal Reading Area',
-      image: 'assets/library/journal-reading-area.jpg'
+      image: this.images.journalZone
     },
     {
       title: 'Coffee Table Reading Area',
-      image: 'assets/library/coffee-table-reading-area.jpg'
+      image: this.images.coffeeTableZone
     }
   ];
 
