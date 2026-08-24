@@ -1,9 +1,460 @@
-<section class="page-section">
-  <div class="wrap">
-    <br><br>
-    <h1>Faculty</h1>
-    <p>
-      Meet the faculty members who guide students through theological scholarship, ministry preparation, and spiritual formation.
-    </p>
+<div class="faculty-page">
+
+  <!-- =====================================================
+       PAGE HEADER
+  ====================================================== -->
+
+  <section class="faculty-hero">
+
+    <div class="hero-content">
+
+      <span class="hero-small-title">
+        UNION BIBLICAL SEMINARY
+      </span>
+
+      <h1>
+        Our Faculty
+      </h1>
+
+      <p>
+        Meet our dedicated faculty members who contribute
+        to theological education, research and ministry.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FACULTY DEPARTMENTS
+  ====================================================== -->
+
+  <main class="faculty-container">
+
+    <section
+      class="department-section"
+      *ngFor="let department of getDepartments()"
+    >
+
+      <!-- Department Heading -->
+
+      <div class="department-header">
+
+        <span class="department-line"></span>
+
+        <h2>
+          {{ department }}
+        </h2>
+
+        <span class="department-line"></span>
+
+      </div>
+
+
+      <!-- Faculty Grid -->
+
+      <div class="faculty-grid">
+
+        <article
+          class="faculty-card"
+          *ngFor="let faculty of getFacultyByDepartment(department)"
+        >
+
+          <!-- Image -->
+
+          <div class="faculty-image-wrapper">
+
+            <img
+              [src]="faculty.image"
+              [alt]="faculty.name"
+              class="faculty-image"
+              (error)="imageError($event)"
+            />
+
+            <div class="image-overlay">
+              <span>View Profile</span>
+            </div>
+
+          </div>
+
+
+          <!-- Faculty Information -->
+
+          <div class="faculty-content">
+
+            <h3>
+              {{ faculty.name }}
+            </h3>
+
+            <div
+              class="qualification-title"
+              *ngIf="faculty.qualificationTitle"
+            >
+              {{ faculty.qualificationTitle }}
+            </div>
+
+
+            <div class="designation">
+              {{ faculty.designation }}
+            </div>
+
+            <div
+              class="additional-designation"
+              *ngIf="faculty.additionalDesignation"
+            >
+              {{ faculty.additionalDesignation }}
+            </div>
+
+
+            <!-- Email -->
+
+            <a
+              class="faculty-email"
+              [href]="'mailto:' + faculty.email"
+            >
+              {{ faculty.email }}
+            </a>
+
+
+            <!-- More Details -->
+
+            <button
+              type="button"
+              class="details-button"
+              (click)="openFaculty(faculty)"
+            >
+
+              <span>
+                More Details
+              </span>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </button>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FACULTY DETAILS MODAL
+  ====================================================== -->
+
+  <div
+    class="faculty-modal-backdrop"
+    *ngIf="selectedFaculty as faculty"
+    (click)="closeFaculty()"
+  >
+
+    <div
+      class="faculty-modal"
+      (click)="stopPropagation($event)"
+    >
+
+      <!-- Close Button -->
+
+      <button
+        type="button"
+        class="modal-close"
+        aria-label="Close"
+        (click)="closeFaculty()"
+      >
+        ×
+      </button>
+
+
+      <!-- Modal Header -->
+
+      <div class="modal-header">
+
+        <div class="modal-image-wrapper">
+
+          <img
+            [src]="faculty.image"
+            [alt]="faculty.name"
+            class="modal-image"
+            (error)="imageError($event)"
+          />
+
+        </div>
+
+
+        <div class="modal-title">
+
+          <h2>
+            {{ faculty.name }}
+          </h2>
+
+          <p
+            class="modal-qualification"
+            *ngIf="faculty.qualificationTitle"
+          >
+            {{ faculty.qualificationTitle }}
+          </p>
+
+          <p class="modal-designation">
+            {{ faculty.designation }}
+          </p>
+
+          <p
+            class="modal-additional"
+            *ngIf="faculty.additionalDesignation"
+          >
+            {{ faculty.additionalDesignation }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Modal Body -->
+
+      <div class="modal-body">
+
+
+        <!-- Department -->
+
+        <div class="profile-row">
+
+          <div class="profile-icon">
+            <span>⌂</span>
+          </div>
+
+          <div>
+            <label>Department</label>
+            <p>
+              {{ faculty.department }}
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- Email -->
+
+        <div class="profile-row">
+
+          <div class="profile-icon">
+            <!-- <span>@</span> -->
+          </div>
+
+          <div>
+            <label>Email</label>
+
+            <a
+              [href]="'mailto:' + faculty.email"
+            >
+              {{ faculty.email }}
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- Qualification -->
+
+        <section
+          class="profile-section"
+          *ngIf="faculty.qualification?.length"
+        >
+
+          <h3>
+            <span></span>
+            Qualification
+          </h3>
+
+          <ol>
+
+            <li
+              *ngFor="let qualification of faculty.qualification"
+            >
+              {{ qualification }}
+            </li>
+
+          </ol>
+
+        </section>
+
+
+        <!-- Specialization -->
+
+        <section
+          class="profile-section"
+          *ngIf="faculty.specialization?.length"
+        >
+
+          <h3>
+            <span></span>
+            Specialization
+          </h3>
+
+          <ul>
+
+            <li
+              *ngFor="let specialization of faculty.specialization"
+            >
+              {{ specialization }}
+            </li>
+
+          </ul>
+
+        </section>
+
+
+        <!-- Books -->
+
+        <section
+          class="profile-section"
+          *ngIf="faculty.books?.length"
+        >
+
+          <h3>
+            <span></span>
+            Books
+          </h3>
+
+          <ol>
+
+            <li
+              *ngFor="let book of faculty.books"
+            >
+              {{ book }}
+            </li>
+
+          </ol>
+
+        </section>
+
+
+        <!-- Articles -->
+
+        <section
+          class="profile-section"
+          *ngIf="faculty.articles?.length"
+        >
+
+          <h3>
+            <span></span>
+            Articles
+          </h3>
+
+          <ol>
+
+            <li
+              *ngFor="let article of faculty.articles"
+            >
+              {{ article }}
+            </li>
+
+          </ol>
+
+        </section>
+
+
+        <!-- Journals -->
+
+        <section
+          class="profile-section"
+          *ngIf="faculty.journals?.length"
+        >
+
+          <h3>
+            <span></span>
+            Journals
+          </h3>
+
+          <ol>
+
+            <li
+              *ngFor="let journal of faculty.journals"
+            >
+              {{ journal }}
+            </li>
+
+          </ol>
+
+        </section>
+
+
+        <!-- Research -->
+
+        <section
+          class="profile-section"
+          *ngIf="faculty.research?.length"
+        >
+
+          <h3>
+            <span></span>
+            Research
+          </h3>
+
+          <ul>
+
+            <li
+              *ngFor="let research of faculty.research"
+            >
+              {{ research }}
+            </li>
+
+          </ul>
+
+        </section>
+
+
+        <!-- No Details -->
+
+        <div
+          class="no-profile-data"
+          *ngIf="
+            !faculty.qualification?.length &&
+            !faculty.specialization?.length &&
+            !faculty.books?.length &&
+            !faculty.articles?.length &&
+            !faculty.journals?.length &&
+            !faculty.research?.length
+          "
+        >
+          No additional profile information available.
+        </div>
+
+      </div>
+
+
+      <!-- Modal Footer -->
+
+      <div class="modal-footer">
+
+        <a
+          [href]="'mailto:' + faculty.email"
+          class="contact-button"
+        >
+          Contact Faculty
+        </a>
+
+        <button
+          type="button"
+          class="close-button"
+          (click)="closeFaculty()"
+        >
+          Close
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
-</section>
+
+</div>
