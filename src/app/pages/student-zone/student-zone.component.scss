@@ -1,0 +1,585 @@
+:host {
+    display: block;
+  }
+  
+  .student-zone-page {
+    --navy: #0b2545;
+    --navy-2: #123b6b;
+    --gold: #c9962b;
+    --ubs-red: #8d0628;
+    --ubs-red-dark: #69051f;
+    --ubs-black: #151515;
+    --ubs-text: #555;
+    --ubs-muted: #817a75;
+    --ubs-light: #f7f5f2;
+    --ubs-border: #e7e2de;
+    --ubs-white: #fff;
+  
+    color: var(--ubs-black);
+    background: #fff;
+    overflow: hidden;
+  }
+  
+  .sz-container {
+    width: min(1180px, calc(100% - 50px));
+    margin: 0 auto;
+  }
+  
+  
+  /* =========================================================
+     COMMON
+  ========================================================= */
+  
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  
+    margin-bottom: 20px;
+  
+    color: var(--ubs-red);
+  
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+  
+  .section-label::before {
+    content: '';
+  
+    width: 32px;
+    height: 2px;
+  
+    background: var(--gold);
+  }
+  
+  .section-header {
+    max-width: 700px;
+  
+    margin: 0 auto 60px;
+  
+    text-align: center;
+  }
+  
+  .section-header h2,
+  .committees-heading h2 {
+    margin: 0 0 20px;
+  
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1;
+  
+    letter-spacing: -3px;
+  }
+  
+  .section-header h2 span,
+  .committees-heading h2 span {
+    color: var(--gold);
+  }
+  
+  .section-header p,
+  .committees-heading > p {
+    max-width: 620px;
+  
+    margin: 0 auto;
+  
+    color: var(--ubs-text);
+  
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  
+  
+  /* =========================================================
+     HERO
+  ========================================================= */
+  
+  .sz-hero {
+    position: relative;
+  
+    min-height: 480px;
+  
+    display: flex;
+    align-items: center;
+  
+    background:
+      linear-gradient(
+        90deg,
+        rgba(11, 37, 69, .9),
+        rgba(11, 37, 69, .74),
+        rgba(11, 37, 69, .4)
+      ),
+      var(--navy);
+  
+    color: white;
+  }
+  
+  .sz-hero-overlay {
+    position: absolute;
+    inset: 0;
+  
+    background:
+      linear-gradient(
+        180deg,
+        transparent 60%,
+        rgba(11, 37, 69, .5)
+      );
+  }
+  
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+  
+    min-height: 480px;
+  
+    display: flex;
+    align-items: center;
+  }
+  
+  .hero-content {
+    max-width: 720px;
+  }
+  
+  .hero-label {
+    display: inline-flex;
+  
+    padding: 9px 14px;
+  
+    border: 1px solid rgba(231, 200, 119, .75);
+  
+    color: var(--gold);
+  
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+  }
+  
+  .hero-content h1 {
+    margin: 25px 0;
+  
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: .98;
+  
+    letter-spacing: -3px;
+    font-weight: 800;
+    color: var(--ubs-white);
+  }
+  
+  .hero-content h1 span {
+    display: block;
+  
+    color: var(--gold);
+  }
+  
+  .hero-content p {
+    max-width: 620px;
+  
+    margin: 0 0 35px;
+  
+    color: rgba(255, 255, 255, .92);
+  
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 25px;
+  
+    padding: 16px 23px;
+  
+    background: var(--gold);
+  
+    color: var(--navy);
+  
+    text-decoration: none;
+  
+    font-size: 13px;
+    font-weight: 800;
+  
+    transition: .3s ease;
+  }
+  
+  .hero-cta span {
+    font-size: 20px;
+  
+    transition: transform .3s ease;
+  }
+  
+  .hero-cta:hover {
+    background: var(--ubs-white);
+    color: var(--navy);
+  }
+  
+  .hero-cta:hover span {
+    transform: translateY(5px);
+  }
+  
+  
+  /* =========================================================
+     STUDENT COUNCIL
+  ========================================================= */
+  
+  .sz-council-section {
+    padding: 120px 0;
+  
+    background: #fff;
+  }
+  
+  .council-grid {
+    display: grid;
+  
+    grid-template-columns: repeat(3, 1fr);
+  
+    gap: 20px;
+  }
+  
+  .council-card {
+    position: relative;
+  
+    min-height: 220px;
+  
+    padding: 32px;
+  
+    background: var(--ubs-light);
+  
+    border: 1px solid var(--ubs-border);
+  
+    transition:
+      transform .35s ease,
+      background .35s ease,
+      color .35s ease;
+  }
+  
+  .council-card:hover {
+    background: var(--navy);
+  
+    color: white;
+  
+    transform: translateY(-8px);
+  
+    box-shadow: 0 20px 50px rgba(11, 37, 69, .2);
+  }
+  
+  .council-top {
+    display: flex;
+  
+    justify-content: space-between;
+    align-items: center;
+  
+    margin-bottom: 22px;
+  }
+  
+  .council-number {
+    color: var(--navy);
+  
+    font-size: 12px;
+    font-weight: 800;
+  }
+  
+  .council-icon {
+    width: 44px;
+    height: 44px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    border-radius: 50%;
+  
+    background: var(--ubs-white);
+  
+    color: var(--gold);
+  
+    font-size: 18px;
+  }
+  
+  .council-card h3 {
+    margin: 0 0 12px;
+  
+    font-size: 20px;
+  
+    color: var(--navy);
+  }
+  
+  .council-card p {
+    margin: 0;
+  
+    color: var(--ubs-text);
+  
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  
+  .council-card:hover .council-number,
+  .council-card:hover h3,
+  .council-card:hover p {
+    color: var(--ubs-white);
+  }
+  
+  .council-card:hover .council-icon {
+    background: rgba(255, 255, 255, .14);
+  }
+  
+  
+  /* =========================================================
+     STUDENT COMMITTEES
+  ========================================================= */
+  
+  .sz-committees-section {
+    padding: 120px 0;
+  
+    background:
+      radial-gradient(circle at 20% 15%, rgba(36, 54, 75, .035), transparent 26%),
+      radial-gradient(circle at 80% 75%, rgba(36, 54, 75, .025), transparent 30%),
+      #f7f7f5;
+  }
+  
+  .committees-heading {
+    max-width: 700px;
+  
+    margin: 0 auto 55px;
+  
+    text-align: center;
+  }
+  
+  .committees-grid {
+    display: grid;
+  
+    grid-template-columns: repeat(3, 1fr);
+  
+    gap: 16px;
+  }
+  
+  .committee-card {
+    position: relative;
+  
+    min-height: 190px;
+  
+    padding: 30px;
+  
+    background: var(--ubs-white);
+  
+    border: 1px solid var(--ubs-border);
+    border-top: 3px solid var(--gold);
+  
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  
+  .committee-card:hover {
+    transform: translateY(-6px);
+  
+    box-shadow: 0 20px 40px rgba(11, 37, 69, .12);
+  }
+  
+  .committee-number {
+    display: block;
+  
+    margin-bottom: 14px;
+  
+    color: var(--ubs-red);
+  
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  
+  .committee-card h3 {
+    margin: 0 0 10px;
+  
+    font-size: 18px;
+    line-height: 1.25;
+  
+    color: var(--navy);
+  }
+  
+  .committee-card p {
+    margin: 0;
+  
+    color: var(--ubs-text);
+  
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  
+  
+  /* =========================================================
+     CLOSING
+  ========================================================= */
+  
+  .sz-closing {
+    position: relative;
+  
+    padding: 130px 0;
+  
+    background: linear-gradient(135deg, var(--navy), var(--navy-2));
+  
+    color: white;
+  
+    text-align: center;
+  }
+  
+  .closing-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+  
+    color: rgba(255, 255, 255, .7);
+  }
+  
+  .sz-closing h2 {
+    margin: 25px 0;
+  
+    font-size: clamp(42px, 6vw, 70px);
+    line-height: .98;
+  
+    letter-spacing: -3px;
+  }
+  
+  .sz-closing h2 span {
+    color: var(--gold);
+  }
+  
+  .sz-closing p {
+    max-width: 600px;
+  
+    margin: 0 auto 35px;
+  
+    color: rgba(255, 255, 255, .75);
+  
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  
+  .closing-button {
+    display: inline-flex;
+    align-items: center;
+  
+    gap: 25px;
+  
+    padding: 16px 25px;
+  
+    background: white;
+  
+    color: var(--ubs-black);
+  
+    text-decoration: none;
+  
+    font-size: 13px;
+    font-weight: 800;
+  
+    transition: .3s ease;
+  }
+  
+  .closing-button span {
+    font-size: 20px;
+  
+    transition: transform .3s ease;
+  }
+  
+  .closing-button:hover {
+    background: var(--gold);
+  
+    color: white;
+  }
+  
+  .closing-button:hover span {
+    transform: translateX(5px);
+  }
+  
+  
+  /* =========================================================
+     SCROLL REVEAL
+  ========================================================= */
+  
+  .sz-reveal {
+    opacity: 0;
+  
+    transform: translateY(35px);
+  
+    transition:
+      opacity .75s ease,
+      transform .75s ease;
+  }
+  
+  .sz-reveal.is-visible {
+    opacity: 1;
+  
+    transform: translateY(0);
+  }
+  
+  
+  /* =========================================================
+     TABLET
+  ========================================================= */
+  
+  @media (max-width: 1000px) {
+  
+    .sz-container {
+      width: calc(100% - 40px);
+    }
+  
+    .council-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .committees-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+  }
+  
+  
+  /* =========================================================
+     MOBILE
+  ========================================================= */
+  
+  @media (max-width: 700px) {
+  
+    .sz-container {
+      width: calc(100% - 30px);
+    }
+  
+    .sz-hero,
+    .hero-inner {
+      min-height: 420px;
+    }
+  
+    .hero-content h1 {
+      font-size: 46px;
+  
+      letter-spacing: -2px;
+    }
+  
+    .hero-content p {
+      font-size: 15px;
+  
+      line-height: 1.7;
+    }
+  
+    .sz-council-section,
+    .sz-committees-section {
+      padding: 80px 0;
+    }
+  
+    .council-grid,
+    .committees-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .sz-closing {
+      padding: 90px 20px;
+    }
+  
+    .sz-closing h2 {
+      font-size: 42px;
+  
+      letter-spacing: -2px;
+    }
+  
+    .sz-closing p {
+      font-size: 14px;
+    }
+  
+  }

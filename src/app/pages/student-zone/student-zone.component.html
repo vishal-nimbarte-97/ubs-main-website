@@ -1,12 +1,185 @@
-<section class="page-section">
-  <div class="wrap">
-    <br><br>
-    <h1>Student Zone</h1>
-    <p>
-      The Student Zone is a dedicated page for student services, campus life updates, and support links.
-    </p>
-    <p>
-      Here students can find information about campus resources, student activities, and academic support.
-    </p>
-  </div>
-</section>
+<div class="student-zone-page">
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="sz-hero">
+
+    <div class="sz-hero-overlay"></div>
+
+    <div class="sz-container hero-inner">
+
+      <div class="hero-content">
+
+        <span class="hero-label">
+          UNION BIBLICAL SEMINARY
+        </span>
+
+        <h1>
+          Student
+          <span>Zone</span>
+        </h1>
+
+        <p>
+          Life beyond the classroom — student leadership, committees
+          and the community that shapes the UBS experience.
+        </p>
+
+        <a
+          href="#sz-council"
+          class="hero-cta"
+        >
+          Meet the Student Council
+          <span>↓</span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       STUDENT COUNCIL
+  ====================================================== -->
+
+  <section
+    class="sz-council-section"
+    id="sz-council"
+  >
+
+    <div class="sz-container">
+
+      <div class="section-header sz-reveal">
+
+        <span class="section-label">
+          STUDENT LEADERSHIP
+        </span>
+
+        <h2>
+          The Student
+          <span>Council</span>
+        </h2>
+
+        <p>
+          Elected students who represent the seminary community and
+          coordinate student life across the campus.
+        </p>
+
+      </div>
+
+      <div class="council-grid">
+
+        <article
+          class="council-card sz-reveal"
+          *ngFor="let role of councilRoles"
+        >
+
+          <div class="council-top">
+
+            <span class="council-number">
+              {{ role.number }}
+            </span>
+
+            <span class="council-icon">
+              {{ role.icon }}
+            </span>
+
+          </div>
+
+          <h3>{{ role.title }}</h3>
+
+          <p>{{ role.description }}</p>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       STUDENT COMMITTEES
+  ====================================================== -->
+
+  <section class="sz-committees-section">
+
+    <div class="sz-container">
+
+      <div class="committees-heading sz-reveal">
+
+        <h2>
+          Student
+          <span>Committees</span>
+        </h2>
+
+        <p>
+          Student-led committees that organize prayer, service,
+          missions, sports and campus life at UBS.
+        </p>
+
+      </div>
+
+      <div class="committees-grid">
+
+        <article
+          class="committee-card sz-reveal"
+          *ngFor="let committee of studentCommittees"
+        >
+
+          <span class="committee-number">
+            {{ committee.number }}
+          </span>
+
+          <h3>{{ committee.title }}</h3>
+
+          <p>{{ committee.description }}</p>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CLOSING
+  ====================================================== -->
+
+  <section class="sz-closing">
+
+    <div class="sz-container">
+
+      <span class="closing-label">
+        GET INVOLVED
+      </span>
+
+      <h2>
+        Be part of the
+        <span>UBS community.</span>
+      </h2>
+
+      <p>
+        Have questions about student life, committees or campus
+        activities? Reach out to the Student Affairs office.
+      </p>
+
+      <a
+        href="mailto:info&#64;ubs.ac.in"
+        class="closing-button"
+      >
+        Contact Us
+        <span>→</span>
+      </a>
+
+    </div>
+
+  </section>
+
+</div>
