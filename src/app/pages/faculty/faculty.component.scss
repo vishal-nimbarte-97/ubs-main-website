@@ -37,7 +37,7 @@
     linear-gradient(
       180deg,
       #ffffff 0%,
-      #fafafa 100%
+      #f8f7f4 100%
     );
 
   color: var(--text-dark);
@@ -137,7 +137,7 @@
     var(--primary-light);
 
   color:
-    var(--primary);
+    var(--navy);
 
   font-size: 12px;
 
@@ -151,7 +151,7 @@
   margin: 0;
 
   color:
-    var(--primary);
+    var(--navy);
 
   font-size:
     clamp(42px, 5vw, 68px);
@@ -245,12 +245,12 @@
     14px 30px;
 
   border:
-    2px solid var(--primary);
+    2px solid var(--navy);
 
   border-radius: 50px;
 
   color:
-    var(--primary);
+    var(--navy);
 
   background:
     #ffffff;
@@ -279,6 +279,19 @@
   gap: 30px;
 }
 
+/* Keep departments with fewer than three faculty profiles centered. */
+.faculty-grid.single-faculty {
+  grid-template-columns: minmax(0, 1fr);
+  width: calc((100% - 60px) / 3);
+  margin-inline: auto;
+}
+
+.faculty-grid.two-faculty {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: calc((100% - 30px) * 2 / 3);
+  margin-inline: auto;
+}
+
 
 /* =========================================================
    FACULTY CARD
@@ -296,10 +309,10 @@
   overflow: hidden;
 
   background:
-    var(--white);
+    linear-gradient(145deg, #ffffff 0%, #fcfafb 100%);
 
   border:
-    1px solid var(--border);
+    1px solid rgba(11, 37, 69, 0.1);
 
   border-radius:
     var(--radius);
@@ -308,21 +321,40 @@
     var(--shadow-sm);
 
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
 
 .faculty-card:hover {
   transform:
-    translateY(-8px);
+    translateY(-12px);
 
   border-color:
-    rgba(155, 0, 54, 0.2);
+    rgba(155, 0, 54, 0.35);
 
   box-shadow:
-    var(--shadow-md);
+    0 22px 45px rgba(11, 37, 69, 0.16);
+}
+
+.faculty-card::after {
+  content: "";
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  right: -110px;
+  bottom: -130px;
+  border-radius: 50%;
+  background: rgba(155, 0, 54, 0.05);
+  z-index: 0;
+  transition: transform 0.45s ease, background 0.45s ease;
+  pointer-events: none;
+}
+
+.faculty-card:hover::after {
+  transform: scale(1.35);
+  background: rgba(155, 0, 54, 0.09);
 }
 
 
@@ -337,14 +369,14 @@
   left: 0;
   right: 0;
 
-  height: 4px;
+  height: 5px;
 
   background:
     linear-gradient(
       90deg,
-      var(--primary),
+      var(--navy),
       #d14a72,
-      var(--primary)
+      var(--navy)
     );
 
   transform:
@@ -370,6 +402,7 @@
 
 .faculty-image-wrapper {
   position: relative;
+  z-index: 1;
 
   width: 190px;
   height: 190px;
@@ -389,7 +422,11 @@
     rgba(0, 0, 0, 0.15);
 
   background:
-    #eeeeee;
+    linear-gradient(135deg, #efe7db, #d5dce6);
+
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
 }
 
 
@@ -402,14 +439,22 @@
   display: block;
 
   transition:
-    transform 0.5s ease;
+    transform 0.6s ease,
+    filter 0.4s ease;
 }
 
 
 .faculty-card:hover
 .faculty-image {
   transform:
-    scale(1.08);
+    scale(1.12);
+
+  filter: brightness(0.72) saturate(1.08);
+}
+
+.faculty-card:hover .faculty-image-wrapper {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 14px 32px rgba(11, 37, 69, 0.24);
 }
 
 
@@ -428,7 +473,7 @@
   border-radius: 50%;
 
   // background:
-  //   rgba(155, 0, 54, 0.75);
+  //   linear-gradient(135deg, rgba(11, 37, 69, 0.74), rgba(155, 0, 54, 0.82));
 
   color: #fff;
 
@@ -438,14 +483,20 @@
 
   opacity: 0;
 
+  letter-spacing: 0.04em;
+
+  transform: scale(0.9);
+
   transition:
-    opacity 0.3s ease;
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 
 .faculty-card:hover
 .image-overlay {
   opacity: 1;
+  transform: scale(1);
 }
 
 
@@ -464,6 +515,9 @@
     5px 25px 25px;
 
   text-align: center;
+
+  position: relative;
+  z-index: 1;
 }
 
 
@@ -472,7 +526,7 @@
     0 0 5px;
 
   color:
-    var(--primary);
+    var(--navy);
 
   font-size:
     21px;
@@ -482,6 +536,12 @@
 
   font-weight:
     750;
+
+  transition: color 0.25s ease;
+}
+
+.faculty-card:hover .faculty-content h3 {
+  color: var(--primary);
 }
 
 
@@ -490,7 +550,7 @@
     15px;
 
   color:
-    var(--primary);
+    var(--navy);
 
   font-size:
     15px;
@@ -562,7 +622,7 @@
 
 .faculty-email:hover {
   color:
-    var(--primary);
+    var(--navy);
 
   text-decoration:
     underline;
@@ -589,13 +649,13 @@
     13px 18px;
 
   border:
-    1px solid #eeeeee;
+    1px solid rgba(11, 37, 69, 0.12);
 
   border-radius:
     10px;
 
   background:
-    #f8f8f8;
+    #f7f8fa;
 
   color:
     #222;
@@ -610,19 +670,24 @@
     pointer;
 
   transition:
-    all 0.25s ease;
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
 }
 
 
 .details-button:hover {
   background:
-    var(--primary);
+    linear-gradient(135deg, var(--navy), #184d80);
 
   border-color:
-    var(--primary);
+    var(--navy);
 
   color:
     #ffffff;
+
+  transform: translateY(-2px);
 }
 
 
@@ -788,7 +853,7 @@
 
 .modal-close:hover {
   background:
-    var(--primary);
+    var(--navy);
 
   color:
     white;
@@ -881,7 +946,7 @@
     0 0 5px;
 
   color:
-    var(--primary);
+    var(--navy);
 
   font-size:
     clamp(25px, 4vw, 36px);
@@ -899,7 +964,7 @@
     0 0 15px;
 
   color:
-    var(--primary);
+    var(--navy);
 
   font-size:
     17px;
@@ -983,7 +1048,7 @@
 
 .modal-body::-webkit-scrollbar-thumb:hover {
   background:
-    var(--primary);
+    var(--navy);
 }
 
 
@@ -1043,7 +1108,7 @@
     var(--primary-light);
 
   color:
-    var(--primary);
+    var(--navy);
 
   font-weight:
     800;
@@ -1091,7 +1156,7 @@
 
 .profile-row a {
   color:
-    var(--primary);
+    var(--navy);
 
   font-size:
     14px;
@@ -1140,7 +1205,7 @@
     1px solid #eeeeee;
 
   color:
-    var(--primary);
+    var(--navy);
 
   font-size:
     19px;
@@ -1161,7 +1226,7 @@
     10px;
 
   background:
-    var(--primary);
+    var(--navy);
 }
 
 
@@ -1192,7 +1257,7 @@
 
 .profile-section li::marker {
   color:
-    var(--primary);
+    var(--navy);
 
   font-weight:
     700;
@@ -1279,10 +1344,10 @@
 
 .contact-button {
   border:
-    1px solid var(--primary);
+    1px solid var(--navy);
 
   background:
-    var(--primary);
+    var(--navy);
 
   color:
     white;
@@ -1328,6 +1393,14 @@
 
     gap:
       25px;
+  }
+
+  .faculty-grid.single-faculty {
+    width: calc((100% - 25px) / 2);
+  }
+
+  .faculty-grid.two-faculty {
+    width: 100%;
   }
 
   .faculty-container {
@@ -1415,6 +1488,11 @@
 
     gap:
       20px;
+  }
+
+  .faculty-grid.single-faculty,
+  .faculty-grid.two-faculty {
+    width: 100%;
   }
 
 

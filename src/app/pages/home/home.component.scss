@@ -332,10 +332,10 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 24px;
+  align-items: flex-start;
+  justify-content: flex-end;
+  text-align: left;
+  padding: 24px clamp(24px, 6vw, 96px) clamp(48px, 8vh, 100px);
   background: linear-gradient(180deg, rgba(11, 37, 69, 0.35), rgb(4 15 28 / 75%));
 }
 
@@ -344,7 +344,7 @@
   height: 3.2em;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .tagline-swapper h1 {
@@ -1520,7 +1520,7 @@
   }
 
   .hero-overlay {
-    padding: 0 16px;
+    padding: 20px 16px 44px;
   }
 
   .hero-cta-line {

@@ -54,7 +54,11 @@
 
       <!-- Faculty Grid -->
 
-      <div class="faculty-grid">
+      <div
+        class="faculty-grid"
+        [class.single-faculty]="getFacultyByDepartment(department).length === 1"
+        [class.two-faculty]="getFacultyByDepartment(department).length === 2"
+      >
 
         <article
           class="faculty-card"
