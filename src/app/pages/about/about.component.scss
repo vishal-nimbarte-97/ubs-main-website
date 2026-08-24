@@ -433,155 +433,123 @@
 
 
 /* =========================================================
-   FOUNDERS
+   OUR BEGINNINGS + FOUNDATION
 ========================================================= */
 
-.founders-foundation-section {
+.beginnings-foundation-section {
   background: var(--light);
+  padding: 100px 0;
 }
 
-.founders-foundation-section .efi-card { margin-top: 90px; }
 
-.founders-grid {
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.beginnings-foundation-grid {
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1.1fr) minmax(0, 0.9fr);
-
-  gap: 100px;
-
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  gap: 70px;
   align-items: center;
 }
 
-.founders-image-wrapper {
-  position: relative;
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.beginnings-content {
+  max-width: 720px;
 }
 
-.image-frame {
-  position: relative;
 
-  padding: 14px;
+/* Section Label */
 
-  background: white;
-
-  box-shadow:
-    0 30px 70px rgba(0, 0, 0, 0.12);
-}
-
-.image-frame::before {
-  content: "";
-
-  position: absolute;
-
-  width: 100px;
-  height: 100px;
-
-  left: -35px;
-  bottom: -35px;
-
-  border-left: 3px solid var(--primary);
-  border-bottom: 3px solid var(--primary);
-
-  z-index: -1;
-}
-
-.image-frame img {
-  width: 100%;
-
-  display: block;
-
-  aspect-ratio: 1 / 0.82;
-
-  //   object-fit: cover;
-
-  filter: grayscale(100%);
-
-  transition:
-    filter 0.5s ease,
-    transform 0.5s ease;
-}
-
-.image-frame:hover img {
-  filter: grayscale(0%);
-  transform: scale(1.015);
-}
-
-.image-caption {
-  position: absolute;
-
-  right: 25px;
-  bottom: 25px;
-
-  padding: 10px 18px;
-
-  background: var(--primary);
-
-  color: white;
-
-  font-size: 11px;
-
-  letter-spacing: 1px;
+.section-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--primary);
   text-transform: uppercase;
 }
 
-.founders-content h2 {
-  margin: 16px 0;
 
-  font-size: clamp(40px, 5vw, 62px);
+/* Main Heading */
 
-  line-height: 1;
+.beginnings-content h2 {
+  margin: 16px 0 0;
+
+  font-size: clamp(42px, 5vw, 64px);
+  line-height: 1.02;
+
+  font-weight: 700;
+  letter-spacing: -2px;
 
   color: var(--dark);
-
-  letter-spacing: -2px;
 }
 
-.founders-content h2 span {
+.beginnings-content h2 span {
   display: block;
-
   color: var(--primary);
 }
 
-.title-line {
-  width: 55px;
-  height: 3px;
 
-  margin: 25px 0 30px;
+/* Heading Line */
+
+.title-line {
+  width: 60px;
+  height: 4px;
+
+  margin: 24px 0 32px;
 
   background: var(--primary);
 }
 
-.founders-content>p {
-  font-size: 16px;
 
-  line-height: 1.9;
+/* Paragraph */
+
+.beginnings-content > p {
+  margin: 0 0 20px;
+
+  max-width: 680px;
+
+  font-size: 16px;
+  line-height: 1.85;
 
   color: var(--muted);
-
-  margin-bottom: 20px;
 }
+
+
+/* =========================================================
+   QUOTE
+========================================================= */
 
 .founder-quote {
   position: relative;
 
-  margin-top: 30px;
+  margin: 35px 0 45px;
 
-  padding: 25px 25px 25px 45px;
+  padding: 28px 30px 28px 48px;
 
-  border-left: 3px solid var(--primary);
+  background: #fff;
 
-  background: white;
+  border-left: 4px solid var(--primary);
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
 }
 
 .quote-mark {
   position: absolute;
 
+  left: 17px;
   top: 8px;
-  left: 15px;
 
   font-family: Georgia, serif;
 
   font-size: 42px;
+
+  line-height: 1;
 
   color: var(--primary);
 }
@@ -592,102 +560,439 @@
   font-family: Georgia, serif;
 
   font-size: 17px;
-
   line-height: 1.7;
 
-  color: #555;
-
   font-style: italic;
+
+  color: #555;
 }
 
 
 /* =========================================================
-   EFI
+   FOUNDATION CONTENT
 ========================================================= */
 
-.efi-section {
-  background: white;
+.foundation-content {
+  padding-top: 40px;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.efi-card {
-  display: grid;
+.foundation-content h3 {
+  margin: 14px 0 20px;
 
-  grid-template-columns: 260px 1fr;
+  font-size: clamp(28px, 3vw, 40px);
 
-  gap: 70px;
-
-  align-items: center;
-
-  padding: 70px;
-
-  background:
-    linear-gradient(135deg,
-      #fff,
-      #f8f4f1);
-
-  border: 1px solid var(--border);
-
-  position: relative;
-
-  overflow: hidden;
-}
-
-.efi-card::after {
-  content: "";
-
-  position: absolute;
-
-  width: 300px;
-  height: 300px;
-
-  right: -120px;
-  top: -120px;
-
-  border-radius: 50%;
-
-  border: 50px solid rgba(128, 0, 32, 0.04);
-}
-
-.efi-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.efi-logo img {
-  width: 210px;
-  max-width: 100%;
-}
-
-.efi-content {
-  position: relative;
-  z-index: 2;
-}
-
-.efi-content h2 {
-  margin: 15px 0 25px;
-
-  font-size: clamp(32px, 4vw, 48px);
-
-  line-height: 1.1;
+  line-height: 1.15;
 
   color: var(--dark);
 }
 
-.efi-content h2 span {
+.foundation-content h3 span {
   color: var(--primary);
 }
 
-.efi-content p {
-  max-width: 850px;
+.foundation-content p {
+  margin: 0 0 18px;
 
-  margin-bottom: 15px;
+  max-width: 680px;
 
   font-size: 16px;
-
   line-height: 1.85;
 
   color: var(--muted);
+}
+
+
+/* =========================================================
+   RIGHT IMAGE COLUMN
+========================================================= */
+
+.beginnings-image-column {
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   FOUNDER IMAGE
+========================================================= */
+
+.founder-image-card {
+  position: relative;
+
+  padding: 14px;
+
+  background: #fff;
+
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+
+  overflow: visible;
+}
+
+
+/* Decorative corner */
+
+.founder-image-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 90px;
+  height: 90px;
+
+  left: -22px;
+  bottom: -22px;
+
+  border-left: 3px solid var(--primary);
+  border-bottom: 3px solid var(--primary);
+
+  z-index: 0;
+}
+
+
+/* Image */
+
+.founder-image {
+  position: relative;
+
+  z-index: 1;
+
+  overflow: hidden;
+
+  background: #f1f2f4;
+}
+
+
+.founder-image img {
+  display: block;
+
+  width: 100%;
+
+  /*
+    Portrait ratio as requested by client.
+    Adjust to 4/5 or 3/4 depending on actual image.
+  */
+  aspect-ratio: 4 / 5;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  filter: grayscale(15%);
+
+  transition:
+    transform 0.5s ease,
+    filter 0.5s ease;
+}
+
+
+.founder-image-card:hover img {
+  transform: scale(1.025);
+
+  filter: grayscale(0%);
+}
+
+
+/* =========================================================
+   IMAGE CAPTION
+========================================================= */
+
+.image-caption {
+  position: absolute;
+
+  right: 28px;
+  bottom: 28px;
+
+  z-index: 2;
+
+  padding: 11px 18px;
+
+  background: var(--primary);
+
+  color: #fff;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   EFI FOUNDATION CARD
+========================================================= */
+
+.efi-foundation-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 22px;
+
+  padding: 22px 24px;
+
+  background: #f5f6f9;
+
+  min-height: 120px;
+}
+
+
+/* EFI Logo */
+
+.efi-logo {
+  flex: 0 0 82px;
+
+  width: 82px;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff;
+
+  padding: 10px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.efi-logo img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+
+/* EFI Content */
+
+.efi-content {
+  padding-right: 10px;
+}
+
+.efi-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+
+  color: var(--primary);
+}
+
+.efi-content h4 {
+  margin: 0;
+
+  font-size: 20px;
+
+  line-height: 1.25;
+
+  color: var(--dark);
+}
+
+.efi-content h4 span {
+  color: var(--primary);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 992px) {
+
+  .beginnings-foundation-section {
+    padding: 80px 0;
+  }
+
+  .beginnings-foundation-grid {
+    grid-template-columns: 1fr;
+
+    gap: 55px;
+  }
+
+  .beginnings-content {
+    max-width: 100%;
+  }
+
+  .beginnings-image-column {
+    max-width: 600px;
+
+    width: 100%;
+
+    margin: 0 auto;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 576px) {
+
+  .beginnings-foundation-section {
+    padding: 60px 0;
+  }
+
+  .beginnings-foundation-grid {
+    gap: 40px;
+  }
+
+  .beginnings-content h2 {
+    font-size: 42px;
+
+    letter-spacing: -1.5px;
+  }
+
+  .title-line {
+    margin: 20px 0 25px;
+  }
+
+  .beginnings-content > p,
+  .foundation-content p {
+    font-size: 15px;
+
+    line-height: 1.75;
+  }
+
+  .founder-quote {
+    margin: 30px 0 35px;
+
+    padding: 24px 20px 24px 42px;
+  }
+
+  .founder-quote p {
+    font-size: 16px;
+  }
+
+  .foundation-content {
+    padding-top: 30px;
+  }
+
+  .foundation-content h3 {
+    font-size: 30px;
+  }
+
+  .founder-image-card {
+    padding: 10px;
+  }
+
+  .founder-image img {
+    aspect-ratio: 4 / 5;
+  }
+
+  .image-caption {
+    right: 18px;
+    bottom: 18px;
+
+    padding: 9px 13px;
+
+    font-size: 9px;
+  }
+
+  .founder-image-card::before {
+    width: 60px;
+    height: 60px;
+
+    left: -12px;
+    bottom: -12px;
+  }
+
+  .efi-foundation-card {
+    padding: 18px;
+
+    gap: 16px;
+  }
+
+  .efi-logo {
+    flex: 0 0 65px;
+
+    width: 65px;
+    height: 65px;
+
+    padding: 7px;
+  }
+
+  .efi-content h4 {
+    font-size: 17px;
+  }
+
+}
+
+/* =========================================================
+   EFI (now stacked under the founders portrait)
+========================================================= */
+
+.efi-logo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  padding: 30px 20px;
+
+  background: white;
+
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.06);
+}
+
+.efi-logo-card img {
+  width: 140px;
+  max-width: 60%;
+}
+
+.efi-logo-card span {
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.6px;
+  text-align: center;
+  text-transform: uppercase;
+
+  color: var(--navy);
+}
+
+.content-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 40px 0 35px;
+
+  background: var(--border);
+}
+
+.founders-content h3 {
+  margin: 15px 0 20px;
+
+  font-size: clamp(28px, 3.6vw, 40px);
+
+  line-height: 1.15;
+
+  color: var(--dark);
+
+  letter-spacing: -1px;
+}
+
+.founders-content h3 span {
+  color: var(--primary);
 }
 
 
@@ -1230,10 +1535,8 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .efi-card {
-    padding: 45px;
-
-    gap: 40px;
+  .founders-image-wrapper {
+    position: static;
   }
 
   .pioneers-grid {
@@ -1389,37 +1692,23 @@
     font-size: 42px;
   }
 
+  .founders-content h3 {
+    font-size: 30px;
+  }
+
+  .content-divider {
+    margin: 30px 0 25px;
+  }
+
 
   /* EFI */
 
-  .efi-card {
-    grid-template-columns: 1fr;
-
-    padding: 35px 25px;
-
-    gap: 30px;
-
-    text-align: center;
+  .efi-logo-card {
+    padding: 22px 18px;
   }
 
-  .founders-foundation-section .efi-card { margin-top: 55px; }
-
-  .efi-logo img {
-    width: 170px;
-  }
-
-  .efi-content .section-label {
-    justify-content: center;
-  }
-
-  .efi-content h2 {
-    font-size: 34px;
-  }
-
-  .efi-content p {
-    font-size: 15px;
-
-    text-align: left;
+  .efi-logo-card img {
+    width: 110px;
   }
 
 
