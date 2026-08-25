@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 export class HeaderComponent implements OnInit, OnDestroy {
   isScrolled = false;
   mobileMenuOpen = false;
-  openDropdown: 'about' | 'administration' | null = null;
+  openDropdown: 'about' | 'administration' | 'academics' | null = null;
   announcementOpen = false;
 
   announcements = [
@@ -87,11 +87,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  openDropdownMenu(menu: 'about' | 'administration'): void {
+  openDropdownMenu(menu: 'about' | 'administration' | 'academics'): void {
     this.openDropdown = menu;
   }
 
-  closeDropdownMenu(menu: 'about' | 'administration'): void {
+  closeDropdownMenu(menu: 'about' | 'administration' | 'academics'): void {
     if (this.openDropdown === menu) this.openDropdown = null;
   }
 
