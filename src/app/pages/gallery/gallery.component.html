@@ -1,12 +1,223 @@
-<section class="page-section">
-  <div class="wrap">
-    <br><br>
-    <h1>Gallery</h1>
-    <p>
-      The Gallery page will display campus photos and visuals highlighting life at UBS.
-    </p>
-    <p>
-      This placeholder page is ready for image galleries or campus media content.
-    </p>
+<!-- =========================
+     UBS GALLERY PAGE
+========================= -->
+
+<div class="gallery-page">
+
+  <!-- =========================
+       HERO
+  ========================== -->
+  <section class="hero">
+
+    <div class="hero-shell">
+      <div class="hero-content">
+
+      <div class="hero-label">
+        <span class="line"></span>
+        UBS GALLERY
+      </div>
+
+      <h1>Moments that <span>shape</span> our story.</h1>
+
+      <p>
+        A glimpse into the spaces, people and moments that make
+        Union Biblical Seminary feel like home.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#gallery-grid" class="primary-btn">
+          Explore Gallery
+          <span>&darr;</span>
+        </a>
+      </div>
+
+      </div>
+
+      <figure class="hero-image">
+        <img src="assets/gallery/image_1.jpg" alt="UBS campus" />
+        <figcaption>Union Biblical Seminary <span>Pune, India</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="hero-bottom">
+
+      <div>
+        <strong>UBS</strong>
+        <span>Campus & Community</span>
+      </div>
+
+      <div class="scroll-indicator">
+        <span></span>
+        Scroll to explore
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       STICKY FILTER BAR
+  ========================== -->
+  <nav class="gallery-nav" aria-label="Gallery filters">
+
+    <div class="nav-inner">
+
+      <div class="nav-brand">
+        <span class="brand-dot"></span>
+        {{ filteredPhotos.length }} Photographs
+      </div>
+
+      <div class="filter-pills" role="tablist">
+        <button
+          *ngFor="let category of categories"
+          type="button"
+          role="tab"
+          [class.is-active]="activeCategory === category"
+          [attr.aria-selected]="activeCategory === category"
+          (click)="selectCategory(category)">
+          {{ category }}
+        </button>
+      </div>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================
+       MASONRY GRID
+  ========================== -->
+  <section id="gallery-grid" class="grid-section">
+
+    <div class="container">
+
+      <div class="section-head">
+        <div class="section-label">THE COLLECTION</div>
+        <h2>Life at UBS, <span>frame by frame.</span></h2>
+      </div>
+
+      <div class="masonry">
+
+        <figure
+          *ngFor="let photo of filteredPhotos; let i = index"
+          class="masonry-item"
+          [style.animation-delay.ms]="(i % 12) * 70"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'Open ' + photo.title"
+          (click)="openLightbox(i)"
+          (keydown.enter)="openLightbox(i)">
+
+          <img [src]="photo.src" [alt]="photo.alt" loading="lazy" />
+
+          <figcaption class="item-overlay">
+            <span class="item-category">{{ photo.category }}</span>
+            <span class="item-title">{{ photo.title }}</span>
+            <span class="item-zoom" aria-hidden="true">&#x2922;</span>
+          </figcaption>
+
+        </figure>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       STATS STRIP
+  ========================== -->
+  <section class="stats-strip">
+
+    <div class="container stats-grid">
+
+      <div class="stat">
+        <strong>70+</strong>
+        <span>Years of heritage</span>
+      </div>
+
+      <div class="stat">
+        <strong>500+</strong>
+        <span>Students on campus</span>
+      </div>
+
+      <div class="stat">
+        <strong>30+</strong>
+        <span>Faculty members</span>
+      </div>
+
+      <div class="stat">
+        <strong>25+</strong>
+        <span>Church partners</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       CTA — VISIT CAMPUS
+  ========================== -->
+  <section class="cta-section">
+
+    <div class="container cta-inner">
+
+      <div class="cta-text">
+        <div class="section-label">COME AND SEE</div>
+        <h2>Experience the campus <span>in person.</span></h2>
+        <p>
+          Photographs only tell part of the story. Visit us in Bibwewadi, Pune,
+          and experience the community first-hand.
+        </p>
+      </div>
+
+      <div class="cta-actions">
+        <a routerLink="/admissions" class="primary-btn">
+          Plan a Visit
+          <span>&nearr;</span>
+        </a>
+        <a routerLink="/campus" class="ghost-btn">
+          Explore Campus
+          <span>&rarr;</span>
+        </a>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       LIGHTBOX
+  ========================== -->
+  <div
+    *ngIf="selectedPhoto"
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="selectedPhoto.title"
+    (click)="closeLightbox()"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)">
+
+    <button type="button" class="lightbox__close" (click)="closeLightbox()" aria-label="Close image viewer">&times;</button>
+
+    <button type="button" class="lightbox__nav lightbox__nav--previous" (click)="previousPhoto($event)" aria-label="Previous image">&#10094;</button>
+
+    <figure class="lightbox__figure" (click)="$event.stopPropagation()">
+      <img [src]="selectedPhoto.src" [alt]="selectedPhoto.alt" />
+      <figcaption>
+        <span class="lightbox__counter">{{ selectedIndex + 1 }} / {{ filteredPhotos.length }}</span>
+        <span class="lightbox__title">{{ selectedPhoto.title }}</span>
+        <span class="lightbox__category">{{ selectedPhoto.category }}</span>
+      </figcaption>
+    </figure>
+
+    <button type="button" class="lightbox__nav lightbox__nav--next" (click)="nextPhoto($event)" aria-label="Next image">&#10095;</button>
+
   </div>
-</section>
+
+</div>
