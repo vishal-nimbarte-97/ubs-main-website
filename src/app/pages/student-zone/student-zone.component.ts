@@ -11,12 +11,14 @@ interface CouncilRole {
   title: string;
   icon: string;
   description: string;
+  image: string;
 }
 
 interface StudentCommittee {
   number: string;
   title: string;
   description: string;
+  image: string;
 }
 
 @Component({
@@ -29,10 +31,23 @@ interface StudentCommittee {
 export class StudentZoneComponent implements AfterViewInit, OnDestroy {
 
   /* =========================================================
+     HERO IMAGE
+     NOTE: pulled from the old site's asset folder as a
+     placeholder — swap this for a proper campus/student photo
+     whenever you have one.
+  ========================================================= */
+
+  heroImage =
+    'https://ubs.ac.in/Admin/assets/img/1e3ee61ebab8854164e856e232f821b0.jpg';
+
+
+  /* =========================================================
      STUDENT COUNCIL
-     NOTE: role names carried over from the old site. Duty text
-     below is drafted from the role title only (the old markup
-     had no real description for these) — please review/edit.
+     NOTE: role names + images carried over from the old site.
+     Images are placeholders pulled from the old asset folder —
+     swap the `image` value on each role once you have real
+     portraits. Duty text drafted from the role title only
+     (old markup had no real description) — please review.
   ========================================================= */
 
   councilRoles: CouncilRole[] = [
@@ -42,7 +57,8 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
       title: 'President',
       icon: '✦',
       description:
-        'Leads the Student Council and represents the student body to the Seminary administration.'
+        'Leads the Student Council and represents the student body to the Seminary administration.',
+      image: 'https://ubs.ac.in/Admin/assets/img/32527ad9ce8a529795148ae9ed777b28.jpeg'
     },
 
     {
@@ -50,7 +66,8 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
       title: 'Vice President',
       icon: '◇',
       description:
-        'Supports the President and oversees Student Council activities in their absence.'
+        'Supports the President and oversees Student Council activities in their absence.',
+      image: 'https://ubs.ac.in/Admin/assets/img/gallery2.jpg'
     },
 
     {
@@ -58,7 +75,8 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
       title: 'Secretary',
       icon: '▣',
       description:
-        'Maintains records, communication and minutes for the Student Council.'
+        'Maintains records, communication and minutes for the Student Council.',
+      image: 'https://ubs.ac.in/Admin/assets/img/images_(1).jpeg'
     },
 
     {
@@ -66,7 +84,8 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
       title: 'Treasurer',
       icon: '⌂',
       description:
-        'Manages the Student Council\u2019s finances and coordinates fund-related activities.'
+        'Manages the Student Council\u2019s finances and coordinates fund-related activities.',
+      image: 'https://ubs.ac.in/Admin/assets/img/gallery1_1.jpg'
     },
 
     {
@@ -74,7 +93,8 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
       title: 'Chief Chapel Stewards',
       icon: '✧',
       description:
-        'Coordinate arrangements for chapel services and campus worship gatherings.'
+        'Coordinate arrangements for chapel services and campus worship gatherings.',
+      image: 'https://ubs.ac.in/Admin/assets/img/testimonial-2.jpg'
     }
 
   ];
@@ -82,10 +102,10 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
 
   /* =========================================================
      STUDENT COMMITTEES
-     NOTE: committee names carried over from the old site.
-     Descriptions are drafted from each name since the original
-     text was placeholder/test copy — please review, and confirm
-     the correct expansions for "SARAC" and "LDP".
+     NOTE: committee names + images carried over from the old
+     site. Descriptions drafted from each name since the
+     original text was placeholder/test copy — please review,
+     and confirm the correct expansions for "SARAC" and "LDP".
   ========================================================= */
 
   studentCommittees: StudentCommittee[] = [
@@ -94,73 +114,97 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
       number: '01',
       title: 'Prayer Committee',
       description:
-        'Arranges the weekly UBS Family Prayer Meeting and organizes community prayer gatherings, encouraging students to intercede together as a Seminary family.'
+        'Arranges the weekly UBS Family Prayer Meeting and organizes community prayer gatherings, encouraging students to intercede together as a Seminary family.',
+      image: 'https://ubs.ac.in/Admin/assets/img/1.jpg'
     },
 
     {
       number: '02',
       title: 'Missionary Project Committee',
       description:
-        'Coordinates missionary awareness projects and initiatives that connect students with mission work beyond the campus.'
+        'Coordinates missionary awareness projects and initiatives that connect students with mission work beyond the campus.',
+      image: 'https://ubs.ac.in/Admin/assets/img/3.jpeg'
     },
 
     {
       number: '03',
       title: 'SARAC',
       description:
-        'Details to be confirmed \u2014 please provide the committee\u2019s full name and role.'
+        'Details to be confirmed \u2014 please provide the committee\u2019s full name and role.',
+      image: 'https://ubs.ac.in/Admin/assets/img/4.png'
     },
 
     {
       number: '04',
       title: 'Handicraft Committee',
       description:
-        'Organizes handicraft and creative skill-building activities for students.'
+        'Organizes handicraft and creative skill-building activities for students.',
+      image: 'https://ubs.ac.in/Admin/assets/img/5.jpeg'
     },
 
     {
       number: '05',
       title: 'LDP',
       description:
-        'Leadership Development Programme \u2014 equips students with practical leadership and ministry skills. (Please confirm expansion.)'
+        'Leadership Development Programme \u2014 equips students with practical leadership and ministry skills. (Please confirm expansion.)',
+      image: 'https://ubs.ac.in/Admin/assets/img/6.jpeg'
     },
 
     {
       number: '06',
       title: 'Service Committee',
       description:
-        'Organizes campus service projects and community outreach initiatives.'
+        'Organizes campus service projects and community outreach initiatives.',
+      image: 'https://ubs.ac.in/Admin/assets/img/7.jpeg'
     },
 
     {
       number: '07',
       title: 'Sports and Games Committee',
       description:
-        'Organizes sports events, tournaments and recreational activities for the student community.'
+        'Organizes sports events, tournaments and recreational activities for the student community.',
+      image: 'https://ubs.ac.in/Admin/assets/img/8.jpeg'
     },
 
     {
       number: '08',
       title: 'Missionaries Conference Committee',
       description:
-        'Plans and coordinates the annual Missionaries Conference on campus.'
+        'Plans and coordinates the annual Missionaries Conference on campus.',
+      image: 'https://ubs.ac.in/Admin/assets/img/Union_Biblical_seminary.jpeg'
     },
 
     {
       number: '09',
       title: 'Campus Care Committee',
       description:
-        'Looks after the general upkeep, cleanliness and care of the campus.'
+        'Looks after the general upkeep, cleanliness and care of the campus.',
+      image: 'https://ubs.ac.in/Admin/assets/img/gallery2.jpg'
     },
 
     {
       number: '10',
       title: 'Days of Challenge Committee',
       description:
-        'Organizes the Days of Challenge programme for spiritual growth and reflection.'
+        'Organizes the Days of Challenge programme for spiritual growth and reflection.',
+      image: 'https://ubs.ac.in/Admin/assets/img/images_(1).jpeg'
     }
 
   ];
+
+
+  /* =========================================================
+     IMAGE FALLBACK
+     If a placeholder link ever 404s, hide the broken image and
+     let the card fall back to its gold/navy tint background
+     instead of showing a broken-image icon.
+  ========================================================= */
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.style.display = 'none';
+    target.parentElement?.classList.add('photo-frame--fallback');
+  }
 
 
   /* =========================================================

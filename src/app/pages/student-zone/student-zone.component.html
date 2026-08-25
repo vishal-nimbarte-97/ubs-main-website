@@ -6,6 +6,18 @@
 
   <section class="sz-hero">
 
+    <div class="sz-hero-media">
+      <img
+        [src]="heroImage"
+        alt=""
+        loading="eager"
+        (error)="onImageError($event)"
+      >
+    </div>
+
+    <div class="sz-hero-blob sz-hero-blob--one"></div>
+    <div class="sz-hero-blob sz-hero-blob--two"></div>
+
     <div class="sz-hero-overlay"></div>
 
     <div class="sz-container hero-inner">
@@ -74,14 +86,21 @@
 
         <article
           class="council-card sz-reveal"
-          *ngFor="let role of councilRoles"
+          *ngFor="let role of councilRoles; let i = index"
+          [style.transition-delay.ms]="i * 90"
         >
 
-          <div class="council-top">
+          <div class="council-media">
 
-            <span class="council-number">
-              {{ role.number }}
-            </span>
+            <div class="photo-frame photo-frame--round">
+              <img
+                [src]="role.image"
+                [alt]="role.title"
+                loading="lazy"
+                (error)="onImageError($event)"
+              >
+              <span class="frame-corner frame-corner--tl"></span>
+            </div>
 
             <span class="council-icon">
               {{ role.icon }}
@@ -89,9 +108,17 @@
 
           </div>
 
-          <h3>{{ role.title }}</h3>
+          <div class="council-body">
 
-          <p>{{ role.description }}</p>
+            <span class="council-number">
+              {{ role.number }}
+            </span>
+
+            <h3>{{ role.title }}</h3>
+
+            <p>{{ role.description }}</p>
+
+          </div>
 
         </article>
 
@@ -128,16 +155,31 @@
 
         <article
           class="committee-card sz-reveal"
-          *ngFor="let committee of studentCommittees"
+          *ngFor="let committee of studentCommittees; let i = index"
+          [style.transition-delay.ms]="(i % 3) * 90"
         >
 
-          <span class="committee-number">
-            {{ committee.number }}
-          </span>
+          <div class="photo-frame photo-frame--wide committee-media">
+            <img
+              [src]="committee.image"
+              [alt]="committee.title"
+              loading="lazy"
+              (error)="onImageError($event)"
+            >
+            <span class="frame-corner frame-corner--tl"></span>
+            <span class="frame-corner frame-corner--br"></span>
+            <span class="committee-number">
+              {{ committee.number }}
+            </span>
+          </div>
 
-          <h3>{{ committee.title }}</h3>
+          <div class="committee-body">
 
-          <p>{{ committee.description }}</p>
+            <h3>{{ committee.title }}</h3>
+
+            <p>{{ committee.description }}</p>
+
+          </div>
 
         </article>
 
@@ -153,6 +195,8 @@
   ====================================================== -->
 
   <section class="sz-closing">
+
+    <div class="sz-closing-glow"></div>
 
     <div class="sz-container">
 
