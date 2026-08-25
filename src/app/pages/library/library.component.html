@@ -35,7 +35,7 @@
 
       <div class="hero-actions">
 
-        <a href="http://ubs-koha.informindia.co.in/" target="_blank" class="primary-btn">
+        <a href="https://libcatubs.ltsinformatics.com/" target="_blank" rel="noopener" class="primary-btn">
           Explore Library
           <span>↗</span>
         </a>
@@ -80,19 +80,23 @@
 
       <div class="nav-links">
 
-        <a href="#library-info">About</a>
+        <a href="#library-info">Meet the Librarian</a>
 
         <a href="#highlights">Highlights</a>
 
-        <a href="#policies">Policies</a>
+        <a href="#catalogue">Digital Catalogue</a>
+
+        <a href="#policies">Guidelines</a>
 
         <a href="#collections">Collections</a>
 
         <a href="#archives">Archives</a>
 
+        <a href="#facilities">Facilities</a>
+
       </div>
 
-      <a href="http://ubs-koha.informindia.co.in/" target="_blank" class="nav-button">
+      <a href="https://libcatubs.ltsinformatics.com/" target="_blank" rel="noopener" class="nav-button">
         KOHA OPAC
       </a>
 
@@ -102,23 +106,21 @@
 
 
   <!-- =========================
-       INTRODUCTION
+      MEET THE LIBRARIAN
   ========================== -->
-  <section id="library-info" class="intro-section">
+  <section id="library-info" class="intro-section librarian-intro-section">
 
     <div class="container">
 
-      <div class="section-label">
-        ABOUT THE LIBRARY
-      </div>
+      <div class="section-label">MEET THE LIBRARIAN</div>
 
       <div class="intro-grid">
 
         <div class="intro-title">
 
           <h2>
-            More than a library.
-            <span>A space for discovery.</span>
+            Meet the librarian.
+            <span>More than a library.</span>
           </h2>
 
         </div>
@@ -293,7 +295,7 @@
   </section>
 
 
-  <section class="reading-zones">
+  <section id="reading-zones" class="reading-zones">
 
   <div class="section-container">
 
@@ -366,76 +368,9 @@
 
 
   <!-- =========================
-       LIBRARIAN
-  ========================== -->
-  <section class="librarian-section">
-
-    <div class="container librarian-grid">
-
-      <div class="librarian-image">
-
-        <img [src]="images.librarian" alt="Librarian in a reading space" loading="lazy" />
-
-        <div class="image-caption">
-          <span>UBS LIBRARY</span>
-          <strong>Knowledge. Research. Excellence.</strong>
-        </div>
-
-      </div>
-
-
-      <div class="librarian-content">
-
-        <span class="section-label">
-          MEET THE LIBRARIAN
-        </span>
-
-        <h2>
-          Supporting every
-          <span>reader's journey.</span>
-        </h2>
-
-        <p>
-          The UBS Library provides students, faculty and
-          researchers with access to academic resources and
-          a welcoming environment for learning.
-        </p>
-
-        <div class="contact-card">
-
-          <div class="contact-icon">
-            ✦
-          </div>
-
-          <div>
-
-            <strong>
-              Mr. Sungjemmeren Kijong Imchen
-            </strong>
-
-            <span>
-              Librarian, UBS Library
-            </span>
-
-            <!-- <a href="mailto:library@ubs.ac.in">
-              library@ubs.ac.in
-            </a> -->
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================
        KOHA CTA
   ========================== -->
-  <section class="koha-section">
+  <section id="catalogue" class="koha-section">
 
     <div class="koha-pattern"></div>
 
@@ -459,7 +394,7 @@
 
       </div>
 
-      <a href="http://ubs-koha.informindia.co.in/" target="_blank" class="koha-button">
+      <a href="https://libcatubs.ltsinformatics.com/" target="_blank" rel="noopener" class="koha-button">
         Open KOHA OPAC
         <span>↗</span>
       </a>
@@ -517,8 +452,11 @@
 
             </div>
 
-            <span class="policy-icon">
-              {{ activePolicy === i ? '−' : '+' }}
+            <span class="policy-action">
+              {{ activePolicy === i ? 'Show less' : 'Know more' }}
+              <span class="policy-icon" aria-hidden="true">
+                {{ activePolicy === i ? '−' : '+' }}
+              </span>
             </span>
 
           </button>
@@ -709,7 +647,7 @@
   <!-- =========================
        FACILITIES
   ========================== -->
-  <section class="facilities-section">
+  <section id="facilities" class="facilities-section">
 
     <div class="container">
 
@@ -814,35 +752,5 @@
 
   </section>
 
-
-  <!-- =========================
-       FINAL CTA
-  ========================== -->
-  <section class="final-cta">
-
-    <div class="container">
-
-      <span class="section-label">
-        START EXPLORING
-      </span>
-
-      <h2>
-        Your next discovery
-        <span>starts here.</span>
-      </h2>
-
-      <p>
-        Explore the UBS Library catalogue and discover
-        resources waiting for you.
-      </p>
-
-      <a href="http://ubs-koha.informindia.co.in/" target="_blank" class="primary-btn">
-        Visit Library Catalogue
-        <span>↗</span>
-      </a>
-
-    </div>
-
-  </section>
 
 </div>

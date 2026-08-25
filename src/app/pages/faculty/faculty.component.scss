@@ -5,17 +5,17 @@
 :host {
   display: block;
 
-  --primary: #9b0036;
-  --primary-dark: #760028;
-  --primary-light: #f9edf2;
+  --primary: #0b2545;
+  --primary-dark: #123b6b;
+  --primary-light: #f7f4ec;
 
-  --text-dark: #222;
-  --text-medium: #555;
-  --text-light: #777;
+  --text-dark: #1b2430;
+  --text-medium: #5b6675;
+  --text-light: #5b6675;
 
   --white: #ffffff;
-  --background: #fafafa;
-  --border: #e7e7e7;
+  --background: #f7f4ec;
+  --border: #dfe4eb;
 
   --shadow-sm:
     0 5px 20px rgba(0, 0, 0, 0.07);
@@ -37,7 +37,7 @@
     linear-gradient(
       180deg,
       #ffffff 0%,
-      #f8f7f4 100%
+      #f7f4ec 100%
     );
 
   color: var(--text-dark);
@@ -67,7 +67,7 @@
     linear-gradient(
       135deg,
       #fff 0%,
-      #faf1f5 50%,
+      #f7f4ec 50%,
       #fff 100%
     );
 
@@ -88,7 +88,7 @@
   border-radius: 50%;
 
   background:
-    rgba(155, 0, 54, 0.05);
+    rgba(18, 59, 107, 0.07);
 
   top: -150px;
   left: -100px;
@@ -106,7 +106,7 @@
   border-radius: 50%;
 
   background:
-    rgba(155, 0, 54, 0.04);
+    rgba(201, 150, 43, 0.08);
 
   bottom: -150px;
   right: -80px;
@@ -331,8 +331,8 @@
   transform:
     translateY(-12px);
 
-  border-color:
-    rgba(155, 0, 54, 0.35);
+    border-color:
+      var(--gold);
 
   box-shadow:
     0 22px 45px rgba(11, 37, 69, 0.16);
@@ -346,7 +346,7 @@
   right: -110px;
   bottom: -130px;
   border-radius: 50%;
-  background: rgba(155, 0, 54, 0.05);
+    background: rgba(18, 59, 107, 0.06);
   z-index: 0;
   transition: transform 0.45s ease, background 0.45s ease;
   pointer-events: none;
@@ -354,7 +354,7 @@
 
 .faculty-card:hover::after {
   transform: scale(1.35);
-  background: rgba(155, 0, 54, 0.09);
+  background: rgba(201, 150, 43, 0.12);
 }
 
 
@@ -375,7 +375,7 @@
     linear-gradient(
       90deg,
       var(--navy),
-      #d14a72,
+        var(--gold),
       var(--navy)
     );
 
@@ -1317,6 +1317,7 @@
 }
 
 
+.pdf-button,
 .contact-button,
 .close-button {
   padding:
@@ -1339,6 +1340,28 @@
 
   transition:
     all 0.2s ease;
+}
+
+.pdf-button {
+  border:
+    1px solid var(--gold);
+
+  background:
+    var(--parchment);
+
+  color:
+    var(--navy);
+}
+
+.pdf-button:hover {
+  border-color:
+    var(--navy);
+
+  background:
+    var(--gold);
+
+  color:
+    var(--navy);
 }
 
 
@@ -1667,6 +1690,7 @@
   }
 
 
+  .pdf-button,
   .contact-button,
   .close-button {
     width:
@@ -1757,7 +1781,7 @@
 button:focus-visible,
 a:focus-visible {
   outline:
-    3px solid rgba(155, 0, 54, 0.3);
+    3px solid rgba(201, 150, 43, 0.45);
 
   outline-offset:
     3px;
@@ -1767,6 +1791,54 @@ a:focus-visible {
 /* =========================================================
    BODY MODAL STATE
 ========================================================= */
+
+.faculty-page,
+.faculty-page .faculty-card,
+.faculty-page .faculty-modal {
+  color: var(--ink);
+}
+
+.faculty-page .faculty-modal-header,
+.faculty-page .modal-header {
+  background: linear-gradient(135deg, var(--white), var(--parchment));
+  border-color: var(--border);
+}
+
+.faculty-page .profile-row,
+.faculty-page .no-profile-data {
+  background: var(--parchment);
+  border-color: var(--border);
+}
+
+.faculty-page .profile-row p,
+.faculty-page .profile-section ul,
+.faculty-page .profile-section ol,
+.faculty-page .designation,
+.faculty-page .additional-designation,
+.faculty-page .close-button {
+  color: var(--ink);
+}
+
+.faculty-page .profile-row label,
+.faculty-page .no-profile-data,
+.faculty-page .profile-section ul,
+.faculty-page .profile-section ol {
+  color: var(--slate);
+}
+
+.faculty-page .profile-section h3,
+.faculty-page .faculty-content h3,
+.faculty-page .modal-title h2 {
+  color: var(--navy);
+}
+
+.faculty-page .profile-section h3,
+.faculty-page .modal-footer,
+.faculty-page .profile-row,
+.faculty-page .faculty-email {
+  border-color: var(--border);
+}
+
 
 :global(body.faculty-modal-open) {
   overflow:

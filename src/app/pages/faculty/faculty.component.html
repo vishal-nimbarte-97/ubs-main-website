@@ -441,6 +441,16 @@
       <div class="modal-footer">
 
         <a
+          [href]="'assets/faculty-pdfs/faculty-' + faculty.id + '.pdf#toolbar=0&navpanes=0&scrollbar=1'"
+          class="pdf-button"
+          target="_blank"
+          rel="noopener"
+          [attr.aria-label]="'View PDF profile for ' + faculty.name"
+        >
+          View PDF
+        </a>
+
+        <a
           [href]="'mailto:' + faculty.email"
           class="contact-button"
         >
