@@ -1,1 +1,129 @@
-<main class="academic-page"><section class="academic-hero"><div class="academic-container academic-hero-grid"><div><span class="eyebrow">Residential formation</span><h1>Study in <span>community.</span></h1><p>Full-time theological education shaped by Scripture, prayer, scholarship, and life together on campus.</p></div><img src="assets/img/Theological_1.png" alt="Residential theological study" /></div></section><section class="academic-section"><div class="academic-container content-grid"><div><span class="eyebrow">Long-term courses</span><h2>Deep learning.<br><span>Shared life.</span></h2></div><div><p>Residential programmes create space for sustained study and practical formation alongside students, faculty, and the wider UBS community.</p><ul><li>Bachelor of Divinity</li><li>Master of Theology</li><li>Doctor of Theology</li></ul><a class="academic-button" routerLink="/apply">Apply for residential study <span>&#8594;</span></a></div></div></section></main>
+<main class="academic-page">
+
+  <!-- Hero -->
+  <section class="academic-hero">
+    <div class="academic-container academic-hero-grid">
+      <div>
+        <span class="eyebrow">Residential formation</span>
+        <h1>Study in <span>community.</span></h1>
+        <p>
+          Full-time theological education shaped by Scripture, prayer, scholarship, and life
+          together on campus.
+        </p>
+        <a class="academic-button" routerLink="/apply">
+          Apply for residential study <span>&#8594;</span>
+        </a>
+      </div>
+      <img src="assets/img/Theological_1.png" alt="Residential theological study" />
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="academic-section">
+    <div class="academic-container content-grid">
+      <div>
+        <span class="eyebrow">Long-term courses</span>
+        <h2>Deep learning.<br /><span>Shared life.</span></h2>
+      </div>
+      <div>
+        <p>
+          Residential programmes create space for sustained study and practical formation
+          alongside students, faculty, and the wider UBS community. Every course is built on
+          Bible-centred teaching, holiness of life, and preparing leaders for the mission of the
+          church.
+        </p>
+        <ul>
+          <li>Bachelor of Divinity</li>
+          <li>Master of Theology</li>
+          <li>Doctor of Theology</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programme cards -->
+  <section class="academic-section programmes-section">
+    <div class="academic-container">
+      <span class="eyebrow">Degree programmes</span>
+      <h2>Courses offered</h2>
+
+      <div class="programme-grid">
+        <article class="programme-card" *ngFor="let p of programmes">
+          <div class="programme-card__head">
+            <h3>{{ p.name }}</h3>
+            <span class="duration-badge">{{ p.duration }}</span>
+          </div>
+          <p class="programme-card__summary">{{ p.summary }}</p>
+          <ul>
+            <li *ngFor="let point of p.points">{{ point }}</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CCM -->
+  <section class="academic-section ccm-section">
+    <div class="academic-container content-grid">
+      <div>
+        <span class="eyebrow">Short-term training</span>
+        <h2>{{ ccm.name }}</h2>
+        <p class="duration-badge duration-badge--outline">{{ ccm.duration }} &middot; {{ ccm.medium }}</p>
+        <p>{{ ccm.summary }}</p>
+      </div>
+      <div>
+        <h3 class="mini-heading">What you'll learn</h3>
+        <ul>
+          <li *ngFor="let point of ccm.points">{{ point }}</li>
+        </ul>
+        <h3 class="mini-heading">Eligibility</h3>
+        <ul>
+          <li *ngFor="let item of ccm.eligibility">{{ item }}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admissions -->
+  <section class="academic-section admissions-section">
+    <div class="academic-container">
+      <span class="eyebrow">Before you apply</span>
+      <h2>Admissions essentials</h2>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h3 class="mini-heading">Application fees</h3>
+          <ul class="info-list">
+            <li *ngFor="let fee of admissionInfo.fees">
+              <span>{{ fee.label }}</span><strong>{{ fee.value }}</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3 class="mini-heading">Deadlines</h3>
+          <ul class="info-list">
+            <li *ngFor="let d of admissionInfo.deadlines">
+              <span>{{ d.programme }}</span><strong>{{ d.date }}</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3 class="mini-heading">Contact for forms</h3>
+          <ul class="info-list">
+            <li *ngFor="let c of admissionInfo.contacts">
+              <span>{{ c.label }}</span>
+              <a [href]="'mailto:' + c.email">{{ c.email }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <a class="academic-button" routerLink="/apply">
+        Apply for residential study <span>&#8594;</span>
+      </a>
+    </div>
+  </section>
+
+</main>
