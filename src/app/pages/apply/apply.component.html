@@ -1,52 +1,74 @@
 <main class="apply-page">
-  <section class="apply-hero">
-    <div class="apply-container apply-hero__inner">
-      <div class="apply-hero__copy">
-        <span class="eyebrow">Union Biblical Seminary</span>
-          <p class="hero-kicker">Take your first step towards</p>
-          <h1><span>Academic Formation.</span></h1>
-        <p>Begin a transformational journey of biblical study, spiritual growth, and preparation for faithful service.</p>
-        <a class="apply-button" href="#application-steps">How to apply <span aria-hidden="true">&#8595;</span></a>
-      </div>
-      <div class="apply-hero__image">
-        <img src="assets/apply/image_4.jpg" alt="Union Biblical Seminary campus" />
-        <span>Apply to UBS / 2026-27</span>
-      </div>
+  <section class="apply-hero" aria-labelledby="apply-title">
+    <div class="apply-container apply-hero__content">
+      <span class="eyebrow eyebrow--light">Admissions &middot; Union Biblical Seminary</span>
+      <p class="hero-kicker">Take your first step towards</p>
+      <h1 id="apply-title">Academic <em>Formation.</em></h1>
+      <p class="hero-description">A focused journey of biblical learning, spiritual growth, and preparation for faithful service.</p>
+      <a class="button button--light" href="#programmes">Explore programmes <span aria-hidden="true">&darr;</span></a>
     </div>
   </section>
 
-  <section id="application-steps" class="apply-section">
+  <section class="steps-section" aria-labelledby="steps-title">
     <div class="apply-container">
       <div class="section-heading">
-          <div><span class="eyebrow">Application process</span><h2>Four steps to <span>begin.</span></h2></div>
-          <p>Academic excellence and integrity are the goals we pursue as we develop scholar-saints who will impact the world.</p>
+        <div>
+          <span class="eyebrow">Your application journey</span>
+          <h2 id="steps-title">Four steps, one <em>calling.</em></h2>
+        </div>
+        <p>We are here to help you move from interest to enrolment with clarity and confidence.</p>
       </div>
+      <div class="journey-banner" aria-hidden="true"></div>
       <div class="steps-grid">
-        <article class="step-card"><span>01</span><h3>Connect to us</h3><p>Write to the UBS admissions team and tell us about your study goals.</p></article>
-        <article class="step-card"><span>02</span><h3>Choose a programme</h3><p>Review residential and non-residential pathways to find the right fit.</p></article>
-        <article class="step-card"><span>03</span><h3>Prepare documents</h3><p>Gather your academic records, references, and required application details.</p></article>
-        <article class="step-card"><span>04</span><h3>Submit for review</h3><p>Send your completed application and our team will guide you through the next step.</p></article>
+        @for (step of steps; track step.number) {
+          <article class="step-card">
+            <div>
+              <span class="step-number">{{ step.number }}</span>
+              <h3>{{ step.title }}</h3>
+              <p>{{ step.description }}</p>
+            </div>
+          </article>
+        }
       </div>
     </div>
   </section>
 
-  <section class="programme-section">
+  <section id="programmes" class="programme-section" aria-labelledby="programmes-title">
     <div class="apply-container">
-      <div class="section-heading section-heading--center"><span class="eyebrow">Academic programmes</span><h2>Choose your <span>pathway.</span></h2></div>
+      <div class="section-heading section-heading--center">
+        <span class="eyebrow">Application downloads</span>
+        <h2 id="programmes-title">Find your <em>programme.</em></h2>
+        <p>Choose a programme below to download its application form and information.</p>
+      </div>
       <div class="programme-grid">
-        <article class="programme-card"><div class="programme-card__image"><img src="assets/apply/image_1.png" alt="Residential programme" loading="lazy"><strong>01</strong></div><div class="programme-card__body"><span class="card-label">Residential</span><h3>Bachelor of Divinity</h3><p>A three-year programme for deep biblical and ministerial formation.</p><a routerLink="/programmes/residential">View programme <span>&#8594;</span></a></div></article>
-        <article class="programme-card"><div class="programme-card__image"><img src="assets/apply/image_2.png" alt="Theology programme" loading="lazy"><strong>02</strong></div><div class="programme-card__body"><span class="card-label">Postgraduate study</span><h3>Master of Theology</h3><p>Focused theological research across biblical studies, theology, and ministry.</p><a routerLink="/programmes/residential">View programme <span>&#8594;</span></a></div></article>
-        <article class="programme-card"><div class="programme-card__image"><img src="assets/apply/image_3.png" alt="Distance learning programme" loading="lazy"><strong>03</strong></div><div class="programme-card__body"><span class="card-label">Non-residential</span><h3>Master of Divinity</h3><p>Flexible distance learning for students serving in their own contexts.</p><a routerLink="/programmes/non-residential">View programme <span>&#8594;</span></a></div></article>
+        @for (programme of programmes; track programme.downloadUrl) {
+          <a class="programme-card" [href]="programme.downloadUrl" target="_blank" rel="noopener">
+            <div class="programme-card__image">
+              <img [src]="programme.image" [alt]="programme.title" loading="lazy">
+              <span>Download &nearr;</span>
+            </div>
+            <div class="programme-card__body">
+              <h3>{{ programme.title }}</h3>
+              <ul>
+                @for (detail of programme.details; track detail) {
+                  <li>{{ detail }}</li>
+                }
+              </ul>
+            </div>
+          </a>
+        }
       </div>
     </div>
   </section>
 
-  <section class="requirements-section">
-    <div class="apply-container requirements-grid">
-      <img src="assets/apply/image_5.jpg" alt="Students gathered at UBS" loading="lazy">
-      <div><span class="eyebrow">Before you apply</span><h2>Prepare with <span>purpose.</span></h2><p>Academic excellence and integrity are central to the UBS journey. Keep your documents ready and contact us when you need guidance.</p><ul><li>Review the programme requirements</li><li>Prepare academic certificates and references</li><li>Confirm tuition and accommodation details</li><li>Contact the Registrar for assistance</li></ul><a class="apply-link" href="mailto:registrar@ubs.ac.in">Contact registrar <span>&#8599;</span></a></div>
+  <section class="contact-section">
+    <div class="apply-container contact-section__inner">
+      <div>
+        <span class="eyebrow eyebrow--light">Need a hand?</span>
+        <h2>Questions before you <em>apply?</em></h2>
+        <p>For tuition, eligibility requirements, or further information, our Registrar is ready to help.</p>
+      </div>
+      <a class="button button--gold" href="mailto:registrar@ubs.ac.in">Email the Registrar <span aria-hidden="true">&nearr;</span></a>
     </div>
   </section>
-
-  <section class="apply-cta"><div class="apply-container"><span class="eyebrow">Your next chapter</span><h2>There is room for your <span>calling here.</span></h2><p>Explore the programmes, ask your questions, and take the next step with UBS.</p><a class="apply-button" routerLink="/faq">Read FAQs <span>&#8594;</span></a></div></section>
 </main>
