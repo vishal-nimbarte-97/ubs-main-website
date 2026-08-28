@@ -1,46 +1,57 @@
 <main class="tuition-page">
-	<section class="tuition-hero">
-		<div class="tuition-container tuition-hero__inner">
-			<div>
-				<span class="eyebrow">Admissions</span>
-				<h1>Tuition <span>&amp; fees.</span></h1>
-				<p>Finance information for students planning their academic formation at Union Biblical Seminary.</p>
-			</div>
-			<img src="assets/tuition/image_1.jpg" alt="UBS campus and grounds" />
-		</div>
-	</section>
+  <section class="tuition-hero" aria-labelledby="tuition-title">
+    <div class="tuition-container tuition-hero__content">
+      <span class="eyebrow eyebrow--light">Union Biblical Seminary &middot; Admissions</span>
+      <p class="hero-kicker">Finance information</p>
+      <h1 id="tuition-title">Tuition <em>&amp; fees.</em></h1>
+      <p>Plan your academic formation with clear, up-to-date guidance from the UBS admissions team.</p>
+      <a class="button button--light" href="#tuition-fees">View fee information <span aria-hidden="true">&darr;</span></a>
+    </div>
+  </section>
 
-	<section class="tuition-section">
-		<div class="tuition-container">
-			<div class="section-heading">
-				<div><span class="eyebrow">Plan with clarity</span><h2>Invest in your <span>calling.</span></h2></div>
-				<p>Tuition and related costs depend on the programme and mode of study. The current official schedule will be published here when available.</p>
-			</div>
+  <section id="tuition-fees" class="tuition-section" aria-labelledby="fees-title">
+    <div class="tuition-container">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Plan with clarity</span>
+          <h2 id="fees-title">Invest in your <em>calling.</em></h2>
+        </div>
+        <p>Tuition and related costs vary by programme and mode of study. The current official schedule will be published here when confirmed.</p>
+      </div>
 
-			<div class="finance-card">
-				<div class="finance-card__heading">
-					<div><span class="eyebrow">Finance information</span><h3>Tuition &amp; Fees</h3></div>
-					<span class="status-badge">Updating soon</span>
-				</div>
-				<div class="table-scroll">
-					<table>
-						<thead><tr><th scope="col">Programme</th><th scope="col">Main Campus</th><th scope="col">Online Campus</th><th scope="col">Extension</th></tr></thead>
-						<tbody><tr *ngFor="let row of tuitionRows"><th scope="row">{{ row.programme }}</th><td>{{ row.mainCampus }}</td><td>{{ row.onlineCampus }}</td><td>{{ row.extension }}</td></tr></tbody>
-					</table>
-				</div>
-				<p class="table-note">Please contact the Registrar for the latest confirmed tuition schedule and payment instructions.</p>
-			</div>
-		</div>
-	</section>
+      <article class="finance-card">
+        <div class="finance-card__heading">
+          <div><span class="eyebrow eyebrow--light">Finance information</span><h3>Tuition &amp; Fees</h3></div>
+          <span class="status-badge"><i></i> Updating soon</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Programme</th><th scope="col">Main Campus</th><th scope="col">Online Campus</th><th scope="col">Extension</th></tr></thead>
+            <tbody><tr *ngFor="let row of tuitionRows"><th scope="row">{{ row.programme }}</th><td>{{ row.mainCampus }}</td><td>{{ row.onlineCampus }}</td><td>{{ row.extension }}</td></tr></tbody>
+          </table>
+        </div>
+        <div class="finance-card__footer"><p>Please contact the Registrar for the latest confirmed tuition schedule and payment instructions.</p><a href="mailto:registrar@ubs.ac.in">Ask a question <span>&nearr;</span></a></div>
+      </article>
+    </div>
+  </section>
 
-	<section class="tuition-section tuition-section--paper">
-		<div class="tuition-container tuition-details-grid">
-			<img src="assets/tuition/image_2.jpg" alt="Reference books and study resources" loading="lazy" />
-			<div><span class="eyebrow">Before you apply</span><h2>Know what to <span>prepare.</span></h2><ul><li>Confirm your programme and mode of study.</li><li>Ask about tuition, registration, and accommodation costs.</li><li>Review payment timelines with the admissions team.</li><li>Keep your academic documents ready.</li></ul><a class="tuition-button" routerLink="/apply">Begin your application <span>&#8594;</span></a></div>
-		</div>
-	</section>
+  <section class="planning-section">
+    <div class="tuition-container planning-grid">
+      <div class="planning-image"><img src="assets/tuition/image_2.jpg" alt="Study resources at Union Biblical Seminary" loading="lazy"></div>
+      <div>
+        <span class="eyebrow">Before you apply</span>
+        <h2>Prepare with <em>confidence.</em></h2>
+        <p>Our admissions team can help you understand every part of the financial preparation for your programme.</p>
+        <ul><li>Confirm your programme and mode of study.</li><li>Ask about tuition, registration, and accommodation costs.</li><li>Review payment timelines with the admissions team.</li><li>Keep your academic documents ready.</li></ul>
+        <a class="button button--wine" routerLink="/apply">Begin your application <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
 
-	<section class="tuition-contact">
-		<div class="tuition-container tuition-contact__inner"><div><span class="eyebrow">Need help?</span><h2>We are here to <span>guide you.</span></h2><p>For questions about tuition, eligibility, and other finance information, contact the Registrar.</p></div><a class="light-button" href="mailto:registrar@ubs.ac.in">Contact Registrar <span>&#8599;</span></a></div>
-	</section>
+  <section class="tuition-contact">
+    <div class="tuition-container tuition-contact__inner">
+      <div><span class="eyebrow eyebrow--light">Need help?</span><h2>We are here to <em>guide you.</em></h2><p>For questions about tuition, eligibility, and other finance information, contact the Registrar.</p></div>
+      <a class="button button--gold" href="mailto:registrar@ubs.ac.in">Contact Registrar <span aria-hidden="true">&nearr;</span></a>
+    </div>
+  </section>
 </main>
