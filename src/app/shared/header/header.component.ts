@@ -88,10 +88,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   openDropdownMenu(menu: 'about' | 'administration' | 'academics'): void {
+    // Hover and focus open submenus on desktop only. On mobile, the parent
+    // button below owns this state so one tap always opens the selected menu.
+    if (this.isMobileViewport()) return;
     this.openDropdown = menu;
   }
 
+  /** Parent navigation items expand submenus only in the mobile drawer. */
+  toggleMobileDropdownMenu(menu: 'about' | 'administration' | 'academics'): void {
+    if (!this.isBrowser || window.innerWidth > 836) return;
+    this.openDropdown = this.openDropdown === menu ? null : menu;
+  }
+
   closeDropdownMenu(menu: 'about' | 'administration' | 'academics'): void {
+    if (this.isMobileViewport()) return;
     if (this.openDropdown === menu) this.openDropdown = null;
   }
 
@@ -144,5 +154,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     this.countdownText = `Time left to apply: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  private isMobileViewport(): boolean {
+    return this.isBrowser && window.innerWidth <= 836;
   }
 }
