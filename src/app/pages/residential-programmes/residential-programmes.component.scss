@@ -250,6 +250,7 @@ ul {
 }
 
 /* Responsive */
+// RESPONSIVE: Tablets: styles apply at 900px viewport width and below.
 @media (max-width: 900px) {
   .programme-grid,
   .info-grid {
@@ -257,6 +258,7 @@ ul {
   }
 }
 
+// RESPONSIVE: Large phones: styles apply at 640px viewport width and below.
 @media (max-width: 640px) {
   .academic-container {
     width: calc(100% - 2rem);

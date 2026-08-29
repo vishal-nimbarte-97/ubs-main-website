@@ -782,6 +782,7 @@
    REDUCED MOTION
 ========================================================= */
 
+// RESPONSIVE: Accessibility: respects the user's OS-level 'reduce motion' setting.
 @media (prefers-reduced-motion: reduce) {
 
   .sz-hero-media img,
@@ -808,6 +809,7 @@
    TABLET
 ========================================================= */
 
+// RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1000px viewport width and below.
 @media (max-width: 1000px) {
 
   .sz-container {
@@ -829,6 +831,7 @@
    MOBILE
 ========================================================= */
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 700px viewport width and below.
 @media (max-width: 700px) {
 
   .sz-container {

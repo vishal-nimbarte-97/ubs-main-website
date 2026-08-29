@@ -16,6 +16,84 @@ h1,h2,h3 { margin-top:0; font-family:Georgia,'Times New Roman',serif; overflow-w
 .planning-section { background:var(--cream); }.planning-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1fr); gap:clamp(2.5rem,7vw,6rem); align-items:center; }.planning-image { position:relative; }.planning-image::after { position:absolute; right:-.8rem; bottom:-.8rem; z-index:0; width:55%; height:55%; content:''; background:var(--gold); }.planning-image img { position:relative; z-index:1; display:block; width:100%; aspect-ratio:4/3; object-fit:cover; filter:saturate(.8); transition:transform .5s ease,filter .5s ease; }.planning-image:hover img { filter:saturate(1); transform:translate(-.4rem,-.4rem); }.planning-grid > div:last-child > p { color:var(--muted); line-height:1.8; }.planning-grid ul { display:grid; gap:.65rem; margin:1.5rem 0 2rem; padding:0; list-style:none; color:var(--muted); line-height:1.5; }.planning-grid li { display:flex; gap:.65rem; }.planning-grid li::before { color:var(--gold); content:'✓'; font-weight:900; }
 .tuition-contact { position:relative; isolation:isolate; padding:clamp(4.5rem,8vw,7rem) 0; overflow:hidden; background:linear-gradient(115deg,rgba(53,0,17,.95),rgba(112,0,35,.84)),url('/assets/tuition/tuition-contact.jpg') center/cover; }.tuition-contact::after { position:absolute; z-index:-1; top:50%; right:8%; width:14rem; height:14rem; border:1px solid rgba(255,255,255,.19); border-radius:50%; content:''; transform:translateY(-50%); box-shadow:0 0 0 2.5rem rgba(255,255,255,.04); }.tuition-contact__inner { display:flex; align-items:center; justify-content:space-between; gap:2rem; }.tuition-contact h2 { margin-bottom:1rem; color:#fff; }.tuition-contact p { max-width:610px; margin:0; color:rgba(255,255,255,.78); line-height:1.75; }
 @keyframes rise-in { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
-@media (max-width:800px) { .section-heading,.planning-grid { grid-template-columns:1fr; gap:1.5rem; }.finance-card__footer,.tuition-contact__inner { align-items:flex-start; flex-direction:column; }.planning-image { max-width:650px; }.button--gold { width:100%; justify-content:center; } }
-@media (max-width:600px) { .tuition-container { width:calc(100% - 2rem); }.tuition-hero { min-height:500px; background-position:60% center; }.tuition-hero__content { padding:5.5rem 0 7rem; }.finance-card__heading,.finance-card__footer { padding:1.25rem; }.finance-card__heading { align-items:flex-start; flex-direction:column; }.finance-card__footer a { padding-top:.25rem; } th,td { padding:1rem; }.planning-image::after { right:-.45rem; bottom:-.45rem; } }
-@media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+// RESPONSIVE: Tablets / large phones (landscape) — styles apply at 800px viewport width and below.
+@media (max-width: 800px) {
+  // Stack the two-column heading and planning sections into a single column
+  .section-heading,
+  .planning-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  // Let footer rows wrap top-to-bottom instead of squeezing side by side
+  .finance-card__footer,
+  .tuition-contact__inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .planning-image {
+    max-width: 650px;
+  }
+
+  // Make the gold CTA button full-width and easy to tap
+  .button--gold {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// RESPONSIVE: Large phones — styles apply at 600px viewport width and below.
+@media (max-width: 600px) {
+  // Reduce side gutters so content isn't cramped on narrow screens
+  .tuition-container {
+    width: calc(100% - 2rem);
+  }
+
+  // Shrink the hero and re-centre its background image for small screens
+  .tuition-hero {
+    min-height: 500px;
+    background-position: 60% center;
+  }
+
+  .tuition-hero__content {
+    padding: 5.5rem 0 7rem;
+  }
+
+  // Tighten card padding to save horizontal space
+  .finance-card__heading,
+  .finance-card__footer {
+    padding: 1.25rem;
+  }
+
+  .finance-card__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .finance-card__footer a {
+    padding-top: .25rem;
+  }
+
+  // Fee table: smaller cell padding (the wrapper already scrolls horizontally, see .table-scroll)
+  th,
+  td {
+    padding: 1rem;
+  }
+
+  .planning-image::after {
+    right: -.45rem;
+    bottom: -.45rem;
+  }
+}
+
+// RESPONSIVE: Accessibility — respects the user's OS-level "reduce motion" setting so animations don't play for users who opt out of motion.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}

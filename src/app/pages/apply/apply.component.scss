@@ -448,6 +448,7 @@ em {
   }
 }
 
+// RESPONSIVE: Tablets: styles apply at 900px viewport width and below.
 @media (max-width: 900px) {
 
   .steps-grid,
@@ -471,6 +472,7 @@ em {
   }
 }
 
+// RESPONSIVE: Large phones: styles apply at 620px viewport width and below.
 @media (max-width: 620px) {
   .apply-container {
     width: calc(100% - 2rem);
@@ -504,6 +506,7 @@ em {
   }
 }
 
+// RESPONSIVE: Accessibility: respects the user's OS-level 'reduce motion' setting.
 @media (prefers-reduced-motion: reduce) {
 
   *,

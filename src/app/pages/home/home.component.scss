@@ -381,12 +381,14 @@
   padding-bottom: 2px;
 }
 
+// RESPONSIVE: Applies from 981px upward (desktop / large-screen only rules).
 @media (min-width: 981px) {
   .hero-video {
     object-position: center 92%;  // was 75%
   }
 }
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 720px viewport width and below.
 @media (max-width: 720px) {
   .hero-video {
     object-position: center 100%;  // was 55% — mobile crop is taller/narrower, needs to go up more
@@ -511,6 +513,7 @@
 }
 
 /* ---------- tablet / mobile ---------- */
+// RESPONSIVE: Tablets: styles apply at 900px viewport width and below.
 @media (max-width: 900px) {
   .about-intro-grid {
     grid-template-columns: 1fr;
@@ -522,6 +525,7 @@
   }
 }
 
+// RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
 @media (max-width: 600px) {
   .about-intro-section {
     padding: 48px 0;
@@ -566,6 +570,7 @@
 }
 
 /* Tablet */
+// RESPONSIVE: Tablets: styles apply at 992px viewport width and below.
 @media (max-width: 992px) {
   .ubs-updates-copy {
     padding: 15px;
@@ -581,12 +586,14 @@
   }
 }
 
+// RESPONSIVE: Tablets: styles apply at 992px viewport width and below.
 @media (max-width: 992px) {
   .typed-heading {
     font-size: 1.9rem;
   }
 }
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 768px viewport width and below.
 @media (max-width: 768px) {
   .typed-heading {
     font-size: 1.7rem;
@@ -594,6 +601,7 @@
 }
 
 /* Mobile */
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 768px viewport width and below.
 @media (max-width: 768px) {
   .ubs-updates-copy {
     padding: 10px 15px;
@@ -1379,6 +1387,7 @@
 /* =========================================================
      RESPONSIVE
   ========================================================= */
+// RESPONSIVE: Tablets: styles apply at 980px viewport width and below.
 @media (max-width: 980px) {
 
   .why-grid,
@@ -1403,6 +1412,7 @@
   }
 }
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 720px viewport width and below.
 @media (max-width: 720px) {
   .top-bar-inner {
     justify-content: center;
@@ -1473,6 +1483,7 @@
   }
 }
 
+// RESPONSIVE: Standard mobile phones: styles apply at 480px viewport width and below.
 @media (max-width: 480px) {
   .tracks-grid {
     grid-template-columns: 1fr;
@@ -1493,6 +1504,7 @@
   }
 }
 
+// RESPONSIVE: Accessibility: respects the user's OS-level 'reduce motion' setting.
 @media (prefers-reduced-motion: reduce) {
 
   .tagline-swapper h1,
@@ -1510,6 +1522,7 @@
    layout stays usable and legible from small phones up to
    tablets, in addition to the fluid clamp() sizing above.
 ========================================================= */
+// RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
 @media (max-width: 600px) {
   .wrap {
     padding: 0 16px;
@@ -1633,6 +1646,7 @@
   }
 }
 
+// RESPONSIVE: Standard mobile phones: styles apply at 480px viewport width and below.
 @media (max-width: 480px) {
   .legacy-grid {
     grid-template-columns: 1fr;
@@ -1673,6 +1687,7 @@
   }
 }
 
+// RESPONSIVE: Small / narrow mobile phones: styles apply at 360px viewport width and below.
 @media (max-width: 360px) {
   .hero {
     min-height: 380px;
@@ -1899,6 +1914,7 @@ body {
 
 /* Tablet */
 
+// RESPONSIVE: Tablets: styles apply at 992px viewport width and below.
 @media(max-width:992px) {
 
   .course-grid {
@@ -1909,6 +1925,7 @@ body {
 
 /* Mobile */
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 768px viewport width and below.
 @media(max-width:768px) {
 
   .course-grid {
@@ -2208,6 +2225,7 @@ body {
 
 /* Tablet */
 
+// RESPONSIVE: Tablets: styles apply at 992px viewport width and below.
 @media(max-width:992px) {
 
   .principal-section h2 {
@@ -2238,6 +2256,7 @@ body {
 
 /* Mobile */
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 768px viewport width and below.
 @media(max-width:768px) {
 
   .principal-section {
@@ -2404,6 +2423,7 @@ body {
 
 /* Tablet */
 
+// RESPONSIVE: Tablets: styles apply at 991px viewport width and below.
 @media(max-width:991px) {
 
   .legacy-slide {
@@ -2414,6 +2434,7 @@ body {
 
 /* Mobile */
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 767px viewport width and below.
 @media(max-width:767px) {
 
   .legacy-slide {
@@ -2583,6 +2604,7 @@ body {
   }
 }
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 720px viewport width and below.
 @media (max-width: 720px) {
   .legacy-grid {
     grid-template-columns: 1fr 1fr;
@@ -3219,6 +3241,7 @@ body {
    TABLET
    ========================================================= */
 
+// RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1000px viewport width and below.
 @media (max-width: 1000px) {
 
   .updates-section {
@@ -3247,6 +3270,7 @@ body {
    MOBILE
    ========================================================= */
 
+// RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
 @media (max-width: 600px) {
 
   .updates-section {
@@ -3476,6 +3500,7 @@ body {
    VERY SMALL MOBILE
    ========================================================= */
 
+// RESPONSIVE: Small / narrow mobile phones: styles apply at 380px viewport width and below.
 @media (max-width: 380px) {
 
   .updates-section {
@@ -3830,6 +3855,7 @@ body {
    LARGE DESKTOP
 ========================================= */
 
+// RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1200px viewport width and below.
 @media (max-width: 1200px) {
   .campus-container {
     width: min(1100px, calc(100% - 60px));
@@ -3844,6 +3870,7 @@ body {
    TABLET
 ========================================= */
 
+// RESPONSIVE: Tablets: styles apply at 900px viewport width and below.
 @media (max-width: 900px) {
   .campus-life-section {
     padding: 60px 0;
@@ -3883,6 +3910,7 @@ body {
    MOBILE
 ========================================= */
 
+// RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
 @media (max-width: 600px) {
   .campus-life-section {
     padding: 46px 0;
@@ -4005,6 +4033,7 @@ body {
   }
 }
 
+// RESPONSIVE: Small / narrow mobile phones: styles apply at 380px viewport width and below.
 @media (max-width: 380px) {
   .campus-container {
     width: calc(100% - 24px);
@@ -4164,6 +4193,7 @@ body {
   z-index: 2;
 }
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 720px viewport width and below.
 @media (max-width: 720px) {
   .campus-video-hero {
     height: 60vh;

@@ -182,6 +182,7 @@ ul {
   color: var(--navy);
 }
 
+// RESPONSIVE: Large phones: styles apply at 640px viewport width and below.
 @media (max-width: 640px) {
   .academic-container {
     width: calc(100% - 2rem);
@@ -206,6 +207,7 @@ ul {
   }
 }
 
+// RESPONSIVE: Tablet band: applies only between 641px and 900px viewport width.
 @media (max-width: 900px) and (min-width: 641px) {
   .academic-cards {
     grid-template-columns: repeat(2, 1fr);

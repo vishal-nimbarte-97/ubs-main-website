@@ -188,6 +188,7 @@ details p {
   }
 }
 
+// RESPONSIVE: Large phones: styles apply at 640px viewport width and below.
 @media (max-width: 640px) {
   .academic-container {
     width: calc(100% - 2rem);

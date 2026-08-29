@@ -242,6 +242,7 @@
 
 /* ---------- Responsive ---------- */
 
+// RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1080px viewport width and below.
 @media (max-width: 1080px) {
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -253,6 +254,7 @@
   }
 }
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 720px viewport width and below.
 @media (max-width: 720px) {
   .site-footer {
     padding-top: 44px;
@@ -271,6 +273,7 @@
   }
 }
 
+// RESPONSIVE: Standard mobile phones: styles apply at 480px viewport width and below.
 @media (max-width: 480px) {
   .footer-bottom {
     padding: 16px 20px;

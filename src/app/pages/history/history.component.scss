@@ -554,6 +554,7 @@
   font-weight: 800;
 }
 
+// RESPONSIVE: Tablets: styles apply at 860px viewport width and below.
 @media (max-width: 860px) {
   .timeline-stage {
     grid-template-columns: 1fr;
@@ -1487,6 +1488,7 @@
    TABLET
 ========================================================= */
 
+// RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1000px viewport width and below.
 @media (max-width: 1000px) {
 
   .history-container {
@@ -1548,6 +1550,7 @@
    MOBILE
 ========================================================= */
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 700px viewport width and below.
 @media (max-width: 700px) {
 
   .history-container {

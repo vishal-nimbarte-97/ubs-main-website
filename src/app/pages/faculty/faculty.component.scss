@@ -1408,6 +1408,7 @@
    TABLET
 ========================================================= */
 
+// RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1100px viewport width and below.
 @media (max-width: 1100px) {
 
   .faculty-grid {
@@ -1443,6 +1444,7 @@
    MOBILE
 ========================================================= */
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 700px viewport width and below.
 @media (max-width: 700px) {
 
   .faculty-hero {
@@ -1707,6 +1709,7 @@
    SMALL MOBILE
 ========================================================= */
 
+// RESPONSIVE: Small / narrow mobile phones: styles apply at 400px viewport width and below.
 @media (max-width: 400px) {
 
   .faculty-hero {

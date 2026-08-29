@@ -758,6 +758,7 @@
    RESPONSIVE
 ========================================================= */
 
+// RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1024px viewport width and below.
 @media (max-width: 1024px) {
   .masonry {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -772,6 +773,7 @@
   .masonry-item:nth-child(7n + 5) { grid-column: auto; }
 }
 
+// RESPONSIVE: Tablets: styles apply at 900px viewport width and below.
 @media (max-width: 900px) {
   .hero-shell {
     grid-template-columns: minmax(0, 1fr) minmax(300px, .9fr);
@@ -789,6 +791,7 @@
   }
 }
 
+// RESPONSIVE: Tablets / large phones (landscape): styles apply at 720px viewport width and below.
 @media (max-width: 720px) {
   .hero-shell {
     width: min(100% - 36px, 560px);
@@ -835,6 +838,7 @@
   }
 }
 
+// RESPONSIVE: Large phones: styles apply at 560px viewport width and below.
 @media (max-width: 560px) {
   .masonry {
     grid-template-columns: 1fr;
