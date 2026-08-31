@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 
 interface Programme {
   name: string;
+  type: string;
   duration: string;
   summary: string;
   points: string[];
@@ -22,9 +23,14 @@ interface Eligibility {
   styleUrl: './residential-programmes.component.scss',
 })
 export class ResidentialProgrammesComponent {
+  activeType = 'All programmes';
+
+  readonly programmeTypes = ['All programmes', 'Undergraduate', 'Postgraduate', 'Doctoral'];
+
   programmes: Programme[] = [
     {
       name: 'Bachelor of Divinity (B.D.)',
+      type: 'Undergraduate',
       duration: '3–4 years',
       summary:
         'Prepares students for the essential functions and ministries of the Church in India and South Asia, blending biblical, theological, historical and practical study.',
@@ -36,6 +42,7 @@ export class ResidentialProgrammesComponent {
     },
     {
       name: 'Master of Theology (M.Th.)',
+      type: 'Postgraduate',
       duration: '2 years',
       summary:
         'Trains candidates for theological teaching and equips them with the academic tools for critical, contextual research — a pathway toward doctoral study.',
@@ -47,6 +54,7 @@ export class ResidentialProgrammesComponent {
     },
     {
       name: 'Doctor of Theology (D.Th.)',
+      type: 'Doctoral',
       duration: 'Min. 3 years residential',
       summary:
         'Advanced theological research degree forming leaders for the ministry, mission and theological education of the church worldwide.',
@@ -57,6 +65,12 @@ export class ResidentialProgrammesComponent {
       ],
     },
   ];
+
+  get visibleProgrammes(): Programme[] {
+    return this.activeType === 'All programmes'
+      ? this.programmes
+      : this.programmes.filter((programme) => programme.type === this.activeType);
+  }
 
   ccm = {
     name: 'Centre for Children Ministry (CCM)',

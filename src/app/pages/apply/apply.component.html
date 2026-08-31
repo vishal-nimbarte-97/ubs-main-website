@@ -43,10 +43,10 @@
       </div>
       <div class="programme-grid">
         @for (programme of programmes; track programme.downloadUrl) {
-        <a class="programme-card" [href]="programme.downloadUrl" target="_blank" rel="noopener">
+        <article class="programme-card">
           <div class="programme-card__image">
             <img [src]="programme.image" [alt]="programme.title" loading="lazy">
-            <span>Download &nearr;</span>
+            <span>Application form</span>
           </div>
           <div class="programme-card__body">
             <h3>{{ programme.title }}</h3>
@@ -55,8 +55,12 @@
               <li>{{ detail }}</li>
               }
             </ul>
+            <a class="programme-card__download" [href]="programme.downloadUrl" target="_blank" rel="noopener"
+              [attr.aria-label]="'Download the application form for ' + programme.title">
+              Download application <span aria-hidden="true">&darr;</span>
+            </a>
           </div>
-        </a>
+        </article>
         }
       </div>
     </div>

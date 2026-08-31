@@ -118,10 +118,9 @@
 
         <div class="intro-title">
 
-          <h2>
-            Meet the librarian.
-            <span>More than a library.</span>
-          </h2>
+          <div class="intro-librarian-image">
+            <img [src]="images.librarian" alt="Mr. Sungjemmeren Kijong Imchen, Librarian of UBS Library" />
+          </div>
 
         </div>
 
@@ -335,32 +334,13 @@
     </div>
 
 
-    <!-- Union Biblical Vision -->
-    <div class="vision-section">
-
-      <div class="vision-content">
-
-        <h2>
-          The Union Biblical Vision
-        </h2>
-
-        <p>
-          Union Biblical Vision
-        </p>
-
-      </div>
-
-
-      <div class="vision-image">
-
-        <img
-          [src]="images.vision"
-          alt="Union Biblical Vision"
-        />
-
-      </div>
-
-    </div>
+    <!-- UBS video from the original site assets -->
+    <section class="vision-video-section" aria-label="Union Biblical Seminary video">
+      <video controls preload="metadata" playsinline>
+        <source src="assets/video/video_1.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </section>
 
   </div>
 
@@ -374,9 +354,9 @@
 
     <div class="koha-pattern"></div>
 
-    <div class="container koha-content">
+    <div class="container digital-resource-grid">
 
-      <div>
+      <article class="digital-resource-card">
 
         <span class="section-label">
           DIGITAL CATALOGUE
@@ -392,12 +372,34 @@
           the KOHA Online Public Access Catalogue.
         </p>
 
-      </div>
-
       <a href="https://libcatubs.ltsinformatics.com/" target="_blank" rel="noopener" class="koha-button">
         Open KOHA OPAC
         <span>↗</span>
       </a>
+
+      </article>
+
+      <article class="digital-resource-card">
+
+        <span class="section-label">
+          RESEARCH DATABASE
+        </span>
+
+        <h2>
+          Discover trusted
+          <span>research.</span>
+        </h2>
+
+        <p>
+          Access EBSCO resources to support your study, research and academic work.
+        </p>
+
+        <a href="https://www.ebsco.com" target="_blank" rel="noopener" class="koha-button">
+          Open EBSCO
+          <span>↗</span>
+        </a>
+
+      </article>
 
     </div>
 

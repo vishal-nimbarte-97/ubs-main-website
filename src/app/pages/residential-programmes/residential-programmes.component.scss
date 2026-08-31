@@ -82,6 +82,10 @@ li {
   padding: clamp(4rem, 8vw, 7rem) 0;
 }
 
+.academic-section--tint {
+  background: var(--paper);
+}
+
 ul {
   padding-left: 1.2rem;
 }
@@ -135,7 +139,103 @@ ul {
 
 /* Programme cards */
 .programmes-section h2 {
+  margin-bottom: 0;
+}
+
+.programme-directory__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.programme-directory__heading p {
+  max-width: 28rem;
+  margin: 0;
+}
+
+.downloads-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
   margin-bottom: 2.5rem;
+}
+
+.downloads-heading h2 {
+  margin: 0;
+}
+
+.downloads-heading p {
+  max-width: 28rem;
+  margin: 0;
+}
+
+.downloads-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.download-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 11rem;
+  padding: 1.4rem;
+  border: 1px solid #e1ded4;
+  border-top: 3px solid var(--gold);
+  color: var(--navy);
+  background: #fff;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.download-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 .9rem 1.8rem rgba(11, 37, 69, .1);
+}
+
+.download-card__type {
+  color: var(--blue);
+  font-size: .67rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.download-card strong {
+  margin: .8rem 0 auto;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.download-card > span:last-child {
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.programme-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem;
+  margin: 2.5rem 0;
+}
+
+.programme-filters button {
+  padding: .7rem 1rem;
+  border: 1px solid #d8dfe7;
+  color: var(--navy);
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: .8rem;
+  font-weight: 700;
+  transition: background .2s ease, color .2s ease;
+}
+
+.programme-filters button:hover,
+.programme-filters button.is-active {
+  color: #fff;
+  background: var(--navy);
 }
 
 .programme-grid {
@@ -165,10 +265,11 @@ ul {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.25rem;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
 }
 
-.programme-card__head h3 {
+.programme-card h3 {
   margin: 0;
   color: var(--navy);
   font-size: 1.25rem;
@@ -187,6 +288,22 @@ ul {
 .programme-card li {
   margin-bottom: 0.4rem;
   font-size: 0.95rem;
+}
+
+.programme-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: var(--navy);
+  font-size: .85rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.programme-card__link:hover {
+  color: var(--blue);
 }
 
 /* CCM section */
@@ -253,8 +370,19 @@ ul {
 // RESPONSIVE: Tablets: styles apply at 900px viewport width and below.
 @media (max-width: 900px) {
   .programme-grid,
-  .info-grid {
+  .info-grid,
+  .downloads-grid {
     grid-template-columns: 1fr;
+  }
+
+  .programme-directory__heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .downloads-heading {
+    align-items: start;
+    flex-direction: column;
   }
 }
 
@@ -273,4 +401,12 @@ ul {
   .academic-hero-grid img {
     box-shadow: 0.6rem 0.6rem 0 var(--gold);
   }
+}
+
+.programme-card__type {
+  color: var(--blue);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }

@@ -310,6 +310,8 @@ em {
 
 .programme-card {
   display: block;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   overflow: hidden;
   color: inherit;
@@ -363,6 +365,9 @@ em {
 }
 
 .programme-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: 1.35rem;
 }
 
@@ -393,6 +398,35 @@ em {
   color: var(--gold);
   content: '✓';
   font-weight: 900;
+}
+
+.programme-card__download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  width: 100%;
+  margin-top: 1.4rem;
+  padding: .78rem .9rem;
+  color: #fff;
+  background: var(--wine);
+  font-size: .66rem;
+  font-weight: 850;
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color .25s ease, transform .25s ease;
+}
+
+.programme-card__download span {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.programme-card__download:hover,
+.programme-card__download:focus-visible {
+  background: var(--wine-deep);
+  transform: translateY(-2px);
 }
 
 .contact-section {

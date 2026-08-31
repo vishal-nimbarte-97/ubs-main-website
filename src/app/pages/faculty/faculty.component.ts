@@ -291,7 +291,7 @@ export class FacultyComponent {
       name: 'Dr. Maisuangdibou',
       qualificationTitle: 'B.A, M.A, B.D, M.Th, D.Th',
       designation: 'Vice Principal, UBS',
-      additionalDesignation: 'Associate Professor & Dean, Christian Theology • Dean of Post-Graduate Studies',
+      additionalDesignation: 'Associate Professor & Dean, Christian Theology\nDean of Post-Graduate Studies',
       department: 'Christian Theology',
       email: 'maisong@ubs.ac.in',
       image: '../../../assets/faculty/image_8.png',
@@ -402,7 +402,7 @@ export class FacultyComponent {
 
     {
       id: 11,
-      name: 'Dr. Sajni Rappill',
+      name: 'Dr. Saju Nirappil Y',
       qualificationTitle: '',
       designation: 'Christian Ministry',
       department: 'Christian Ministry',
