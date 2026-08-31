@@ -1,51 +1,71 @@
 <div class="student-zone-page">
 
+  <!-- Reusable ornamental divider placed under every photo. -->
+  <svg class="sz-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <g id="sz-divider" fill="none" stroke="currentColor" stroke-width="1.3">
+        <line x1="4" y1="10" x2="78" y2="10" />
+        <line x1="122" y1="10" x2="196" y2="10" />
+
+        <!-- symmetric confronting scrolls -->
+        <path d="M100 10 C97 4, 89 2, 84 6 C80.5 8.6, 82 12, 86 12 C89 12, 90.5 10, 89 8" />
+        <path d="M100 10 C103 4, 111 2, 116 6 C119.5 8.6, 118 12, 114 12 C111 12, 109.5 10, 111 8" />
+
+        <circle cx="84" cy="6.4" r="1.7" fill="currentColor" stroke="none" />
+        <circle cx="116" cy="6.4" r="1.7" fill="currentColor" stroke="none" />
+        <circle cx="100" cy="10" r="2" fill="currentColor" stroke="none" />
+
+        <path d="M4 10 L9 5.5 L14 10 L9 14.5 Z" fill="currentColor" stroke="none" />
+        <path d="M196 10 L191 5.5 L186 10 L191 14.5 Z" fill="currentColor" stroke="none" />
+      </g>
+    </defs>
+  </svg>
+
+
   <!-- =====================================================
        HERO
+       Asymmetric split — a quiet editorial opening rather
+       than a full-bleed banner with floating shapes.
   ====================================================== -->
 
   <section class="sz-hero">
 
-    <div class="sz-hero-media">
-      <img
-        [src]="heroImage"
-        alt=""
-        loading="eager"
-        (error)="onImageError($event)"
-      >
-    </div>
+    <div class="sz-container sz-hero-grid">
 
-    <div class="sz-hero-blob sz-hero-blob--one"></div>
-    <div class="sz-hero-blob sz-hero-blob--two"></div>
+      <div class="sz-hero-text sz-rise">
 
-    <div class="sz-hero-overlay"></div>
-
-    <div class="sz-container hero-inner">
-
-      <div class="hero-content">
-
-        <span class="hero-label">
-          UNION BIBLICAL SEMINARY
-        </span>
+        <p class="sz-eyebrow">Union Biblical Seminary</p>
 
         <h1>
-          Student
-          <span>Zone</span>
+          Life, faith and friendship<br>
+          beyond the classroom
         </h1>
 
-        <p>
-          Life beyond the classroom — student leadership, committees
-          and the community that shapes the UBS experience.
+        <p class="sz-hero-lede">
+          Student Zone is where UBS students lead, serve and grow
+          together — through an elected council, a network of
+          committees, and a community that shapes seminary life
+          well beyond the lecture hall.
         </p>
 
-        <a
-          href="#sz-council"
-          class="hero-cta"
-        >
+        <a href="#sz-council" class="sz-textlink">
           Meet the Student Council
-          <span>↓</span>
         </a>
 
+      </div>
+
+      <div class="sz-hero-photo sz-rise">
+        <div class="sz-hero-image">
+          <img
+            [src]="heroImage"
+            alt="Students at Union Biblical Seminary"
+            loading="eager"
+            (error)="onImageError($event)"
+          >
+        </div>
+        <div class="photo-divider photo-divider--lg">
+          <svg viewBox="0 0 200 20"><use href="#sz-divider"></use></svg>
+        </div>
       </div>
 
     </div>
@@ -55,69 +75,53 @@
 
   <!-- =====================================================
        STUDENT COUNCIL
+       Alternating profile rows, like a printed prospectus,
+       instead of a repeating card grid.
   ====================================================== -->
 
-  <section
-    class="sz-council-section"
-    id="sz-council"
-  >
+  <section class="sz-council" id="sz-council">
 
     <div class="sz-container">
 
-      <div class="section-header sz-reveal">
-
-        <span class="section-label">
-          STUDENT LEADERSHIP
-        </span>
-
-        <h2>
-          The Student
-          <span>Council</span>
-        </h2>
-
+      <div class="sz-section-head sz-reveal">
+        <p class="sz-eyebrow">Student leadership</p>
+        <h2>The Student Council</h2>
         <p>
-          Elected students who represent the seminary community and
-          coordinate student life across the campus.
+          Five students elected by their peers to represent the
+          seminary community and coordinate student life across
+          the campus.
         </p>
-
       </div>
 
-      <div class="council-grid">
+      <div class="council-list">
 
         <article
-          class="council-card sz-reveal"
+          class="council-row sz-reveal"
           *ngFor="let role of councilRoles; let i = index"
-          [style.transition-delay.ms]="i * 90"
+          [class.council-row--reverse]="i % 2 === 1"
+          [style.transition-delay.ms]="i * 70"
         >
 
-          <div class="council-media">
-
-            <div class="photo-frame photo-frame--round">
+          <div class="council-row-media-wrap">
+            <div class="council-row-media">
               <img
                 [src]="role.image"
                 [alt]="role.title"
                 loading="lazy"
                 (error)="onImageError($event)"
               >
-              <span class="frame-corner frame-corner--tl"></span>
             </div>
-
-            <span class="council-icon">
-              {{ role.icon }}
-            </span>
-
+            <div class="photo-divider">
+              <svg viewBox="0 0 200 20"><use href="#sz-divider"></use></svg>
+            </div>
           </div>
 
-          <div class="council-body">
-
-            <span class="council-number">
-              {{ role.number }}
-            </span>
-
-            <h3>{{ role.title }}</h3>
-
+          <div
+            class="council-row-body"
+            [attr.data-initial]="role.title.charAt(0)"
+          >
+            <span class="council-role-tag">{{ role.title }}</span>
             <p>{{ role.description }}</p>
-
           </div>
 
         </article>
@@ -131,57 +135,55 @@
 
   <!-- =====================================================
        STUDENT COMMITTEES
+       A directory / index list rather than a tile grid —
+       reads like the table of contents of a seminary handbook.
   ====================================================== -->
 
-  <section class="sz-committees-section">
+  <section class="sz-committees">
 
     <div class="sz-container">
 
-      <div class="committees-heading sz-reveal">
-
-        <h2>
-          Student
-          <span>Committees</span>
-        </h2>
-
+      <div class="sz-section-head sz-reveal">
+        <p class="sz-eyebrow">Get involved</p>
+        <h2>Student Committees</h2>
         <p>
-          Student-led committees that organize prayer, service,
-          missions, sports and campus life at UBS.
+          Ten student-led committees that organize prayer,
+          service, missions, sport and everyday campus life
+          at UBS.
         </p>
-
       </div>
 
-      <div class="committees-grid">
+      <div class="committee-index">
 
-        <article
-          class="committee-card sz-reveal"
+        <div
+          class="committee-row sz-reveal"
           *ngFor="let committee of studentCommittees; let i = index"
-          [style.transition-delay.ms]="(i % 3) * 90"
+          [style.transition-delay.ms]="(i % 5) * 60"
         >
 
-          <div class="photo-frame photo-frame--wide committee-media">
-            <img
-              [src]="committee.image"
-              [alt]="committee.title"
-              loading="lazy"
-              (error)="onImageError($event)"
-            >
-            <span class="frame-corner frame-corner--tl"></span>
-            <span class="frame-corner frame-corner--br"></span>
-            <span class="committee-number">
-              {{ committee.number }}
-            </span>
+          <div class="committee-media">
+            <div class="committee-thumb">
+              <img
+                [src]="committee.image"
+                [alt]="committee.title"
+                loading="lazy"
+                (error)="onImageError($event)"
+              >
+            </div>
+            <div class="photo-divider photo-divider--sm">
+              <svg viewBox="0 0 200 20"><use href="#sz-divider"></use></svg>
+            </div>
           </div>
 
-          <div class="committee-body">
-
+          <div
+            class="committee-text"
+            [attr.data-initial]="committee.title.charAt(0)"
+          >
             <h3>{{ committee.title }}</h3>
-
             <p>{{ committee.description }}</p>
-
           </div>
 
-        </article>
+        </div>
 
       </div>
 
@@ -196,31 +198,29 @@
 
   <section class="sz-closing">
 
-    <div class="sz-closing-glow"></div>
+    <div class="sz-container sz-closing-grid">
 
-    <div class="sz-container">
+      <div class="sz-closing-statement sz-reveal">
+        <p class="sz-eyebrow sz-eyebrow--light">Get in touch</p>
+        <h2>
+          Be part of<br>
+          the UBS community.
+        </h2>
+      </div>
 
-      <span class="closing-label">
-        GET INVOLVED
-      </span>
-
-      <h2>
-        Be part of the
-        <span>UBS community.</span>
-      </h2>
-
-      <p>
-        Have questions about student life, committees or campus
-        activities? Reach out to the Student Affairs office.
-      </p>
-
-      <a
-        href="mailto:info&#64;ubs.ac.in"
-        class="closing-button"
-      >
-        Contact Us
-        <span>→</span>
-      </a>
+      <div class="sz-closing-side sz-reveal">
+        <p>
+          Have questions about student life, committees or
+          campus activities? The Student Affairs office is
+          happy to help.
+        </p>
+        <a
+          href="mailto:info&#64;ubs.ac.in"
+          class="sz-textlink sz-textlink--light"
+        >
+          Contact Student Affairs
+        </a>
+      </div>
 
     </div>
 

@@ -7,15 +7,12 @@ import {
 import { RouterModule } from '@angular/router';
 
 interface CouncilRole {
-  number: string;
   title: string;
-  icon: string;
   description: string;
   image: string;
 }
 
 interface StudentCommittee {
-  number: string;
   title: string;
   description: string;
   image: string;
@@ -53,45 +50,35 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
   councilRoles: CouncilRole[] = [
 
     {
-      number: '01',
       title: 'President',
-      icon: '✦',
       description:
         'Leads the Student Council and represents the student body to the Seminary administration.',
       image: 'https://ubs.ac.in/Admin/assets/img/32527ad9ce8a529795148ae9ed777b28.jpeg'
     },
 
     {
-      number: '02',
       title: 'Vice President',
-      icon: '◇',
       description:
         'Supports the President and oversees Student Council activities in their absence.',
       image: 'https://ubs.ac.in/Admin/assets/img/gallery2.jpg'
     },
 
     {
-      number: '03',
       title: 'Secretary',
-      icon: '▣',
       description:
         'Maintains records, communication and minutes for the Student Council.',
       image: 'https://ubs.ac.in/Admin/assets/img/images_(1).jpeg'
     },
 
     {
-      number: '04',
       title: 'Treasurer',
-      icon: '⌂',
       description:
         'Manages the Student Council\u2019s finances and coordinates fund-related activities.',
       image: 'https://ubs.ac.in/Admin/assets/img/gallery1_1.jpg'
     },
 
     {
-      number: '05',
       title: 'Chief Chapel Stewards',
-      icon: '✧',
       description:
         'Coordinate arrangements for chapel services and campus worship gatherings.',
       image: 'https://ubs.ac.in/Admin/assets/img/testimonial-2.jpg'
@@ -111,7 +98,6 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
   studentCommittees: StudentCommittee[] = [
 
     {
-      number: '01',
       title: 'Prayer Committee',
       description:
         'Arranges the weekly UBS Family Prayer Meeting and organizes community prayer gatherings, encouraging students to intercede together as a Seminary family.',
@@ -119,7 +105,6 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
     },
 
     {
-      number: '02',
       title: 'Missionary Project Committee',
       description:
         'Coordinates missionary awareness projects and initiatives that connect students with mission work beyond the campus.',
@@ -127,15 +112,13 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
     },
 
     {
-      number: '03',
       title: 'SARAC',
       description:
-        'Details to be confirmed \u2014 please provide the committee\u2019s full name and role.',
+        'Details to be confirmed \u2014 please share the committee\u2019s full name and role so this description can be finalised.',
       image: 'https://ubs.ac.in/Admin/assets/img/4.png'
     },
 
     {
-      number: '04',
       title: 'Handicraft Committee',
       description:
         'Organizes handicraft and creative skill-building activities for students.',
@@ -143,7 +126,6 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
     },
 
     {
-      number: '05',
       title: 'LDP',
       description:
         'Leadership Development Programme \u2014 equips students with practical leadership and ministry skills. (Please confirm expansion.)',
@@ -151,7 +133,6 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
     },
 
     {
-      number: '06',
       title: 'Service Committee',
       description:
         'Organizes campus service projects and community outreach initiatives.',
@@ -159,7 +140,6 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
     },
 
     {
-      number: '07',
       title: 'Sports and Games Committee',
       description:
         'Organizes sports events, tournaments and recreational activities for the student community.',
@@ -167,7 +147,6 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
     },
 
     {
-      number: '08',
       title: 'Missionaries Conference Committee',
       description:
         'Plans and coordinates the annual Missionaries Conference on campus.',
@@ -175,7 +154,6 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
     },
 
     {
-      number: '09',
       title: 'Campus Care Committee',
       description:
         'Looks after the general upkeep, cleanliness and care of the campus.',
@@ -183,7 +161,6 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
     },
 
     {
-      number: '10',
       title: 'Days of Challenge Committee',
       description:
         'Organizes the Days of Challenge programme for spiritual growth and reflection.',
@@ -196,14 +173,14 @@ export class StudentZoneComponent implements AfterViewInit, OnDestroy {
   /* =========================================================
      IMAGE FALLBACK
      If a placeholder link ever 404s, hide the broken image and
-     let the card fall back to its gold/navy tint background
-     instead of showing a broken-image icon.
+     let the frame fall back to a duotone tint instead of a
+     broken-image icon.
   ========================================================= */
 
   onImageError(event: Event): void {
     const target = event.target as HTMLImageElement;
     target.style.display = 'none';
-    target.parentElement?.classList.add('photo-frame--fallback');
+    target.parentElement?.classList.add('img-fallback');
   }
 
 
