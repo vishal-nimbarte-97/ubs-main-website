@@ -1,717 +1,653 @@
-/* Move this @import to your global stylesheet / index.html
-   <link> tags in production so the font isn't re-fetched
-   per component. Left here for a self-contained preview. */
-   @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600&display=swap');
+/* =========================================================
+   UBS STUDENT ZONE — matches Library page design language
+========================================================= */
 
-   :host {
-     display: block;
-   }
-   
-   .student-zone-page {
-   
-     /* =========================================================
-        DESIGN TOKENS
-        A manuscript/seminary palette — warm parchment, deep ink
-        navy, brass gold, and a claret accent drawn from academic
-        gown trim — instead of a bright SaaS blue or terracotta.
-     ========================================================= */
-   
-     --parchment: #f8f5ee;
-     --parchment-deep: #efe7d4;
-     --ink: #202b36;
-     --ink-soft: #5b6570;
-     --navy: #1c3654;
-     --navy-deep: #142639;
-     --gold: #ad7d3c;
-     --gold-light: #d3ac6c;
-     --frame-gold: #c0902f;
-     --claret: #7c1f31;
-     --rule: #ded2b8;
-     --white: #ffffff;
-   
-     --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-   
-     color: var(--ink);
-     background: var(--parchment);
-   }
-   
-   .sz-container {
-     width: min(1180px, calc(100% - 48px));
-     margin: 0 auto;
-   }
-   
-   
-   /* =========================================================
-      SHARED TYPE
-   ========================================================= */
-   
-   .sz-eyebrow {
-     margin: 0 0 18px;
-   
-     color: var(--claret);
-   
-     font-family: var(--font-display);
-     font-style: italic;
-     font-size: 15px;
-   }
-   
-   .sz-eyebrow--light {
-     color: var(--gold-light);
-   }
-   
-   .sz-section-head {
-     max-width: 640px;
-   
-     margin: 0 0 64px;
-   }
-   
-   .sz-section-head h2 {
-     margin: 0 0 20px;
-   
-     color: var(--navy);
-   
-     font-family: var(--font-display);
-     font-weight: 500;
-     font-size: clamp(32px, 4.2vw, 46px);
-     line-height: 1.1;
-     letter-spacing: -.4px;
-   }
-   
-   .sz-section-head p {
-     max-width: 54ch;
-   
-     margin: 0;
-   
-     color: var(--ink-soft);
-   
-     font-family: var(--font-body);
-     font-size: 16px;
-     line-height: 1.75;
-   }
-   
-   .sz-textlink {
-     position: relative;
-   
-     display: inline-block;
-   
-     padding-bottom: 3px;
-   
-     border-bottom: 1px solid var(--navy);
-   
-     color: var(--navy);
-   
-     font-family: var(--font-body);
-     font-weight: 600;
-     font-size: 15px;
-     text-decoration: none;
-   
-     transition: color .25s ease, border-color .25s ease;
-   }
-   
-   .sz-textlink:hover,
-   .sz-textlink:focus-visible {
-     border-color: var(--claret);
-   
-     color: var(--claret);
-   }
-   
-   .sz-textlink--light {
-     border-color: rgba(255, 255, 255, .55);
-   
-     color: var(--white);
-   }
-   
-   .sz-textlink--light:hover,
-   .sz-textlink--light:focus-visible {
-     border-color: var(--gold-light);
-   
-     color: var(--gold-light);
-   }
-   
-   
-   /* =========================================================
-      ORNAMENTAL DIVIDER
-      A slim gold rule with a small scroll motif at its centre,
-      set below every photo instead of framing it.
-   ========================================================= */
-   
-   .sz-defs {
-     position: absolute;
-   
-     width: 0;
-     height: 0;
-   
-     overflow: hidden;
-   }
-   
-   .photo-divider {
-     display: flex;
-     justify-content: center;
-   
-     margin-top: 16px;
-   
-     color: var(--frame-gold);
-   }
-   
-   .photo-divider svg {
-     width: 100%;
-     max-width: 220px;
-     height: 35px;
-   }
-   
-   .photo-divider--lg svg {
-     max-width: 260px;
-     height: 30px;
-   }
-   
-   .photo-divider--sm {
-     margin-top: 10px;
-   }
-   
-   .photo-divider--sm svg {
-     max-width: 64px;
-     height: 9px;
-   }
-   
-   
-   /* =========================================================
-      IMAGE FALLBACK
-      If a placeholder link 404s, hide the image and let the
-      frame fall back to a duotone tint instead of a broken icon.
-   ========================================================= */
-   
-   .img-fallback {
-     background: linear-gradient(160deg, var(--navy), var(--gold));
-   }
-   
-   
-   /* =========================================================
-      HERO
-   ========================================================= */
-   
-   .sz-hero {
-     padding: 96px 0 104px;
-   
-     background: var(--parchment);
-   }
-   
-   .sz-hero-grid {
-     display: grid;
-   
-     grid-template-columns: .95fr 1.05fr;
-     gap: 64px;
-   
-     align-items: center;
-   }
-   
-   .sz-hero-text {
-     max-width: 480px;
-   }
-   
-   .sz-hero-text h1 {
-     margin: 0 0 26px;
-   
-     color: var(--ink);
-   
-     font-family: var(--font-display);
-     font-weight: 500;
-     font-size: clamp(38px, 5vw, 60px);
-     line-height: 1.08;
-     letter-spacing: -.5px;
-   }
-   
-   .sz-hero-lede {
-     max-width: 44ch;
-   
-     margin: 0 0 32px;
-   
-     color: var(--ink-soft);
-   
-     font-family: var(--font-body);
-     font-size: 17px;
-     line-height: 1.75;
-   }
-   
-   .sz-hero-image {
-     position: relative;
-   
-     aspect-ratio: 4 / 5;
-   
-     background: var(--navy);
-   }
-   
-   .sz-hero-image img {
-     display: block;
-   
-     width: 100%;
-     height: 100%;
-   
-     object-fit: cover;
-   
-     filter: grayscale(12%) contrast(1.03);
-   }
-   
-   .sz-rise {
-     opacity: 0;
-   
-     animation: sz-fade-up .8s ease forwards;
-   }
-   
-   .sz-hero-photo.sz-rise {
-     animation-delay: .12s;
-   }
-   
-   
-   /* =========================================================
-      STUDENT COUNCIL — alternating profile rows
-   ========================================================= */
-   
-   .sz-council {
-     padding: 110px 0;
-   
-     background: var(--parchment);
-   }
-   
-   .council-list {
-     border-top: 1px solid var(--rule);
-   }
-   
-   .council-row {
-     display: grid;
-   
-     grid-template-columns: .8fr 1.2fr;
-     gap: 56px;
-   
-     align-items: center;
-   
-     padding: 52px 0;
-   
-     border-bottom: 1px solid var(--rule);
-   }
-   
-   .council-row--reverse .council-row-media-wrap {
-     order: 2;
-   }
-   
-   .council-row--reverse .council-row-body {
-     order: 1;
-   }
-   
-   .council-row-media {
-     position: relative;
-   
-     aspect-ratio: 4 / 3;
-   
-     background: var(--navy);
-   }
-   
-   .council-row-media img {
-     display: block;
-   
-     width: 100%;
-     height: 100%;
-   
-     object-fit: cover;
-   
-     filter: grayscale(22%) contrast(1.05);
-   }
-   
-   .council-row-body {
-     position: relative;
-   }
-   
-   /* Signature element — an illuminated-manuscript initial,
-      faint behind the copy, nodding to the seminary's own
-      handwritten and printed texts. */
-   .council-row-body::before {
-     content: attr(data-initial);
-   
-     position: absolute;
-     top: -54px;
-     left: -4px;
-   
-     z-index: 0;
-   
-     color: var(--gold);
-   
-     font-family: var(--font-display);
-     font-weight: 600;
-     font-size: 148px;
-     line-height: 1;
-   
-     opacity: .12;
-   
-     pointer-events: none;
-     user-select: none;
-   }
-   
-   .council-role-tag,
-   .council-row-body p {
-     position: relative;
-     z-index: 1;
-   }
-   
-   .council-role-tag {
-     display: block;
-   
-     margin: 0 0 14px;
-   
-     color: var(--navy);
-   
-     font-family: var(--font-display);
-     font-weight: 500;
-     font-size: 27px;
-   }
-   
-   .council-row-body p {
-     max-width: 48ch;
-   
-     margin: 0;
-   
-     color: var(--ink-soft);
-   
-     font-family: var(--font-body);
-     font-size: 15.5px;
-     line-height: 1.75;
-   }
-   
-   
-   /* =========================================================
-      STUDENT COMMITTEES — directory / index list
-   ========================================================= */
-   
-   .sz-committees {
-     padding: 110px 0;
-   
-     background: var(--parchment-deep);
-   }
-   
-   .committee-index {
-     display: grid;
-   
-     grid-template-columns: repeat(2, 1fr);
-     column-gap: 60px;
-   }
-   
-   .committee-row {
-     display: flex;
-   
-     gap: 22px;
-     align-items: flex-start;
-   
-     padding: 26px 0;
-   
-     border-top: 1px solid var(--rule);
-   }
-   
-   .committee-media {
-     flex: 0 0 64px;
-   }
-   
-   .committee-thumb {
-     position: relative;
-   
-     width: 64px;
-     height: 64px;
-   
-     background: var(--navy);
-   }
-   
-   .committee-thumb img {
-     display: block;
-   
-     width: 100%;
-     height: 100%;
-   
-     object-fit: cover;
-   
-     filter: grayscale(30%) contrast(1.05);
-   
-     transition: transform .5s ease;
-   }
-   
-   .committee-row:hover .committee-thumb img {
-     transform: scale(1.06);
-   }
-   
-   .committee-text {
-     position: relative;
-   
-     flex: 1;
-   }
-   
-   .committee-text::before {
-     content: attr(data-initial);
-   
-     position: absolute;
-     top: -18px;
-     left: -6px;
-   
-     z-index: 0;
-   
-     color: var(--gold);
-   
-     font-family: var(--font-display);
-     font-weight: 600;
-     font-size: 88px;
-     line-height: 1;
-   
-     opacity: .08;
-   
-     pointer-events: none;
-     user-select: none;
-   }
-   
-   .committee-text h3,
-   .committee-text p {
-     position: relative;
-     z-index: 1;
-   }
-   
-   .committee-text h3 {
-     margin: 0 0 8px;
-   
-     color: var(--navy);
-   
-     font-family: var(--font-display);
-     font-weight: 500;
-     font-size: 18px;
-     line-height: 1.3;
-   }
-   
-   .committee-text p {
-     max-width: 46ch;
-   
-     margin: 0;
-   
-     color: var(--ink-soft);
-   
-     font-family: var(--font-body);
-     font-size: 14px;
-     line-height: 1.7;
-   }
-   
-   
-   /* =========================================================
-      CLOSING
-   ========================================================= */
-   
-   .sz-closing {
-     padding: 104px 0;
-   
-     background: linear-gradient(155deg, var(--navy-deep), var(--navy));
-   
-     color: var(--white);
-   }
-   
-   .sz-closing-grid {
-     display: grid;
-   
-     grid-template-columns: 1fr 1fr;
-     gap: 60px;
-   
-     align-items: end;
-   }
-   
-   .sz-closing-statement h2 {
-     margin: 0;
-   
-     /* Explicit color wins over any global h2 rule the site's
-        theme may set — this is what was making the line hard
-        to read against the dark background. */
-     color: var(--gold-light);
-   
-     font-family: var(--font-display);
-     font-weight: 500;
-     font-size: clamp(36px, 5vw, 54px);
-     line-height: 1.1;
-     letter-spacing: -.5px;
-   
-     background-image:
-       linear-gradient(
-         100deg,
-         var(--gold-light) 0%,
-         var(--gold-light) 38%,
-         #fff 50%,
-         var(--gold-light) 62%,
-         var(--gold-light) 100%
-       );
-     background-size: 260% 100%;
-     background-position: 0% 0;
-   
-     animation: sz-shine 5s ease-in-out infinite;
-   }
-   
-   @supports (background-clip: text) or (-webkit-background-clip: text) {
-   
-     .sz-closing-statement h2 {
-       -webkit-background-clip: text;
-       background-clip: text;
-   
-       -webkit-text-fill-color: transparent;
-       color: transparent;
-     }
-   
-   }
-   
-   .sz-closing-side p {
-     max-width: 42ch;
-   
-     margin: 0 0 26px;
-   
-     color: rgba(255, 255, 255, .78);
-   
-     font-family: var(--font-body);
-     font-size: 16px;
-     line-height: 1.75;
-   }
-   
-   
-   /* =========================================================
-      SCROLL REVEAL
-      One quiet fade-up per section, triggered once on scroll.
-   ========================================================= */
-   
-   .sz-reveal {
-     opacity: 0;
-   
-     transform: translateY(24px);
-   
-     transition: opacity .7s ease, transform .7s ease;
-   }
-   
-   .sz-reveal.is-visible {
-     opacity: 1;
-   
-     transform: translateY(0);
-   }
-   
-   
-   /* =========================================================
-      KEYFRAMES
-   ========================================================= */
-   
-   @keyframes sz-fade-up {
-     from { opacity: 0; transform: translateY(16px); }
-     to   { opacity: 1; transform: translateY(0); }
-   }
-   
-   @keyframes sz-shine {
-     0%   { background-position: 0% 0; }
-     50%  { background-position: 100% 0; }
-     100% { background-position: 0% 0; }
-   }
-   
-   
-   /* =========================================================
-      REDUCED MOTION
-   ========================================================= */
-   
-   @media (prefers-reduced-motion: reduce) {
-   
-     .sz-rise {
-       opacity: 1;
-       animation: none;
-     }
-   
-     .sz-reveal {
-       opacity: 1;
-       transform: none;
-       transition: none;
-     }
-   
-     .sz-closing-statement h2 {
-       animation: none;
-   
-       background-image: none;
-   
-       -webkit-text-fill-color: unset;
-       color: var(--gold-light);
-     }
-   
-   }
-   
-   
-   /* =========================================================
-      TABLET
-   ========================================================= */
-   
-   @media (max-width: 980px) {
-   
-     .sz-hero-grid {
-       grid-template-columns: 1fr;
-     }
-   
-     .sz-hero-image {
-       aspect-ratio: 16 / 10;
-     }
-   
-     .council-row,
-     .council-row--reverse {
-       grid-template-columns: 1fr;
-       gap: 28px;
-     }
-   
-     .council-row-media-wrap,
-     .council-row--reverse .council-row-media-wrap {
-       order: 0;
-     }
-   
-     .council-row-body,
-     .council-row--reverse .council-row-body {
-       order: 0;
-     }
-   
-     .council-row-body::before {
-       font-size: 100px;
-       top: -36px;
-     }
-   
-     .sz-closing-grid {
-       grid-template-columns: 1fr;
-       gap: 36px;
-   
-       align-items: start;
-     }
-   
-   }
-   
-   
-   /* =========================================================
-      MOBILE
-   ========================================================= */
-   
-   @media (max-width: 640px) {
-   
-     .sz-hero {
-       padding: 64px 0 72px;
-     }
-   
-     .sz-council,
-     .sz-committees {
-       padding: 72px 0;
-     }
-   
-     .sz-section-head {
-       margin-bottom: 44px;
-     }
-   
-     .committee-index {
-       grid-template-columns: 1fr;
-     }
-   
-     .committee-media {
-       flex-basis: 52px;
-     }
-   
-     .committee-thumb {
-       width: 52px;
-       height: 52px;
-     }
-   
-     .sz-closing {
-       padding: 72px 0;
-     }
-   
-   }
+:host {
+  display: block;
+
+  --navy: #1c3654;
+  --gold: #ad7d3c;
+  --black: #171717;
+  --gray: #6d6d6d;
+  --light: #f7f5f2;
+  --white: #fff;
+  --border: #e7e2dc;
+
+  font-family: "Poppins", "Inter", Arial, sans-serif;
+}
+
+.student-zone-page * {
+  box-sizing: border-box;
+}
+
+.student-zone-page {
+  background: #fff;
+  color: var(--black);
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: auto;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+  position: relative;
+
+  height: min(820px, 92vh);
+  min-height: 600px;
+
+  overflow: hidden;
+
+  color: white;
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center 45%;
+
+  transform: scale(1.02);
+
+  animation: heroImageDrift 16s ease-in-out infinite alternate;
+}
+
+@keyframes heroImageDrift {
+  from { transform: scale(1.02); }
+  to   { transform: scale(1.1); }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10, 10, 10, .88) 0%,
+      rgba(10, 10, 10, .65) 38%,
+      rgba(10, 10, 10, .15) 75%,
+      rgba(10, 10, 10, .25) 100%
+    );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  width: min(1180px, calc(100% - 48px));
+  margin: auto;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding-bottom: 40px;
+}
+
+.hero-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  color: var(--gold);
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.hero-label .line {
+  width: 42px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero h1 {
+  max-width: 780px;
+
+  margin: 22px 0;
+
+  font-size: clamp(44px, 6vw, 76px);
+  line-height: 1.05;
+  letter-spacing: -2.5px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.hero h1 span {
+  color: var(--gold);
+}
+
+.hero-content > p {
+  max-width: 600px;
+
+  margin: 0 0 36px;
+
+  color: rgba(255, 255, 255, .8);
+
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.primary-btn,
+.secondary-btn,
+.nav-button {
+  text-decoration: none;
+}
+
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+
+  padding: 16px 22px 16px 26px;
+
+  background: var(--navy);
+  color: white;
+
+  border-radius: 3px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: .3s ease;
+}
+
+.primary-btn span {
+  font-size: 20px;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 15px 22px;
+
+  color: white;
+
+  border: 1px solid rgba(255, 255, 255, .35);
+
+  font-size: 14px;
+
+  transition: .3s ease;
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, .1);
+}
+
+.hero-bottom {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 3;
+
+  width: min(1180px, calc(100% - 48px));
+  margin: auto;
+
+  padding: 24px 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-top: 1px solid rgba(255, 255, 255, .2);
+}
+
+.hero-bottom div:first-child {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-bottom strong {
+  font-size: 24px;
+}
+
+.hero-bottom span {
+  color: rgba(255, 255, 255, .65);
+  font-size: 12px;
+}
+
+.scroll-indicator {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  color: rgba(255, 255, 255, .65);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.scroll-indicator span {
+  width: 5px;
+  height: 5px;
+
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.student-nav {
+  position: sticky;
+  top: 0;
+
+  z-index: 50;
+
+  background: rgba(255, 255, 255, .95);
+
+  border-bottom: 1px solid var(--border);
+
+  backdrop-filter: blur(15px);
+}
+
+.nav-inner {
+  width: min(1180px, calc(100% - 48px));
+  min-height: 72px;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--navy);
+
+  font-weight: 700;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+
+  background: var(--navy);
+
+  border-radius: 50%;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: #444;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition: .25s ease;
+}
+
+.nav-links a:hover {
+  color: var(--navy);
+}
+
+.nav-button {
+  padding: 10px 17px;
+
+  background: var(--navy);
+  color: white;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   COMMON SECTION
+========================================================= */
+
+section:not(.hero) {
+  scroll-margin-top: 72px;
+}
+
+.section-label {
+  display: inline-block;
+
+  color: var(--gold);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+h2 {
+  margin: 14px 0 0;
+
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  color: var(--navy);
+}
+
+h2 span {
+  color: var(--gold);
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+
+  gap: 60px;
+
+  margin-bottom: 55px;
+}
+
+.section-heading > div {
+  flex: 1;
+}
+
+.section-heading > p {
+  max-width: 390px;
+
+  margin: 0;
+
+  color: #777;
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   STUDENT COMMITTEES — alternating gallery rows
+========================================================= */
+
+.committees-section {
+  padding: 120px 0;
+
+  background: var(--light);
+}
+
+.committee-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 90px;
+}
+
+.committee-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+
+  align-items: center;
+}
+
+.committee-row.reverse .committee-gallery {
+  order: 2;
+}
+
+.committee-row.reverse .committee-content {
+  order: 1;
+}
+
+.committee-gallery {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 140px;
+
+  gap: 12px;
+}
+
+.committee-gallery-item {
+  position: relative;
+
+  overflow: hidden;
+
+  background: var(--navy);
+}
+
+.committee-gallery-item.main {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.committee-gallery-item img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform .55s ease, filter .4s ease;
+}
+
+.committee-gallery-item:hover img {
+  transform: scale(1.06);
+  filter: saturate(1.08) contrast(1.03);
+}
+
+.committee-content h3 {
+  max-width: 460px;
+
+  margin: 8px 0 0;
+
+  font-size: clamp(26px, 2.6vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.committee-content > p {
+  max-width: 460px;
+
+  margin: 22px 0 0;
+
+  color: #6e6e6e;
+
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+
+/* =========================================================
+   IMAGE FALLBACK
+========================================================= */
+
+.img-fallback {
+  background: linear-gradient(160deg, var(--navy), var(--gold));
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.final-cta {
+  padding: 150px 20px;
+
+  text-align: center;
+
+  background: #171717;
+  color: white;
+}
+
+.final-cta .section-label {
+  color: var(--gold);
+}
+
+.final-cta h2 {
+  max-width: 750px;
+
+  margin: 18px auto;
+  color: var(--white);
+}
+
+.final-cta h2 span {
+  color: var(--gold);
+}
+
+.final-cta p {
+  max-width: 560px;
+
+  margin: 0 auto 30px;
+
+  color: #999;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .nav-links {
+    display: none;
+  }
+
+  .committee-row {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .committee-row.reverse .committee-gallery,
+  .committee-row.reverse .committee-content {
+    order: 0;
+  }
+
+  .committee-gallery {
+    grid-auto-rows: 160px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .container,
+  .hero-content,
+  .hero-bottom,
+  .nav-inner {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .hero {
+    min-height: 600px;
+    height: 85vh;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-content > p {
+    font-size: 14px;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+
+    width: 220px;
+  }
+
+  .hero-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .nav-inner {
+    min-height: 60px;
+  }
+
+  .committees-section {
+    padding: 80px 0;
+  }
+
+  .section-heading {
+    display: block;
+  }
+
+  .section-heading > p {
+    margin-top: 20px;
+  }
+
+  .committee-list {
+    gap: 60px;
+  }
+
+  .committee-gallery {
+    grid-auto-rows: 130px;
+  }
+
+  .final-cta {
+    padding: 100px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-image img,
+  .committee-gallery-item img {
+    animation: none;
+    transition: none;
+  }
+
+}
