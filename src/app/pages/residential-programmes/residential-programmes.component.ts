@@ -25,7 +25,12 @@ interface Eligibility {
 export class ResidentialProgrammesComponent {
   activeType = 'All programmes';
 
-  readonly programmeTypes = ['All programmes', 'Undergraduate', 'Postgraduate', 'Doctoral'];
+  readonly programmeTypes = [
+    'All programmes',
+    'Undergraduate',
+    'Postgraduate',
+    'Doctoral',
+  ];
 
   programmes: Programme[] = [
     {
@@ -69,7 +74,9 @@ export class ResidentialProgrammesComponent {
   get visibleProgrammes(): Programme[] {
     return this.activeType === 'All programmes'
       ? this.programmes
-      : this.programmes.filter((programme) => programme.type === this.activeType);
+      : this.programmes.filter(
+          (programme) => programme.type === this.activeType,
+        );
   }
 
   ccm = {
@@ -99,7 +106,10 @@ export class ResidentialProgrammesComponent {
     ],
     deadlines: [
       { programme: 'BD / M.Th. / D.Th.', date: '19 January 2026' },
-      { programme: 'BD / M.Th. / D.Th. (with late fee)', date: '15 February 2026' },
+      {
+        programme: 'BD / M.Th. / D.Th. (with late fee)',
+        date: '15 February 2026',
+      },
       { programme: 'CCM', date: '1 April 2026' },
     ],
     contacts: [

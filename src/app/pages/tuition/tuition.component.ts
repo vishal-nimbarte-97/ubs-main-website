@@ -17,9 +17,25 @@ interface TuitionRow {
   styleUrl: './tuition.component.scss',
 })
 export class TuitionComponent {
+  // Display the currently available fee status for each study format.
   readonly tuitionRows: TuitionRow[] = [
-    { programme: 'Residential programmes', mainCampus: 'To be updated', onlineCampus: 'Not applicable', extension: 'Not applicable' },
-    { programme: 'Non-residential programmes', mainCampus: 'Not applicable', onlineCampus: 'To be updated', extension: 'To be updated' },
-    { programme: 'Short-term courses', mainCampus: 'To be updated', onlineCampus: 'Contact UBS', extension: 'Contact UBS' },
+    {
+      programme: 'Residential programmes',
+      mainCampus: 'To be updated',
+      onlineCampus: 'Not applicable',
+      extension: 'Not applicable',
+    },
+    {
+      programme: 'Non-residential programmes',
+      mainCampus: 'Not applicable',
+      onlineCampus: 'To be updated',
+      extension: 'To be updated',
+    },
+    {
+      programme: 'Short-term courses',
+      mainCampus: 'To be updated',
+      onlineCampus: 'Contact UBS',
+      extension: 'Contact UBS',
+    },
   ];
 }

@@ -29,10 +29,30 @@ export class FooterComponent {
   ];
 
   socialLinks = [
-    { icon: 'fa-brands fa-facebook-f', url: 'https://facebook.com', label: 'Facebook' },
-    { icon: 'fa-brands fa-instagram', url: 'https://instagram.com', label: 'Instagram' },
-    { icon: 'fa-brands fa-linkedin-in', url: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: 'fa-brands fa-twitter', url: 'https://twitter.com', label: 'Twitter' },
-    { icon: 'fa-brands fa-youtube', url: 'https://youtube.com', label: 'YouTube' },
+    {
+      icon: 'fa-brands fa-facebook-f',
+      url: 'https://facebook.com',
+      label: 'Facebook',
+    },
+    {
+      icon: 'fa-brands fa-instagram',
+      url: 'https://instagram.com',
+      label: 'Instagram',
+    },
+    {
+      icon: 'fa-brands fa-linkedin-in',
+      url: 'https://linkedin.com',
+      label: 'LinkedIn',
+    },
+    {
+      icon: 'fa-brands fa-twitter',
+      url: 'https://twitter.com',
+      label: 'Twitter',
+    },
+    {
+      icon: 'fa-brands fa-youtube',
+      url: 'https://youtube.com',
+      label: 'YouTube',
+    },
   ];
 }

@@ -25,7 +25,6 @@
   margin: 0 auto;
 }
 
-
 /* =========================================================
    COMMON
 ========================================================= */
@@ -46,14 +45,13 @@
 }
 
 .section-label::before {
-  content: '';
+  content: "";
 
   width: 32px;
   height: 2px;
 
   background: var(--gold);
 }
-
 
 /* =========================================================
    HERO
@@ -70,11 +68,11 @@
   background:
     linear-gradient(
       90deg,
-      rgba(11, 37, 69, .88),
-      rgba(11, 37, 69, .62),
-      rgba(11, 37, 69, .22)
+      rgba(11, 37, 69, 0.88),
+      rgba(11, 37, 69, 0.62),
+      rgba(11, 37, 69, 0.22)
     ),
-    url('../../../assets/history/image_4.png');
+    url("../../../assets/history/image_4.png");
 
   background-position: center;
   background-size: cover;
@@ -86,12 +84,7 @@
   position: absolute;
   inset: 0;
 
-  background:
-    linear-gradient(
-      180deg,
-      transparent 60%,
-      rgba(11, 37, 69, .52)
-    );
+  background: linear-gradient(180deg, transparent 60%, rgba(11, 37, 69, 0.52));
 }
 
 .hero-inner {
@@ -113,7 +106,7 @@
 
   padding: 9px 14px;
 
-  border: 1px solid rgba(231, 200, 119, .75);
+  border: 1px solid rgba(231, 200, 119, 0.75);
 
   color: var(--gold-light);
 
@@ -126,7 +119,7 @@
   margin: 25px 0;
 
   font-size: clamp(52px, 7vw, 88px);
-  line-height: .98;
+  line-height: 0.98;
 
   letter-spacing: -4px;
   font-weight: 800;
@@ -144,7 +137,7 @@
 
   margin: 0 0 35px;
 
-  color: rgba(255, 255, 255, .92);
+  color: rgba(255, 255, 255, 0.92);
 
   font-size: 18px;
   line-height: 1.8;
@@ -166,13 +159,13 @@
   font-size: 13px;
   font-weight: 800;
 
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 .hero-cta span {
   font-size: 20px;
 
-  transition: transform .3s ease;
+  transition: transform 0.3s ease;
 }
 
 .hero-cta:hover {
@@ -208,9 +201,8 @@
   width: 60px;
   height: 1px;
 
-  background: rgba(255, 255, 255, .6);
+  background: rgba(255, 255, 255, 0.6);
 }
-
 
 /* =========================================================
    INTRODUCTION
@@ -288,7 +280,6 @@
   line-height: 1.9;
 }
 
-
 /* =========================================================
    TIMELINE SECTION HEADER
 ========================================================= */
@@ -297,9 +288,21 @@
   padding: 140px 0 160px;
 
   background:
-    radial-gradient(circle at 20% 15%, rgba(36, 54, 75, .035), transparent 26%),
-    radial-gradient(circle at 80% 75%, rgba(36, 54, 75, .025), transparent 30%),
-    repeating-linear-gradient(0deg, rgba(36, 54, 75, .018) 0 1px, transparent 1px 6px),
+    radial-gradient(
+      circle at 20% 15%,
+      rgba(36, 54, 75, 0.035),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(36, 54, 75, 0.025),
+      transparent 30%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(36, 54, 75, 0.018) 0 1px,
+      transparent 1px 6px
+    ),
     #f7f7f5;
   color: #1b1a18;
 }
@@ -337,7 +340,6 @@
   line-height: 1.8;
 }
 
-
 /* =========================================================
    OUR JOURNEY — auto-advancing stage + track
    (FIXED: real two-column grid, card and photo never overlap)
@@ -356,7 +358,7 @@
 
   background: var(--navy);
 
-  box-shadow: 0 30px 70px rgba(11, 37, 69, .28);
+  box-shadow: 0 30px 70px rgba(11, 37, 69, 0.28);
 }
 
 /* CARD — normal grid item in its own column, no absolute positioning */
@@ -403,7 +405,7 @@
 
   font-size: 14px;
   font-weight: 800;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
 }
 
 .timeline-stage-card h3 {
@@ -412,9 +414,9 @@
   font-size: clamp(20px, 2.4vw, 26px);
   line-height: 1.15;
 
-  letter-spacing: -.6px;
+  letter-spacing: -0.6px;
   text-transform: uppercase;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   color: var(--navy);
 }
 
@@ -441,7 +443,7 @@
   color: var(--gold);
   font-weight: 800;
   font-size: 12px;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
@@ -465,7 +467,9 @@
   opacity: 0;
   transform: scale(1.04);
 
-  transition: opacity .9s ease, transform 8s ease;
+  transition:
+    opacity 0.9s ease,
+    transform 8s ease;
 }
 
 .timeline-stage-photo.is-active {
@@ -477,7 +481,7 @@
   position: absolute;
   inset: 0;
 
-  background: linear-gradient(0deg, rgba(11, 37, 69, .4), transparent 45%);
+  background: linear-gradient(0deg, rgba(11, 37, 69, 0.4), transparent 45%);
 }
 
 /* ---- horizontal year track ---- */
@@ -529,7 +533,10 @@
 
   background: #c7c0b5;
 
-  transition: background .25s ease, box-shadow .25s ease, transform .25s ease;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 .timeline-track-year {
@@ -538,14 +545,14 @@
 
   color: #8a8478;
 
-  letter-spacing: .02em;
+  letter-spacing: 0.02em;
 
-  transition: color .25s ease;
+  transition: color 0.25s ease;
 }
 
 .timeline-track-point.is-active .timeline-track-dot {
   background: var(--ubs-red);
-  box-shadow: 0 0 0 5px rgba(141, 6, 40, .16);
+  box-shadow: 0 0 0 5px rgba(141, 6, 40, 0.16);
   transform: scale(1.25);
 }
 
@@ -571,7 +578,6 @@
   }
 }
 
-
 /* =========================================================
    ANNIVERSARY
 ========================================================= */
@@ -585,7 +591,7 @@
 .anniversary-grid {
   display: grid;
 
-  grid-template-columns: .95fr 1.05fr;
+  grid-template-columns: 0.95fr 1.05fr;
 
   gap: 90px;
 
@@ -601,7 +607,7 @@
 
   font-size: 80px;
 
-  line-height: .9;
+  line-height: 0.9;
 
   font-weight: 800;
 
@@ -701,13 +707,12 @@
 
   object-fit: cover;
 
-  transition: transform .6s ease;
+  transition: transform 0.6s ease;
 }
 
 .anniversary-photo:hover img {
   transform: scale(1.06);
 }
-
 
 /* =========================================================
    ARCHIVE
@@ -736,7 +741,7 @@
 
   font-size: clamp(43px, 6vw, 68px);
 
-  line-height: .98;
+  line-height: 0.98;
 
   letter-spacing: -3px;
 }
@@ -782,7 +787,7 @@
 
   object-fit: cover;
 
-  transition: transform .7s ease;
+  transition: transform 0.7s ease;
 }
 
 .archive-card:hover img {
@@ -790,17 +795,12 @@
 }
 
 .archive-card::after {
-  content: '';
+  content: "";
 
   position: absolute;
   inset: 0;
 
-  background:
-    linear-gradient(
-      to top,
-      rgba(0, 0, 0, .82),
-      transparent 60%
-    );
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82), transparent 60%);
 }
 
 .archive-overlay {
@@ -832,11 +832,10 @@
 .archive-overlay p {
   margin: 0;
 
-  color: rgba(255, 255, 255, .78);
+  color: rgba(255, 255, 255, 0.78);
 
   font-size: 12px;
 }
-
 
 /* =========================================================
    VISION
@@ -866,7 +865,7 @@
 }
 
 .vision-image::after {
-  content: '';
+  content: "";
 
   position: absolute;
 
@@ -878,7 +877,7 @@
 
   background: var(--gold);
 
-  opacity: .12;
+  opacity: 0.12;
 }
 
 .vision-image img {
@@ -964,7 +963,7 @@
   color: var(--gold);
 
   font-size: 50px;
-  line-height: .6;
+  line-height: 0.6;
 }
 
 .vision-quote p {
@@ -975,7 +974,6 @@
 
   line-height: 1.6;
 }
-
 
 /* =========================================================
    DEVELOPMENT
@@ -1004,7 +1002,7 @@
 
   font-size: clamp(45px, 6vw, 70px);
 
-  line-height: .98;
+  line-height: 0.98;
 
   letter-spacing: -3px;
 }
@@ -1038,9 +1036,9 @@
   border: 1px solid var(--ubs-border);
 
   transition:
-    transform .35s ease,
-    background .35s ease,
-    color .35s ease;
+    transform 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease;
 }
 
 .development-card:hover {
@@ -1050,8 +1048,7 @@
 
   transform: translateY(-8px);
 
-  box-shadow:
-    0 20px 50px rgba(141, 6, 40, .18);
+  box-shadow: 0 20px 50px rgba(141, 6, 40, 0.18);
 }
 
 .development-top {
@@ -1112,7 +1109,7 @@
 }
 
 .development-card:hover .development-icon {
-  background: rgba(255, 255, 255, .14);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .development-arrow {
@@ -1130,7 +1127,6 @@
   color: white;
 }
 
-
 /* =========================================================
    COMMUNITY
 ========================================================= */
@@ -1138,7 +1134,7 @@
 .community-section {
   display: grid;
 
-  grid-template-columns: 1.2fr .8fr;
+  grid-template-columns: 1.2fr 0.8fr;
 
   margin-top: 100px;
 
@@ -1199,9 +1195,8 @@
 
   font-size: 20px;
 
-  opacity: .65;
+  opacity: 0.65;
 }
-
 
 /* =========================================================
    PRIMARY SCHOOL
@@ -1233,7 +1228,7 @@
 
   object-fit: cover;
 
-  transition: transform .6s ease;
+  transition: transform 0.6s ease;
 }
 
 .primary-school-image:hover img {
@@ -1286,7 +1281,6 @@
   font-weight: 700;
 }
 
-
 /* =========================================================
    TYRANNUS
 ========================================================= */
@@ -1335,11 +1329,7 @@
   justify-content: center;
   align-items: center;
 
-  background:
-    linear-gradient(
-      135deg,
-      var(--navy),
-      var(--navy-2))
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 
 .tyrannus-circle {
@@ -1352,7 +1342,7 @@
   justify-content: center;
   align-items: center;
 
-  border: 1px solid rgba(255, 255, 255, .35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
 
   border-radius: 50%;
 
@@ -1378,7 +1368,6 @@
   letter-spacing: 2px;
 }
 
-
 /* =========================================================
    CLOSING
 ========================================================= */
@@ -1388,8 +1377,7 @@
 
   padding: 150px 0;
 
-  background:
-    linear-gradient(135deg, var(--navy), var(--navy-2));
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 
@@ -1401,7 +1389,7 @@
   font-weight: 800;
   letter-spacing: 3px;
 
-  color: rgba(255, 255, 255, .7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .history-closing h2 {
@@ -1409,7 +1397,7 @@
 
   font-size: clamp(46px, 7vw, 82px);
 
-  line-height: .98;
+  line-height: 0.98;
 
   letter-spacing: -4px;
 }
@@ -1419,7 +1407,7 @@
 
   margin: 0 auto 35px;
 
-  color: rgba(255, 255, 255, .75);
+  color: rgba(255, 255, 255, 0.75);
 
   font-size: 16px;
   line-height: 1.8;
@@ -1443,13 +1431,13 @@
   font-size: 13px;
   font-weight: 800;
 
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 .closing-button span {
   font-size: 20px;
 
-  transition: transform .3s ease;
+  transition: transform 0.3s ease;
 }
 
 .closing-button:hover {
@@ -1462,7 +1450,6 @@
   transform: translateX(5px);
 }
 
-
 /* =========================================================
    SCROLL REVEAL
 ========================================================= */
@@ -1473,8 +1460,8 @@
   transform: translateY(35px);
 
   transition:
-    opacity .75s ease,
-    transform .75s ease;
+    opacity 0.75s ease,
+    transform 0.75s ease;
 }
 
 .history-reveal.is-visible {
@@ -1483,14 +1470,12 @@
   transform: translateY(0);
 }
 
-
 /* =========================================================
    TABLET
 ========================================================= */
 
 // RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1000px viewport width and below.
 @media (max-width: 1000px) {
-
   .history-container {
     width: calc(100% - 40px);
   }
@@ -1542,9 +1527,7 @@
   .tyrannus-section {
     grid-template-columns: 1fr;
   }
-
 }
-
 
 /* =========================================================
    MOBILE
@@ -1552,11 +1535,9 @@
 
 // RESPONSIVE: Tablets / large phones (landscape): styles apply at 700px viewport width and below.
 @media (max-width: 700px) {
-
   .history-container {
     width: calc(100% - 30px);
   }
-
 
   /* HERO */
 
@@ -1585,7 +1566,6 @@
     display: none;
   }
 
-
   /* INTRO */
 
   .history-introduction {
@@ -1613,7 +1593,6 @@
   .intro-content p {
     font-size: 15px;
   }
-
 
   /* OUR JOURNEY */
 
@@ -1648,7 +1627,6 @@
   .timeline-track-year {
     font-size: 10.5px;
   }
-
 
   /* ANNIVERSARY */
 
@@ -1686,7 +1664,6 @@
     grid-auto-rows: 150px;
   }
 
-
   /* ARCHIVE */
 
   .archive-section {
@@ -1720,7 +1697,6 @@
     min-height: 310px;
   }
 
-
   /* VISION */
 
   .vision-section {
@@ -1752,7 +1728,6 @@
     font-size: 14px;
   }
 
-
   /* DEVELOPMENT */
 
   .development-section {
@@ -1779,7 +1754,6 @@
     min-height: 270px;
   }
 
-
   /* COMMUNITY */
 
   .community-section {
@@ -1798,7 +1772,6 @@
     font-size: 14px;
   }
 
-
   /* PRIMARY SCHOOL */
 
   .primary-school-section {
@@ -1812,7 +1785,6 @@
   .primary-school-content h2 {
     font-size: 43px;
   }
-
 
   /* TYRANNUS */
 
@@ -1837,7 +1809,6 @@
     height: 210px;
   }
 
-
   /* CLOSING */
 
   .history-closing {
@@ -1853,5 +1824,4 @@
   .history-closing p {
     font-size: 14px;
   }
-
 }

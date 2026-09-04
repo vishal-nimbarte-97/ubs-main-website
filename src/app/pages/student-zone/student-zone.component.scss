@@ -30,7 +30,6 @@
   margin: auto;
 }
 
-
 /* =========================================================
    HERO
 ========================================================= */
@@ -66,22 +65,25 @@
 }
 
 @keyframes heroImageDrift {
-  from { transform: scale(1.02); }
-  to   { transform: scale(1.1); }
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.1);
+  }
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
 
-  background:
-    linear-gradient(
-      90deg,
-      rgba(10, 10, 10, .88) 0%,
-      rgba(10, 10, 10, .65) 38%,
-      rgba(10, 10, 10, .15) 75%,
-      rgba(10, 10, 10, .25) 100%
-    );
+  background: linear-gradient(
+    90deg,
+    rgba(10, 10, 10, 0.88) 0%,
+    rgba(10, 10, 10, 0.65) 38%,
+    rgba(10, 10, 10, 0.15) 75%,
+    rgba(10, 10, 10, 0.25) 100%
+  );
 }
 
 .hero-content {
@@ -139,7 +141,7 @@
 
   margin: 0 0 36px;
 
-  color: rgba(255, 255, 255, .8);
+  color: rgba(255, 255, 255, 0.8);
 
   font-size: 17px;
   line-height: 1.8;
@@ -172,7 +174,7 @@
   font-size: 14px;
   font-weight: 600;
 
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 .primary-btn span {
@@ -192,15 +194,15 @@
 
   color: white;
 
-  border: 1px solid rgba(255, 255, 255, .35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
 
   font-size: 14px;
 
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 .secondary-btn:hover {
-  background: rgba(255, 255, 255, .1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .hero-bottom {
@@ -221,7 +223,7 @@
   justify-content: space-between;
   align-items: center;
 
-  border-top: 1px solid rgba(255, 255, 255, .2);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .hero-bottom div:first-child {
@@ -235,7 +237,7 @@
 }
 
 .hero-bottom span {
-  color: rgba(255, 255, 255, .65);
+  color: rgba(255, 255, 255, 0.65);
   font-size: 12px;
 }
 
@@ -244,7 +246,7 @@
   gap: 10px;
   align-items: center;
 
-  color: rgba(255, 255, 255, .65);
+  color: rgba(255, 255, 255, 0.65);
   font-size: 11px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -258,7 +260,6 @@
   border-radius: 50%;
 }
 
-
 /* =========================================================
    NAVIGATION
 ========================================================= */
@@ -269,7 +270,7 @@
 
   z-index: 50;
 
-  background: rgba(255, 255, 255, .95);
+  background: rgba(255, 255, 255, 0.95);
 
   border-bottom: 1px solid var(--border);
 
@@ -320,7 +321,7 @@
 
   text-decoration: none;
 
-  transition: .25s ease;
+  transition: 0.25s ease;
 }
 
 .nav-links a:hover {
@@ -336,7 +337,6 @@
   font-size: 12px;
   font-weight: 600;
 }
-
 
 /* =========================================================
    COMMON SECTION
@@ -393,7 +393,6 @@ h2 span {
   font-size: 14px;
   line-height: 1.8;
 }
-
 
 /* =========================================================
    STUDENT COMMITTEES — alternating gallery rows
@@ -459,7 +458,9 @@ h2 span {
 
   object-fit: cover;
 
-  transition: transform .55s ease, filter .4s ease;
+  transition:
+    transform 0.55s ease,
+    filter 0.4s ease;
 }
 
 .committee-gallery-item:hover img {
@@ -490,7 +491,6 @@ h2 span {
   line-height: 1.85;
 }
 
-
 /* =========================================================
    IMAGE FALLBACK
 ========================================================= */
@@ -498,7 +498,6 @@ h2 span {
 .img-fallback {
   background: linear-gradient(160deg, var(--navy), var(--gold));
 }
-
 
 /* =========================================================
    FINAL CTA
@@ -538,13 +537,11 @@ h2 span {
   line-height: 1.8;
 }
 
-
 /* =========================================================
    TABLET
 ========================================================= */
 
 @media (max-width: 1000px) {
-
   .nav-links {
     display: none;
   }
@@ -562,16 +559,13 @@ h2 span {
   .committee-gallery {
     grid-auto-rows: 160px;
   }
-
 }
-
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
 @media (max-width: 700px) {
-
   .container,
   .hero-content,
   .hero-bottom,
@@ -634,20 +628,16 @@ h2 span {
   .final-cta {
     padding: 100px 20px;
   }
-
 }
-
 
 /* =========================================================
    ACCESSIBILITY
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
   .hero-image img,
   .committee-gallery-item img {
     animation: none;
     transition: none;
   }
-
 }

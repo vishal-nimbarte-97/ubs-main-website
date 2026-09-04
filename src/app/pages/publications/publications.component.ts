@@ -21,19 +21,19 @@ export class PublicationsComponent {
       title: 'Future Publication',
       description:
         'This section will be updated soon with academic writing, research reflections, and ministry-focused publications from UBS contributors.',
-      status: 'Coming Soon'
+      status: 'Coming Soon',
     },
     {
       title: 'Research & Reflection',
       description:
         'New publications will highlight theological insights, ministry studies, and contextual research shaped by the seminary’s mission and teaching.',
-      status: 'Coming Soon'
+      status: 'Coming Soon',
     },
     {
       title: 'Theological Writing',
       description:
         'Planned academic pieces will be shared here as they are prepared for publication and public reading.',
-      status: 'Coming Soon'
-    }
+      status: 'Coming Soon',
+    },
   ];
 }

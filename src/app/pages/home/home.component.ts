@@ -14,7 +14,12 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-import { ProgrammeTrack, Counter, CalendarEvent, CalendarCell } from '../../models';
+import {
+  ProgrammeTrack,
+  Counter,
+  CalendarEvent,
+  CalendarCell,
+} from '../../models';
 import {
   PROGRAMME_TRACKS,
   CENTRES,
@@ -41,7 +46,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private routerSubscription?: Subscription;
 
   @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
-@ViewChild('campusVideoRef') campusVideoRef?: ElementRef<HTMLVideoElement>;
+  @ViewChild('campusVideoRef') campusVideoRef?: ElementRef<HTMLVideoElement>;
 
   /* ================= HERO — tagline swapper over video ================= */
   taglineGroups: string[][] = [
@@ -115,18 +120,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   aboutIntroSection!: ElementRef;
   introInView = false;
 
-  title =
-    'Welcome to ubs';
-    paragraph1 =
-    `Union Biblical Seminary commits itself to train, equip, nurture and instill in those called by God,
+  title = 'Welcome to ubs';
+  paragraph1 = `Union Biblical Seminary commits itself to train, equip, nurture and instill in those called by God,
     a Christ-like lifestyle, Biblical teaching and holistic formation for becoming servant leaders
     and scholar-saints in the church's mission in the contemporary world. UBS represents evangelical
     Christians from almost all the major Indian ethnic, linguistic and cultural groups, as well as from
     other countries. Its faculty, staff and students come from various cultural, regional, language
     backgrounds and church traditions.`;
-  
-  paragraph2 =
-    `The dynamic principle of 'unity in diversity' finds its expression in everyday experience based on the
+
+  paragraph2 = `The dynamic principle of 'unity in diversity' finds its expression in everyday experience based on the
     solid foundation of the person of Jesus Christ, to whom every member of the UBS is committed.
     The variegated character of the community provides rich opportunities for cultural interchange and
     interdenominational understanding.`;
@@ -137,36 +139,27 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   started = false;
 
-  // ngAfterViewInit() {
-
-
-
-  // }
-
-  async startTyping() {
-
-    await this.typeText(this.title, value => {
+  /** Reveal the introductory title and paragraphs one character at a time. */
+  async startTyping(): Promise<void> {
+    await this.typeText(this.title, (value) => {
       this.displayedTitle = value;
     });
 
-    await this.typeText(this.paragraph1, value => {
+    await this.typeText(this.paragraph1, (value) => {
       this.displayedParagraph1 = value;
     });
 
-    await this.typeText(this.paragraph2, value => {
+    await this.typeText(this.paragraph2, (value) => {
       this.displayedParagraph2 = value;
     });
-
   }
 
+  /** Run a typewriter animation and report each intermediate value. */
   typeText(text: string, callback: (value: string) => void): Promise<void> {
-
-    return new Promise(resolve => {
-
+    return new Promise((resolve) => {
       let index = 0;
 
       const timer = setInterval(() => {
-
         callback(text.substring(0, index + 1));
 
         index++;
@@ -175,16 +168,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           clearInterval(timer);
           resolve();
         }
-
       }, 5); // typing speed
-
     });
-
   }
 
   ngOnInit(): void {
-
-
+    // Build static calendar data before the first template render.
     this.buildCalendar();
 
     // Timers, scroll position, and observers only make sense in a real
@@ -199,11 +188,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.routerSubscription = this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ),
+      )
       .subscribe(() => this.scrollToCurrentRouteSection());
 
     this.taglineTimer = setInterval(() => {
-      this.activeTaglineIndex = (this.activeTaglineIndex + 1) % this.taglineGroups.length;
+      this.activeTaglineIndex =
+        (this.activeTaglineIndex + 1) % this.taglineGroups.length;
     }, 3200);
 
     this.testimonialTimer = setInterval(() => this.nextTestimonial(), 6000);
@@ -218,8 +212,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    // Browser-only observers and video playback require rendered DOM elements.
     if (!this.isBrowser) return;
-  
+
     if (this.countersSection && 'IntersectionObserver' in window) {
       this.countersObserver = new IntersectionObserver(
         (entries) => {
@@ -230,11 +225,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           });
         },
-        { threshold: 0.4 }
+        { threshold: 0.4 },
       );
       this.countersObserver.observe(this.countersSection.nativeElement);
     }
-  
+
     if (this.aboutIntroSection && 'IntersectionObserver' in window) {
       const introObserver = new IntersectionObserver(
         (entries, obs) => {
@@ -243,11 +238,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             obs.disconnect();
           }
         },
-        { threshold: 0.25 }
+        { threshold: 0.25 },
       );
       introObserver.observe(this.aboutIntroSection.nativeElement);
     }
-  
+
     if (this.campusVideoRef) {
       const video = this.campusVideoRef.nativeElement;
       video.muted = true;
@@ -257,6 +252,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    // Release subscriptions, timers, and observers when the home page is removed.
     this.routerSubscription?.unsubscribe();
     if (this.taglineTimer) clearInterval(this.taglineTimer);
     if (this.testimonialTimer) clearInterval(this.testimonialTimer);
@@ -265,6 +261,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* ---------- helpers ---------- */
   private scrollToCurrentRouteSection(): void {
+    // Scroll to the matching home section when navigation uses a section route.
     if (!this.isBrowser) return;
 
     const rawPath = this.router.url.split('?')[0].split('#')[0];
@@ -286,21 +283,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setTab(tab: 'programmes' | 'centres'): void {
+    // Switch the data set displayed in the programmes/centres section.
     this.activeTab = tab;
   }
 
   setLiveVideo(save = true): void {
+    // Validate the YouTube URL, create a safe embed URL, and optionally persist it.
     this.liveUrlError = '';
     const videoId = this.getYouTubeVideoId(this.liveYouTubeUrl);
 
     if (!videoId) {
       this.liveEmbedUrl = null;
-      this.liveUrlError = 'Enter a valid YouTube video, live-stream, or youtu.be link.';
+      this.liveUrlError =
+        'Enter a valid YouTube video, live-stream, or youtu.be link.';
       return;
     }
 
     this.liveEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`
+      `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`,
     );
 
     if (save && this.isBrowser) {
@@ -309,6 +309,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getYouTubeVideoId(value: string): string | null {
+    // Accept standard YouTube, live, shorts, embed, and youtu.be URL formats.
     try {
       const url = new URL(value.trim());
       const host = url.hostname.replace(/^www\./, '').toLowerCase();
@@ -320,7 +321,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         videoId = url.searchParams.get('v') ?? '';
         if (!videoId) {
           const pathParts = url.pathname.split('/').filter(Boolean);
-          if (['embed', 'live', 'shorts'].includes(pathParts[0])) videoId = pathParts[1] ?? '';
+          if (['embed', 'live', 'shorts'].includes(pathParts[0]))
+            videoId = pathParts[1] ?? '';
         }
       }
 
@@ -331,6 +333,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private animateCounters(): void {
+    // Animate each statistic from zero to its configured target with easing.
     const duration = 1600;
     const start = performance.now();
     const from = this.counters.map(() => 0);
@@ -348,6 +351,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /* ---------- calendar ---------- */
+  /** Build the visible month grid and mark days that contain events. */
   buildCalendar(): void {
     const year = this.calendarDate.getFullYear();
     const month = this.calendarDate.getMonth();
@@ -356,7 +360,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const eventDates = new Set(this.events.map((e) => e.date));
 
     const cells: CalendarCell[] = [];
-    for (let i = 0; i < firstDay; i++) cells.push({ date: null, iso: '', hasEvent: false });
+    for (let i = 0; i < firstDay; i++)
+      cells.push({ date: null, iso: '', hasEvent: false });
     for (let d = 1; d <= daysInMonth; d++) {
       const iso = new Date(year, month, d).toISOString().slice(0, 10);
       cells.push({ date: d, iso, hasEvent: eventDates.has(iso) });
@@ -365,20 +370,34 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get calendarMonthLabel(): string {
-    return this.calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    return this.calendarDate.toLocaleDateString('en-US', {
+      month: 'long',
+      year: 'numeric',
+    });
   }
 
   prevMonth(): void {
-    this.calendarDate = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth() - 1, 1);
+    // Move the calendar back one month and rebuild its cells.
+    this.calendarDate = new Date(
+      this.calendarDate.getFullYear(),
+      this.calendarDate.getMonth() - 1,
+      1,
+    );
     this.buildCalendar();
   }
 
   nextMonth(): void {
-    this.calendarDate = new Date(this.calendarDate.getFullYear(), this.calendarDate.getMonth() + 1, 1);
+    // Move the calendar forward one month and rebuild its cells.
+    this.calendarDate = new Date(
+      this.calendarDate.getFullYear(),
+      this.calendarDate.getMonth() + 1,
+      1,
+    );
     this.buildCalendar();
   }
 
   selectDay(cell: CalendarCell): void {
+    // Display events for the selected calendar day.
     if (!cell.date) return;
     this.selectedEvents = this.events.filter((e) => e.date === cell.iso);
     this.selectedDateLabel = new Date(cell.iso).toLocaleDateString('en-US', {
@@ -389,31 +408,42 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   closeSelectedDay(): void {
+    // Clear the selected day details panel.
     this.selectedEvents = [];
     this.selectedDateLabel = '';
   }
 
   /* ---------- blog carousel ---------- */
   scrollBlog(dir: number): void {
+    // Clamp carousel movement so it never exceeds the available posts.
     const max = this.blogPosts.length - 1;
-    this.blogScrollIndex = Math.min(Math.max(this.blogScrollIndex + dir, 0), max);
+    this.blogScrollIndex = Math.min(
+      Math.max(this.blogScrollIndex + dir, 0),
+      max,
+    );
   }
 
   /* ---------- testimonials ---------- */
   nextTestimonial(): void {
-    this.testimonialIndex = (this.testimonialIndex + 1) % this.testimonials.length;
+    // Advance the testimonial carousel and wrap at the final item.
+    this.testimonialIndex =
+      (this.testimonialIndex + 1) % this.testimonials.length;
   }
   prevTestimonial(): void {
+    // Move backward through testimonials and wrap at the first item.
     this.testimonialIndex =
-      (this.testimonialIndex - 1 + this.testimonials.length) % this.testimonials.length;
+      (this.testimonialIndex - 1 + this.testimonials.length) %
+      this.testimonials.length;
   }
 
   /* ---------- enquiry ---------- */
   toggleEnquiry(): void {
+    // Open or close the floating enquiry form.
     this.enquiryOpen = !this.enquiryOpen;
   }
 
   submitEnquiry(): void {
+    // Require essential fields, then show a temporary submission state.
     if (!this.enquiryName || !this.enquiryEmail) return;
     this.enquirySubmitted = true;
     this.enquiryName = '';
@@ -487,37 +517,26 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   currentLegacySlide = 0;
 
-  // ngOnInit() {
-
-
-
-  // }
-
-  createLegacySlides() {
-
+  /** Group legacy milestones into three-item slides for the carousel. */
+  createLegacySlides(): void {
     this.legacySlides = [];
 
     for (let i = 0; i < this.legacyMilestones.length; i += 3) {
-      this.legacySlides.push(
-        this.legacyMilestones.slice(i, i + 3)
-      );
+      this.legacySlides.push(this.legacyMilestones.slice(i, i + 3));
     }
-
   }
 
-  nextLegacySlide() {
-
+  /** Advance the legacy carousel by one slide. */
+  nextLegacySlide(): void {
     this.currentLegacySlide =
       (this.currentLegacySlide + 1) % this.legacySlides.length;
-
   }
 
-  prevLegacySlide() {
-
+  /** Move the legacy carousel back by one slide. */
+  prevLegacySlide(): void {
     this.currentLegacySlide =
       (this.currentLegacySlide - 1 + this.legacySlides.length) %
       this.legacySlides.length;
-
   }
 
   connectBannerImage = 'https://picsum.photos/seed/ubs-foliage/1600/700';
@@ -540,11 +559,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   legacyVoiceIndex = 0;
 
   nextLegacyVoice(): void {
-    this.legacyVoiceIndex = (this.legacyVoiceIndex + 1) % this.legacyVoices.length;
+    // Advance the legacy voice carousel and wrap at the final voice.
+    this.legacyVoiceIndex =
+      (this.legacyVoiceIndex + 1) % this.legacyVoices.length;
   }
   prevLegacyVoice(): void {
+    // Move backward through legacy voices and wrap at the first voice.
     this.legacyVoiceIndex =
-      (this.legacyVoiceIndex - 1 + this.legacyVoices.length) % this.legacyVoices.length;
+      (this.legacyVoiceIndex - 1 + this.legacyVoices.length) %
+      this.legacyVoices.length;
   }
-
 }

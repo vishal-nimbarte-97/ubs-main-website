@@ -1,4 +1,11 @@
-import { Component, inject, OnDestroy, OnInit, PLATFORM_ID, HostListener } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  HostListener,
+} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -28,6 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private isBrowser = isPlatformBrowser(this.platformId);
 
   ngOnInit(): void {
+    // Render the initial countdown immediately, then refresh it once per second.
     this.updateCountdown();
     if (!this.isBrowser) return;
 
@@ -35,10 +43,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    // Stop the timer when the header is removed to prevent background work.
     if (this.countdownTimer) clearInterval(this.countdownTimer);
   }
 
   onWindowScroll(): void {
+    // Add the compact header state after the user scrolls past the top area.
     if (!this.isBrowser) return;
     this.isScrolled = window.scrollY > 40;
   }
@@ -47,6 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // left open and the viewport is then resized/rotated past the 836px
   // breakpoint into desktop layout.
   onWindowResize(): void {
+    // Close the mobile drawer when the viewport changes to desktop width.
     if (!this.isBrowser) return;
     if (this.mobileMenuOpen && window.innerWidth >= 837) {
       this.closeMobileMenu();
@@ -54,6 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleMobileMenu(): void {
+    // Open or close the mobile drawer and keep the document scroll state in sync.
     this.mobileMenuOpen = !this.mobileMenuOpen;
     if (!this.isBrowser) return;
     try {
@@ -69,7 +81,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.mobileMenuOpen) {
       setTimeout(() => {
         try {
-          const firstLink = document.querySelector('#primary-nav-links a') as HTMLElement | null;
+          const firstLink = document.querySelector(
+            '#primary-nav-links a',
+          ) as HTMLElement | null;
           firstLink?.focus();
         } catch {
           // ignore
@@ -78,7 +92,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       setTimeout(() => {
         try {
-          const toggle = document.getElementById('mobile-menu-toggle') as HTMLElement | null;
+          const toggle = document.getElementById(
+            'mobile-menu-toggle',
+          ) as HTMLElement | null;
           toggle?.focus();
         } catch {
           // ignore
@@ -95,25 +111,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   /** Parent navigation items expand submenus only in the mobile drawer. */
-  toggleMobileDropdownMenu(menu: 'about' | 'administration' | 'academics'): void {
+  toggleMobileDropdownMenu(
+    menu: 'about' | 'administration' | 'academics',
+  ): void {
     if (!this.isBrowser || window.innerWidth > 836) return;
     this.openDropdown = this.openDropdown === menu ? null : menu;
   }
 
   closeDropdownMenu(menu: 'about' | 'administration' | 'academics'): void {
+    // Close only the dropdown currently being hovered or focused.
     if (this.isMobileViewport()) return;
     if (this.openDropdown === menu) this.openDropdown = null;
   }
 
   onEscapeKey(): void {
+    // Provide a direct template handler for closing the mobile drawer.
     if (this.mobileMenuOpen) this.closeMobileMenu();
   }
 
   toggleAnnouncement(): void {
+    // Toggle the announcement panel without changing the current route.
     this.announcementOpen = !this.announcementOpen;
   }
 
   closeMobileMenu(): void {
+    // Reset mobile navigation state and restore normal document scrolling.
     this.mobileMenuOpen = false;
     this.openDropdown = null;
     if (!this.isBrowser) return;
@@ -126,7 +148,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Return focus to the toggle for keyboard users
     setTimeout(() => {
       try {
-        const toggle = document.getElementById('mobile-menu-toggle') as HTMLElement | null;
+        const toggle = document.getElementById(
+          'mobile-menu-toggle',
+        ) as HTMLElement | null;
         toggle?.focus();
       } catch {
         // ignore
@@ -139,8 +163,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.mobileMenuOpen) this.closeMobileMenu();
   }
 
-
   private updateCountdown(): void {
+    // Calculate the remaining admission time from the configured deadline.
     const now = new Date().getTime();
     const distance = this.admissionDeadline.getTime() - now;
     if (distance <= 0) {
@@ -149,7 +173,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+    );
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 

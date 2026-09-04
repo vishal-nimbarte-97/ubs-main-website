@@ -49,8 +49,9 @@
   align-items: center;
   justify-content: center;
   min-height: 560px;
-  background-image: linear-gradient(rgba(20, 22, 34, 0.5), rgba(20, 22, 34, 0.65)),
-    url('../../../assets/about/about-home.png');
+  background-image:
+    linear-gradient(rgba(20, 22, 34, 0.5), rgba(20, 22, 34, 0.65)),
+    url("../../../assets/about/about-home.png");
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -59,7 +60,11 @@
 .alumni-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(11, 17, 27, 0.22), rgba(11, 17, 27, 0.32));
+  background: linear-gradient(
+    180deg,
+    rgba(11, 17, 27, 0.22),
+    rgba(11, 17, 27, 0.32)
+  );
 }
 
 .alumni-hero__content {

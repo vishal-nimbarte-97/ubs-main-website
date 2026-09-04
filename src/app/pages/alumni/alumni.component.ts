@@ -17,6 +17,6 @@ export class AlumniComponent {
     description:
       'UBS alumni continue to serve in churches, mission fields, theological education, and community leadership across India and beyond. Their lives bear testimony to the seminary’s conviction that faithful biblical teaching, spiritual formation, and Christ-centred discipleship prepare servants for lasting impact.',
     highlight:
-      'From local congregations to cross-cultural mission work, the stories of our graduates reflect courage, humility, and a deep commitment to the gospel.'
+      'From local congregations to cross-cultural mission work, the stories of our graduates reflect courage, humility, and a deep commitment to the gospel.',
   };
 }

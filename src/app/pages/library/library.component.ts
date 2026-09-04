@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
-
 interface LibraryPolicy {
   number: string;
   title: string;
@@ -21,9 +19,7 @@ interface ReadingZone {
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss'],
 })
-
 export class LibraryComponent {
-
   activePolicy: number = 0;
 
   readonly images = {
@@ -41,7 +37,6 @@ export class LibraryComponent {
   };
 
   policies: LibraryPolicy[] = [
-
     {
       number: '01',
       title: 'Class Hours',
@@ -50,8 +45,8 @@ export class LibraryComponent {
         'Saturday library hours are from 8:30 AM to 1:00 PM.',
         'During examinations, Monday to Friday hours are 8:30 AM to 11:00 PM.',
         'Students are not allowed to use the library during chapel and seminary program times.',
-        'Check-in and check-out services are available during designated circulation hours.'
-      ]
+        'Check-in and check-out services are available during designated circulation hours.',
+      ],
     },
 
     {
@@ -61,8 +56,8 @@ export class LibraryComponent {
         'Registered students, faculty and staff can use the library resources and services.',
         'Children are not allowed to use the library without permission.',
         'Distance Learning students may produce a letter from the Distance Learning Coordinator for regular use of the library.',
-        'Registered users receive a library user number which can be used to access the OPAC and library services.'
-      ]
+        'Registered users receive a library user number which can be used to access the OPAC and library services.',
+      ],
     },
 
     {
@@ -74,8 +69,8 @@ export class LibraryComponent {
         'Use of social media is not permitted inside the library.',
         'Talking or group discussions are not permitted.',
         'Users should maintain an atmosphere of dignity, peace and quiet.',
-        'Library books and resources should be handled carefully.'
-      ]
+        'Library books and resources should be handled carefully.',
+      ],
     },
 
     {
@@ -87,8 +82,8 @@ export class LibraryComponent {
         'Use paper flags or bookmarks to mark pages.',
         'Do not use sticky notes that may damage pages.',
         'Avoid using paper clips or objects that can damage books.',
-        'Return books to the appropriate location after use.'
-      ]
+        'Return books to the appropriate location after use.',
+      ],
     },
 
     {
@@ -99,8 +94,8 @@ export class LibraryComponent {
         'Fill in the required details on the issue card.',
         'Submit the book to the library staff at the circulation counter.',
         'Books cannot be issued using another cardholder’s account.',
-        'Temporary reference and essential books may be issued with faculty approval.'
-      ]
+        'Temporary reference and essential books may be issued with faculty approval.',
+      ],
     },
 
     {
@@ -111,8 +106,8 @@ export class LibraryComponent {
         'Books can be renewed once unless another user has placed a hold.',
         'Books can be renewed using the OPAC.',
         'Distance Learning students are subject to specific circulation rules.',
-        'Users are responsible for returning books on time.'
-      ]
+        'Users are responsible for returning books on time.',
+      ],
     },
 
     {
@@ -123,8 +118,8 @@ export class LibraryComponent {
         'The room contains reference materials intended mainly for consultation.',
         'The Reference Room includes dictionaries, encyclopaedias, commentaries, bibliographies, indexes and directories.',
         'Periodicals including journals, magazines, reviews and newsletters are also maintained.',
-        'The Archives are located on the first floor.'
-      ]
+        'The Archives are located on the first floor.',
+      ],
     },
 
     {
@@ -134,36 +129,32 @@ export class LibraryComponent {
         'Computers and a printer are available on the ground floor.',
         'Photocopy services are available after payment when the facility is operational.',
         'The UBS Library collection can be searched through the KOHA OPAC.',
-        'The online catalogue provides access to library collection information.'
-      ]
-    }
-
+        'The online catalogue provides access to library collection information.',
+      ],
+    },
   ];
 
-
   togglePolicy(index: number): void {
-
+    // Allow one policy section to remain open, or close the active section.
     if (this.activePolicy === index) {
       this.activePolicy = -1;
     } else {
       this.activePolicy = index;
     }
-
   }
 
   readingZones: ReadingZone[] = [
     {
       title: 'Newspaper Reading Area',
-      image: this.images.newspaperZone
+      image: this.images.newspaperZone,
     },
     {
       title: 'Journal Reading Area',
-      image: this.images.journalZone
+      image: this.images.journalZone,
     },
     {
       title: 'Coffee Table Reading Area',
-      image: this.images.coffeeTableZone
-    }
+      image: this.images.coffeeTableZone,
+    },
   ];
-
 }

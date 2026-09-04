@@ -28,15 +28,23 @@
   margin: 0 auto;
 }
 
-h1, h2, h3, blockquote {
-  font-family: 'Playfair Display', 'Georgia', serif;
+h1,
+h2,
+h3,
+blockquote {
+  font-family: "Playfair Display", "Georgia", serif;
   line-height: 1.15;
   margin: 0;
   color: var(--navy);
 }
 
-p, span, a, li, small, figcaption {
-  font-family: 'Roboto', system-ui, sans-serif;
+p,
+span,
+a,
+li,
+small,
+figcaption {
+  font-family: "Roboto", system-ui, sans-serif;
 }
 
 .eyebrow {
@@ -48,18 +56,29 @@ p, span, a, li, small, figcaption {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.eyebrow--light { color: var(--gold-light); }
+.eyebrow--light {
+  color: var(--gold-light);
+}
 
 .section-title {
   font-weight: 700;
   font-size: clamp(1.7rem, 3vw, 2.4rem);
-  span { color: var(--gold); font-style: italic; font-weight: 600; }
+  span {
+    color: var(--gold);
+    font-style: italic;
+    font-weight: 600;
+  }
 }
-.section-title--center { text-align: center; margin-bottom: 2rem; }
+.section-title--center {
+  text-align: center;
+  margin-bottom: 2rem;
+}
 
 // RESPONSIVE: Accessibility: respects the user's OS-level 'reduce motion' setting.
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -90,7 +109,12 @@ p, span, a, li, small, figcaption {
 .hero__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7,22,38,0.55) 0%, rgba(7,22,38,0.35) 40%, rgba(7,22,38,0.85) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(7, 22, 38, 0.55) 0%,
+    rgba(7, 22, 38, 0.35) 40%,
+    rgba(7, 22, 38, 0.85) 100%
+  );
 }
 
 .hero__content {
@@ -105,7 +129,11 @@ p, span, a, li, small, figcaption {
   font-weight: 700;
   color: var(--white);
   margin-bottom: 22px;
-  span { color: var(--gold-light); font-style: italic; font-weight: 600; }
+  span {
+    color: var(--gold-light);
+    font-style: italic;
+    font-weight: 600;
+  }
 }
 
 .hero__sub {
@@ -134,7 +162,7 @@ p, span, a, li, small, figcaption {
     overflow: hidden;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       top: -100%;
       left: 0;
@@ -153,14 +181,23 @@ p, span, a, li, small, figcaption {
 }
 
 @keyframes scroll-fall {
-  0% { top: -100%; }
-  60%, 100% { top: 100%; }
+  0% {
+    top: -100%;
+  }
+  60%,
+  100% {
+    top: 100%;
+  }
 }
 
 // RESPONSIVE: Tablets / large phones (landscape): styles apply at 700px viewport width and below.
 @media (max-width: 700px) {
-  .hero { min-height: 600px; }
-  .hero__scroll-cue { display: none; }
+  .hero {
+    min-height: 600px;
+  }
+  .hero__scroll-cue {
+    display: none;
+  }
 }
 
 /* =========================================================
@@ -184,12 +221,17 @@ p, span, a, li, small, figcaption {
   box-shadow: 0 24px 54px rgba(11, 37, 69, 0.2);
   aspect-ratio: 3 / 4;
 
-  img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 }
 
 .principal__mark {
   display: block;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: clamp(4rem, 8vw, 6rem);
   line-height: 0.6;
   color: var(--gold);
@@ -212,7 +254,7 @@ p, span, a, li, small, figcaption {
 
   strong {
     display: block;
-    font-family: 'Playfair Display', serif;
+    font-family: "Playfair Display", serif;
     font-size: 1.1rem;
     color: var(--navy);
   }
@@ -232,8 +274,13 @@ p, span, a, li, small, figcaption {
 
 // RESPONSIVE: Tablets: styles apply at 860px viewport width and below.
 @media (max-width: 860px) {
-  .principal__grid { grid-template-columns: 1fr; }
-  .principal__photo { max-width: 260px; margin: 0 auto; }
+  .principal__grid {
+    grid-template-columns: 1fr;
+  }
+  .principal__photo {
+    max-width: 260px;
+    margin: 0 auto;
+  }
 }
 
 /* =========================================================
@@ -242,15 +289,25 @@ p, span, a, li, small, figcaption {
 .day-strip {
   position: relative;
   padding: clamp(70px, 9vw, 110px) 0 clamp(50px, 6vw, 80px);
-  background: linear-gradient(160deg, var(--navy-deep) 0%, #0a1c30 55%, var(--navy) 100%);
+  background: linear-gradient(
+    160deg,
+    var(--navy-deep) 0%,
+    #0a1c30 55%,
+    var(--navy) 100%
+  );
   overflow: hidden;
 }
 
-.day-strip__head { margin-bottom: 2.8rem; text-align: center; }
+.day-strip__head {
+  margin-bottom: 2.8rem;
+  text-align: center;
+}
 
 .section-title--light {
   color: var(--white);
-  span { color: var(--gold-light); }
+  span {
+    color: var(--gold-light);
+  }
 }
 
 /* ---- card + big mood-lit image ---- */
@@ -279,7 +336,9 @@ p, span, a, li, small, figcaption {
   background-position: center;
   opacity: 0;
   transform: scale(1.04);
-  transition: opacity 0.7s ease, transform 8s ease;
+  transition:
+    opacity 0.7s ease,
+    transform 8s ease;
 
   &.is-active {
     opacity: 1;
@@ -290,14 +349,24 @@ p, span, a, li, small, figcaption {
 .day-strip__hero-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 68% 55%, rgba(231, 200, 119, 0.22) 0%, transparent 55%);
+  background: radial-gradient(
+    ellipse at 68% 55%,
+    rgba(231, 200, 119, 0.22) 0%,
+    transparent 55%
+  );
   pointer-events: none;
 }
 
 .day-strip__hero-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, rgba(7,22,38,0.94) 0%, rgba(7,22,38,0.55) 32%, rgba(7,22,38,0.05) 60%, transparent 80%);
+  background: linear-gradient(
+    100deg,
+    rgba(7, 22, 38, 0.94) 0%,
+    rgba(7, 22, 38, 0.55) 32%,
+    rgba(7, 22, 38, 0.05) 60%,
+    transparent 80%
+  );
 }
 
 .day-strip__card {
@@ -357,14 +426,25 @@ p, span, a, li, small, figcaption {
 
 // RESPONSIVE: Tablets: styles apply at 860px viewport width and below.
 @media (max-width: 860px) {
-  .day-strip__stage { grid-template-columns: 1fr; }
-  .day-strip__hero { height: 320px; grid-row: 1; }
+  .day-strip__stage {
+    grid-template-columns: 1fr;
+  }
+  .day-strip__hero {
+    height: 320px;
+    grid-row: 1;
+  }
   .day-strip__card {
     grid-row: 2;
     margin: -60px auto 0;
     width: min(340px, calc(100% - 32px));
   }
-  .day-strip__hero-scrim { background: linear-gradient(180deg, rgba(7,22,38,0.2) 0%, rgba(7,22,38,0.85) 100%); }
+  .day-strip__hero-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(7, 22, 38, 0.2) 0%,
+      rgba(7, 22, 38, 0.85) 100%
+    );
+  }
 }
 
 /* ---- horizontal time-line ---- */
@@ -404,7 +484,10 @@ p, span, a, li, small, figcaption {
   height: 8px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.35);
-  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 .day-strip__point-time {
@@ -435,7 +518,9 @@ p, span, a, li, small, figcaption {
   background: var(--white);
 }
 
-.facilities__head { margin-bottom: 2.6rem; }
+.facilities__head {
+  margin-bottom: 2.6rem;
+}
 
 .facilities__grid {
   display: grid;
@@ -453,7 +538,9 @@ p, span, a, li, small, figcaption {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 14px 32px rgba(11, 37, 69, 0.12);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
   opacity: 0;
   transform: translateY(24px);
   animation: facility-rise 0.6s ease forwards;
@@ -471,7 +558,10 @@ p, span, a, li, small, figcaption {
 }
 
 @keyframes facility-rise {
-  to { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .facilities__card-index {
@@ -493,10 +583,18 @@ p, span, a, li, small, figcaption {
   aspect-ratio: 4 / 3;
   overflow: hidden;
 
-  img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
 }
 
-.facilities__card:hover .facilities__card-photo img { transform: scale(1.06); }
+.facilities__card:hover .facilities__card-photo img {
+  transform: scale(1.06);
+}
 
 .facilities__card-label {
   margin: 18px 20px 0;
@@ -509,7 +607,7 @@ p, span, a, li, small, figcaption {
 
 .facilities__card-heading {
   margin: 8px 20px 0;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.1rem;
   color: var(--navy);
   line-height: 1.35;
@@ -525,18 +623,26 @@ p, span, a, li, small, figcaption {
   font-weight: 600;
   font-size: 0.85rem;
 
-  i { transition: transform 0.25s ease; }
+  i {
+    transition: transform 0.25s ease;
+  }
 }
 
-.facilities__card:hover .facilities__card-cta i { transform: translateX(4px); }
+.facilities__card:hover .facilities__card-cta i {
+  transform: translateX(4px);
+}
 
 // RESPONSIVE: Tablets: styles apply at 900px viewport width and below.
 @media (max-width: 900px) {
-  .facilities__grid { grid-template-columns: repeat(2, 1fr); }
+  .facilities__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 // RESPONSIVE: Large phones: styles apply at 560px viewport width and below.
 @media (max-width: 560px) {
-  .facilities__grid { grid-template-columns: 1fr; }
+  .facilities__grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ---- facility popup modal ---- */
@@ -554,8 +660,12 @@ p, span, a, li, small, figcaption {
 }
 
 @keyframes modal-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .facility-modal__panel {
@@ -571,8 +681,14 @@ p, span, a, li, small, figcaption {
 }
 
 @keyframes modal-rise {
-  from { opacity: 0; transform: translateY(18px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .facility-modal__close {
@@ -590,7 +706,9 @@ p, span, a, li, small, figcaption {
   color: var(--navy);
   transition: background 0.2s ease;
 
-  &:hover { background: var(--gold-light); }
+  &:hover {
+    background: var(--gold-light);
+  }
 }
 
 .facility-modal__gallery {
@@ -605,11 +723,19 @@ p, span, a, li, small, figcaption {
   border-radius: 12px;
   overflow: hidden;
 
-  img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 }
 
 .facility-modal__copy {
-  h3 { font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin: 10px 0 14px; }
+  h3 {
+    font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+    margin: 10px 0 14px;
+  }
 
   p {
     color: var(--slate);
@@ -633,7 +759,7 @@ p, span, a, li, small, figcaption {
       font-size: 0.95rem;
 
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         left: 0;
         top: 0.55em;
@@ -648,8 +774,12 @@ p, span, a, li, small, figcaption {
 
 // RESPONSIVE: Large phones: styles apply at 640px viewport width and below.
 @media (max-width: 640px) {
-  .facility-modal__gallery { grid-template-columns: repeat(2, 1fr); }
-  .facility-modal__copy ul { grid-template-columns: 1fr; }
+  .facility-modal__gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .facility-modal__copy ul {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* =========================================================
@@ -661,7 +791,9 @@ p, span, a, li, small, figcaption {
   padding: clamp(60px, 8vw, 100px) 0;
   background: var(--navy-deep);
 
-  .section-title { color: var(--white); }
+  .section-title {
+    color: var(--white);
+  }
 }
 
 .mosaic__grid {
@@ -675,14 +807,20 @@ p, span, a, li, small, figcaption {
     object-fit: cover;
     display: block;
     border-radius: 10px;
-    background: var(--parchment); /* fills any transparent corners on non-rectangular source images */
+    background: var(
+      --parchment
+    ); /* fills any transparent corners on non-rectangular source images */
     transition: transform 0.4s ease;
 
-    &:hover { transform: scale(1.02); }
+    &:hover {
+      transform: scale(1.02);
+    }
   }
 }
 
 // RESPONSIVE: Standard mobile phones: styles apply at 540px viewport width and below.
 @media (max-width: 540px) {
-  .mosaic__grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .mosaic__grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
 }

@@ -17,15 +17,12 @@
   --background: #f7f4ec;
   --border: #dfe4eb;
 
-  --shadow-sm:
-    0 5px 20px rgba(0, 0, 0, 0.07);
+  --shadow-sm: 0 5px 20px rgba(0, 0, 0, 0.07);
 
-  --shadow-md:
-    0 15px 40px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 15px 40px rgba(0, 0, 0, 0.12);
 
   --radius: 18px;
 }
-
 
 /* =========================================================
    MAIN PAGE
@@ -33,22 +30,12 @@
 
 .faculty-page {
   min-height: 100vh;
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #f7f4ec 100%
-    );
+  background: linear-gradient(180deg, #ffffff 0%, #f7f4ec 100%);
 
   color: var(--text-dark);
 
-  font-family:
-    "Inter",
-    "Segoe UI",
-    Arial,
-    sans-serif;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
 }
-
 
 /* =========================================================
    HERO
@@ -57,23 +44,14 @@
 .faculty-hero {
   position: relative;
 
-  padding:
-    90px 20px
-    75px;
+  padding: 90px 20px 75px;
 
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      135deg,
-      #fff 0%,
-      #f7f4ec 50%,
-      #fff 100%
-    );
+  background: linear-gradient(135deg, #fff 0%, #f7f4ec 50%, #fff 100%);
 
   text-align: center;
 }
-
 
 /* decorative circles */
 
@@ -87,13 +65,11 @@
 
   border-radius: 50%;
 
-  background:
-    rgba(18, 59, 107, 0.07);
+  background: rgba(18, 59, 107, 0.07);
 
   top: -150px;
   left: -100px;
 }
-
 
 .faculty-hero::after {
   content: "";
@@ -105,13 +81,11 @@
 
   border-radius: 50%;
 
-  background:
-    rgba(201, 150, 43, 0.08);
+  background: rgba(201, 150, 43, 0.08);
 
   bottom: -150px;
   right: -80px;
 }
-
 
 .hero-content {
   position: relative;
@@ -122,22 +96,18 @@
   margin: auto;
 }
 
-
 .hero-small-title {
   display: inline-block;
 
   margin-bottom: 14px;
 
-  padding:
-    7px 18px;
+  padding: 7px 18px;
 
   border-radius: 50px;
 
-  background:
-    var(--primary-light);
+  background: var(--primary-light);
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
   font-size: 12px;
 
@@ -146,15 +116,12 @@
   letter-spacing: 2px;
 }
 
-
 .hero-content h1 {
   margin: 0;
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-size:
-    clamp(42px, 5vw, 68px);
+  font-size: clamp(42px, 5vw, 68px);
 
   line-height: 1.1;
 
@@ -163,21 +130,17 @@
   letter-spacing: -2px;
 }
 
-
 .hero-content p {
   max-width: 650px;
 
-  margin:
-    20px auto 0;
+  margin: 20px auto 0;
 
-  color:
-    var(--text-medium);
+  color: var(--text-medium);
 
   font-size: 17px;
 
   line-height: 1.7;
 }
-
 
 /* =========================================================
    FACULTY CONTAINER
@@ -186,13 +149,10 @@
 .faculty-container {
   width: min(1400px, 92%);
 
-  margin:
-    0 auto;
+  margin: 0 auto;
 
-  padding:
-    70px 0 100px;
+  padding: 70px 0 100px;
 }
-
 
 /* =========================================================
    DEPARTMENT SECTION
@@ -201,7 +161,6 @@
 .department-section {
   margin-bottom: 85px;
 }
-
 
 .department-header {
   display: flex;
@@ -213,58 +172,39 @@
   margin-bottom: 40px;
 }
 
-
 .department-line {
   flex: 1;
 
   height: 1px;
 
-  background:
-    linear-gradient(
-      to right,
-      transparent,
-      #cfcfcf
-    );
+  background: linear-gradient(to right, transparent, #cfcfcf);
 }
-
 
 .department-line:last-child {
-  background:
-    linear-gradient(
-      to left,
-      transparent,
-      #cfcfcf
-    );
+  background: linear-gradient(to left, transparent, #cfcfcf);
 }
-
 
 .department-header h2 {
   margin: 0;
 
-  padding:
-    14px 30px;
+  padding: 14px 30px;
 
-  border:
-    2px solid var(--navy);
+  border: 2px solid var(--navy);
 
   border-radius: 50px;
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  background:
-    #ffffff;
+  background: #ffffff;
 
   text-align: center;
 
-  font-size:
-    clamp(20px, 2.5vw, 30px);
+  font-size: clamp(20px, 2.5vw, 30px);
 
   font-weight: 800;
 
   letter-spacing: 0.3px;
 }
-
 
 /* =========================================================
    FACULTY GRID
@@ -273,8 +213,7 @@
 .faculty-grid {
   display: grid;
 
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   gap: 30px;
 }
@@ -292,7 +231,6 @@
   margin-inline: auto;
 }
 
-
 /* =========================================================
    FACULTY CARD
 ========================================================= */
@@ -308,17 +246,13 @@
 
   overflow: hidden;
 
-  background:
-    linear-gradient(145deg, #ffffff 0%, #fcfafb 100%);
+  background: linear-gradient(145deg, #ffffff 0%, #fcfafb 100%);
 
-  border:
-    1px solid rgba(11, 37, 69, 0.1);
+  border: 1px solid rgba(11, 37, 69, 0.1);
 
-  border-radius:
-    var(--radius);
+  border-radius: var(--radius);
 
-  box-shadow:
-    var(--shadow-sm);
+  box-shadow: var(--shadow-sm);
 
   transition:
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
@@ -326,16 +260,12 @@
     border-color 0.35s ease;
 }
 
-
 .faculty-card:hover {
-  transform:
-    translateY(-12px);
+  transform: translateY(-12px);
 
-    border-color:
-      var(--gold);
+  border-color: var(--gold);
 
-  box-shadow:
-    0 22px 45px rgba(11, 37, 69, 0.16);
+  box-shadow: 0 22px 45px rgba(11, 37, 69, 0.16);
 }
 
 .faculty-card::after {
@@ -346,9 +276,11 @@
   right: -110px;
   bottom: -130px;
   border-radius: 50%;
-    background: rgba(18, 59, 107, 0.06);
+  background: rgba(18, 59, 107, 0.06);
   z-index: 0;
-  transition: transform 0.45s ease, background 0.45s ease;
+  transition:
+    transform 0.45s ease,
+    background 0.45s ease;
   pointer-events: none;
 }
 
@@ -356,7 +288,6 @@
   transform: scale(1.35);
   background: rgba(201, 150, 43, 0.12);
 }
-
 
 /* top accent */
 
@@ -371,30 +302,18 @@
 
   height: 5px;
 
-  background:
-    linear-gradient(
-      90deg,
-      var(--navy),
-        var(--gold),
-      var(--navy)
-    );
+  background: linear-gradient(90deg, var(--navy), var(--gold), var(--navy));
 
-  transform:
-    scaleX(0);
+  transform: scaleX(0);
 
-  transform-origin:
-    left;
+  transform-origin: left;
 
-  transition:
-    transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
-
 
 .faculty-card:hover::before {
-  transform:
-    scaleX(1);
+  transform: scaleX(1);
 }
-
 
 /* =========================================================
    FACULTY IMAGE
@@ -407,28 +326,22 @@
   width: 190px;
   height: 190px;
 
-  margin:
-    35px auto 20px;
+  margin: 35px auto 20px;
 
   overflow: hidden;
 
   border-radius: 50%;
 
-  border:
-    6px solid #ffffff;
+  border: 6px solid #ffffff;
 
-  box-shadow:
-    0 8px 25px
-    rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 
-  background:
-    linear-gradient(135deg, #efe7db, #d5dce6);
+  background: linear-gradient(135deg, #efe7db, #d5dce6);
 
   transition:
     transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.4s ease;
 }
-
 
 .faculty-image {
   width: 100%;
@@ -443,11 +356,8 @@
     filter 0.4s ease;
 }
 
-
-.faculty-card:hover
-.faculty-image {
-  transform:
-    scale(1.12);
+.faculty-card:hover .faculty-image {
+  transform: scale(1.12);
 
   filter: brightness(0.72) saturate(1.08);
 }
@@ -456,7 +366,6 @@
   transform: translateY(-5px) scale(1.03);
   box-shadow: 0 14px 32px rgba(11, 37, 69, 0.24);
 }
-
 
 /* image overlay */
 
@@ -492,13 +401,10 @@
     transform 0.3s ease;
 }
 
-
-.faculty-card:hover
-.image-overlay {
+.faculty-card:hover .image-overlay {
   opacity: 1;
   transform: scale(1);
 }
-
 
 /* =========================================================
    CARD CONTENT
@@ -511,8 +417,7 @@
 
   flex: 1;
 
-  padding:
-    5px 25px 25px;
+  padding: 5px 25px 25px;
 
   text-align: center;
 
@@ -520,22 +425,16 @@
   z-index: 1;
 }
 
-
 .faculty-content h3 {
-  margin:
-    0 0 5px;
+  margin: 0 0 5px;
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-size:
-    21px;
+  font-size: 21px;
 
-  line-height:
-    1.35;
+  line-height: 1.35;
 
-  font-weight:
-    750;
+  font-weight: 750;
 
   transition: color 0.25s ease;
 }
@@ -544,59 +443,41 @@
   color: var(--primary);
 }
 
-
 .qualification-title {
-  margin-bottom:
-    15px;
+  margin-bottom: 15px;
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-size:
-    15px;
+  font-size: 15px;
 
-  font-weight:
-    600;
+  font-weight: 600;
 }
-
 
 .designation {
-  min-height:
-    24px;
+  min-height: 24px;
 
-  color:
-    #111;
+  color: #111;
 
-  font-size:
-    15px;
+  font-size: 15px;
 
-  line-height:
-    1.55;
+  line-height: 1.55;
 
-  font-weight:
-    650;
+  font-weight: 650;
 }
 
-
 .additional-designation {
-  margin-top:
-    3px;
+  margin-top: 3px;
 
-  color:
-    #333;
+  color: #333;
 
   white-space: pre-line;
 
-  font-size:
-    14px;
+  font-size: 14px;
 
-  line-height:
-    1.55;
+  line-height: 1.55;
 
-  font-weight:
-    600;
+  font-weight: 600;
 }
-
 
 /* =========================================================
    EMAIL
@@ -605,31 +486,22 @@
 .faculty-email {
   display: inline-block;
 
-  margin:
-    12px 0;
+  margin: 12px 0;
 
-  color:
-    var(--text-light);
+  color: var(--text-light);
 
-  font-size:
-    13px;
+  font-size: 13px;
 
-  text-decoration:
-    none;
+  text-decoration: none;
 
-  transition:
-    color 0.2s ease;
+  transition: color 0.2s ease;
 }
-
 
 .faculty-email:hover {
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  text-decoration:
-    underline;
+  text-decoration: underline;
 }
-
 
 /* =========================================================
    DETAILS BUTTON
@@ -647,29 +519,21 @@
 
   margin-top: auto;
 
-  padding:
-    13px 18px;
+  padding: 13px 18px;
 
-  border:
-    1px solid rgba(11, 37, 69, 0.12);
+  border: 1px solid rgba(11, 37, 69, 0.12);
 
-  border-radius:
-    10px;
+  border-radius: 10px;
 
-  background:
-    #f7f8fa;
+  background: #f7f8fa;
 
-  color:
-    #222;
+  color: #222;
 
-  font-size:
-    15px;
+  font-size: 15px;
 
-  font-weight:
-    600;
+  font-weight: 600;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 
   transition:
     background 0.25s ease,
@@ -678,32 +542,23 @@
     transform 0.25s ease;
 }
 
-
 .details-button:hover {
-  background:
-    linear-gradient(135deg, var(--navy), #184d80);
+  background: linear-gradient(135deg, var(--navy), #184d80);
 
-  border-color:
-    var(--navy);
+  border-color: var(--navy);
 
-  color:
-    #ffffff;
+  color: #ffffff;
 
   transform: translateY(-2px);
 }
 
-
 .details-button .arrow {
-  transition:
-    transform 0.25s ease;
+  transition: transform 0.25s ease;
 }
-
 
 .details-button:hover .arrow {
-  transform:
-    translateX(5px);
+  transform: translateX(5px);
 }
-
 
 /* =========================================================
    MODAL BACKDROP
@@ -723,19 +578,14 @@
 
   padding: 25px;
 
-  background:
-    rgba(15, 15, 20, 0.72);
+  background: rgba(15, 15, 20, 0.72);
 
-  backdrop-filter:
-    blur(7px);
+  backdrop-filter: blur(7px);
 
-  animation:
-    backdropIn 0.25s ease;
+  animation: backdropIn 0.25s ease;
 }
 
-
 @keyframes backdropIn {
-
   from {
     opacity: 0;
   }
@@ -743,9 +593,7 @@
   to {
     opacity: 1;
   }
-
 }
-
 
 /* =========================================================
    MODAL
@@ -754,54 +602,36 @@
 .faculty-modal {
   position: relative;
 
-  width:
-    min(900px, 100%);
+  width: min(900px, 100%);
 
-  max-height:
-    92vh;
+  max-height: 92vh;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  display:
-    flex;
+  display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  border-radius:
-    22px;
+  border-radius: 22px;
 
-  background:
-    #ffffff;
+  background: #ffffff;
 
-  box-shadow:
-    0 30px 80px
-    rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
 
-  animation:
-    modalIn 0.3s ease;
+  animation: modalIn 0.3s ease;
 }
 
-
 @keyframes modalIn {
-
   from {
     opacity: 0;
-    transform:
-      translateY(30px)
-      scale(0.96);
+    transform: translateY(30px) scale(0.96);
   }
 
   to {
     opacity: 1;
-    transform:
-      translateY(0)
-      scale(1);
+    transform: translateY(0) scale(1);
   }
-
 }
-
 
 /* =========================================================
    CLOSE BUTTON
@@ -823,590 +653,402 @@
   align-items: center;
   justify-content: center;
 
-  border:
-    0;
+  border: 0;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
-  background:
-    rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
 
-  color:
-    #444;
+  color: #444;
 
-  font-size:
-    28px;
+  font-size: 28px;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 
-  box-shadow:
-    0 3px 12px
-    rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
 
-  transition:
-    all 0.2s ease;
+  transition: all 0.2s ease;
 }
-
 
 .modal-close:hover {
-  background:
-    var(--navy);
+  background: var(--navy);
 
-  color:
-    white;
+  color: white;
 
-  transform:
-    rotate(90deg);
+  transform: rotate(90deg);
 }
-
 
 /* =========================================================
    MODAL HEADER
 ========================================================= */
 
 .modal-header {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  gap:
-    30px;
+  gap: 30px;
 
-  padding:
-    40px;
+  padding: 40px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #fff,
-      #fff5f8
-    );
+  background: linear-gradient(135deg, #fff, #fff5f8);
 
-  border-bottom:
-    1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
 }
-
 
 .modal-image-wrapper {
-  flex:
-    0 0 170px;
+  flex: 0 0 170px;
 
-  width:
-    170px;
+  width: 170px;
 
-  height:
-    170px;
+  height: 170px;
 
-  padding:
-    6px;
+  padding: 6px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
-  background:
-    #ffffff;
+  background: #ffffff;
 
-  box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
-
 
 .modal-image {
-  width:
-    100%;
+  width: 100%;
 
-  height:
-    100%;
+  height: 100%;
 
-  display:
-    block;
+  display: block;
 
-  object-fit:
-    cover;
+  object-fit: cover;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 }
-
 
 .modal-title {
-  flex:
-    1;
+  flex: 1;
 }
-
 
 .modal-title h2 {
-  margin:
-    0 0 5px;
+  margin: 0 0 5px;
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-size:
-    clamp(25px, 4vw, 36px);
+  font-size: clamp(25px, 4vw, 36px);
 
-  line-height:
-    1.2;
+  line-height: 1.2;
 
-  font-weight:
-    800;
+  font-weight: 800;
 }
-
 
 .modal-qualification {
-  margin:
-    0 0 15px;
+  margin: 0 0 15px;
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-size:
-    17px;
+  font-size: 17px;
 
-  font-weight:
-    650;
+  font-weight: 650;
 }
-
 
 .modal-designation {
-  margin:
-    0;
+  margin: 0;
 
-  color:
-    #222;
+  color: #222;
 
-  font-size:
-    16px;
+  font-size: 16px;
 
-  line-height:
-    1.6;
+  line-height: 1.6;
 
-  font-weight:
-    650;
+  font-weight: 650;
 }
 
-
 .modal-additional {
-  margin:
-    3px 0 0;
+  margin: 3px 0 0;
 
-  color:
-    #444;
+  color: #444;
 
   white-space: pre-line;
 
-  font-size:
-    14px;
+  font-size: 14px;
 
-  line-height:
-    1.5;
+  line-height: 1.5;
 
-  font-weight:
-    600;
+  font-weight: 600;
 }
-
 
 /* =========================================================
    MODAL BODY
 ========================================================= */
 
 .modal-body {
-  overflow-y:
-    auto;
+  overflow-y: auto;
 
-  padding:
-    35px 40px 40px;
+  padding: 35px 40px 40px;
 }
-
 
 /* scrollbar */
 
 .modal-body::-webkit-scrollbar {
-  width:
-    7px;
+  width: 7px;
 }
-
 
 .modal-body::-webkit-scrollbar-track {
-  background:
-    #f2f2f2;
+  background: #f2f2f2;
 }
-
 
 .modal-body::-webkit-scrollbar-thumb {
-  border-radius:
-    20px;
+  border-radius: 20px;
 
-  background:
-    #c4c4c4;
+  background: #c4c4c4;
 }
-
 
 .modal-body::-webkit-scrollbar-thumb:hover {
-  background:
-    var(--navy);
+  background: var(--navy);
 }
-
 
 /* =========================================================
    PROFILE ROW
 ========================================================= */
 
 .profile-row {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    flex-start;
+  align-items: flex-start;
 
-  gap:
-    14px;
+  gap: 14px;
 
-  margin-bottom:
-    20px;
+  margin-bottom: 20px;
 
-  padding:
-    15px;
+  padding: 15px;
 
-  border:
-    1px solid #eeeeee;
+  border: 1px solid #eeeeee;
 
-  border-radius:
-    12px;
+  border-radius: 12px;
 
-  background:
-    #fafafa;
+  background: #fafafa;
 }
-
 
 .profile-icon {
-  width:
-    36px;
+  width: 36px;
 
-  height:
-    36px;
+  height: 36px;
 
-  flex:
-    0 0 36px;
+  flex: 0 0 36px;
 
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
-  justify-content:
-    center;
+  align-items: center;
+  justify-content: center;
 
-  border-radius:
-    10px;
+  border-radius: 10px;
 
-  background:
-    var(--primary-light);
+  background: var(--primary-light);
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-weight:
-    800;
+  font-weight: 800;
 }
-
 
 .profile-row label {
-  display:
-    block;
+  display: block;
 
-  margin-bottom:
-    4px;
+  margin-bottom: 4px;
 
-  color:
-    #777;
+  color: #777;
 
-  font-size:
-    12px;
+  font-size: 12px;
 
-  font-weight:
-    700;
+  font-weight: 700;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 
-  letter-spacing:
-    0.7px;
+  letter-spacing: 0.7px;
 }
-
 
 .profile-row p {
-  margin:
-    0;
+  margin: 0;
 
-  color:
-    #222;
+  color: #222;
 
-  font-size:
-    14px;
+  font-size: 14px;
 
-  line-height:
-    1.5;
+  line-height: 1.5;
 }
-
 
 .profile-row a {
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-size:
-    14px;
+  font-size: 14px;
 
-  text-decoration:
-    none;
+  text-decoration: none;
 
-  word-break:
-    break-word;
+  word-break: break-word;
 }
-
 
 .profile-row a:hover {
-  text-decoration:
-    underline;
+  text-decoration: underline;
 }
-
 
 /* =========================================================
    PROFILE SECTIONS
 ========================================================= */
 
 .profile-section {
-  margin-top:
-    30px;
+  margin-top: 30px;
 }
-
 
 .profile-section h3 {
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  gap:
-    10px;
+  gap: 10px;
 
-  margin:
-    0 0 15px;
+  margin: 0 0 15px;
 
-  padding-bottom:
-    10px;
+  padding-bottom: 10px;
 
-  border-bottom:
-    1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
 
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-size:
-    19px;
+  font-size: 19px;
 
-  font-weight:
-    750;
+  font-weight: 750;
 }
-
 
 .profile-section h3 span {
-  width:
-    5px;
+  width: 5px;
 
-  height:
-    22px;
+  height: 22px;
 
-  border-radius:
-    10px;
+  border-radius: 10px;
 
-  background:
-    var(--navy);
+  background: var(--navy);
 }
-
 
 .profile-section ul,
 .profile-section ol {
-  margin:
-    0;
+  margin: 0;
 
-  padding-left:
-    25px;
+  padding-left: 25px;
 
-  color:
-    #444;
+  color: #444;
 
-  font-size:
-    14px;
+  font-size: 14px;
 
-  line-height:
-    1.75;
+  line-height: 1.75;
 }
-
 
 .profile-section li {
-  margin-bottom:
-    8px;
+  margin-bottom: 8px;
 }
-
 
 .profile-section li::marker {
-  color:
-    var(--navy);
+  color: var(--navy);
 
-  font-weight:
-    700;
+  font-weight: 700;
 }
-
 
 /* =========================================================
    NO DATA
 ========================================================= */
 
 .no-profile-data {
-  margin-top:
-    25px;
+  margin-top: 25px;
 
-  padding:
-    25px;
+  padding: 25px;
 
-  border-radius:
-    12px;
+  border-radius: 12px;
 
-  background:
-    #fafafa;
+  background: #fafafa;
 
-  color:
-    #777;
+  color: #777;
 
-  text-align:
-    center;
+  text-align: center;
 
-  font-size:
-    14px;
+  font-size: 14px;
 }
-
 
 /* =========================================================
    MODAL FOOTER
 ========================================================= */
 
 .modal-footer {
-  display:
-    flex;
+  display: flex;
 
-  justify-content:
-    flex-end;
+  justify-content: flex-end;
 
-  gap:
-    12px;
+  gap: 12px;
 
-  padding:
-    18px 40px;
+  padding: 18px 40px;
 
-  border-top:
-    1px solid #eeeeee;
+  border-top: 1px solid #eeeeee;
 
-  background:
-    #ffffff;
+  background: #ffffff;
 }
-
 
 .pdf-button,
 .contact-button,
 .close-button {
-  padding:
-    11px 20px;
+  padding: 11px 20px;
 
-  border-radius:
-    9px;
+  border-radius: 9px;
 
-  font-size:
-    14px;
+  font-size: 14px;
 
-  font-weight:
-    650;
+  font-weight: 650;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 
-  text-decoration:
-    none;
+  text-decoration: none;
 
-  transition:
-    all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .pdf-button {
-  border:
-    1px solid var(--gold);
+  border: 1px solid var(--gold);
 
-  background:
-    var(--parchment);
+  background: var(--parchment);
 
-  color:
-    var(--navy);
+  color: var(--navy);
 }
 
 .pdf-button:hover {
-  border-color:
-    var(--navy);
+  border-color: var(--navy);
 
-  background:
-    var(--gold);
+  background: var(--gold);
 
-  color:
-    var(--navy);
+  color: var(--navy);
 }
-
 
 .contact-button {
-  border:
-    1px solid var(--navy);
+  border: 1px solid var(--navy);
 
-  background:
-    var(--navy);
+  background: var(--navy);
 
-  color:
-    white;
+  color: white;
 }
-
 
 .contact-button:hover {
-  background:
-    var(--primary-dark);
+  background: var(--primary-dark);
 
-  border-color:
-    var(--primary-dark);
+  border-color: var(--primary-dark);
 }
-
 
 .close-button {
-  border:
-    1px solid #ddd;
+  border: 1px solid #ddd;
 
-  background:
-    #fff;
+  background: #fff;
 
-  color:
-    #333;
+  color: #333;
 }
-
 
 .close-button:hover {
-  background:
-    #f3f3f3;
+  background: #f3f3f3;
 }
-
 
 /* =========================================================
    TABLET
@@ -1414,13 +1056,10 @@
 
 // RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1100px viewport width and below.
 @media (max-width: 1100px) {
-
   .faculty-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    gap:
-      25px;
+    gap: 25px;
   }
 
   .faculty-grid.single-faculty {
@@ -1432,17 +1071,13 @@
   }
 
   .faculty-container {
-    width:
-      94%;
+    width: 94%;
   }
 
   .faculty-card {
-    min-height:
-      510px;
+    min-height: 510px;
   }
-
 }
-
 
 /* =========================================================
    MOBILE
@@ -1450,73 +1085,50 @@
 
 // RESPONSIVE: Tablets / large phones (landscape): styles apply at 700px viewport width and below.
 @media (max-width: 700px) {
-
   .faculty-hero {
-    padding:
-      60px 20px 55px;
+    padding: 60px 20px 55px;
   }
-
 
   .hero-content h1 {
-    font-size:
-      42px;
+    font-size: 42px;
 
-    letter-spacing:
-      -1px;
+    letter-spacing: -1px;
   }
-
 
   .hero-content p {
-    font-size:
-      15px;
+    font-size: 15px;
 
-    line-height:
-      1.6;
+    line-height: 1.6;
   }
-
 
   .faculty-container {
-    width:
-      calc(100% - 30px);
+    width: calc(100% - 30px);
 
-    padding:
-      50px 0 70px;
+    padding: 50px 0 70px;
   }
-
 
   .department-section {
-    margin-bottom:
-      60px;
+    margin-bottom: 60px;
   }
-
 
   .department-header {
-    gap:
-      10px;
+    gap: 10px;
 
-    margin-bottom:
-      25px;
+    margin-bottom: 25px;
   }
-
 
   .department-header h2 {
-    padding:
-      11px 18px;
+    padding: 11px 18px;
 
-    font-size:
-      18px;
+    font-size: 18px;
 
-    border-width:
-      2px;
+    border-width: 2px;
   }
 
-
   .faculty-grid {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
 
-    gap:
-      20px;
+    gap: 20px;
   }
 
   .faculty-grid.single-faculty,
@@ -1524,190 +1136,129 @@
     width: 100%;
   }
 
-
   .faculty-card {
-    min-height:
-      0;
+    min-height: 0;
 
-    border-radius:
-      16px;
+    border-radius: 16px;
   }
-
 
   .faculty-image-wrapper {
-    width:
-      165px;
+    width: 165px;
 
-    height:
-      165px;
+    height: 165px;
 
-    margin-top:
-      28px;
+    margin-top: 28px;
   }
-
 
   .faculty-content {
-    padding:
-      5px 20px 22px;
+    padding: 5px 20px 22px;
   }
-
 
   .faculty-content h3 {
-    font-size:
-      20px;
+    font-size: 20px;
   }
-
 
   .qualification-title {
-    font-size:
-      14px;
+    font-size: 14px;
   }
-
 
   .designation {
-    font-size:
-      14px;
+    font-size: 14px;
   }
-
 
   .additional-designation {
-    font-size:
-      13px;
+    font-size: 13px;
   }
-
 
   /* Modal */
 
   .faculty-modal-backdrop {
-    padding:
-      10px;
+    padding: 10px;
   }
-
 
   .faculty-modal {
-    max-height:
-      95vh;
+    max-height: 95vh;
 
-    border-radius:
-      16px;
+    border-radius: 16px;
   }
-
 
   .modal-header {
-    flex-direction:
-      column;
+    flex-direction: column;
 
-    text-align:
-      center;
+    text-align: center;
 
-    gap:
-      15px;
+    gap: 15px;
 
-    padding:
-      30px 20px 25px;
+    padding: 30px 20px 25px;
   }
-
 
   .modal-image-wrapper {
-    width:
-      135px;
+    width: 135px;
 
-    height:
-      135px;
+    height: 135px;
 
-    flex-basis:
-      135px;
+    flex-basis: 135px;
   }
-
 
   .modal-title h2 {
-    font-size:
-      25px;
+    font-size: 25px;
   }
-
 
   .modal-qualification {
-    font-size:
-      15px;
+    font-size: 15px;
 
-    margin-bottom:
-      10px;
+    margin-bottom: 10px;
   }
-
 
   .modal-designation {
-    font-size:
-      14px;
+    font-size: 14px;
   }
-
 
   .modal-additional {
-    font-size:
-      13px;
+    font-size: 13px;
   }
-
 
   .modal-body {
-    padding:
-      25px 18px 30px;
+    padding: 25px 18px 30px;
   }
-
 
   .profile-row {
-    padding:
-      12px;
+    padding: 12px;
 
-    gap:
-      10px;
+    gap: 10px;
   }
-
 
   .profile-section {
-    margin-top:
-      25px;
+    margin-top: 25px;
   }
-
 
   .profile-section h3 {
-    font-size:
-      17px;
+    font-size: 17px;
   }
-
 
   .profile-section ul,
   .profile-section ol {
-    padding-left:
-      22px;
+    padding-left: 22px;
 
-    font-size:
-      13px;
+    font-size: 13px;
 
-    line-height:
-      1.7;
+    line-height: 1.7;
   }
-
 
   .modal-footer {
-    padding:
-      14px 18px;
+    padding: 14px 18px;
 
-    flex-direction:
-      column;
+    flex-direction: column;
   }
-
 
   .pdf-button,
   .contact-button,
   .close-button {
-    width:
-      100%;
+    width: 100%;
 
-    text-align:
-      center;
+    text-align: center;
   }
-
 }
-
 
 /* =========================================================
    SMALL MOBILE
@@ -1715,71 +1266,48 @@
 
 // RESPONSIVE: Small / narrow mobile phones: styles apply at 400px viewport width and below.
 @media (max-width: 400px) {
-
   .faculty-hero {
-    padding:
-      50px 15px;
+    padding: 50px 15px;
   }
-
 
   .hero-content h1 {
-    font-size:
-      36px;
+    font-size: 36px;
   }
-
 
   .hero-small-title {
-    font-size:
-      10px;
+    font-size: 10px;
 
-    letter-spacing:
-      1.5px;
+    letter-spacing: 1.5px;
   }
-
 
   .department-header h2 {
-    font-size:
-      16px;
+    font-size: 16px;
 
-    padding:
-      10px 14px;
+    padding: 10px 14px;
   }
-
 
   .department-line {
-    min-width:
-      10px;
+    min-width: 10px;
   }
-
 
   .faculty-image-wrapper {
-    width:
-      145px;
+    width: 145px;
 
-    height:
-      145px;
+    height: 145px;
   }
-
 
   .modal-close {
-    top:
-      10px;
+    top: 10px;
 
-    right:
-      10px;
+    right: 10px;
 
-    width:
-      36px;
+    width: 36px;
 
-    height:
-      36px;
+    height: 36px;
 
-    font-size:
-      24px;
+    font-size: 24px;
   }
-
 }
-
 
 /* =========================================================
    ACCESSIBILITY
@@ -1787,13 +1315,10 @@
 
 button:focus-visible,
 a:focus-visible {
-  outline:
-    3px solid rgba(201, 150, 43, 0.45);
+  outline: 3px solid rgba(201, 150, 43, 0.45);
 
-  outline-offset:
-    3px;
+  outline-offset: 3px;
 }
-
 
 /* =========================================================
    BODY MODAL STATE
@@ -1846,8 +1371,6 @@ a:focus-visible {
   border-color: var(--border);
 }
 
-
 :global(body.faculty-modal-open) {
-  overflow:
-    hidden;
+  overflow: hidden;
 }

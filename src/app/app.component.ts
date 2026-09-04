@@ -9,15 +9,17 @@ import { HeaderComponent } from './shared/header/header.component';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'ubs-website';
-  isHome = true; // default true so first paint (before router settles) doesn't flash a gap
+  // Keep the home layout during the first render until the router reports the URL.
+  isHome = true;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    // Track route changes so the shell applies home-page spacing only at '/'.
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe((e) => {

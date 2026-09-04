@@ -1,21 +1,408 @@
-:host { display: block; }
+:host {
+  display: block;
+}
 
-.tuition-page { --wine:#720020; --wine-deep:#39000f; --gold:#e2b455; --cream:#fbf8f2; --ink:#241b1d; --muted:#71676a; overflow:hidden; color:var(--ink); background:#fff; }
-.tuition-container { width:min(1160px, calc(100% - 3rem)); margin-inline:auto; }
-.tuition-hero { position:relative; isolation:isolate; display:grid; min-height:540px; align-items:center; overflow:hidden; background:linear-gradient(90deg,rgba(34,0,11,.91),rgba(56,0,17,.45)), url('/assets/tuition/tuition-hero.webp') center/cover; }
-.tuition-hero::before { position:absolute; z-index:-1; right:-6rem; bottom:-11rem; width:32rem; height:32rem; border:1px solid rgba(255,255,255,.2); border-radius:50%; content:''; box-shadow:0 0 0 3.5rem rgba(255,255,255,.045),0 0 0 7rem rgba(255,255,255,.03); }
-.tuition-hero::after { position:absolute; z-index:-1; right:-2%; bottom:-1px; left:-2%; height:70px; content:''; background:#fff; clip-path:polygon(0 72%,13% 39%,28% 75%,44% 24%,62% 68%,82% 28%,100% 61%,100% 100%,0 100%); }
-.tuition-hero__content { padding:6rem 0 8rem; color:#fff; animation:rise-in .8s ease-out both; }
-.eyebrow { display:inline-flex; align-items:center; gap:.65rem; margin-bottom:1rem; color:var(--wine); font-size:.71rem; font-weight:850; letter-spacing:.17em; text-transform:uppercase; }.eyebrow::before { width:2rem; height:1px; content:''; background:currentColor; }.eyebrow--light { color:var(--gold); }
-h1,h2,h3 { margin-top:0; font-family:Georgia,'Times New Roman',serif; overflow-wrap:anywhere; } h1 { max-width:700px; margin-bottom:1rem; color:#fff; font-size:clamp(3.4rem,7vw,6.4rem); line-height:.9; letter-spacing:-.065em; } h2 { margin-bottom:0; color:var(--wine-deep); font-size:clamp(2.25rem,4.5vw,4rem); line-height:1; letter-spacing:-.055em; } h3 { margin:0; font-size:clamp(1.5rem,2.5vw,2rem); } em { color:var(--wine); font-style:italic; }.tuition-hero em,.tuition-contact em { color:var(--gold); }
-.hero-kicker { margin:0 0 .55rem; font-size:clamp(1.1rem,2vw,1.65rem); font-weight:600; }.tuition-hero__content > p:not(.hero-kicker) { max-width:525px; margin:0 0 2rem; color:rgba(255,255,255,.8); line-height:1.8; }
-.button { display:inline-flex; align-items:center; gap:.8rem; padding:.95rem 1.25rem; border:1px solid transparent; text-decoration:none; font-size:.74rem; font-weight:850; letter-spacing:.1em; text-transform:uppercase; transition:transform .25s ease,box-shadow .25s ease,background .25s ease; }.button span { font-size:1.15rem; line-height:.7; transition:transform .25s ease; }.button:hover { transform:translateY(-4px); box-shadow:0 13px 23px rgba(0,0,0,.2); }.button:hover span { transform:translateY(3px); }.button--light { color:var(--wine); background:#fff; }.button--wine { color:#fff; background:var(--wine); }.button--gold { color:var(--wine-deep); background:var(--gold); }
-.tuition-section,.planning-section { padding:clamp(4.5rem,9vw,8rem) 0; }.section-heading { display:grid; grid-template-columns:minmax(0,1fr) minmax(240px,.52fr); gap:3.5rem; align-items:end; margin-bottom:3.2rem; }.section-heading p { margin:0; color:var(--muted); line-height:1.8; }
-.finance-card { overflow:hidden; border:1px solid #ece6e4; background:#fff; box-shadow:0 22px 45px rgba(72,0,24,.1); }.finance-card__heading { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding:1.75rem 2rem; color:#fff; background:linear-gradient(115deg,var(--wine-deep),var(--wine)); }.finance-card__heading .eyebrow { margin-bottom:.5rem; }.finance-card__heading h3 { color:#fff; }.status-badge { display:inline-flex; align-items:center; gap:.5rem; flex-shrink:0; padding:.55rem .75rem; border:1px solid rgba(255,255,255,.25); color:#fff; background:rgba(255,255,255,.1); font-size:.68rem; font-weight:850; letter-spacing:.07em; text-transform:uppercase; }.status-badge i { width:.45rem; height:.45rem; border-radius:50%; background:var(--gold); box-shadow:0 0 0 .22rem rgba(226,180,85,.18); }
-.table-scroll { overflow-x:auto; } table { width:100%; min-width:43rem; border-collapse:collapse; } th,td { padding:1.2rem 1.5rem; border-bottom:1px solid #eee7e4; text-align:left; vertical-align:top; } thead th { color:var(--wine-deep); background:var(--cream); font-size:.73rem; font-weight:850; letter-spacing:.08em; text-transform:uppercase; } tbody th { color:var(--ink); font-weight:750; } tbody td { color:var(--muted); } tbody tr { transition:background .2s ease; } tbody tr:hover { background:#fdf9f6; }.finance-card__footer { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding:1.25rem 2rem; background:#fffaf2; }.finance-card__footer p { max-width:630px; margin:0; color:var(--muted); font-size:.9rem; line-height:1.65; }.finance-card__footer a { flex-shrink:0; color:var(--wine); font-size:.76rem; font-weight:850; letter-spacing:.07em; text-decoration:none; text-transform:uppercase; }.finance-card__footer a span { margin-left:.35rem; font-size:1rem; }
-.planning-section { background:var(--cream); }.planning-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1fr); gap:clamp(2.5rem,7vw,6rem); align-items:center; }.planning-image { position:relative; }.planning-image::after { position:absolute; right:-.8rem; bottom:-.8rem; z-index:0; width:55%; height:55%; content:''; background:var(--gold); }.planning-image img { position:relative; z-index:1; display:block; width:100%; aspect-ratio:4/3; object-fit:cover; filter:saturate(.8); transition:transform .5s ease,filter .5s ease; }.planning-image:hover img { filter:saturate(1); transform:translate(-.4rem,-.4rem); }.planning-grid > div:last-child > p { color:var(--muted); line-height:1.8; }.planning-grid ul { display:grid; gap:.65rem; margin:1.5rem 0 2rem; padding:0; list-style:none; color:var(--muted); line-height:1.5; }.planning-grid li { display:flex; gap:.65rem; }.planning-grid li::before { color:var(--gold); content:'✓'; font-weight:900; }
-.tuition-contact { position:relative; isolation:isolate; padding:clamp(4.5rem,8vw,7rem) 0; overflow:hidden; background:linear-gradient(115deg,rgba(53,0,17,.95),rgba(112,0,35,.84)),url('/assets/tuition/tuition-contact.jpg') center/cover; }.tuition-contact::after { position:absolute; z-index:-1; top:50%; right:8%; width:14rem; height:14rem; border:1px solid rgba(255,255,255,.19); border-radius:50%; content:''; transform:translateY(-50%); box-shadow:0 0 0 2.5rem rgba(255,255,255,.04); }.tuition-contact__inner { display:flex; align-items:center; justify-content:space-between; gap:2rem; }.tuition-contact h2 { margin-bottom:1rem; color:#fff; }.tuition-contact p { max-width:610px; margin:0; color:rgba(255,255,255,.78); line-height:1.75; }
-@keyframes rise-in { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+.tuition-page {
+  --wine: #720020;
+  --wine-deep: #39000f;
+  --gold: #e2b455;
+  --cream: #fbf8f2;
+  --ink: #241b1d;
+  --muted: #71676a;
+  overflow: hidden;
+  color: var(--ink);
+  background: #fff;
+}
+.tuition-container {
+  width: min(1160px, calc(100% - 3rem));
+  margin-inline: auto;
+}
+.tuition-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 540px;
+  align-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(34, 0, 11, 0.91), rgba(56, 0, 17, 0.45)),
+    url("/assets/tuition/tuition-hero.webp") center/cover;
+}
+.tuition-hero::before {
+  position: absolute;
+  z-index: -1;
+  right: -6rem;
+  bottom: -11rem;
+  width: 32rem;
+  height: 32rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  content: "";
+  box-shadow:
+    0 0 0 3.5rem rgba(255, 255, 255, 0.045),
+    0 0 0 7rem rgba(255, 255, 255, 0.03);
+}
+.tuition-hero::after {
+  position: absolute;
+  z-index: -1;
+  right: -2%;
+  bottom: -1px;
+  left: -2%;
+  height: 70px;
+  content: "";
+  background: #fff;
+  clip-path: polygon(
+    0 72%,
+    13% 39%,
+    28% 75%,
+    44% 24%,
+    62% 68%,
+    82% 28%,
+    100% 61%,
+    100% 100%,
+    0 100%
+  );
+}
+.tuition-hero__content {
+  padding: 6rem 0 8rem;
+  color: #fff;
+  animation: rise-in 0.8s ease-out both;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+  color: var(--wine);
+  font-size: 0.71rem;
+  font-weight: 850;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  width: 2rem;
+  height: 1px;
+  content: "";
+  background: currentColor;
+}
+.eyebrow--light {
+  color: var(--gold);
+}
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  overflow-wrap: anywhere;
+}
+h1 {
+  max-width: 700px;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-size: clamp(3.4rem, 7vw, 6.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+}
+h2 {
+  margin-bottom: 0;
+  color: var(--wine-deep);
+  font-size: clamp(2.25rem, 4.5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+h3 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+}
+em {
+  color: var(--wine);
+  font-style: italic;
+}
+.tuition-hero em,
+.tuition-contact em {
+  color: var(--gold);
+}
+.hero-kicker {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.1rem, 2vw, 1.65rem);
+  font-weight: 600;
+}
+.tuition-hero__content > p:not(.hero-kicker) {
+  max-width: 525px;
+  margin: 0 0 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.8;
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.95rem 1.25rem;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+.button span {
+  font-size: 1.15rem;
+  line-height: 0.7;
+  transition: transform 0.25s ease;
+}
+.button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 13px 23px rgba(0, 0, 0, 0.2);
+}
+.button:hover span {
+  transform: translateY(3px);
+}
+.button--light {
+  color: var(--wine);
+  background: #fff;
+}
+.button--wine {
+  color: #fff;
+  background: var(--wine);
+}
+.button--gold {
+  color: var(--wine-deep);
+  background: var(--gold);
+}
+.tuition-section,
+.planning-section {
+  padding: clamp(4.5rem, 9vw, 8rem) 0;
+}
+.section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.52fr);
+  gap: 3.5rem;
+  align-items: end;
+  margin-bottom: 3.2rem;
+}
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.finance-card {
+  overflow: hidden;
+  border: 1px solid #ece6e4;
+  background: #fff;
+  box-shadow: 0 22px 45px rgba(72, 0, 24, 0.1);
+}
+.finance-card__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  color: #fff;
+  background: linear-gradient(115deg, var(--wine-deep), var(--wine));
+}
+.finance-card__heading .eyebrow {
+  margin-bottom: 0.5rem;
+}
+.finance-card__heading h3 {
+  color: #fff;
+}
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.status-badge i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 0.22rem rgba(226, 180, 85, 0.18);
+}
+.table-scroll {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  min-width: 43rem;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #eee7e4;
+  text-align: left;
+  vertical-align: top;
+}
+thead th {
+  color: var(--wine-deep);
+  background: var(--cream);
+  font-size: 0.73rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+tbody th {
+  color: var(--ink);
+  font-weight: 750;
+}
+tbody td {
+  color: var(--muted);
+}
+tbody tr {
+  transition: background 0.2s ease;
+}
+tbody tr:hover {
+  background: #fdf9f6;
+}
+.finance-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem 2rem;
+  background: #fffaf2;
+}
+.finance-card__footer p {
+  max-width: 630px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.finance-card__footer a {
+  flex-shrink: 0;
+  color: var(--wine);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.finance-card__footer a span {
+  margin-left: 0.35rem;
+  font-size: 1rem;
+}
+.planning-section {
+  background: var(--cream);
+}
+.planning-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: clamp(2.5rem, 7vw, 6rem);
+  align-items: center;
+}
+.planning-image {
+  position: relative;
+}
+.planning-image::after {
+  position: absolute;
+  right: -0.8rem;
+  bottom: -0.8rem;
+  z-index: 0;
+  width: 55%;
+  height: 55%;
+  content: "";
+  background: var(--gold);
+}
+.planning-image img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  filter: saturate(0.8);
+  transition:
+    transform 0.5s ease,
+    filter 0.5s ease;
+}
+.planning-image:hover img {
+  filter: saturate(1);
+  transform: translate(-0.4rem, -0.4rem);
+}
+.planning-grid > div:last-child > p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+.planning-grid ul {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.planning-grid li {
+  display: flex;
+  gap: 0.65rem;
+}
+.planning-grid li::before {
+  color: var(--gold);
+  content: "✓";
+  font-weight: 900;
+}
+.tuition-contact {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(4.5rem, 8vw, 7rem) 0;
+  overflow: hidden;
+  background:
+    linear-gradient(115deg, rgba(53, 0, 17, 0.95), rgba(112, 0, 35, 0.84)),
+    url("/assets/tuition/tuition-contact.jpg") center/cover;
+}
+.tuition-contact::after {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: 8%;
+  width: 14rem;
+  height: 14rem;
+  border: 1px solid rgba(255, 255, 255, 0.19);
+  border-radius: 50%;
+  content: "";
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 2.5rem rgba(255, 255, 255, 0.04);
+}
+.tuition-contact__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.tuition-contact h2 {
+  margin-bottom: 1rem;
+  color: #fff;
+}
+.tuition-contact p {
+  max-width: 610px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.75;
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 // RESPONSIVE: Tablets / large phones (landscape) — styles apply at 800px viewport width and below.
 @media (max-width: 800px) {
   // Stack the two-column heading and planning sections into a single column
@@ -72,7 +459,7 @@ h1,h2,h3 { margin-top:0; font-family:Georgia,'Times New Roman',serif; overflow-w
   }
 
   .finance-card__footer a {
-    padding-top: .25rem;
+    padding-top: 0.25rem;
   }
 
   // Fee table: smaller cell padding (the wrapper already scrolls horizontally, see .table-scroll)
@@ -82,8 +469,8 @@ h1,h2,h3 { margin-top:0; font-family:Georgia,'Times New Roman',serif; overflow-w
   }
 
   .planning-image::after {
-    right: -.45rem;
-    bottom: -.45rem;
+    right: -0.45rem;
+    bottom: -0.45rem;
   }
 }
 
@@ -93,7 +480,7 @@ h1,h2,h3 { margin-top:0; font-family:Georgia,'Times New Roman',serif; overflow-w
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -21,16 +21,11 @@
   --white: #ffffff;
   --border: #e7e2dd;
 
-  font-family:
-    "Poppins",
-    "Montserrat",
-    Arial,
-    sans-serif;
+  font-family: "Poppins", "Montserrat", Arial, sans-serif;
 
   color: var(--text);
   overflow: hidden;
 }
-
 
 /* =========================================================
    GLOBAL
@@ -90,7 +85,7 @@
 }
 
 .section-heading h2 span {
-  color: var(--gold)
+  color: var(--gold);
 }
 
 .section-heading p {
@@ -115,7 +110,9 @@
   line-height: 1.1;
 }
 
-.journey-heading h3 span { color: var(--primary); }
+.journey-heading h3 span {
+  color: var(--primary);
+}
 
 .journey-heading p {
   margin: 0;
@@ -124,7 +121,11 @@
   line-height: 1.8;
 }
 
-.journey-timeline { position: relative; display: grid; gap: 28px; }
+.journey-timeline {
+  position: relative;
+  display: grid;
+  gap: 28px;
+}
 
 .journey-timeline::before {
   content: "";
@@ -144,7 +145,9 @@
   align-items: center;
 }
 
-.journey-item:nth-child(even) .journey-card { grid-column: 2; }
+.journey-item:nth-child(even) .journey-card {
+  grid-column: 2;
+}
 
 .journey-marker {
   position: absolute;
@@ -173,9 +176,24 @@
   background: #faf9f7;
 }
 
-.journey-card-content > span { color: var(--primary); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; }
-.journey-card h4 { margin: 9px 0 10px; color: var(--dark); font-size: 21px; line-height: 1.2; }
-.journey-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.journey-card-content > span {
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+.journey-card h4 {
+  margin: 9px 0 10px;
+  color: var(--dark);
+  font-size: 21px;
+  line-height: 1.2;
+}
+.journey-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
 
 .journey-image-button {
   position: relative;
@@ -189,11 +207,38 @@
   text-align: left;
 }
 
-.journey-image-button img { display: block; width: 100%; height: 150px; object-fit: cover; opacity: .82; transition: transform .35s ease, opacity .35s ease; }
-.journey-image-button:hover img, .journey-image-button:focus-visible img { transform: scale(1.05); opacity: .58; }
-.journey-image-button span { position: absolute; right: 12px; bottom: 10px; left: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; }
-.journey-image-button b { font-size: 20px; font-weight: 400; }
-
+.journey-image-button img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  opacity: 0.82;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease;
+}
+.journey-image-button:hover img,
+.journey-image-button:focus-visible img {
+  transform: scale(1.05);
+  opacity: 0.58;
+}
+.journey-image-button span {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  left: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.journey-image-button b {
+  font-size: 20px;
+  font-weight: 400;
+}
 
 /* =========================================================
    HERO
@@ -217,8 +262,7 @@
   position: absolute;
   inset: 0;
 
-  background-image:
-    url("../../../assets/about/about-home.png");
+  background-image: url("../../../assets/about/about-home.png");
 
   background-size: cover;
   background-position: center;
@@ -229,11 +273,12 @@
   position: absolute;
   inset: 0;
 
-  background:
-    linear-gradient(90deg,
-      rgba(0, 0, 0, 0.70),
-      rgba(0, 0, 0, 0.35),
-      rgba(128, 0, 32, 0.40));
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.35),
+    rgba(128, 0, 32, 0.4)
+  );
 }
 
 .hero-content {
@@ -314,7 +359,6 @@
   clip-path: ellipse(62% 70% at 50% 100%);
 }
 
-
 /* =========================================================
    INTRODUCTION
 ========================================================= */
@@ -326,8 +370,7 @@
 .intro-grid {
   display: grid;
 
-  grid-template-columns:
-    minmax(0, 1.3fr) minmax(300px, 0.7fr);
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
 
   gap: 100px;
 
@@ -400,8 +443,7 @@
 .highlight-card:hover {
   transform: translateX(-8px);
 
-  box-shadow:
-    0 20px 45px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
 }
 
 .highlight-icon {
@@ -431,7 +473,6 @@
   color: var(--muted);
 }
 
-
 /* =========================================================
    OUR BEGINNINGS + FOUNDATION
 ========================================================= */
@@ -440,7 +481,6 @@
   background: var(--light);
   padding: 100px 0;
 }
-
 
 /* =========================================================
    MAIN GRID
@@ -453,7 +493,6 @@
   align-items: center;
 }
 
-
 /* =========================================================
    LEFT CONTENT
 ========================================================= */
@@ -461,7 +500,6 @@
 .beginnings-content {
   max-width: 720px;
 }
-
 
 /* Section Label */
 
@@ -473,7 +511,6 @@
   color: var(--primary);
   text-transform: uppercase;
 }
-
 
 /* Main Heading */
 
@@ -494,7 +531,6 @@
   color: var(--primary);
 }
 
-
 /* Heading Line */
 
 .title-line {
@@ -505,7 +541,6 @@
 
   background: var(--primary);
 }
-
 
 /* Paragraph */
 
@@ -519,7 +554,6 @@
 
   color: var(--muted);
 }
-
 
 /* =========================================================
    QUOTE
@@ -567,7 +601,6 @@
   color: #555;
 }
 
-
 /* =========================================================
    FOUNDATION CONTENT
 ========================================================= */
@@ -603,7 +636,6 @@
   color: var(--muted);
 }
 
-
 /* =========================================================
    RIGHT IMAGE COLUMN
 ========================================================= */
@@ -616,7 +648,6 @@
 
   width: 100%;
 }
-
 
 /* =========================================================
    FOUNDER IMAGE
@@ -633,7 +664,6 @@
 
   overflow: visible;
 }
-
 
 /* Decorative corner */
 
@@ -654,7 +684,6 @@
   z-index: 0;
 }
 
-
 /* Image */
 
 .founder-image {
@@ -666,7 +695,6 @@
 
   background: #f1f2f4;
 }
-
 
 .founder-image img {
   display: block;
@@ -690,13 +718,11 @@
     filter 0.5s ease;
 }
 
-
 .founder-image-card:hover img {
   transform: scale(1.025);
 
   filter: grayscale(0%);
 }
-
 
 /* =========================================================
    IMAGE CAPTION
@@ -725,7 +751,6 @@
   text-transform: uppercase;
 }
 
-
 /* =========================================================
    EFI FOUNDATION CARD
 ========================================================= */
@@ -744,7 +769,6 @@
 
   min-height: 120px;
 }
-
 
 /* EFI Logo */
 
@@ -771,7 +795,6 @@
 
   object-fit: contain;
 }
-
 
 /* EFI Content */
 
@@ -809,14 +832,12 @@
   color: var(--primary);
 }
 
-
 /* =========================================================
    TABLET
 ========================================================= */
 
 // RESPONSIVE: Tablets: styles apply at 992px viewport width and below.
 @media (max-width: 992px) {
-
   .beginnings-foundation-section {
     padding: 80px 0;
   }
@@ -838,9 +859,7 @@
 
     margin: 0 auto;
   }
-
 }
-
 
 /* =========================================================
    MOBILE
@@ -848,7 +867,6 @@
 
 // RESPONSIVE: Large phones: styles apply at 576px viewport width and below.
 @media (max-width: 576px) {
-
   .beginnings-foundation-section {
     padding: 60px 0;
   }
@@ -935,7 +953,6 @@
   .efi-content h4 {
     font-size: 17px;
   }
-
 }
 
 /* =========================================================
@@ -997,7 +1014,6 @@
   color: var(--primary);
 }
 
-
 /* =========================================================
    PIONEERS
 ========================================================= */
@@ -1031,8 +1047,7 @@
 .pioneer-card:hover {
   transform: translateY(-10px);
 
-  box-shadow:
-    0 25px 55px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.1);
 }
 
 .pioneer-image {
@@ -1119,7 +1134,6 @@
   color: var(--muted);
 }
 
-
 /* =========================================================
    TIMELINE
 ========================================================= */
@@ -1190,8 +1204,7 @@
 
   z-index: 2;
 
-  box-shadow:
-    0 0 0 8px white;
+  box-shadow: 0 0 0 8px white;
 }
 
 .timeline-right .timeline-marker {
@@ -1214,11 +1227,10 @@
 .timeline-card:hover {
   transform: translateY(-5px);
 
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
 
-.timeline-card>span {
+.timeline-card > span {
   font-size: 12px;
 
   font-weight: 800;
@@ -1245,7 +1257,6 @@
 
   color: var(--muted);
 }
-
 
 /* =========================================================
    DIVERSITY
@@ -1329,7 +1340,6 @@
   color: rgba(255, 255, 255, 0.82);
 }
 
-
 /* =========================================================
    CTA
 ========================================================= */
@@ -1353,8 +1363,12 @@
   inset: 0;
 
   background:
-    linear-gradient(90deg, rgba(11, 37, 69, .98), rgba(18, 59, 107, .82)),
-    repeating-linear-gradient(135deg, transparent 0 38px, rgba(255, 255, 255, .035) 38px 39px);
+    linear-gradient(90deg, rgba(11, 37, 69, 0.98), rgba(18, 59, 107, 0.82)),
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 38px,
+      rgba(255, 255, 255, 0.035) 38px 39px
+    );
 }
 
 .cta-content {
@@ -1447,27 +1461,49 @@
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgba(21, 21, 21, .72);
+  background: rgba(21, 21, 21, 0.72);
 }
 
 .timeline-dialog {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(220px, .85fr) 1fr;
+  grid-template-columns: minmax(220px, 0.85fr) 1fr;
   gap: 30px;
   width: min(760px, 100%);
   max-height: min(620px, 90vh);
   overflow: auto;
   padding: 26px;
   background: var(--white);
-  box-shadow: 0 25px 80px rgba(0, 0, 0, .28);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.28);
 }
 
-.timeline-dialog img { width: 100%; height: 100%; min-height: 220px; object-fit: cover; }
-.timeline-dialog > div { align-self: center; }
-.timeline-dialog > div > span { color: var(--primary); font-size: 12px; font-weight: 800; letter-spacing: 1px; }
-.timeline-dialog h2 { margin: 12px 0; color: var(--dark); font-size: clamp(26px, 4vw, 38px); line-height: 1.1; }
-.timeline-dialog p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.8; }
+.timeline-dialog img {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+}
+.timeline-dialog > div {
+  align-self: center;
+}
+.timeline-dialog > div > span {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.timeline-dialog h2 {
+  margin: 12px 0;
+  color: var(--dark);
+  font-size: clamp(26px, 4vw, 38px);
+  line-height: 1.1;
+}
+.timeline-dialog p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
 
 .dialog-close {
   position: absolute;
@@ -1484,13 +1520,11 @@
   line-height: 1;
 }
 
-
 /* =========================================================
    ANIMATIONS
 ========================================================= */
 
 @keyframes heroReveal {
-
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -1500,11 +1534,9 @@
     opacity: 1;
     transform: translateY(0);
   }
-
 }
 
 @keyframes cardReveal {
-
   from {
     opacity: 0;
     transform: translateY(25px);
@@ -1514,9 +1546,7 @@
     opacity: 1;
     transform: translateY(0);
   }
-
 }
-
 
 /* =========================================================
    TABLET
@@ -1524,7 +1554,6 @@
 
 // RESPONSIVE: Small laptops / large tablets (landscape): styles apply at 1000px viewport width and below.
 @media (max-width: 1000px) {
-
   .section {
     padding: 80px 0;
   }
@@ -1546,10 +1575,10 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .journey-card { grid-template-columns: minmax(0, 1fr) 160px; }
-
+  .journey-card {
+    grid-template-columns: minmax(0, 1fr) 160px;
+  }
 }
-
 
 /* =========================================================
    MOBILE
@@ -1557,7 +1586,6 @@
 
 // RESPONSIVE: Tablets / large phones (landscape): styles apply at 768px viewport width and below.
 @media (max-width: 768px) {
-
   .container {
     width: min(100% - 30px, 600px);
   }
@@ -1565,7 +1593,6 @@
   .section {
     padding: 65px 0;
   }
-
 
   /* HERO */
 
@@ -1578,10 +1605,11 @@
   }
 
   .hero-overlay {
-    background:
-      linear-gradient(180deg,
-        rgba(0, 0, 0, 0.65),
-        rgba(128, 0, 32, 0.55));
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.65),
+      rgba(128, 0, 32, 0.55)
+    );
   }
 
   .hero-content {
@@ -1613,7 +1641,6 @@
     height: 65px;
   }
 
-
   /* HEADINGS */
 
   .section-heading {
@@ -1630,7 +1657,6 @@
     font-size: 15px;
   }
 
-
   /* INTRO */
 
   .intro-grid {
@@ -1639,9 +1665,13 @@
     gap: 40px;
   }
 
-  .journey-heading { margin: 70px 0 40px; }
+  .journey-heading {
+    margin: 70px 0 40px;
+  }
 
-  .journey-timeline::before { left: 20px; }
+  .journey-timeline::before {
+    left: 20px;
+  }
 
   .journey-item,
   .journey-item:nth-child(even) {
@@ -1649,8 +1679,12 @@
     padding-left: 55px;
   }
 
-  .journey-item:nth-child(even) .journey-card { grid-column: auto; }
-  .journey-marker { left: 20px; }
+  .journey-item:nth-child(even) .journey-card {
+    grid-column: auto;
+  }
+  .journey-marker {
+    left: 20px;
+  }
 
   .intro-content h3 {
     font-size: 36px;
@@ -1665,7 +1699,6 @@
 
     padding: 18px;
   }
-
 
   /* FOUNDERS */
 
@@ -1704,7 +1737,6 @@
     margin: 30px 0 25px;
   }
 
-
   /* EFI */
 
   .efi-logo-card {
@@ -1714,7 +1746,6 @@
   .efi-logo-card img {
     width: 110px;
   }
-
 
   /* PIONEERS */
 
@@ -1731,7 +1762,6 @@
   .pioneer-content {
     padding: 20px;
   }
-
 
   /* TIMELINE */
 
@@ -1751,8 +1781,7 @@
 
     margin-left: 0;
 
-    padding:
-      0 0 45px 65px;
+    padding: 0 0 45px 65px;
   }
 
   .timeline-marker,
@@ -1772,7 +1801,6 @@
     font-size: 20px;
   }
 
-
   /* DIVERSITY */
 
   .diversity-card {
@@ -1791,7 +1819,6 @@
     font-size: 40px;
   }
 
-
   /* CTA */
 
   .about-cta {
@@ -1807,9 +1834,7 @@
   .cta-content p {
     font-size: 15px;
   }
-
 }
-
 
 /* =========================================================
    SMALL MOBILE
@@ -1817,7 +1842,6 @@
 
 // RESPONSIVE: Standard mobile phones: styles apply at 480px viewport width and below.
 @media (max-width: 480px) {
-
   .container {
     width: calc(100% - 24px);
   }
@@ -1893,10 +1917,12 @@
     padding: 18px;
   }
 
-  .timeline-dialog img { height: 190px; min-height: 0; }
+  .timeline-dialog img {
+    height: 190px;
+    min-height: 0;
+  }
 
   .cta-content h2 {
     font-size: 36px;
   }
-
 }

@@ -11,19 +11,26 @@
 ============================================================ -->
 
 <main class="campus">
-
   <!-- ============ HERO — full-bleed video ============ -->
   <section class="hero">
-    <video class="hero__video" #heroVideoRef autoplay muted defaultMuted loop playsinline
-    poster="assets/campus/image_6.jpg">
-<source src="../../../assets/video/video_1.mp4" type="video/mp4">
-</video>
+    <video
+      class="hero__video"
+      #heroVideoRef
+      autoplay
+      muted
+      defaultMuted
+      loop
+      playsinline
+      poster="assets/campus/image_6.jpg"
+    >
+      <source src="../../../assets/video/video_1.mp4" type="video/mp4" />
+    </video>
     <div class="hero__scrim"></div>
 
     <div class="hero__content wrap">
       <span class="eyebrow eyebrow--light">Bibwewadi, Pune</span>
       <h1 class="hero__title">
-        A campus built for<br>
+        A campus built for<br />
         <span>study, worship</span> and everyday life
       </h1>
       <p class="hero__sub">
@@ -42,14 +49,19 @@
   <section class="principal">
     <div class="wrap principal__grid">
       <div class="principal__photo">
-        + <img src="assets/campus/image_1.jpg" alt="Dr. W.S. Annie, Principal" loading="lazy">
+        +
+        <img
+          src="assets/campus/image_1.jpg"
+          alt="Dr. W.S. Annie, Principal"
+          loading="lazy"
+        />
       </div>
       <div class="principal__copy">
         <span class="principal__mark">&#8220;</span>
         <blockquote class="principal__quote">
-          You sit under the Word four hours a day, establish friendships,
-          and sit in on conferences — a saturation effect where it soaks
-          in to a different degree.
+          You sit under the Word four hours a day, establish friendships, and
+          sit in on conferences — a saturation effect where it soaks in to a
+          different degree.
         </blockquote>
         <div class="principal__byline">
           <span class="principal__rule"></span>
@@ -66,39 +78,62 @@
   <section class="day-strip">
     <div class="wrap day-strip__head">
       <span class="eyebrow eyebrow--light">— The Rhythm of a Day</span>
-      <h2 class="section-title section-title--light">From 6 a.m. chapel to evening sport</h2>
+      <h2 class="section-title section-title--light">
+        From 6 a.m. chapel to evening sport
+      </h2>
     </div>
 
-    <div class="wrap day-strip__stage" (mouseenter)="pauseDayAutoplay()" (mouseleave)="resumeDayAutoplay()">
-
+    <div
+      class="wrap day-strip__stage"
+      (mouseenter)="pauseDayAutoplay()"
+      (mouseleave)="resumeDayAutoplay()"
+    >
       <div class="day-strip__hero">
-        <div class="day-strip__hero-photo" *ngFor="let moment of dayMoments; let i = index"
-          [class.is-active]="i === activeDayIndex" [style.backgroundImage]="'url(' + moment.heroImg + ')'"></div>
+        <div
+          class="day-strip__hero-photo"
+          *ngFor="let moment of dayMoments; let i = index"
+          [class.is-active]="i === activeDayIndex"
+          [style.backgroundImage]="'url(' + moment.heroImg + ')'"
+        ></div>
         <div class="day-strip__hero-glow"></div>
         <div class="day-strip__hero-scrim"></div>
       </div>
 
       <div class="day-strip__card">
-        <div class="day-strip__card-photo"
-          [style.backgroundImage]="'url(' + dayMoments[activeDayIndex].img + ')'"></div>
+        <div
+          class="day-strip__card-photo"
+          [style.backgroundImage]="
+            'url(' + dayMoments[activeDayIndex].img + ')'
+          "
+        ></div>
         <div class="day-strip__card-body">
-          <span class="day-strip__card-time">{{ dayMoments[activeDayIndex].time }} &nbsp;|&nbsp;
-            {{ dayMoments[activeDayIndex].title }}</span>
+          <span class="day-strip__card-time"
+            >{{ dayMoments[activeDayIndex].time }} &nbsp;|&nbsp;
+            {{ dayMoments[activeDayIndex].title }}</span
+          >
           <p class="day-strip__card-desc" [class.is-collapsed]="!dayExpanded">
             {{ dayMoments[activeDayIndex].desc }}
           </p>
-          <button type="button" class="day-strip__more" (click)="dayExpanded = !dayExpanded">
-            {{ dayExpanded ? 'Show less' : 'Show more' }}
+          <button
+            type="button"
+            class="day-strip__more"
+            (click)="dayExpanded = !dayExpanded"
+          >
+            {{ dayExpanded ? "Show less" : "Show more" }}
           </button>
         </div>
       </div>
-
     </div>
 
     <div class="wrap day-strip__timeline">
       <div class="day-strip__track"></div>
-      <button type="button" class="day-strip__point" *ngFor="let moment of dayMoments; let i = index"
-        [class.is-active]="i === activeDayIndex" (click)="selectDayMoment(i)">
+      <button
+        type="button"
+        class="day-strip__point"
+        *ngFor="let moment of dayMoments; let i = index"
+        [class.is-active]="i === activeDayIndex"
+        (click)="selectDayMoment(i)"
+      >
         <span class="day-strip__point-dot"></span>
         <span class="day-strip__point-time">{{ moment.time }}</span>
       </button>
@@ -118,14 +153,17 @@
         class="facilities__card"
         *ngFor="let group of facilityGroups; let i = index"
         [style.--i]="i"
-        (click)="openFacility(group)">
+        (click)="openFacility(group)"
+      >
         <span class="facilities__card-index">0{{ i + 1 }}</span>
         <div class="facilities__card-photo">
-          <img [src]="group.images[0]" [alt]="group.heading" loading="lazy">
+          <img [src]="group.images[0]" [alt]="group.heading" loading="lazy" />
         </div>
         <span class="facilities__card-label">{{ group.label }}</span>
         <span class="facilities__card-heading">{{ group.heading }}</span>
-        <span class="facilities__card-cta">View gallery <i class="fa-solid fa-arrow-right"></i></span>
+        <span class="facilities__card-cta"
+          >View gallery <i class="fa-solid fa-arrow-right"></i
+        ></span>
       </button>
     </div>
   </section>
@@ -133,13 +171,21 @@
   <!-- Facility popup modal -->
   <div class="facility-modal" *ngIf="activeFacility" (click)="closeFacility()">
     <div class="facility-modal__panel" (click)="$event.stopPropagation()">
-      <button type="button" class="facility-modal__close" (click)="closeFacility()" aria-label="Close">
+      <button
+        type="button"
+        class="facility-modal__close"
+        (click)="closeFacility()"
+        aria-label="Close"
+      >
         <i class="fa-solid fa-xmark"></i>
       </button>
 
       <div class="facility-modal__gallery">
-        <div class="facility-modal__photo" *ngFor="let img of activeFacility.images">
-          <img [src]="img" [alt]="activeFacility.heading" loading="lazy">
+        <div
+          class="facility-modal__photo"
+          *ngFor="let img of activeFacility.images"
+        >
+          <img [src]="img" [alt]="activeFacility.heading" loading="lazy" />
         </div>
       </div>
 
@@ -157,11 +203,17 @@
   <!-- ============ GALLERY — mosaic (now also holds former event photos) ============ -->
   <section class="mosaic">
     <div class="wrap">
-      <h2 class="section-title section-title--center">Campus <span>Gallery</span></h2>
+      <h2 class="section-title section-title--center">
+        Campus <span>Gallery</span>
+      </h2>
       <div class="mosaic__grid">
-        <img *ngFor="let src of galleryImages" [src]="src" alt="UBS campus" loading="lazy">
+        <img
+          *ngFor="let src of galleryImages"
+          [src]="src"
+          alt="UBS campus"
+          loading="lazy"
+        />
       </div>
     </div>
   </section>
-
 </main>

@@ -26,14 +26,12 @@ interface Faculty {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './faculty.component.html',
-  styleUrls: ['./faculty.component.scss']
+  styleUrls: ['./faculty.component.scss'],
 })
 export class FacultyComponent {
-
   selectedFaculty: Faculty | null = null;
 
   facultyList: Faculty[] = [
-
     // =========================================================
     // OLD TESTAMENT
     // =========================================================
@@ -52,21 +50,21 @@ export class FacultyComponent {
         'D. Th - Senate of Serampore – 2017',
         'M. Th – Senate of Serampore – 2010',
         'BD – Senate of Serampore – 2000',
-        'B.TH – Senate of Serampore – 1997'
+        'B.TH – Senate of Serampore – 1997',
       ],
 
       specialization: [
         'Hebrew Bible',
         'Ancient West Asia',
-        'History of Ancient Israel'
+        'History of Ancient Israel',
       ],
 
       books: [
         'Women’s Inheritance Law in the Old Testament. New Delhi: CWC, 2020.',
-        'Prophetic Movement with Special Reference to Isaiah 40-55. Kolkata: SCEPTRE, Shrachi Centre, 2023.'
+        'Prophetic Movement with Special Reference to Isaiah 40-55. Kolkata: SCEPTRE, Shrachi Centre, 2023.',
       ],
 
-      research: []
+      research: [],
     },
 
     {
@@ -82,25 +80,21 @@ export class FacultyComponent {
       qualification: [
         'DTh - United Theological College - 2024',
         'MTh - United Theological College - 2017',
-        'BD - Baptist Theological College - 2014'
+        'BD - Baptist Theological College - 2014',
       ],
 
-      specialization: [
-        'Prophetic Literature'
-      ],
+      specialization: ['Prophetic Literature'],
 
       books: [
-        'Oracles Against the nations in Proto-Isaiah. New Delhi: CWI, 2026.'
+        'Oracles Against the nations in Proto-Isaiah. New Delhi: CWI, 2026.',
       ],
 
       articles: [
         '"Analysis of the Concept of Ger in Deuteronomy and Exodus," UBS Journal 18/1 (March, 2024)',
-        '"Social Exclusion of dalits and Tribals in India: A Reflection from the Prophetic book of Isaiah," UBS Journal 19/1 (April, 2026)'
+        '"Social Exclusion of dalits and Tribals in India: A Reflection from the Prophetic book of Isaiah," UBS Journal 19/1 (April, 2026)',
       ],
 
-      research: [
-        'Prophetical Books and Wisdom Literatures'
-      ]
+      research: ['Prophetical Books and Wisdom Literatures'],
     },
 
     {
@@ -115,7 +109,7 @@ export class FacultyComponent {
 
       qualification: [
         'M.Th - Senate of Serampore - 2022',
-        'B.D - Senate of Serampore - 2019'
+        'B.D - Senate of Serampore - 2019',
       ],
 
       specialization: [],
@@ -124,10 +118,9 @@ export class FacultyComponent {
 
       research: [
         'Postcolonial Reading on Hosea',
-        'Exilic and Post-Exilic Israelite history'
-      ]
+        'Exilic and Post-Exilic Israelite history',
+      ],
     },
-
 
     // =========================================================
     // NEW TESTAMENT
@@ -143,19 +136,15 @@ export class FacultyComponent {
       email: 'lanu@ubs.ac.in',
       image: '../../../assets/faculty/image_4.png',
 
-      qualification: [
-        'PhD - MiddleSex University, 2012'
-      ],
+      qualification: ['PhD - MiddleSex University, 2012'],
 
-      specialization: [
-        'Pauline Studies'
-      ],
+      specialization: ['Pauline Studies'],
 
       books: [
-        'Exclusion and Judgement in Fellowship Meals: The Socio-Historical Background of 1 Corinthians 11:17-34'
+        'Exclusion and Judgement in Fellowship Meals: The Socio-Historical Background of 1 Corinthians 11:17-34',
       ],
 
-      research: []
+      research: [],
     },
 
     {
@@ -171,24 +160,24 @@ export class FacultyComponent {
       qualification: [
         'D.Th – Senate of Serampore – 2016',
         'M.Th – Senate of Serampore – 2005',
-        'BD – Senate of Serampore – 2002'
+        'BD – Senate of Serampore – 2002',
       ],
 
       specialization: [
         'Synoptic Gospels (Gospel of Mark) – The Healing Narratives as Resistance Literature',
         'Pauline Letters and the Connection of Paul and Jesus',
-        'Gospels and Epistles'
+        'Gospels and Epistles',
       ],
 
       books: [
         'A Study of Pauline Interpretation of Jesus’ Ethical Sayings in Q and its Significance in Today’s Indian Context. New Delhi: ISPCK, 2007.',
-        'The Jesus Movement and its Resistance to Oppressive Institutions: A Study of Healing Narratives in Mark’s Gospel. ISPCK, 2020.'
+        'The Jesus Movement and its Resistance to Oppressive Institutions: A Study of Healing Narratives in Mark’s Gospel. ISPCK, 2020.',
       ],
 
       research: [
         'A Study of Pauline Interpretation of Jesus’ Ethical Sayings in Q and its Significance in Today’s Indian Context. New Delhi: ISPCK, 2007.',
-        'The Jesus Movement and its Resistance to Oppressive Institutions: A Study of Healing Narratives in Mark’s Gospel. ISPCK, 2020.'
-      ]
+        'The Jesus Movement and its Resistance to Oppressive Institutions: A Study of Healing Narratives in Mark’s Gospel. ISPCK, 2020.',
+      ],
     },
 
     {
@@ -204,21 +193,15 @@ export class FacultyComponent {
       qualification: [
         'M.Th – Senate of Serampore – 2025',
         'B.D – Senate of Serampore – 2020',
-        'B.E – Anna University – 2011'
+        'B.E – Anna University – 2011',
       ],
 
-      specialization: [
-        'The New Perspective on Paul',
-        'Colossians 2:11-15'
-      ],
+      specialization: ['The New Perspective on Paul', 'Colossians 2:11-15'],
 
       books: [],
 
-      research: [
-        'Pauline Understanding of Law and Grace'
-      ]
+      research: ['Pauline Understanding of Law and Grace'],
     },
-
 
     // =========================================================
     // CHRISTIAN THEOLOGY
@@ -237,7 +220,7 @@ export class FacultyComponent {
       qualification: [
         'B.D., Gurukul Lutheran Theological Seminary, Chennai. 1992-94',
         'M.Th., Gurukul Lutheran Theological Seminary, Chennai. 1994-96',
-        'D. Th. (2005) Federated Faculty of Research in Religion and Culture. Kottayam.'
+        'D. Th. (2005) Federated Faculty of Research in Religion and Culture. Kottayam.',
       ],
 
       specialization: [
@@ -247,12 +230,12 @@ export class FacultyComponent {
         'Christology',
         'Human Sexuality',
         'Study of Text – Buddha and His Dhamma',
-        'Major Figures in Indian Christian Thought'
+        'Major Figures in Indian Christian Thought',
       ],
 
       books: [
         'Annie, W. S., Globalization and Women’s Subsistence Labour: A Third World Theological Perspective (Bangalore: BTESSC / SATHRI, 2009). 165 pp.',
-        'Fostering Faith and Struggle: A Christian Feminist Musings (Serampore: BTESSC / SATHRI, 2023). 174 pp.'
+        'Fostering Faith and Struggle: A Christian Feminist Musings (Serampore: BTESSC / SATHRI, 2023). 174 pp.',
       ],
 
       articles: [
@@ -264,7 +247,7 @@ export class FacultyComponent {
         'Gender in India and Elsewhere.',
         'A Feminist Reading of Christian Identity and Human Rights Violations in Contemporary India.',
         'Barren Couples Towards Inclusive Community and Spirituality.',
-        'Easy Target or a Person - Widows and Single Women in India.'
+        'Easy Target or a Person - Widows and Single Women in India.',
       ],
 
       journals: [
@@ -280,10 +263,10 @@ export class FacultyComponent {
         'Women as Agents of Transformation in Ecumenical Horizon, Vol 4, No.7, March 2010.',
         'Women and Space in Ecumenical Horizon, Vol 3, No.2, March 2009.',
         'Chengara: A case study in Ecumenical Horizon, Vol 2, No.4, March 2008.',
-        'Feminist Theology in Church and Society in Ecumenical Horizon, Vol 1, No.7, March 2007.'
+        'Feminist Theology in Church and Society in Ecumenical Horizon, Vol 1, No.7, March 2007.',
       ],
 
-      research: []
+      research: [],
     },
 
     {
@@ -291,7 +274,8 @@ export class FacultyComponent {
       name: 'Dr. Maisuangdibou',
       qualificationTitle: 'B.A, M.A, B.D, M.Th, D.Th',
       designation: 'Vice Principal, UBS',
-      additionalDesignation: 'Associate Professor & Dean, Christian Theology\nDean of Post-Graduate Studies',
+      additionalDesignation:
+        'Associate Professor & Dean, Christian Theology\nDean of Post-Graduate Studies',
       department: 'Christian Theology',
       email: 'maisong@ubs.ac.in',
       image: '../../../assets/faculty/image_8.png',
@@ -301,7 +285,7 @@ export class FacultyComponent {
         'M. Th – Senate of Serampore – 2012',
         'BD – Senate of Serampore – 2009',
         'M.A – English (UGC-NET) & Philosophy (UGC-NET)',
-        'B.A – Delhi University - 2004'
+        'B.A – Delhi University - 2004',
       ],
 
       specialization: [
@@ -314,7 +298,7 @@ export class FacultyComponent {
         'Postmodern Theology',
         'Subaltern Theology',
         'Tribal Theology',
-        'Tribal Literature and Criticism'
+        'Tribal Literature and Criticism',
       ],
 
       books: [
@@ -322,7 +306,7 @@ export class FacultyComponent {
         'Liangmai and Christianity (Witinglung Publication)',
         'Liangmai Narratives (Winco Books)',
         'Tribal Literature, Theology and Methodology (CWI)',
-        'Biblical Hermeneutics (CWI)'
+        'Biblical Hermeneutics (CWI)',
       ],
 
       research: [
@@ -333,10 +317,9 @@ export class FacultyComponent {
         'Hermeneutics',
         'Subaltern/Tribal Theologies',
         'Tribal Literature',
-        'Aesthetics and Criticism'
-      ]
+        'Aesthetics and Criticism',
+      ],
     },
-
 
     // =========================================================
     // HISTORY OF CHRISTIANITY
@@ -357,14 +340,14 @@ export class FacultyComponent {
         'Master of Theology- ETC/Senate of Serampore',
         'Certificate in Missiology - ETC',
         'Bachelor of Divinity - ETC/Senate of Serampore',
-        'Bachelor of Theology - ETC/Senate of Serampore'
+        'Bachelor of Theology - ETC/Senate of Serampore',
       ],
 
       specialization: [],
 
       books: [],
 
-      research: []
+      research: [],
     },
 
     {
@@ -381,20 +364,15 @@ export class FacultyComponent {
         'D. Th - Senate of Serampore – 2023',
         'M. Th – Senate of Serampore – 2010',
         'BD – Senate of Serampore – 2006',
-        'B.A – Delhi University - 2000'
+        'B.A – Delhi University - 2000',
       ],
 
-      specialization: [
-        'Ecumenism and Tribal History'
-      ],
+      specialization: ['Ecumenism and Tribal History'],
 
       books: [],
 
-      research: [
-        'Ecumenical Movement and Church Relations'
-      ]
+      research: ['Ecumenical Movement and Church Relations'],
     },
-
 
     // =========================================================
     // CHRISTIAN MINISTRY
@@ -412,7 +390,7 @@ export class FacultyComponent {
       qualification: [],
       specialization: [],
       books: [],
-      research: []
+      research: [],
     },
 
     {
@@ -428,22 +406,21 @@ export class FacultyComponent {
       qualification: [
         'M.Th – Senate of Serampore – 2014',
         'B.D – Senate of Serampore – 2005',
-        'B.Th – Senate of Serampore – 2002'
+        'B.Th – Senate of Serampore – 2002',
       ],
 
       specialization: [
         'Pastoral Care and Counselling',
-        'Positive Mental Health of Employed Married Women'
+        'Positive Mental Health of Employed Married Women',
       ],
 
       books: [],
 
       research: [
         'Marriage and Family Counselling',
-        'Midlife Crisis and Resilience among Working Women'
-      ]
+        'Midlife Crisis and Resilience among Working Women',
+      ],
     },
-
 
     // =========================================================
     // MISSIOLOGY
@@ -462,12 +439,10 @@ export class FacultyComponent {
       qualification: [
         'M.Th – Union Biblical Seminary, Senate of Serampore – 2011',
         'BD – Gospel for Asia Biblical Seminary, Senate of Serampore – 2004',
-        'B.Sc – Kohima Science College, Nagaland University - 1999'
+        'B.Sc – Kohima Science College, Nagaland University - 1999',
       ],
 
-      specialization: [
-        'Missiology'
-      ],
+      specialization: ['Missiology'],
 
       books: [
         'Contemporary Religious Movements in India (2011).',
@@ -477,7 +452,7 @@ export class FacultyComponent {
         'Mongchen Baptist Arogo Youth Department Platinum Jubilee Souvenir. 2007.',
         'Becoming a Missional Congregation in the 21st Century Indian Context. ISPCK, 2016.',
         'Witnessing Christ in Diverse Contexts. ISPCK, 2019.',
-        'Mission and the Emerging Middle Class. ISPCK, 2020.'
+        'Mission and the Emerging Middle Class. ISPCK, 2020.',
       ],
 
       articles: [
@@ -486,7 +461,7 @@ export class FacultyComponent {
         'Quantitation in Protestant Christian Literatures since Carey’s Enquiry (1792) and Indian Christian Population.',
         'Carey’s Notion of Conversion of the Heathens in the Light of India’s Right-Wing Intellectuals.',
         'The Great Commission and its Relevance for Indian Missiology.',
-        'Mission Challenges amidst the Pandemic.'
+        'Mission Challenges amidst the Pandemic.',
       ],
 
       research: [
@@ -498,63 +473,43 @@ export class FacultyComponent {
         'Theory & practice of mission',
         'Congregational studies',
         'Indian megachurches',
-        'Urban churches'
-      ]
-    }
+        'Urban churches',
+      ],
+    },
   ];
 
-
-  /**
-   * Get department groups
-   */
+  /** Return the unique departments used to group faculty members. */
   getDepartments(): string[] {
-    return [...new Set(
-      this.facultyList.map(faculty => faculty.department)
-    )];
+    return [...new Set(this.facultyList.map((faculty) => faculty.department))];
   }
 
-
-  /**
-   * Get faculty by department
-   */
+  /** Return faculty members belonging to the requested department. */
   getFacultyByDepartment(department: string): Faculty[] {
     return this.facultyList.filter(
-      faculty => faculty.department === department
+      (faculty) => faculty.department === department,
     );
   }
 
-
-  /**
-   * Open faculty popup
-   */
+  /** Open the selected faculty profile and lock the page behind the modal. */
   openFaculty(faculty: Faculty): void {
     this.selectedFaculty = faculty;
 
     document.body.classList.add('faculty-modal-open');
   }
 
-
-  /**
-   * Close faculty popup
-   */
+  /** Close the faculty profile modal and restore page scrolling. */
   closeFaculty(): void {
     this.selectedFaculty = null;
 
     document.body.classList.remove('faculty-modal-open');
   }
 
-
-  /**
-   * Prevent backdrop click when clicking inside modal
-   */
+  /** Keep clicks inside the modal from closing it through the backdrop. */
   stopPropagation(event: Event): void {
     event.stopPropagation();
   }
 
-
-  /**
-   * Image fallback
-   */
+  /** Replace an unavailable faculty image with the default portrait. */
   imageError(event: Event): void {
     const imageElement = event.target as HTMLImageElement;
 

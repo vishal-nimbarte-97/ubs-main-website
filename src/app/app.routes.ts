@@ -30,7 +30,10 @@ export const routes: Routes = [
   { path: 'apply', component: ApplyComponent },
   { path: 'tuition', component: TuitionComponent },
   { path: 'programmes/residential', component: ResidentialProgrammesComponent },
-  { path: 'programmes/non-residential', component: NonResidentialProgrammesComponent },
+  {
+    path: 'programmes/non-residential',
+    component: NonResidentialProgrammesComponent,
+  },
   { path: 'publications', component: PublicationsComponent },
   { path: 'faq', component: FaqComponent },
   { path: '**', redirectTo: '' },

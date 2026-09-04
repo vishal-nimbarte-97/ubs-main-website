@@ -117,7 +117,9 @@
   z-index: 70;
   background: var(--white);
   box-shadow: 0 2px 16px rgba(11, 37, 69, 0.08);
-  transition: box-shadow 0.35s ease, color 0.35s ease;
+  transition:
+    box-shadow 0.35s ease,
+    color 0.35s ease;
 }
 
 /* When the mobile menu is open we want a solid navbar. */
@@ -131,12 +133,12 @@
   }
 
   .logo-sub,
-  .nav-links>li>a {
+  .nav-links > li > a {
     color: var(--navy);
   }
 
-  .nav-links>a.active,
-  .nav-links>li>a.active {
+  .nav-links > a.active,
+  .nav-links > li > a.active {
     color: var(--gold);
   }
 
@@ -144,7 +146,6 @@
     background: var(--navy);
   }
 }
-
 
 .main-nav {
   display: flex;
@@ -197,7 +198,7 @@
 .logo-mark {
   background: var(--navy);
   color: var(--gold-light);
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 700;
   padding: 8px 12px;
   border-radius: var(--radius);
@@ -205,7 +206,7 @@
 }
 
 .logo-name {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 700;
   font-size: 25px;
   color: var(--navy);
@@ -230,7 +231,7 @@
 }
 
 .logo-sub {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 600;
   font-size: 0.92rem;
   color: var(--navy);
@@ -246,16 +247,16 @@
   z-index: 10;
 }
 
-.nav-links>li>a,
-.nav-links>a {
+.nav-links > li > a,
+.nav-links > a {
   text-decoration: none;
   color: var(--navy);
   font-weight: 500;
   font-size: 1rem;
 }
 
-.nav-links>a.active,
-.nav-links>li>a.active {
+.nav-links > a.active,
+.nav-links > li > a.active {
   color: var(--gold);
 }
 
@@ -289,7 +290,10 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
 }
 
 .subnav a {
@@ -344,7 +348,10 @@
   height: 3px;
   background: var(--navy);
   border-radius: 2px;
-  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease,
+    background 0.3s ease;
 }
 
 // Morph the three bars into an "X" when the mobile menu is open
@@ -369,7 +376,9 @@
   background: rgba(11, 37, 69, 0.35);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   z-index: 90; // below .nav-links (100) and .burger (120), above page content
 }
 
@@ -410,14 +419,16 @@
     display: block;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.35s ease, visibility 0.35s ease;
+    transition:
+      opacity 0.35s ease,
+      visibility 0.35s ease;
   }
 
-  .nav-links>li {
+  .nav-links > li {
     width: 100%;
   }
 
-  .nav-links>li>a {
+  .nav-links > li > a {
     display: flex;
     align-items: center;
     width: 100%;
@@ -432,7 +443,6 @@
     min-height: 44px;
     padding: 12px 0;
   }
-
 }
 
 // The desktop rules begin at 768px, so only expand the submenu in the
@@ -450,7 +460,10 @@
     visibility: visible;
     transform: none;
     overflow: hidden;
-    transition: max-height 0.25s ease, padding-top 0.22s ease, padding-bottom 0.22s ease;
+    transition:
+      max-height 0.25s ease,
+      padding-top 0.22s ease,
+      padding-bottom 0.22s ease;
   }
 
   .subnav a {
@@ -462,7 +475,6 @@
     padding-top: 2px;
     padding-bottom: 6px;
   }
-
 }
 
 // Desktop (≥837px): the mobile menu machinery should never be reachable,
@@ -496,7 +508,7 @@
     gap: 14px;
   }
 
-  .nav-links>li>a {
+  .nav-links > li > a {
     font-size: 0.85rem;
   }
 }
@@ -523,8 +535,8 @@
   .main-nav {
     padding: 8px 24px; // was 12px 24px
   }
-  
-// RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
+
+  // RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
   @media (max-width: 600px) {
     .main-nav {
       padding: 6px 16px; // was 10px 16px

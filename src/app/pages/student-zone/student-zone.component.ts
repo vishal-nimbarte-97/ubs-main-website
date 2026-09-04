@@ -13,10 +13,9 @@ interface StudentCommittee {
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './student-zone.component.html',
-  styleUrls: ['./student-zone.component.scss']
+  styleUrls: ['./student-zone.component.scss'],
 })
 export class StudentZoneComponent {
-
   /* =========================================================
      HERO IMAGE
      NOTE: placeholder pulled from the old asset folder —
@@ -25,7 +24,6 @@ export class StudentZoneComponent {
 
   heroImage =
     'https://ubs.ac.in/Admin/assets/img/1e3ee61ebab8854164e856e232f821b0.jpg';
-
 
   /* =========================================================
      STUDENT COMMITTEES
@@ -37,7 +35,6 @@ export class StudentZoneComponent {
   ========================================================= */
 
   studentCommittees: StudentCommittee[] = [
-
     {
       title: 'Prayer Committee',
       description:
@@ -45,8 +42,8 @@ export class StudentZoneComponent {
       images: [
         'https://ubs.ac.in/Admin/assets/img/1.jpg',
         'https://ubs.ac.in/Admin/assets/img/gallery1_1.jpg',
-        'https://ubs.ac.in/Admin/assets/img/testimonial-2.jpg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/testimonial-2.jpg',
+      ],
     },
 
     {
@@ -56,8 +53,8 @@ export class StudentZoneComponent {
       images: [
         'https://ubs.ac.in/Admin/assets/img/3.jpeg',
         'https://ubs.ac.in/Admin/assets/img/gallery2.jpg',
-        'https://ubs.ac.in/Admin/assets/img/Union_Biblical_seminary.jpeg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/Union_Biblical_seminary.jpeg',
+      ],
     },
 
     {
@@ -66,8 +63,8 @@ export class StudentZoneComponent {
         'Details to be confirmed \u2014 please share the committee\u2019s full name and role so this description can be finalised.',
       images: [
         'https://ubs.ac.in/Admin/assets/img/4.png',
-        'https://ubs.ac.in/Admin/assets/img/32527ad9ce8a529795148ae9ed777b28.jpeg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/32527ad9ce8a529795148ae9ed777b28.jpeg',
+      ],
     },
 
     {
@@ -76,8 +73,8 @@ export class StudentZoneComponent {
         'Organizes handicraft and creative skill-building activities for students.',
       images: [
         'https://ubs.ac.in/Admin/assets/img/5.jpeg',
-        'https://ubs.ac.in/Admin/assets/img/images_(1).jpeg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/images_(1).jpeg',
+      ],
     },
 
     {
@@ -86,8 +83,8 @@ export class StudentZoneComponent {
         'Leadership Development Programme \u2014 equips students with practical leadership and ministry skills. (Please confirm expansion.)',
       images: [
         'https://ubs.ac.in/Admin/assets/img/6.jpeg',
-        'https://ubs.ac.in/Admin/assets/img/gallery1_1.jpg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/gallery1_1.jpg',
+      ],
     },
 
     {
@@ -96,8 +93,8 @@ export class StudentZoneComponent {
         'Organizes campus service projects and community outreach initiatives.',
       images: [
         'https://ubs.ac.in/Admin/assets/img/7.jpeg',
-        'https://ubs.ac.in/Admin/assets/img/testimonial-2.jpg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/testimonial-2.jpg',
+      ],
     },
 
     {
@@ -106,8 +103,8 @@ export class StudentZoneComponent {
         'Organizes sports events, tournaments and recreational activities for the student community.',
       images: [
         'https://ubs.ac.in/Admin/assets/img/8.jpeg',
-        'https://ubs.ac.in/Admin/assets/img/gallery2.jpg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/gallery2.jpg',
+      ],
     },
 
     {
@@ -116,8 +113,8 @@ export class StudentZoneComponent {
         'Plans and coordinates the annual Missionaries Conference on campus.',
       images: [
         'https://ubs.ac.in/Admin/assets/img/Union_Biblical_seminary.jpeg',
-        'https://ubs.ac.in/Admin/assets/img/1.jpg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/1.jpg',
+      ],
     },
 
     {
@@ -126,8 +123,8 @@ export class StudentZoneComponent {
         'Looks after the general upkeep, cleanliness and care of the campus.',
       images: [
         'https://ubs.ac.in/Admin/assets/img/gallery2.jpg',
-        'https://ubs.ac.in/Admin/assets/img/3.jpeg'
-      ]
+        'https://ubs.ac.in/Admin/assets/img/3.jpeg',
+      ],
     },
 
     {
@@ -136,12 +133,10 @@ export class StudentZoneComponent {
         'Organizes the Days of Challenge programme for spiritual growth and reflection.',
       images: [
         'https://ubs.ac.in/Admin/assets/img/images_(1).jpeg',
-        'https://ubs.ac.in/Admin/assets/img/5.jpeg'
-      ]
-    }
-
+        'https://ubs.ac.in/Admin/assets/img/5.jpeg',
+      ],
+    },
   ];
-
 
   /* =========================================================
      IMAGE FALLBACK
@@ -150,9 +145,9 @@ export class StudentZoneComponent {
   ========================================================= */
 
   onImageError(event: Event): void {
+    // Hide broken remote images and let the styled fallback frame remain visible.
     const target = event.target as HTMLImageElement;
     target.style.display = 'none';
     target.parentElement?.classList.add('img-fallback');
   }
-
 }

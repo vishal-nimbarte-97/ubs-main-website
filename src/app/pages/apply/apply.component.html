@@ -1,12 +1,18 @@
 <main class="apply-page">
   <section class="apply-hero" aria-labelledby="apply-title">
     <div class="apply-container apply-hero__content">
-      <span class="eyebrow eyebrow--light">Admissions &middot; Union Biblical Seminary</span>
+      <span class="eyebrow eyebrow--light"
+        >Admissions &middot; Union Biblical Seminary</span
+      >
       <p class="hero-kicker">Take your first step towards</p>
       <h1 id="apply-title">Academic <em>Formation.</em></h1>
-      <p class="hero-description">A focused journey of biblical learning, spiritual growth, and preparation for faithful
-        service.</p>
-      <a class="button button--light" href="#programmes">Explore programmes <span aria-hidden="true">&darr;</span></a>
+      <p class="hero-description">
+        A focused journey of biblical learning, spiritual growth, and
+        preparation for faithful service.
+      </p>
+      <a class="button button--light" href="#programmes"
+        >Explore programmes <span aria-hidden="true">&darr;</span></a
+      >
     </div>
   </section>
 
@@ -17,50 +23,71 @@
           <span class="eyebrow">Your application journey</span>
           <h2 id="steps-title">Four steps, one <em>calling.</em></h2>
         </div>
-        <p>We are here to help you move from interest to enrolment with clarity and confidence.</p>
+        <p>
+          We are here to help you move from interest to enrolment with clarity
+          and confidence.
+        </p>
       </div>
       <div class="journey-banner" aria-hidden="true"></div>
       <div class="steps-grid">
         @for (step of steps; track step.number) {
-        <article class="step-card">
-          <div>
-            <span class="step-number">{{ step.number }}</span>
-            <h3>{{ step.title }}</h3>
-            <p>{{ step.description }}</p>
-          </div>
-        </article>
+          <article class="step-card">
+            <div>
+              <span class="step-number">{{ step.number }}</span>
+              <h3>{{ step.title }}</h3>
+              <p>{{ step.description }}</p>
+            </div>
+          </article>
         }
       </div>
     </div>
   </section>
 
-  <section id="programmes" class="programme-section" aria-labelledby="programmes-title">
+  <section
+    id="programmes"
+    class="programme-section"
+    aria-labelledby="programmes-title"
+  >
     <div class="apply-container">
       <div class="section-heading section-heading--center">
         <span class="eyebrow">Application downloads</span>
         <h2 id="programmes-title">Find your <em>programme.</em></h2>
-        <p>Choose a programme below to download its application form and information.</p>
+        <p>
+          Choose a programme below to download its application form and
+          information.
+        </p>
       </div>
       <div class="programme-grid">
         @for (programme of programmes; track programme.downloadUrl) {
-        <article class="programme-card">
-          <div class="programme-card__image">
-            <img [src]="programme.image" [alt]="programme.title" loading="lazy">
-            <span>Application form</span>
-          </div>
-          <div class="programme-card__body">
-            <h3>{{ programme.title }}</h3>
-            <ul>
-              @for (detail of programme.details; track detail) {
-              <li>{{ detail }}</li>
-              }
-            </ul>
-            <a class="programme-card__download" [href]="programme.downloadUrl" target="_blank" rel="noopener"
-              [attr.aria-label]="'Download the application form for ' + programme.title">
-              Download application <span aria-hidden="true">&darr;</span>
-            </a>
-          </div>
-        </article>
+          <article class="programme-card">
+            <div class="programme-card__image">
+              <img
+                [src]="programme.image"
+                [alt]="programme.title"
+                loading="lazy"
+              />
+              <span>Application form</span>
+            </div>
+            <div class="programme-card__body">
+              <h3>{{ programme.title }}</h3>
+              <ul>
+                @for (detail of programme.details; track detail) {
+                  <li>{{ detail }}</li>
+                }
+              </ul>
+              <a
+                class="programme-card__download"
+                [href]="programme.downloadUrl"
+                target="_blank"
+                rel="noopener"
+                [attr.aria-label]="
+                  'Download the application form for ' + programme.title
+                "
+              >
+                Download application <span aria-hidden="true">&darr;</span>
+              </a>
+            </div>
+          </article>
         }
       </div>
     </div>
@@ -71,10 +98,14 @@
       <div>
         <span class="eyebrow eyebrow--light">Need a hand?</span>
         <h2>Questions before you <em>apply?</em></h2>
-        <p>For tuition, eligibility requirements, or further information, our Registrar is ready to help.</p>
+        <p>
+          For tuition, eligibility requirements, or further information, our
+          Registrar is ready to help.
+        </p>
       </div>
-      <a class="button button--gold" href="mailto:registrar@ubs.ac.in">Email the Registrar <span
-          aria-hidden="true">&nearr;</span></a>
+      <a class="button button--gold" href="mailto:registrar@ubs.ac.in"
+        >Email the Registrar <span aria-hidden="true">&nearr;</span></a
+      >
     </div>
   </section>
 </main>

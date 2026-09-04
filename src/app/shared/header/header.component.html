@@ -1,5 +1,11 @@
-<header class="site-header" [class.scrolled]="isScrolled" [class.menu-open]="mobileMenuOpen"
-  (window:scroll)="onWindowScroll()" (window:resize)="onWindowResize()" (window:keydown.escape)="onEscapeKey()">
+<header
+  class="site-header"
+  [class.scrolled]="isScrolled"
+  [class.menu-open]="mobileMenuOpen"
+  (window:scroll)="onWindowScroll()"
+  (window:resize)="onWindowResize()"
+  (window:keydown.escape)="onEscapeKey()"
+>
   <!-- <div>
     <div class="wrap top-bar-inner">
       <div class="countdown-chip">{{ countdownText }}</div>
@@ -35,57 +41,204 @@
     </a>
 
     <ul id="primary-nav-links" class="nav-links" [class.open]="mobileMenuOpen">
-      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMobileMenu()">Home</a></li>
-      <li class="nav-dropdown" [class.open]="openDropdown === 'about'" (mouseenter)="openDropdownMenu('about')"
-        (mouseleave)="closeDropdownMenu('about')" (focusin)="openDropdownMenu('about')">
-        <button type="button" class="nav-dropdown-trigger" aria-haspopup="true"
-          [attr.aria-expanded]="openDropdown === 'about'" (click)="toggleMobileDropdownMenu('about')">About Us</button>
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMobileMenu()"
+          >Home</a
+        >
+      </li>
+      <li
+        class="nav-dropdown"
+        [class.open]="openDropdown === 'about'"
+        (mouseenter)="openDropdownMenu('about')"
+        (mouseleave)="closeDropdownMenu('about')"
+        (focusin)="openDropdownMenu('about')"
+      >
+        <button
+          type="button"
+          class="nav-dropdown-trigger"
+          aria-haspopup="true"
+          [attr.aria-expanded]="openDropdown === 'about'"
+          (click)="toggleMobileDropdownMenu('about')"
+        >
+          About Us
+        </button>
         <ul class="subnav" aria-label="About Us submenu">
-          <li><a routerLink="/about" routerLinkActive="active" (click)="closeMobileMenu()">About</a></li>
-          <li><a routerLink="/history" routerLinkActive="active" (click)="closeMobileMenu()">Our History</a></li>
-          <li><a routerLink="/alumni" routerLinkActive="active" (click)="closeMobileMenu()">Our Alumni</a></li>
+          <li>
+            <a
+              routerLink="/about"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/history"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >Our History</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/alumni"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >Our Alumni</a
+            >
+          </li>
         </ul>
       </li>
-      <li><a routerLink="/campus" routerLinkActive="active" (click)="closeMobileMenu()">Campus</a></li>
-      <li class="nav-dropdown" [class.open]="openDropdown === 'administration'"
-        (mouseenter)="openDropdownMenu('administration')" (mouseleave)="closeDropdownMenu('administration')"
-        (focusin)="openDropdownMenu('administration')">
-        <button type="button" class="nav-dropdown-trigger" aria-haspopup="true"
+      <li>
+        <a
+          routerLink="/campus"
+          routerLinkActive="active"
+          (click)="closeMobileMenu()"
+          >Campus</a
+        >
+      </li>
+      <li
+        class="nav-dropdown"
+        [class.open]="openDropdown === 'administration'"
+        (mouseenter)="openDropdownMenu('administration')"
+        (mouseleave)="closeDropdownMenu('administration')"
+        (focusin)="openDropdownMenu('administration')"
+      >
+        <button
+          type="button"
+          class="nav-dropdown-trigger"
+          aria-haspopup="true"
           [attr.aria-expanded]="openDropdown === 'administration'"
-          (click)="toggleMobileDropdownMenu('administration')">Administration</button>
+          (click)="toggleMobileDropdownMenu('administration')"
+        >
+          Administration
+        </button>
         <ul class="subnav" aria-label="Administration submenu">
-          <li><a routerLink="/faculty" routerLinkActive="active" (click)="closeMobileMenu()">Faculty</a></li>
+          <li>
+            <a
+              routerLink="/faculty"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >Faculty</a
+            >
+          </li>
         </ul>
       </li>
-      <li><a routerLink="/library" routerLinkActive="active" (click)="closeMobileMenu()">Library</a></li>
-      <li class="nav-dropdown" [class.open]="openDropdown === 'academics'"
-        (mouseenter)="openDropdownMenu('academics')" (mouseleave)="closeDropdownMenu('academics')"
-        (focusin)="openDropdownMenu('academics')">
-        <button type="button" class="nav-dropdown-trigger" aria-haspopup="true"
+      <li>
+        <a
+          routerLink="/library"
+          routerLinkActive="active"
+          (click)="closeMobileMenu()"
+          >Library</a
+        >
+      </li>
+      <li
+        class="nav-dropdown"
+        [class.open]="openDropdown === 'academics'"
+        (mouseenter)="openDropdownMenu('academics')"
+        (mouseleave)="closeDropdownMenu('academics')"
+        (focusin)="openDropdownMenu('academics')"
+      >
+        <button
+          type="button"
+          class="nav-dropdown-trigger"
+          aria-haspopup="true"
           [attr.aria-expanded]="openDropdown === 'academics'"
-          (click)="toggleMobileDropdownMenu('academics')">Academics</button>
+          (click)="toggleMobileDropdownMenu('academics')"
+        >
+          Academics
+        </button>
         <ul class="subnav" aria-label="Academics submenu">
-          <li><a routerLink="/apply" routerLinkActive="active" (click)="closeMobileMenu()">Apply</a></li>
-          <li><a routerLink="/tuition" routerLinkActive="active" (click)="closeMobileMenu()">Tuition</a></li>
-          <li><a routerLink="/programmes/residential" routerLinkActive="active" (click)="closeMobileMenu()">Residential Programmes</a></li>
-          <li><a routerLink="/programmes/non-residential" routerLinkActive="active" (click)="closeMobileMenu()">Non-Residential Programmes</a></li>
-          <li><a routerLink="/publications" routerLinkActive="active" (click)="closeMobileMenu()">Publications</a></li>
-          <li><a routerLink="/faq" routerLinkActive="active" (click)="closeMobileMenu()">FAQ</a></li>
+          <li>
+            <a
+              routerLink="/apply"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >Apply</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/tuition"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >Tuition</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/programmes/residential"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >Residential Programmes</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/programmes/non-residential"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >Non-Residential Programmes</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/publications"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >Publications</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/faq"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+              >FAQ</a
+            >
+          </li>
         </ul>
       </li>
-      <li><a routerLink="/student-zone" routerLinkActive="active" (click)="closeMobileMenu()">Student Zone</a></li>
-      <li><a routerLink="/gallery" routerLinkActive="active" (click)="closeMobileMenu()">Gallery</a>
+      <li>
+        <a
+          routerLink="/student-zone"
+          routerLinkActive="active"
+          (click)="closeMobileMenu()"
+          >Student Zone</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/gallery"
+          routerLinkActive="active"
+          (click)="closeMobileMenu()"
+          >Gallery</a
+        >
       </li>
     </ul>
 
-    <button id="mobile-menu-toggle" class="burger" [class.open]="mobileMenuOpen" (click)="toggleMobileMenu()"
-      [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'" [attr.aria-expanded]="mobileMenuOpen"
-      aria-controls="primary-nav-links">
+    <button
+      id="mobile-menu-toggle"
+      class="burger"
+      [class.open]="mobileMenuOpen"
+      (click)="toggleMobileMenu()"
+      [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'"
+      [attr.aria-expanded]="mobileMenuOpen"
+      aria-controls="primary-nav-links"
+    >
       <span></span><span></span><span></span>
     </button>
   </nav>
 
   <!-- Backdrop: click outside the open mobile menu to close it -->
-  <div class="nav-backdrop" [class.open]="mobileMenuOpen" (click)="closeMobileMenu()" aria-hidden="true"></div>
+  <div
+    class="nav-backdrop"
+    [class.open]="mobileMenuOpen"
+    (click)="closeMobileMenu()"
+    aria-hidden="true"
+  ></div>
 </header>

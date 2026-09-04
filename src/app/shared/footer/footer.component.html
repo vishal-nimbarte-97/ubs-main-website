@@ -1,19 +1,26 @@
 <footer class="site-footer">
   <div class="wrap footer-grid">
-
     <!-- Column 1: Brand + Socials -->
     <div class="footer-column footer-brand">
       <a routerLink="/" class="brand-link">
         <img src="assets/img/ubs-logo.png" alt="UBS Logo" class="footer-logo" />
         <div>
           <h3>union biblical seminary</h3>
-          <p>Official single-window portal for accessing examination results and notifications securely.</p>
+          <p>
+            Official single-window portal for accessing examination results and
+            notifications securely.
+          </p>
         </div>
       </a>
 
       <div class="footer-social">
-        <a *ngFor="let s of socialLinks" [href]="s.url" target="_blank" rel="noopener"
-           [attr.aria-label]="s.label">
+        <a
+          *ngFor="let s of socialLinks"
+          [href]="s.url"
+          target="_blank"
+          rel="noopener"
+          [attr.aria-label]="s.label"
+        >
           <i [class]="s.icon"></i>
         </a>
       </div>
@@ -24,7 +31,9 @@
       <h4>Quick Links</h4>
       <ul>
         <li *ngFor="let link of quickLinks">
-          <a [routerLink]="link.url"><i class="fa-solid fa-angle-right"></i>{{ link.label }}</a>
+          <a [routerLink]="link.url"
+            ><i class="fa-solid fa-angle-right"></i>{{ link.label }}</a
+          >
         </li>
       </ul>
     </div>
@@ -34,7 +43,9 @@
       <h4>Legal</h4>
       <ul>
         <li *ngFor="let link of legalLinks">
-          <a [routerLink]="link.url"><i class="fa-solid fa-angle-right"></i>{{ link.label }}</a>
+          <a [routerLink]="link.url"
+            ><i class="fa-solid fa-angle-right"></i>{{ link.label }}</a
+          >
         </li>
       </ul>
     </div>
@@ -44,7 +55,9 @@
       <h4>Contact</h4>
 
       <div class="contact-block">
-        <p class="contact-label"><i class="fa-solid fa-location-dot"></i> Address</p>
+        <p class="contact-label">
+          <i class="fa-solid fa-location-dot"></i> Address
+        </p>
         <address>
           Union Biblical Seminary,<br />
           Ramyanagari Housing Society,<br />
@@ -62,12 +75,14 @@
         <a href="mailto:principal@ubs.ac.in">principal&#64;ubs.ac.in</a>
       </p>
     </div>
-
   </div>
 
   <div class="footer-bottom">
     <div class="wrap">
-      <p class="footer-copyright">Copyright © {{ currentYear }} Union Biblical Seminary. All rights reserved.</p>
+      <p class="footer-copyright">
+        Copyright © {{ currentYear }} Union Biblical Seminary. All rights
+        reserved.
+      </p>
     </div>
   </div>
 </footer>

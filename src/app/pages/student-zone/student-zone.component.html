@@ -1,18 +1,19 @@
 <div class="student-zone-page">
-
   <!-- =========================
        HERO
   ========================== -->
   <section class="hero">
-
     <div class="hero-image">
-      <img [src]="heroImage" alt="Students at Union Biblical Seminary" (error)="onImageError($event)" />
+      <img
+        [src]="heroImage"
+        alt="Students at Union Biblical Seminary"
+        (error)="onImageError($event)"
+      />
     </div>
 
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
-
       <div class="hero-label">
         <span class="line"></span>
         UBS STUDENT ZONE
@@ -25,13 +26,12 @@
       </h1>
 
       <p>
-        Student Zone is where UBS students lead, serve and grow
-        together — through a network of student-led committees
-        that shape seminary life well beyond the lecture hall.
+        Student Zone is where UBS students lead, serve and grow together —
+        through a network of student-led committees that shape seminary life
+        well beyond the lecture hall.
       </p>
 
       <div class="hero-actions">
-
         <a href="#committees" class="primary-btn">
           Explore Committees
           <span>↓</span>
@@ -40,13 +40,10 @@
         <a href="mailto:info&#64;ubs.ac.in" class="secondary-btn">
           Contact Student Affairs
         </a>
-
       </div>
-
     </div>
 
     <div class="hero-bottom">
-
       <div>
         <strong>UBS</strong>
         <span>Student Zone</span>
@@ -56,19 +53,14 @@
         <span></span>
         Scroll to explore
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        QUICK NAVIGATION
   ========================== -->
   <nav class="student-nav">
-
     <div class="nav-inner">
-
       <div class="nav-brand">
         <span class="brand-dot"></span>
         UBS Student Zone
@@ -79,14 +71,9 @@
         <a href="#get-involved">Get Involved</a>
       </div>
 
-      <a href="mailto:info&#64;ubs.ac.in" class="nav-button">
-        Contact Us
-      </a>
-
+      <a href="mailto:info&#64;ubs.ac.in" class="nav-button"> Contact Us </a>
     </div>
-
   </nav>
-
 
   <!-- =========================
        STUDENT COMMITTEES
@@ -95,11 +82,8 @@
        down the page.
   ========================== -->
   <section id="committees" class="committees-section">
-
     <div class="container">
-
       <div class="section-heading">
-
         <div>
           <span class="section-label">GET INVOLVED</span>
 
@@ -110,24 +94,19 @@
         </div>
 
         <p>
-          Ten student-led committees that organize prayer,
-          service, missions, sport and everyday campus life
-          at UBS.
+          Ten student-led committees that organize prayer, service, missions,
+          sport and everyday campus life at UBS.
         </p>
-
       </div>
 
       <div class="committee-list">
-
         <article
           class="committee-row"
           *ngFor="let committee of studentCommittees; let i = index"
           [id]="'committee-' + i"
           [class.reverse]="i % 2 === 1"
         >
-
           <div class="committee-gallery">
-
             <div
               class="committee-gallery-item"
               *ngFor="let photo of committee.images; let first = first"
@@ -138,37 +117,28 @@
                 [alt]="committee.title"
                 loading="lazy"
                 (error)="onImageError($event)"
-              >
+              />
             </div>
-
           </div>
 
           <div class="committee-content">
-
             <span class="section-label">
-              {{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}
+              {{ i + 1 < 10 ? "0" + (i + 1) : i + 1 }}
             </span>
 
             <h3>{{ committee.title }}</h3>
 
             <p>{{ committee.description }}</p>
-
           </div>
-
         </article>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        GET IN TOUCH
   ========================== -->
   <section id="get-involved" class="final-cta">
-
     <span class="section-label">GET IN TOUCH</span>
 
     <h2>
@@ -177,15 +147,13 @@
     </h2>
 
     <p>
-      Have questions about student life, committees or campus
-      activities? The Student Affairs office is happy to help.
+      Have questions about student life, committees or campus activities? The
+      Student Affairs office is happy to help.
     </p>
 
     <a href="mailto:info&#64;ubs.ac.in" class="primary-btn">
       Contact Student Affairs
       <span>↗</span>
     </a>
-
   </section>
-
 </div>
