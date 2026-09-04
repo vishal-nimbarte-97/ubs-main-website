@@ -1,0 +1,28 @@
+<div class="alumni-page">
+  <section class="alumni-hero">
+    <div class="alumni-hero__overlay"></div>
+    <div class="alumni-hero__content">
+      <span class="section-label">UBS COMMUNITY</span>
+      <h1>{{ alumniStory.title }}</h1>
+      <div class="hero-divider"></div>
+      <p>{{ alumniStory.subtitle }}</p>
+    </div>
+  </section>
+
+  <section class="alumni-story section">
+    <div class="container">
+      <div class="alumni-story__layout">
+        <div class="alumni-story__image-wrap">
+          <img [src]="alumniStory.image" [alt]="alumniStory.title" loading="lazy" />
+        </div>
+
+        <div class="alumni-story__content">
+          <span class="section-label">OUR ALUMNI</span>
+          <h2>Faithful leaders shaped by <span>UBS</span></h2>
+          <p>{{ alumniStory.description }}</p>
+          <p>{{ alumniStory.highlight }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

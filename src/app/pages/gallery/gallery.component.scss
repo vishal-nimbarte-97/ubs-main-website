@@ -565,6 +565,85 @@
   color: rgba(255, 255, 255, .6);
 }
 
+.events-section {
+  padding: clamp(64px, 9vw, 110px) 0;
+  background: #f7f4f0;
+}
+
+.events-intro {
+  max-width: 780px;
+  margin-bottom: 40px;
+}
+
+.events-intro h2 {
+  margin: 0 0 16px;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.1;
+  color: var(--black);
+}
+
+.events-intro h2 span {
+  color: var(--maroon);
+  font-style: italic;
+}
+
+.events-intro p {
+  margin: 0;
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.event-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 28px;
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 36px rgba(23, 19, 19, 0.04);
+}
+
+.event-card__images {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.event-card__images img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border: 1px solid rgba(11, 37, 69, 0.08);
+}
+
+.event-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.event-card__content h3 {
+  margin: 0 0 12px;
+  font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+  line-height: 1.2;
+  color: var(--maroon-dark);
+}
+
+.event-card__content p {
+  margin: 0;
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
 
 /* =========================================================
    CTA — VISIT CAMPUS
@@ -824,6 +903,14 @@
     flex: 0 0 auto;
   }
 
+  .event-card {
+    grid-template-columns: 1fr;
+  }
+
+  .event-card__images {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .lightbox {
     padding: 24px 56px;
   }
@@ -856,6 +943,14 @@
     grid-column: auto;
     grid-row: auto;
     aspect-ratio: 4 / 3;
+  }
+
+  .event-card__images {
+    grid-template-columns: 1fr;
+  }
+
+  .event-card__images img {
+    height: 190px;
   }
 
   .hero {

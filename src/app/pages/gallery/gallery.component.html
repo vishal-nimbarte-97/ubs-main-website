@@ -157,6 +157,30 @@
 
   </section>
 
+  <section class="events-section">
+    <div class="container">
+      <div class="events-intro">
+        <div class="section-label">EVENTS</div>
+        <h2>Gatherings that <span>shape community.</span></h2>
+        <p>
+          Life at UBS is marked by meaningful gatherings that bring students, faculty and church partners together in worship, celebration and reflection. These events are not just moments on the calendar; they are expressions of the Seminary’s shared faith, hospitality and commitment to ministry.
+        </p>
+      </div>
+
+      <div class="events-grid">
+        <article class="event-card" *ngFor="let event of featuredEvents">
+          <div class="event-card__images">
+            <img *ngFor="let image of event.images" [src]="image" [alt]="event.title" loading="lazy" />
+          </div>
+          <div class="event-card__content">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.description }}</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
 
   <!-- =========================
        CTA — VISIT CAMPUS

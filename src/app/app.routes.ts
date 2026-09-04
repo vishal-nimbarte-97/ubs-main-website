@@ -8,10 +8,12 @@ import { LibraryComponent } from './pages/library/library.component';
 import { StudentZoneComponent } from './pages/student-zone/student-zone.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { HistoryComponent } from './pages/history/history.component';
+import { AlumniComponent } from './pages/alumni/alumni.component';
 import { ApplyComponent } from './pages/apply/apply.component';
 import { TuitionComponent } from './pages/tuition/tuition.component';
 import { ResidentialProgrammesComponent } from './pages/residential-programmes/residential-programmes.component';
 import { NonResidentialProgrammesComponent } from './pages/non-residential-programmes/non-residential-programmes.component';
+import { PublicationsComponent } from './pages/publications/publications.component';
 import { FaqComponent } from './pages/faq/faq.component';
 
 export const routes: Routes = [
@@ -24,10 +26,12 @@ export const routes: Routes = [
   { path: 'student-zone', component: StudentZoneComponent },
   { path: 'gallery', component: GalleryComponent },
   { path: 'history', component: HistoryComponent },
+  { path: 'alumni', component: AlumniComponent },
   { path: 'apply', component: ApplyComponent },
   { path: 'tuition', component: TuitionComponent },
   { path: 'programmes/residential', component: ResidentialProgrammesComponent },
   { path: 'programmes/non-residential', component: NonResidentialProgrammesComponent },
+  { path: 'publications', component: PublicationsComponent },
   { path: 'faq', component: FaqComponent },
   { path: '**', redirectTo: '' },
 ];

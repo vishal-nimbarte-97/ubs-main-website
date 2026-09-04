@@ -1,0 +1,33 @@
+<main class="publications-page">
+  <section class="publications-hero">
+    <div class="academic-container">
+      <span class="eyebrow">Academics</span>
+      <h1>Publications</h1>
+      <p>
+        A space for future theological writing, research reflections, and ministry-oriented publications from UBS.
+      </p>
+    </div>
+  </section>
+
+  <section class="publications-section">
+    <div class="academic-container">
+      <div class="publication-grid">
+        <article class="publication-card" *ngFor="let item of publications">
+          <div class="publication-visual">
+            <div class="publication-icon">P</div>
+            <span class="publication-badge">{{ item.status }}</span>
+          </div>
+
+          <div class="publication-content">
+            <span class="publication-tag">To be announced</span>
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.description }}</p>
+            <button type="button" class="publication-button" disabled>
+              Coming soon
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>

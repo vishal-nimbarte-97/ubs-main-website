@@ -8,6 +8,30 @@
     </video> -->
     <img class="hero-video" src="../../assets/img/home.png" alt="UBS campus" />
     <div class="hero-overlay">
+      <aside class="hero-live-module" [class.is-open]="liveModuleOpen" aria-label="Live YouTube stream">
+        <button type="button" class="live-module-toggle" (click)="liveModuleOpen = !liveModuleOpen"
+          [attr.aria-expanded]="liveModuleOpen">
+          <span class="live-dot" aria-hidden="true"></span>
+          Live
+        </button>
+
+        <form *ngIf="liveModuleOpen" class="live-module-panel" (ngSubmit)="setLiveVideo()">
+          <label for="live-youtube-url">YouTube live link</label>
+          <div class="live-module-controls">
+            <input id="live-youtube-url" name="liveYouTubeUrl" type="url" [(ngModel)]="liveYouTubeUrl"
+              placeholder="Paste a YouTube link" autocomplete="url" />
+            <button type="submit">Show live</button>
+          </div>
+          <p *ngIf="liveUrlError" class="live-module-error" role="alert">{{ liveUrlError }}</p>
+          <p class="live-module-help">This link is saved in this browser only.</p>
+        </form>
+      </aside>
+
+      <div *ngIf="liveEmbedUrl" class="hero-live-player">
+        <iframe [src]="liveEmbedUrl" title="UBS live stream" allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
       <div class="tagline-swapper">
         <h1 *ngFor="let group of taglineGroups; let i = index" [class.active]="i === activeTaglineIndex">
           <span class="tagline-line">{{ group.join(' ') }}</span>

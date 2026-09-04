@@ -23,6 +23,39 @@ export class GalleryComponent {
   activeCategory: Category = 'All';
   selectedIndex = -1;
 
+  readonly featuredEvents = [
+    {
+      title: 'Foundation Day Celebration',
+      description:
+        'Each year, the UBS community gathers to celebrate the Seminary’s vision, heritage and continuing mission through worship, thanksgiving and fellowship. These moments remind students, faculty and alumni that the story of UBS is not only historical but alive in every generation of ministry.',
+      images: [
+        'assets/gallery/heritage-7.png',
+        'assets/gallery/heritage-5.png',
+        'assets/gallery/heritage-9.png'
+      ]
+    },
+    {
+      title: 'Campus Worship & Fellowship',
+      description:
+        'From prayer gatherings to student-led worship, campus life at UBS is shaped by spiritual unity and shared devotion. These events create rhythms of worship, mutual encouragement and practical formation that strengthen the community across classrooms, dormitories and ministry contexts.',
+      images: [
+        'assets/gallery/image_11.jpg',
+        'assets/gallery/image_12.png',
+        'assets/gallery/people-about-2.png'
+      ]
+    },
+    {
+      title: 'Community & Cultural Encounters',
+      description:
+        'UBS values the richness of cultural diversity and the beauty of intergenerational fellowship. Through student gatherings, cultural programmes and shared celebrations, the Seminary forms graduates who are not only academically equipped but also deeply rooted in community and service.',
+      images: [
+        'assets/gallery/image_3.jpg',
+        'assets/gallery/image_5.jpg',
+        'assets/gallery/people-about-5.png'
+      ]
+    }
+  ];
+
   readonly photos: GalleryPhoto[] = [
     // ---- Campus life ----
     { src: 'assets/gallery/image_1.jpg', alt: 'UBS campus building', title: 'A place to grow', category: 'Campus' },

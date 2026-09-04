@@ -32,7 +32,7 @@ export class LibraryComponent {
     studySpace: 'assets/library/study-space.jpg',
     rareBooks: 'assets/library/rare-books.jpg',
     vision: 'assets/library/vision.jpg',
-    librarian: 'assets/library/librarian.jpg',
+    librarian: 'assets/library/librarian.png',
     reference: 'assets/library/reference.jpg',
     archives: 'assets/library/archives.jpg',
     newspaperZone: 'assets/library/newspaper-zone.jpg',

@@ -12,6 +12,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ProgrammeTrack, Counter, CalendarEvent, CalendarCell } from '../../models';
 import {
@@ -36,6 +37,7 @@ import {
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private router = inject(Router);
+  private sanitizer = inject(DomSanitizer);
   private routerSubscription?: Subscription;
 
   @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
@@ -50,6 +52,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
   activeTaglineIndex = 0;
   private taglineTimer?: ReturnType<typeof setInterval>;
+
+  /* ================= LIVE YOUTUBE MODULE ================= */
+  liveModuleOpen = false;
+  liveYouTubeUrl = '';
+  liveEmbedUrl: SafeResourceUrl | null = null;
+  liveUrlError = '';
 
   /* ================= PROGRAMMES OFFERED BAR ================= */
   programmeSearch = '';
@@ -184,6 +192,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // persistence on the server) or leak timers that never get cleared.
     if (!this.isBrowser) return;
 
+    const savedLiveUrl = localStorage.getItem('ubs-live-youtube-url');
+    if (savedLiveUrl) {
+      this.liveYouTubeUrl = savedLiveUrl;
+      this.setLiveVideo(false);
+    }
+
     this.routerSubscription = this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe(() => this.scrollToCurrentRouteSection());
@@ -273,6 +287,47 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setTab(tab: 'programmes' | 'centres'): void {
     this.activeTab = tab;
+  }
+
+  setLiveVideo(save = true): void {
+    this.liveUrlError = '';
+    const videoId = this.getYouTubeVideoId(this.liveYouTubeUrl);
+
+    if (!videoId) {
+      this.liveEmbedUrl = null;
+      this.liveUrlError = 'Enter a valid YouTube video, live-stream, or youtu.be link.';
+      return;
+    }
+
+    this.liveEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`
+    );
+
+    if (save && this.isBrowser) {
+      localStorage.setItem('ubs-live-youtube-url', this.liveYouTubeUrl.trim());
+    }
+  }
+
+  private getYouTubeVideoId(value: string): string | null {
+    try {
+      const url = new URL(value.trim());
+      const host = url.hostname.replace(/^www\./, '').toLowerCase();
+      let videoId = '';
+
+      if (host === 'youtu.be') {
+        videoId = url.pathname.split('/').filter(Boolean)[0] ?? '';
+      } else if (host === 'youtube.com' || host === 'm.youtube.com') {
+        videoId = url.searchParams.get('v') ?? '';
+        if (!videoId) {
+          const pathParts = url.pathname.split('/').filter(Boolean);
+          if (['embed', 'live', 'shorts'].includes(pathParts[0])) videoId = pathParts[1] ?? '';
+        }
+      }
+
+      return /^[A-Za-z0-9_-]{11}$/.test(videoId) ? videoId : null;
+    } catch {
+      return null;
+    }
   }
 
   private animateCounters(): void {

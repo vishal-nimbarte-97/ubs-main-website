@@ -343,6 +343,10 @@ html {
 }
 
 .nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 10px 17px;
 
   background: var(--navy);
@@ -350,6 +354,12 @@ html {
 
   font-size: 12px;
   font-weight: 600;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 
