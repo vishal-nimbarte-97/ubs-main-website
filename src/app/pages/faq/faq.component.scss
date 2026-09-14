@@ -1,11 +1,13 @@
 .academic-page {
   --navy: #0b2545;
-  --blue: #123b6b;
-  --gold: #c9962b;
-  --paper: #f7f4ec;
-  --ink: #1b2430;
-  --slate: #5b6675;
+  --navy-2: #123b6b;
+  --gold: #e2b455;
+  --paper: #fbf8f2;
+  --cream: #fbf8f2;
+  --ink: #241b1d;
+  --slate: #71676a;
   color: var(--ink);
+  background: var(--cream);
 }
 
 .academic-container {
@@ -14,8 +16,35 @@
 }
 
 .academic-hero {
-  padding: clamp(4rem, 9vw, 8rem) 0;
-  background: var(--paper);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 590px;
+  overflow: hidden;
+  align-items: center;
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
+}
+
+.academic-hero::after {
+  position: absolute;
+  z-index: -1;
+  right: -2%;
+  bottom: -1px;
+  left: -2%;
+  height: 72px;
+  content: "";
+  background: var(--cream);
+  clip-path: polygon(
+    0 72%,
+    12% 37%,
+    26% 75%,
+    42% 20%,
+    59% 70%,
+    78% 29%,
+    100% 63%,
+    100% 100%,
+    0 100%
+  );
 }
 
 .eyebrow {
@@ -31,18 +60,20 @@
 h1,
 h2 {
   color: var(--navy);
+  font-family: Georgia, "Times New Roman", serif;
   overflow-wrap: anywhere;
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  color: #fff;
+  font-size: clamp(3.3rem, 7.3vw, 6.75rem);
   line-height: 1;
 }
 
 h1 span,
 h2 span {
-  color: var(--blue);
+  color: var(--gold);
 }
 
 p {
@@ -53,6 +84,7 @@ p {
 .academic-hero p {
   max-width: 38rem;
   margin: 1.5rem 0 0;
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .academic-section {
@@ -140,7 +172,7 @@ details p {
   margin-top: 2rem;
   padding: 0.8rem 1rem;
   color: #fff;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   text-decoration: none;
   font-weight: 700;
   border-radius: 4px;
@@ -148,14 +180,14 @@ details p {
 
   &:hover,
   &:focus-visible {
-    background: var(--blue);
+    background: var(--navy-2);
   }
 }
 
 // Bottom contact call-to-action
 .academic-contact {
   padding: clamp(3rem, 7vw, 5rem) 0;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: #fff;
 
   &__inner {

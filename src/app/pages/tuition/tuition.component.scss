@@ -11,7 +11,7 @@
   --muted: #71676a;
   overflow: hidden;
   color: var(--ink);
-  background: #fff;
+  background: var(--cream);
 }
 .tuition-container {
   width: min(1160px, calc(100% - 3rem));
@@ -24,9 +24,7 @@
   min-height: 540px;
   align-items: center;
   overflow: hidden;
-  background:
-    linear-gradient(90deg, rgba(34, 0, 11, 0.91), rgba(56, 0, 17, 0.45)),
-    url("/assets/tuition/tuition-hero.webp") center/cover;
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 .tuition-hero::before {
   position: absolute;
@@ -50,7 +48,7 @@
   left: -2%;
   height: 70px;
   content: "";
-  background: #fff;
+  background: var(--cream);
   clip-path: polygon(
     0 72%,
     13% 39%,
@@ -73,7 +71,7 @@
   align-items: center;
   gap: 0.65rem;
   margin-bottom: 1rem;
-  color: var(--wine);
+  color: var(--gold);
   font-size: 0.71rem;
   font-weight: 850;
   letter-spacing: 0.17em;
@@ -99,13 +97,13 @@ h1 {
   max-width: 700px;
   margin-bottom: 1rem;
   color: #fff;
-  font-size: clamp(3.4rem, 7vw, 6.4rem);
+  font-size: clamp(3.3rem, 7.3vw, 6.75rem);
   line-height: 0.9;
   letter-spacing: -0.065em;
 }
 h2 {
   margin-bottom: 0;
-  color: var(--wine-deep);
+  color: var(--navy);
   font-size: clamp(2.25rem, 4.5vw, 4rem);
   line-height: 1;
   letter-spacing: -0.055em;
@@ -115,7 +113,7 @@ h3 {
   font-size: clamp(1.5rem, 2.5vw, 2rem);
 }
 em {
-  color: var(--wine);
+  color: var(--gold);
   font-style: italic;
 }
 .tuition-hero em,
@@ -162,12 +160,12 @@ em {
   transform: translateY(3px);
 }
 .button--light {
-  color: var(--wine);
+  color: var(--gold);
   background: #fff;
 }
 .button--wine {
   color: #fff;
-  background: var(--wine);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 .button--gold {
   color: var(--wine-deep);
@@ -202,12 +200,13 @@ em {
   gap: 1.5rem;
   padding: 1.75rem 2rem;
   color: #fff;
-  background: linear-gradient(115deg, var(--wine-deep), var(--wine));
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 .finance-card__heading .eyebrow {
   margin-bottom: 0.5rem;
 }
 .finance-card__heading h3 {
+  font-family: Georgia, "Times New Roman", serif;
   color: #fff;
 }
 .status-badge {
@@ -360,9 +359,7 @@ tbody tr:hover {
   isolation: isolate;
   padding: clamp(4.5rem, 8vw, 7rem) 0;
   overflow: hidden;
-  background:
-    linear-gradient(115deg, rgba(53, 0, 17, 0.95), rgba(112, 0, 35, 0.84)),
-    url("/assets/tuition/tuition-contact.jpg") center/cover;
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 .tuition-contact::after {
   position: absolute;
@@ -385,6 +382,7 @@ tbody tr:hover {
 }
 .tuition-contact h2 {
   margin-bottom: 1rem;
+  font-family: Georgia, "Times New Roman", serif;
   color: #fff;
 }
 .tuition-contact p {

@@ -166,7 +166,7 @@
 
   padding: 16px 22px 16px 26px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
 
   border-radius: 3px;
@@ -303,7 +303,7 @@
   width: 10px;
   height: 10px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   border-radius: 50%;
 }
@@ -331,7 +331,7 @@
 .nav-button {
   padding: 10px 17px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
 
   font-size: 12px;
@@ -442,7 +442,7 @@ h2 span {
 
   overflow: hidden;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 
 .committee-gallery-item.main {

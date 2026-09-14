@@ -1,11 +1,13 @@
 .academic-page {
   --navy: #0b2545;
-  --blue: #123b6b;
-  --gold: #c9962b;
-  --paper: #f7f4ec;
-  --ink: #1b2430;
-  --slate: #5b6675;
+  --navy-2: #123b6b;
+  --gold: #e2b455;
+  --paper: #fbf8f2;
+  --cream: #fbf8f2;
+  --ink: #241b1d;
+  --slate: #71676a;
   color: var(--ink);
+  background: var(--cream);
 }
 
 .academic-container {
@@ -14,8 +16,35 @@
 }
 
 .academic-hero {
-  padding: clamp(3rem, 8vw, 7rem) 0;
-  background: var(--paper);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 590px;
+  overflow: hidden;
+  align-items: center;
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
+}
+
+.academic-hero::after {
+  position: absolute;
+  z-index: -1;
+  right: -2%;
+  bottom: -1px;
+  left: -2%;
+  height: 30px;
+  content: "";
+  background: var(--cream);
+  clip-path: polygon(
+    0 72%,
+    12% 37%,
+    26% 75%,
+    42% 20%,
+    59% 70%,
+    78% 29%,
+    100% 63%,
+    100% 100%,
+    0 100%
+  );
 }
 
 .academic-hero-grid,
@@ -47,18 +76,20 @@
 h1,
 h2 {
   color: var(--navy);
+  font-family: Georgia, "Times New Roman", serif;
   overflow-wrap: anywhere;
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  color: #fff;
+  font-size: clamp(3.3rem, 7.3vw, 6.75rem);
   line-height: 1;
 }
 
 h1 span,
 h2 span {
-  color: var(--blue);
+  color: var(--gold);
 }
 
 h2 {
@@ -83,6 +114,7 @@ li {
 .academic-hero p {
   max-width: 38rem;
   margin: 1.5rem 0 0;
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .academic-lede {
@@ -147,7 +179,7 @@ li {
 }
 
 .download-card__type {
-  color: var(--blue);
+  color: var(--navy-2);
   font-size: 0.67rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -195,7 +227,7 @@ li {
 .programme-directory__meta {
   display: grid;
   gap: 0.55rem;
-  color: var(--blue);
+  color: var(--navy-2);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.11em;
@@ -208,7 +240,7 @@ li {
 }
 
 .programme-directory__card h3 span {
-  color: var(--blue);
+  color: var(--gold);
 }
 
 .programme-directory__card p {
@@ -228,13 +260,38 @@ ul {
 .academic-button {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.8rem;
   margin-top: 1rem;
-  padding: 0.8rem 1rem;
-  color: #fff;
-  background: var(--navy);
+  padding: 0.95rem 1.25rem;
+  border: 1px solid transparent;
+  color: var(--gold);
+  background: #fff;
   text-decoration: none;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.academic-button span {
+  font-size: 1.2rem;
+  line-height: 0.7;
+  transition: transform 0.25s ease;
+}
+
+.academic-button:hover,
+.academic-button:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.2);
+}
+
+.academic-button:hover span,
+.academic-button:focus-visible span {
+  transform: translateY(3px);
 }
 
 /* Feature cards */
@@ -283,7 +340,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: #fff;
   font-weight: 700;
   font-size: 0.9rem;

@@ -196,7 +196,7 @@ html {
 
   padding: 16px 22px 16px 26px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
 
   border-radius: 3px;
@@ -212,7 +212,7 @@ html {
 }
 
 .primary-btn:hover {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   transform: translateY(-2px);
 }
 
@@ -334,7 +334,7 @@ html {
   width: 10px;
   height: 10px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   border-radius: 50%;
 }
@@ -366,7 +366,7 @@ html {
 
   padding: 10px 17px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
 
   font-size: 12px;
@@ -474,7 +474,7 @@ h2 span {
 .signature-line {
   width: 45px;
   height: 1px;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 
 .intro-signature strong,
@@ -750,7 +750,7 @@ h2 span {
   display: grid;
   place-items: center;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
 }
 
@@ -785,7 +785,7 @@ h2 span {
 
   overflow: hidden;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
 }
 
@@ -1075,7 +1075,7 @@ h2 span {
   width: 7px;
   height: 7px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   border-radius: 50%;
 }
@@ -1169,7 +1169,7 @@ h2 span {
 
   padding: 14px 20px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
 
   font-size: 10px;
@@ -1283,7 +1283,7 @@ h2 span {
 
   margin-bottom: 35px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
 
   font-size: 22px;

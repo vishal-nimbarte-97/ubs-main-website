@@ -455,7 +455,7 @@
 
   border-radius: 50%;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 
@@ -1087,7 +1087,7 @@
   display: grid;
   place-items: center;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 
@@ -1194,7 +1194,7 @@
 
   border-radius: 50%;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 
@@ -1275,7 +1275,7 @@
 
   padding: 70px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 
@@ -1353,7 +1353,7 @@
 
   align-items: center;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 }

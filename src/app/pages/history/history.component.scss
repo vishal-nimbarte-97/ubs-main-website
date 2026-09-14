@@ -356,7 +356,7 @@
   border-radius: 4px;
   overflow: hidden;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   box-shadow: 0 30px 70px rgba(11, 37, 69, 0.28);
 }
@@ -1042,7 +1042,7 @@
 }
 
 .development-card:hover {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 
@@ -1178,7 +1178,7 @@
   justify-content: center;
   align-items: center;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--ubs-white);
 
   text-align: center;

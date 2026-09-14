@@ -26,9 +26,7 @@
   min-height: 590px;
   overflow: hidden;
   align-items: center;
-  background:
-    linear-gradient(90deg, rgba(32, 0, 10, 0.91), rgba(43, 0, 14, 0.44)),
-    url("/assets/apply/hero-campus.jpg") center / cover;
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 
 .apply-hero::before {
@@ -456,7 +454,7 @@ em {
   margin-top: 1.4rem;
   padding: 0.78rem 0.9rem;
   color: #fff;
-  background: var(--wine);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   font-size: 0.66rem;
   font-weight: 850;
   letter-spacing: 0.1em;
@@ -483,9 +481,7 @@ em {
   isolation: isolate;
   padding: clamp(4.5rem, 8vw, 7rem) 0;
   overflow: hidden;
-  background:
-    linear-gradient(115deg, rgba(53, 0, 17, 0.95), rgba(112, 0, 35, 0.84)),
-    url("/assets/apply/footer-banner.jpg") center / cover;
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 
 .contact-section::after {

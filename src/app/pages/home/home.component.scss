@@ -90,7 +90,7 @@
      TOP UTILITY BAR
   ========================================================= */
 .top-bar {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--white);
   font-size: 0.82rem;
   position: relative;
@@ -207,7 +207,7 @@
 }
 
 .brand-mark {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--gold-light);
   //font-family: 'Playfair Display', serif;
   font-weight: 700;
@@ -298,7 +298,7 @@
 .burger span {
   width: 26px;
   height: 3px;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   border-radius: 2px;
 }
 
@@ -311,7 +311,7 @@
   height: 82dvh;
   min-height: 420px;
   overflow: hidden;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 
 .hero-video {
@@ -440,7 +440,7 @@
   overflow: hidden;
   border: 2px solid var(--gold);
   border-radius: 10px;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -763,7 +763,7 @@
 }
 
 .tracks-toggle button.active {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--white);
 }
 
@@ -884,7 +884,7 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--gold-light);
   align-items: center;
   justify-content: center;
@@ -900,7 +900,7 @@
 }
 
 .why-counters {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   border-radius: 12px;
   padding: clamp(20px, 5vw, 36px) clamp(12px, 4vw, 24px);
   display: grid;
@@ -1086,7 +1086,7 @@
 }
 
 .calendar-cell.has-event {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--white);
   font-weight: 700;
 }
@@ -2650,7 +2650,7 @@ body {
       color 0.25s ease;
 
     &:hover {
-      background: var(--navy);
+      background: linear-gradient(135deg, var(--navy), var(--navy-2));
       color: var(--white);
     }
   }
@@ -2920,7 +2920,7 @@ body {
 }
 
 .tab.active {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   border-color: var(--navy);
   color: #ffffff;
 
@@ -4122,7 +4122,7 @@ body {
   height: 50dvh;
   min-height: 420px;
   overflow: hidden;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   border: 3px solid var(--gold); // gold frame
   box-shadow: 0 0 0 1px rgba(201, 150, 43, 0.25); // subtle outer glow line
   box-sizing: border-box;

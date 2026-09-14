@@ -673,7 +673,7 @@
 }
 
 .modal-close:hover {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 
@@ -805,7 +805,7 @@
 }
 
 .modal-body::-webkit-scrollbar-thumb:hover {
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 
 /* =========================================================
@@ -926,7 +926,7 @@
 
   border-radius: 10px;
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 
 .profile-section ul,
@@ -1027,7 +1027,7 @@
 .contact-button {
   border: 1px solid var(--navy);
 
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
 
   color: white;
 }
