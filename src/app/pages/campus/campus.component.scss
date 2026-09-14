@@ -2,16 +2,11 @@
    DESIGN TOKENS
 ========================================================= */
 :host {
-  --navy: #0c2340;
+  /* Page-specific accent colors only — navy/gold/parchment/ink/slate/
+     white all come from the global tokens in styles.scss now. */
   --navy-deep: #071626;
-  --gold: #c9962b;
-  --gold-light: #e7c877;
   --sage: #5f7a5a;
   --sage-light: #9db593;
-  --parchment: #f6f2e9;
-  --ink: #1b2430;
-  --slate: #5b6675;
-  --white: #ffffff;
 
   display: block;
   color: var(--ink);
@@ -28,23 +23,13 @@
   margin: 0 auto;
 }
 
-h1,
-h2,
-h3,
+/* h1–h3 already get the display font + navy color from the global
+   stylesheet; blockquote isn't covered globally, so keep it here. */
 blockquote {
-  font-family: "Playfair Display", "Georgia", serif;
+  font-family: var(--font-display);
   line-height: 1.15;
   margin: 0;
   color: var(--navy);
-}
-
-p,
-span,
-a,
-li,
-small,
-figcaption {
-  font-family: "Roboto", system-ui, sans-serif;
 }
 
 .eyebrow {
@@ -231,7 +216,7 @@ figcaption {
 
 .principal__mark {
   display: block;
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-display);
   font-size: clamp(4rem, 8vw, 6rem);
   line-height: 0.6;
   color: var(--gold);
@@ -254,7 +239,7 @@ figcaption {
 
   strong {
     display: block;
-    font-family: "Playfair Display", serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     color: var(--navy);
   }
@@ -607,7 +592,7 @@ figcaption {
 
 .facilities__card-heading {
   margin: 8px 20px 0;
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-display);
   font-size: 1.1rem;
   color: var(--navy);
   line-height: 1.35;

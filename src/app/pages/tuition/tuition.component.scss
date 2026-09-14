@@ -3,12 +3,11 @@
 }
 
 .tuition-page {
-  --wine: #720020;
+  --wine: var(--maroon);
   --wine-deep: #39000f;
-  --gold: #e2b455;
-  --cream: #fbf8f2;
-  --ink: #241b1d;
-  --muted: #71676a;
+  --gold: var(--gold-mid);
+  --ink: var(--charcoal);
+  --muted: var(--taupe);
   overflow: hidden;
   color: var(--ink);
   background: var(--cream);
@@ -63,20 +62,10 @@
 }
 .tuition-hero__content {
   padding: 6rem 0 8rem;
-  color: #fff;
+  color: var(--white);
   animation: rise-in 0.8s ease-out both;
 }
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 1rem;
-  color: var(--gold);
-  font-size: 0.71rem;
-  font-weight: 850;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-}
+/* .eyebrow now comes from the global stylesheet (styles.scss) */
 .eyebrow::before {
   width: 2rem;
   height: 1px;
@@ -90,13 +79,12 @@ h1,
 h2,
 h3 {
   margin-top: 0;
-  font-family: Georgia, "Times New Roman", serif;
   overflow-wrap: anywhere;
 }
 h1 {
   max-width: 700px;
   margin-bottom: 1rem;
-  color: #fff;
+  color: var(--white);
   font-size: clamp(3.3rem, 7.3vw, 6.75rem);
   line-height: 0.9;
   letter-spacing: -0.065em;
@@ -161,10 +149,10 @@ em {
 }
 .button--light {
   color: var(--gold);
-  background: #fff;
+  background: var(--white);
 }
 .button--wine {
-  color: #fff;
+  color: var(--white);
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 .button--gold {
@@ -190,7 +178,7 @@ em {
 .finance-card {
   overflow: hidden;
   border: 1px solid #ece6e4;
-  background: #fff;
+  background: var(--white);
   box-shadow: 0 22px 45px rgba(72, 0, 24, 0.1);
 }
 .finance-card__heading {
@@ -199,15 +187,14 @@ em {
   justify-content: space-between;
   gap: 1.5rem;
   padding: 1.75rem 2rem;
-  color: #fff;
+  color: var(--white);
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
 }
 .finance-card__heading .eyebrow {
   margin-bottom: 0.5rem;
 }
 .finance-card__heading h3 {
-  font-family: Georgia, "Times New Roman", serif;
-  color: #fff;
+  color: var(--white);
 }
 .status-badge {
   display: inline-flex;
@@ -216,7 +203,7 @@ em {
   flex-shrink: 0;
   padding: 0.55rem 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #fff;
+  color: var(--white);
   background: rgba(255, 255, 255, 0.1);
   font-size: 0.68rem;
   font-weight: 850;
@@ -382,8 +369,7 @@ tbody tr:hover {
 }
 .tuition-contact h2 {
   margin-bottom: 1rem;
-  font-family: Georgia, "Times New Roman", serif;
-  color: #fff;
+  color: var(--white);
 }
 .tuition-contact p {
   max-width: 610px;

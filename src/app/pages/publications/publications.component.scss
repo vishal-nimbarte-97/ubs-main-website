@@ -1,13 +1,9 @@
 .publications-page {
-  --navy: #0b2545;
-  --navy-2: #123b6b;
-  --gold: #e2b455;
-  --paper: #fbf8f2;
-  --cream: #fbf8f2;
-  --ink: #241b1d;
-  --slate: #71676a;
-  --white: #ffffff;
-  --border: #dfe4eb;
+  --gold: var(--gold-mid);
+  --paper: var(--cream);
+  --ink: var(--charcoal);
+  --slate: var(--taupe);
+  --border: var(--border-blue);
   color: var(--ink);
 }
 
@@ -48,20 +44,11 @@
   );
 }
 
-.eyebrow {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: var(--gold);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
+/* .eyebrow now comes from the global stylesheet (styles.scss) */
 
 .publications-hero h1 {
   margin: 0;
-  color: #fff;
-  font-family: Georgia, "Times New Roman", serif;
+  color: var(--white);
   font-size: clamp(3.3rem, 7.3vw, 6.75rem);
   line-height: 1;
 }
@@ -109,7 +96,7 @@
   align-items: center;
   justify-content: center;
   min-height: 150px;
-  background: linear-gradient(135deg, #fff 0%, var(--paper) 100%);
+  background: linear-gradient(135deg, var(--white) 0%, var(--paper) 100%);
   border: 1px solid rgba(11, 37, 69, 0.08);
 }
 
@@ -157,7 +144,6 @@
 .publication-content h2 {
   margin: 0;
   color: var(--navy);
-  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.5rem, 2.5vw, 2.1rem);
   line-height: 1.2;
 }

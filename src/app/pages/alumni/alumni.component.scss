@@ -3,15 +3,11 @@
 }
 
 .alumni-page {
-  --navy: #0b2545;
-  --gold: #c9962b;
-  --text: #444;
+  --text: var(--gray-800);
   --muted: #6b7280;
   --light: #f6f3ee;
-  --white: #ffffff;
   --border: #e8e1d8;
   color: var(--text);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container {

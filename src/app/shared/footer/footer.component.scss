@@ -78,7 +78,7 @@
   padding-bottom: 12px;
   font-size: 1.02rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--white);
   letter-spacing: 0.02em;
 }
 
@@ -114,7 +114,7 @@
 .footer-brand h3 {
   margin: 0 0 6px;
   font-size: 1.25rem;
-  color: #ffffff;
+  color: var(--white);
   white-space: nowrap;
 }
 
@@ -172,7 +172,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #b9c6e3;
+  color: var(--gray-400);
   text-decoration: none;
   font-size: 0.9rem;
   padding: 5px 0;
@@ -188,7 +188,7 @@
   }
 
   &:hover {
-    color: #ffffff;
+    color: var(--white);
     padding-left: 4px;
 
     i {
@@ -216,7 +216,7 @@
 .footer-contact address {
   font-style: normal;
   line-height: 1.75;
-  color: #b9c6e3;
+  color: var(--gray-400);
   font-size: 0.88rem;
 }
 
@@ -234,12 +234,12 @@
   }
 
   a {
-    color: #b9c6e3;
+    color: var(--gray-400);
     text-decoration: none;
     transition: color 0.2s ease;
 
     &:hover {
-      color: #ffffff;
+      color: var(--white);
     }
   }
 }

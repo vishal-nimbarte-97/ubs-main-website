@@ -1,0 +1,62 @@
+// =========================================================
+// RESPONSIVE BREAKPOINT MIXINS
+// One shared set of breakpoints so every component responds
+// to the same screen sizes instead of inventing its own.
+//
+// Usage in any component .scss file:
+//   @use '../../styles/mixins' as *;
+//
+//   .card {
+//     padding: 2rem;
+//     @include tablet {
+//       padding: 1.25rem;
+//     }
+//     @include mobile {
+//       padding: 1rem;
+//     }
+//   }
+// =========================================================
+
+$bp-xs: 400px; // small phones
+$bp-sm: 600px; // phones
+$bp-md: 768px; // tablets / large phones landscape
+$bp-lg: 1024px; // small laptops / tablet landscape
+$bp-xl: 1200px; // desktop
+
+@mixin xs {
+  @media (max-width: #{$bp-xs}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$bp-sm}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$bp-md}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: #{$bp-lg}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: #{$bp-xl}) {
+    @content;
+  }
+}
+
+// Explicit min-width helper for the rare case a component needs
+// to add styles going *up* from a breakpoint rather than down.
+@mixin from($breakpoint) {
+  @media (min-width: #{$breakpoint}) {
+    @content;
+  }
+}

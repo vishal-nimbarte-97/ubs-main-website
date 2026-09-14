@@ -5,15 +5,12 @@
 :host {
   display: block;
 
-  --navy: #1c3654;
-  --gold: #ad7d3c;
-  --black: #171717;
+  /* navy/gold/white/font now come from the global brand tokens
+     (was a slightly different shade + Poppins font locally). */
+  --black: var(--near-black);
   --gray: #6d6d6d;
-  --light: #f7f5f2;
-  --white: #fff;
+  --light: var(--gray-100);
   --border: #e7e2dc;
-
-  font-family: "Poppins", "Inter", Arial, sans-serif;
 }
 
 .student-zone-page * {
@@ -21,7 +18,7 @@
 }
 
 .student-zone-page {
-  background: #fff;
+  background: var(--white);
   color: var(--black);
 }
 
@@ -314,7 +311,7 @@
 }
 
 .nav-links a {
-  color: #444;
+  color: var(--gray-800);
 
   font-size: 13px;
   font-weight: 500;
@@ -388,7 +385,7 @@ h2 span {
 
   margin: 0;
 
-  color: #777;
+  color: var(--gray-500);
 
   font-size: 14px;
   line-height: 1.8;
@@ -485,7 +482,7 @@ h2 span {
 
   margin: 22px 0 0;
 
-  color: #6e6e6e;
+  color: var(--gray-600);
 
   font-size: 15px;
   line-height: 1.85;
@@ -508,7 +505,7 @@ h2 span {
 
   text-align: center;
 
-  background: #171717;
+  background: var(--near-black);
   color: white;
 }
 

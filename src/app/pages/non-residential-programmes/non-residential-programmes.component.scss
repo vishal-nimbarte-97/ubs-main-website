@@ -1,11 +1,8 @@
 .academic-page {
-  --navy: #0b2545;
-  --navy-2: #123b6b;
-  --gold: #e2b455;
-  --paper: #fbf8f2;
-  --cream: #fbf8f2;
-  --ink: #241b1d;
-  --slate: #71676a;
+  --gold: var(--gold-mid);
+  --paper: var(--cream);
+  --ink: var(--charcoal);
+  --slate: var(--taupe);
   color: var(--ink);
   background: var(--cream);
 }
@@ -59,30 +56,21 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border: 12px solid #fff;
+  border: 12px solid var(--white);
   box-shadow: 1rem 1rem 0 var(--gold);
 }
 
-.eyebrow {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: var(--gold);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
+/* .eyebrow now comes from the global stylesheet (styles.scss) */
 
 h1,
 h2 {
   color: var(--navy);
-  font-family: Georgia, "Times New Roman", serif;
   overflow-wrap: anywhere;
 }
 
 h1 {
   margin: 0;
-  color: #fff;
+  color: var(--white);
   font-size: clamp(3.3rem, 7.3vw, 6.75rem);
   line-height: 1;
 }
@@ -166,7 +154,7 @@ li {
   border: 1px solid #e1ded4;
   border-top: 3px solid var(--gold);
   color: var(--navy);
-  background: #fff;
+  background: var(--white);
   text-decoration: none;
   transition:
     transform 0.2s ease,
@@ -197,7 +185,7 @@ li {
 }
 
 .programme-directory {
-  background: #fff;
+  background: var(--white);
 }
 
 .programme-directory__heading {
@@ -265,7 +253,7 @@ ul {
   padding: 0.95rem 1.25rem;
   border: 1px solid transparent;
   color: var(--gold);
-  background: #fff;
+  background: var(--white);
   text-decoration: none;
   font-size: 0.75rem;
   font-weight: 850;
@@ -304,7 +292,7 @@ ul {
 
 .academic-card {
   padding: 1.75rem;
-  background: #fff;
+  background: var(--white);
   border: 1px solid rgba(11, 37, 69, 0.08);
   border-left: 4px solid var(--gold);
 }
@@ -341,7 +329,7 @@ ul {
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
-  color: #fff;
+  color: var(--white);
   font-weight: 700;
   font-size: 0.9rem;
 }

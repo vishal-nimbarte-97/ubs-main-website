@@ -2,26 +2,24 @@
    FACULTY PAGE
 ========================================================= */
 
+/* These local names are kept (used throughout this file) but now
+   point at the global tokens in styles.scss instead of repeating
+   the hex/shadow values locally. */
 :host {
   display: block;
 
-  --primary: #0b2545;
-  --primary-dark: #123b6b;
-  --primary-light: #f7f4ec;
+  --primary: var(--navy);
+  --primary-dark: var(--navy-2);
+  --primary-light: var(--parchment);
 
-  --text-dark: #1b2430;
-  --text-medium: #5b6675;
-  --text-light: #5b6675;
+  --text-dark: var(--ink);
+  --text-medium: var(--slate);
+  --text-light: var(--slate);
 
-  --white: #ffffff;
-  --background: #f7f4ec;
-  --border: #dfe4eb;
+  --background: var(--parchment);
+  --border: var(--border-blue);
 
-  --shadow-sm: 0 5px 20px rgba(0, 0, 0, 0.07);
-
-  --shadow-md: 0 15px 40px rgba(0, 0, 0, 0.12);
-
-  --radius: 18px;
+  --radius: var(--radius-lg);
 }
 
 /* =========================================================
@@ -30,11 +28,9 @@
 
 .faculty-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #ffffff 0%, #f7f4ec 100%);
+  background: linear-gradient(180deg, var(--white) 0%, var(--parchment) 100%);
 
   color: var(--text-dark);
-
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
 }
 
 /* =========================================================
@@ -48,7 +44,7 @@
 
   overflow: hidden;
 
-  background: linear-gradient(135deg, #fff 0%, #f7f4ec 50%, #fff 100%);
+  background: linear-gradient(135deg, var(--white) 0%, var(--parchment) 50%, var(--white) 100%);
 
   text-align: center;
 }
@@ -195,7 +191,7 @@
 
   color: var(--navy);
 
-  background: #ffffff;
+  background: var(--white);
 
   text-align: center;
 
@@ -246,7 +242,7 @@
 
   overflow: hidden;
 
-  background: linear-gradient(145deg, #ffffff 0%, #fcfafb 100%);
+  background: linear-gradient(145deg, var(--white) 0%, #fcfafb 100%);
 
   border: 1px solid rgba(11, 37, 69, 0.1);
 
@@ -332,7 +328,7 @@
 
   border-radius: 50%;
 
-  border: 6px solid #ffffff;
+  border: 6px solid var(--white);
 
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 
@@ -384,7 +380,7 @@
   // background:
   //   linear-gradient(135deg, rgba(11, 37, 69, 0.74), rgba(155, 0, 54, 0.82));
 
-  color: #fff;
+  color: var(--white);
 
   font-size: 14px;
 
@@ -527,7 +523,7 @@
 
   background: #f7f8fa;
 
-  color: #222;
+  color: var(--gray-900);
 
   font-size: 15px;
 
@@ -547,7 +543,7 @@
 
   border-color: var(--navy);
 
-  color: #ffffff;
+  color: var(--white);
 
   transform: translateY(-2px);
 }
@@ -614,7 +610,7 @@
 
   border-radius: 22px;
 
-  background: #ffffff;
+  background: var(--white);
 
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
 
@@ -659,7 +655,7 @@
 
   background: rgba(255, 255, 255, 0.9);
 
-  color: #444;
+  color: var(--gray-800);
 
   font-size: 28px;
 
@@ -693,9 +689,9 @@
 
   padding: 40px;
 
-  background: linear-gradient(135deg, #fff, #fff5f8);
+  background: linear-gradient(135deg, var(--white), #fff5f8);
 
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .modal-image-wrapper {
@@ -709,7 +705,7 @@
 
   border-radius: 50%;
 
-  background: #ffffff;
+  background: var(--white);
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
@@ -755,7 +751,7 @@
 .modal-designation {
   margin: 0;
 
-  color: #222;
+  color: var(--gray-900);
 
   font-size: 16px;
 
@@ -767,7 +763,7 @@
 .modal-additional {
   margin: 3px 0 0;
 
-  color: #444;
+  color: var(--gray-800);
 
   white-space: pre-line;
 
@@ -823,7 +819,7 @@
 
   padding: 15px;
 
-  border: 1px solid #eeeeee;
+  border: 1px solid var(--gray-200);
 
   border-radius: 12px;
 
@@ -856,7 +852,7 @@
 
   margin-bottom: 4px;
 
-  color: #777;
+  color: var(--gray-500);
 
   font-size: 12px;
 
@@ -870,7 +866,7 @@
 .profile-row p {
   margin: 0;
 
-  color: #222;
+  color: var(--gray-900);
 
   font-size: 14px;
 
@@ -910,7 +906,7 @@
 
   padding-bottom: 10px;
 
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid var(--gray-200);
 
   color: var(--navy);
 
@@ -935,7 +931,7 @@
 
   padding-left: 25px;
 
-  color: #444;
+  color: var(--gray-800);
 
   font-size: 14px;
 
@@ -965,7 +961,7 @@
 
   background: #fafafa;
 
-  color: #777;
+  color: var(--gray-500);
 
   text-align: center;
 
@@ -985,9 +981,9 @@
 
   padding: 18px 40px;
 
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid var(--gray-200);
 
-  background: #ffffff;
+  background: var(--white);
 }
 
 .pdf-button,
@@ -1039,9 +1035,9 @@
 }
 
 .close-button {
-  border: 1px solid #ddd;
+  border: 1px solid var(--gray-300);
 
-  background: #fff;
+  background: var(--white);
 
   color: #333;
 }
