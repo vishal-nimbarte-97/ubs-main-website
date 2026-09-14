@@ -125,6 +125,19 @@ h4 {
   color: var(--navy);
 }
 
+h1 span,
+h2 span,
+h3 span,
+h4 span,
+h1 em,
+h2 em,
+h3 em,
+h4 em {
+  color: var(--gold) !important;
+  font-style: italic !important;
+  font-weight: 600;
+}
+
 h1 {
   font-size: var(--fs-h1);
 }
