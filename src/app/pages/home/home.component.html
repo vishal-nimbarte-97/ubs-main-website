@@ -8,61 +8,14 @@
     </video> -->
     <img class="hero-video" src="../../assets/img/home.png" alt="UBS campus" />
     <div class="hero-overlay">
-      <aside
-        class="hero-live-module"
-        [class.is-open]="liveModuleOpen"
-        aria-label="Live YouTube stream"
-      >
-        <button
-          type="button"
-          class="live-module-toggle"
-          (click)="liveModuleOpen = !liveModuleOpen"
-          [attr.aria-expanded]="liveModuleOpen"
-        >
-          <span class="live-dot" aria-hidden="true"></span>
-          Live
-        </button>
-
-        <form
-          *ngIf="liveModuleOpen"
-          class="live-module-panel"
-          (ngSubmit)="setLiveVideo()"
-        >
-          <label for="live-youtube-url">YouTube live link</label>
-          <div class="live-module-controls">
-            <input
-              id="live-youtube-url"
-              name="liveYouTubeUrl"
-              type="url"
-              [(ngModel)]="liveYouTubeUrl"
-              placeholder="Paste a YouTube link"
-              autocomplete="url"
-            />
-            <button type="submit">Show live</button>
-          </div>
-          <p *ngIf="liveUrlError" class="live-module-error" role="alert">
-            {{ liveUrlError }}
-          </p>
-          <p class="live-module-help">
-            This link is saved in this browser only.
-          </p>
-        </form>
-      </aside>
-
-      <div *ngIf="liveEmbedUrl" class="hero-live-player">
-        <iframe
-          [src]="liveEmbedUrl"
-          title="UBS live stream"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
+      <a [href]="liveChannelUrl" target="_blank" rel="noopener" class="hero-live-button" [class.is-live]="liveIsLive"
+        [attr.aria-disabled]="!liveIsLive" (click)="!liveIsLive && $event.preventDefault()">
+        <span class="live-dot" aria-hidden="true"></span>
+        Live
+      </a>
 
       <div class="tagline-swapper">
-        <h1
-          *ngFor="let group of taglineGroups; let i = index"
-          [class.active]="i === activeTaglineIndex"
-        >
+        <h1 *ngFor="let group of taglineGroups; let i = index" [class.active]="i === activeTaglineIndex">
           <span class="tagline-line">{{ group.join(" ") }}</span>
         </h1>
       </div>
@@ -148,25 +101,10 @@
                 <div class="campus-feature">
                   <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M4 21V9L12 4L20 9V21"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M8 21V13H16V21"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M9 9H9.01M15 9H15.01"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                        stroke-linecap="round"
-                      />
+                      <path d="M4 21V9L12 4L20 9V21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                      <path d="M8 21V13H16V21" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                      <path d="M9 9H9.01M15 9H15.01" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
                     </svg>
                   </div>
 
@@ -180,32 +118,12 @@
                 <div class="campus-feature">
                   <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="none">
-                      <circle
-                        cx="9"
-                        cy="8"
-                        r="3"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      />
-                      <circle
-                        cx="16"
-                        cy="9"
-                        r="2.5"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      />
-                      <path
-                        d="M3.5 20C3.5 16.7 5.9 14.5 9 14.5C12.1 14.5 14.5 16.7 14.5 20"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                      />
-                      <path
-                        d="M14 14.5C17 14.5 19.5 16.4 20 19.5"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                      />
+                      <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.8" />
+                      <circle cx="16" cy="9" r="2.5" stroke="currentColor" stroke-width="1.8" />
+                      <path d="M3.5 20C3.5 16.7 5.9 14.5 9 14.5C12.1 14.5 14.5 16.7 14.5 20" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" />
+                      <path d="M14 14.5C17 14.5 19.5 16.4 20 19.5" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" />
                     </svg>
                   </div>
 
@@ -221,17 +139,8 @@
                     <svg viewBox="0 0 24 24" fill="none">
                       <path
                         d="M12 21C16.5 16.5 19 13.3 19 9.5C19 5.9 16.1 3 12 3C7.9 3 5 5.9 5 9.5C5 13.3 7.5 16.5 12 21Z"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linejoin="round"
-                      />
-                      <circle
-                        cx="12"
-                        cy="9.5"
-                        r="2.3"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      />
+                        stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                      <circle cx="12" cy="9.5" r="2.3" stroke="currentColor" stroke-width="1.8" />
                     </svg>
                   </div>
 
@@ -245,18 +154,10 @@
                 <div class="campus-feature">
                   <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M4 5.5C6.8 4.2 9.5 4.5 12 6V20C9.5 18.5 6.8 18.2 4 19.5V5.5Z"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M20 5.5C17.2 4.2 14.5 4.5 12 6V20C14.5 18.5 17.2 18.2 20 19.5V5.5Z"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linejoin="round"
-                      />
+                      <path d="M4 5.5C6.8 4.2 9.5 4.5 12 6V20C9.5 18.5 6.8 18.2 4 19.5V5.5Z" stroke="currentColor"
+                        stroke-width="1.8" stroke-linejoin="round" />
+                      <path d="M20 5.5C17.2 4.2 14.5 4.5 12 6V20C14.5 18.5 17.2 18.2 20 19.5V5.5Z" stroke="currentColor"
+                        stroke-width="1.8" stroke-linejoin="round" />
                     </svg>
                   </div>
 
@@ -350,9 +251,7 @@
       <div class="why-grid">
         <div class="why-reasons">
           <div class="why-reason" *ngFor="let r of whyReasons">
-            <span class="why-icon"
-              ><i class="fa-solid" [ngClass]="r.icon"></i
-            ></span>
+            <span class="why-icon"><i class="fa-solid" [ngClass]="r.icon"></i></span>
             <p>{{ r.text }}</p>
           </div>
         </div>
@@ -468,9 +367,7 @@
           <div class="header-left">
             <div class="header-icon">
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
-                ></path>
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
                 <path d="M10 21h4"></path>
               </svg>
             </div>
@@ -632,10 +529,8 @@
   <section class="principal-section">
     <div class="curve-top">
       <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-        <path
-          fill="#fff"
-          d="M0,96L80,90C160,85,320,75,480,58C640,43,800,21,960,26C1120,32,1280,64,1360,80L1440,96L1440,0L0,0Z"
-        ></path>
+        <path fill="#fff"
+          d="M0,96L80,90C160,85,320,75,480,58C640,43,800,21,960,26C1120,32,1280,64,1360,80L1440,96L1440,0L0,0Z"></path>
       </svg>
     </div>
 
@@ -673,10 +568,9 @@
 
     <div class="curve-bottom">
       <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-        <path
-          fill="#fff"
-          d="M0,32L80,42C160,53,320,75,480,85C640,96,800,96,960,80C1120,64,1280,32,1360,21L1440,11L1440,120L0,120Z"
-        ></path>
+        <path fill="#fff"
+          d="M0,32L80,42C160,53,320,75,480,85C640,96,800,96,960,80C1120,64,1280,32,1360,21L1440,11L1440,120L0,120Z">
+        </path>
       </svg>
     </div>
   </section>
@@ -716,16 +610,9 @@
         </button>
 
         <div class="legacy-slider-window">
-          <div
-            class="legacy-slider-track"
-            [style.transform]="'translateX(-' + currentLegacySlide * 100 + '%)'"
-          >
+          <div class="legacy-slider-track" [style.transform]="'translateX(-' + currentLegacySlide * 100 + '%)'">
             <div class="legacy-slide" *ngFor="let group of legacySlides">
-              <div
-                class="legacy-card"
-                *ngFor="let item of group"
-                [class.portrait]="item.portrait"
-              >
+              <div class="legacy-card" *ngFor="let item of group" [class.portrait]="item.portrait">
                 <div class="legacy-photo">
                   <img [src]="item.image" [alt]="item.title" />
                 </div>
@@ -912,26 +799,9 @@
     <h4>Admission Enquiry</h4>
 
     <form (ngSubmit)="submitEnquiry()" *ngIf="!enquirySubmitted">
-      <input
-        type="text"
-        placeholder="Full name"
-        [(ngModel)]="enquiryName"
-        name="enquiryName"
-        required
-      />
-      <input
-        type="email"
-        placeholder="Email address"
-        [(ngModel)]="enquiryEmail"
-        name="enquiryEmail"
-        required
-      />
-      <input
-        type="tel"
-        placeholder="Phone number"
-        [(ngModel)]="enquiryPhone"
-        name="enquiryPhone"
-      />
+      <input type="text" placeholder="Full name" [(ngModel)]="enquiryName" name="enquiryName" required />
+      <input type="email" placeholder="Email address" [(ngModel)]="enquiryEmail" name="enquiryEmail" required />
+      <input type="tel" placeholder="Phone number" [(ngModel)]="enquiryPhone" name="enquiryPhone" />
       <button type="submit" class="btn-gold">Submit Enquiry</button>
     </form>
 

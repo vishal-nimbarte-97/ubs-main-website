@@ -15,6 +15,9 @@ import { ResidentialProgrammesComponent } from './pages/residential-programmes/r
 import { NonResidentialProgrammesComponent } from './pages/non-residential-programmes/non-residential-programmes.component';
 import { PublicationsComponent } from './pages/publications/publications.component';
 import { FaqComponent } from './pages/faq/faq.component';
+import { LoginComponent } from './admin/login/login.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -36,5 +39,9 @@ export const routes: Routes = [
   },
   { path: 'publications', component: PublicationsComponent },
   { path: 'faq', component: FaqComponent },
+
+  { path: 'admin/login', component: LoginComponent },
+  { path: 'admin/dashboard', component: DashboardComponent, canActivate: [authGuard] },
+
   { path: '**', redirectTo: '' },
 ];

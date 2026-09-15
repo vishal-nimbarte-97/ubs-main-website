@@ -1,0 +1,64 @@
+<div class="admin-login-wrapper">
+  <div class="admin-login-panel brand-panel">
+    <div class="brand-panel-content">
+      <div class="brand-mark">UBS</div>
+      <h1>Admin Console</h1>
+      <p>Union Biblical Seminary — content &amp; broadcast management.</p>
+    </div>
+  </div>
+
+  <div class="admin-login-panel form-panel">
+    <form (ngSubmit)="onSubmit()" class="admin-login-form" novalidate>
+      <h2>Sign in</h2>
+      <p class="form-subtitle">Enter your credentials to access the admin panel.</p>
+
+      <label for="email">Email</label>
+      <div class="input-wrap">
+        <i class="fa-solid fa-envelope"></i>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="you&#64;ubs.ac.in"
+          autocomplete="username"
+          required
+        />
+      </div>
+
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <i class="fa-solid fa-lock"></i>
+        <input
+          id="password"
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        />
+        <button
+          type="button"
+          class="toggle-visibility"
+          (click)="showPassword = !showPassword"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+        >
+          <i class="fa-solid" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+        </button>
+      </div>
+
+      <p *ngIf="errorMessage" class="error">
+        <i class="fa-solid fa-triangle-exclamation"></i> {{ errorMessage }}
+      </p>
+
+      <button type="submit" class="submit-btn" [disabled]="loading">
+        <span *ngIf="!loading">Sign in</span>
+        <span *ngIf="loading" class="spinner" aria-hidden="true"></span>
+        <span *ngIf="loading">Signing in…</span>
+      </button>
+
+      <a routerLink="/" class="back-link">&larr; Back to website</a>
+    </form>
+  </div>
+</div>

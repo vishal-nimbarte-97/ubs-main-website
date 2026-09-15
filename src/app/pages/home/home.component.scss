@@ -4197,3 +4197,48 @@ li,
 div {
   font-family: "Roboto", system-ui, sans-serif;
 }
+
+.hero-live-button {
+  position: absolute;
+  top: 22px;
+  right: clamp(20px, 4vw, 64px);
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #7a1f18; // dimmed red when offline
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity 0.25s ease, background 0.25s ease;
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.18);
+  }
+
+  &.is-live {
+    background: #b42318;
+    opacity: 1;
+    pointer-events: auto;
+    animation: liveBlink 1.2s infinite;
+  }
+}
+
+@keyframes liveBlink {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(180, 35, 24, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 14px 7px rgba(180, 35, 24, 0.55);
+  }
+}

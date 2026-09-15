@@ -12,7 +12,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import {
   ProgrammeTrack,
@@ -32,6 +31,7 @@ import {
   BLOG_POSTS,
   TESTIMONIALS,
 } from '../../data';
+import { LiveStatusService } from '../../services/dashboard/live-status.service';
 
 @Component({
   selector: 'app-home',
@@ -42,7 +42,7 @@ import {
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private router = inject(Router);
-  private sanitizer = inject(DomSanitizer);
+  private liveStatusService = inject(LiveStatusService); // 👈 NEW
   private routerSubscription?: Subscription;
 
   @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
@@ -59,10 +59,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private taglineTimer?: ReturnType<typeof setInterval>;
 
   /* ================= LIVE YOUTUBE MODULE ================= */
-  liveModuleOpen = false;
-  liveYouTubeUrl = '';
-  liveEmbedUrl: SafeResourceUrl | null = null;
-  liveUrlError = '';
+  // Controlled entirely by the backend now — no more localStorage,
+  // no more visitor-entered URLs. Admin flips it on/off from /admin/dashboard.
+  liveIsLive = false;
+  liveChannelUrl = 'https://youtube.com/@unionbsmedia?si=zYmglMFw-xPmCV4t';
+  private liveStatusTimer?: ReturnType<typeof setInterval>;
 
   /* ================= PROGRAMMES OFFERED BAR ================= */
   programmeSearch = '';
@@ -181,11 +182,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // persistence on the server) or leak timers that never get cleared.
     if (!this.isBrowser) return;
 
-    const savedLiveUrl = localStorage.getItem('ubs-live-youtube-url');
-    if (savedLiveUrl) {
-      this.liveYouTubeUrl = savedLiveUrl;
-      this.setLiveVideo(false);
-    }
+    // Live status: fetch immediately, then re-check every 20s.
+    this.pollLiveStatus();
+    this.liveStatusTimer = setInterval(() => this.pollLiveStatus(), 20000);
 
     this.routerSubscription = this.router.events
       .pipe(
@@ -256,6 +255,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.routerSubscription?.unsubscribe();
     if (this.taglineTimer) clearInterval(this.taglineTimer);
     if (this.testimonialTimer) clearInterval(this.testimonialTimer);
+    if (this.liveStatusTimer) clearInterval(this.liveStatusTimer);
     this.countersObserver?.disconnect();
   }
 
@@ -287,49 +287,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activeTab = tab;
   }
 
-  setLiveVideo(save = true): void {
-    // Validate the YouTube URL, create a safe embed URL, and optionally persist it.
-    this.liveUrlError = '';
-    const videoId = this.getYouTubeVideoId(this.liveYouTubeUrl);
-
-    if (!videoId) {
-      this.liveEmbedUrl = null;
-      this.liveUrlError =
-        'Enter a valid YouTube video, live-stream, or youtu.be link.';
-      return;
-    }
-
-    this.liveEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`,
-    );
-
-    if (save && this.isBrowser) {
-      localStorage.setItem('ubs-live-youtube-url', this.liveYouTubeUrl.trim());
-    }
-  }
-
-  private getYouTubeVideoId(value: string): string | null {
-    // Accept standard YouTube, live, shorts, embed, and youtu.be URL formats.
-    try {
-      const url = new URL(value.trim());
-      const host = url.hostname.replace(/^www\./, '').toLowerCase();
-      let videoId = '';
-
-      if (host === 'youtu.be') {
-        videoId = url.pathname.split('/').filter(Boolean)[0] ?? '';
-      } else if (host === 'youtube.com' || host === 'm.youtube.com') {
-        videoId = url.searchParams.get('v') ?? '';
-        if (!videoId) {
-          const pathParts = url.pathname.split('/').filter(Boolean);
-          if (['embed', 'live', 'shorts'].includes(pathParts[0]))
-            videoId = pathParts[1] ?? '';
+  /** Ask the backend whether the admin has gone live, and what the channel link is. */
+  private pollLiveStatus(): void {
+    this.liveStatusService.getStatus().subscribe({
+      next: (res) => {
+        this.liveIsLive = res.isLive;
+        if (res.channelUrl) {
+          this.liveChannelUrl = res.channelUrl;
         }
-      }
-
-      return /^[A-Za-z0-9_-]{11}$/.test(videoId) ? videoId : null;
-    } catch {
-      return null;
-    }
+      },
+      error: () => {
+        // Fail quietly on the public homepage — don't break the page if the API is down.
+        this.liveIsLive = false;
+      },
+    });
   }
 
   private animateCounters(): void {
@@ -377,7 +348,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   prevMonth(): void {
-    // Move the calendar back one month and rebuild its cells.
     this.calendarDate = new Date(
       this.calendarDate.getFullYear(),
       this.calendarDate.getMonth() - 1,
@@ -387,7 +357,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   nextMonth(): void {
-    // Move the calendar forward one month and rebuild its cells.
     this.calendarDate = new Date(
       this.calendarDate.getFullYear(),
       this.calendarDate.getMonth() + 1,
@@ -397,7 +366,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectDay(cell: CalendarCell): void {
-    // Display events for the selected calendar day.
     if (!cell.date) return;
     this.selectedEvents = this.events.filter((e) => e.date === cell.iso);
     this.selectedDateLabel = new Date(cell.iso).toLocaleDateString('en-US', {
@@ -408,14 +376,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   closeSelectedDay(): void {
-    // Clear the selected day details panel.
     this.selectedEvents = [];
     this.selectedDateLabel = '';
   }
 
   /* ---------- blog carousel ---------- */
   scrollBlog(dir: number): void {
-    // Clamp carousel movement so it never exceeds the available posts.
     const max = this.blogPosts.length - 1;
     this.blogScrollIndex = Math.min(
       Math.max(this.blogScrollIndex + dir, 0),
@@ -425,12 +391,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* ---------- testimonials ---------- */
   nextTestimonial(): void {
-    // Advance the testimonial carousel and wrap at the final item.
     this.testimonialIndex =
       (this.testimonialIndex + 1) % this.testimonials.length;
   }
   prevTestimonial(): void {
-    // Move backward through testimonials and wrap at the first item.
     this.testimonialIndex =
       (this.testimonialIndex - 1 + this.testimonials.length) %
       this.testimonials.length;
@@ -438,12 +402,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* ---------- enquiry ---------- */
   toggleEnquiry(): void {
-    // Open or close the floating enquiry form.
     this.enquiryOpen = !this.enquiryOpen;
   }
 
   submitEnquiry(): void {
-    // Require essential fields, then show a temporary submission state.
     if (!this.enquiryName || !this.enquiryEmail) return;
     this.enquirySubmitted = true;
     this.enquiryName = '';
@@ -514,25 +476,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   legacySlides: any[] = [];
-
   currentLegacySlide = 0;
 
-  /** Group legacy milestones into three-item slides for the carousel. */
   createLegacySlides(): void {
     this.legacySlides = [];
-
     for (let i = 0; i < this.legacyMilestones.length; i += 3) {
       this.legacySlides.push(this.legacyMilestones.slice(i, i + 3));
     }
   }
 
-  /** Advance the legacy carousel by one slide. */
   nextLegacySlide(): void {
     this.currentLegacySlide =
       (this.currentLegacySlide + 1) % this.legacySlides.length;
   }
 
-  /** Move the legacy carousel back by one slide. */
   prevLegacySlide(): void {
     this.currentLegacySlide =
       (this.currentLegacySlide - 1 + this.legacySlides.length) %
@@ -559,12 +516,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   legacyVoiceIndex = 0;
 
   nextLegacyVoice(): void {
-    // Advance the legacy voice carousel and wrap at the final voice.
     this.legacyVoiceIndex =
       (this.legacyVoiceIndex + 1) % this.legacyVoices.length;
   }
   prevLegacyVoice(): void {
-    // Move backward through legacy voices and wrap at the first voice.
     this.legacyVoiceIndex =
       (this.legacyVoiceIndex - 1 + this.legacyVoices.length) %
       this.legacyVoices.length;

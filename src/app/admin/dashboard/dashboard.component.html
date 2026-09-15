@@ -1,0 +1,99 @@
+<div class="admin-shell">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="admin-sidebar" [class.open]="sidebarOpen">
+    <div class="sidebar-brand">
+      <div class="brand-mark">UBS</div>
+      <span>Admin Panel</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button
+        *ngFor="let section of sections"
+        class="sidebar-link"
+        [class.active]="activeSection === section.id"
+        (click)="setSection(section.id)"
+      >
+        <i class="fa-solid" [ngClass]="section.icon"></i>
+        <span>{{ section.label }}</span>
+      </button>
+    </nav>
+
+    <button class="sidebar-logout" (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Log out</span>
+    </button>
+  </aside>
+
+  <!-- overlay for mobile drawer -->
+  <div class="sidebar-scrim" *ngIf="sidebarOpen" (click)="sidebarOpen = false"></div>
+
+  <!-- ============ MAIN AREA ============ -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="burger-btn" (click)="sidebarOpen = !sidebarOpen" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <h1>{{ currentSectionLabel }}</h1>
+    </header>
+
+    <main class="admin-content">
+      <!-- ---------- OVERVIEW ---------- -->
+      <section *ngIf="activeSection === 'overview'" class="panel">
+        <p class="panel-intro">Welcome back. Use the sections on the left to manage the site.</p>
+
+        <div class="overview-grid">
+          <div class="overview-card">
+            <span class="overview-label">Live Broadcast</span>
+            <span class="overview-value" [class.on]="isLive">{{ isLive ? 'ON AIR' : 'Offline' }}</span>
+          </div>
+          <div class="overview-card">
+            <span class="overview-label">Notifications</span>
+            <span class="overview-value">—</span>
+          </div>
+          <div class="overview-card">
+            <span class="overview-label">Site Settings</span>
+            <span class="overview-value">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- LIVE BROADCAST ---------- -->
+      <section *ngIf="activeSection === 'live'" class="panel">
+        <p class="panel-intro">
+          Toggle this on when a service or event is streaming live. The
+          <strong>Live</strong> button on the public homepage will light up and link
+          visitors to the channel.
+        </p>
+
+        <div class="live-card">
+          <div class="live-status" [class.on]="isLive">
+            <span class="live-dot"></span>
+            {{ isLive ? 'Currently Live' : 'Currently Offline' }}
+          </div>
+
+          <button class="live-toggle" [class.active]="isLive" (click)="toggleLive()">
+            {{ isLive ? 'Stop Live' : 'Go Live' }}
+          </button>
+        </div>
+      </section>
+
+      <!-- ---------- NOTIFICATIONS (placeholder) ---------- -->
+      <section *ngIf="activeSection === 'notifications'" class="panel">
+        <div class="empty-state">
+          <i class="fa-solid fa-bell"></i>
+          <h3>Notifications</h3>
+          <p>Manage official notices and circulars here. Coming soon.</p>
+        </div>
+      </section>
+
+      <!-- ---------- SITE SETTINGS (placeholder) ---------- -->
+      <section *ngIf="activeSection === 'settings'" class="panel">
+        <div class="empty-state">
+          <i class="fa-solid fa-gear"></i>
+          <h3>Site Settings</h3>
+          <p>General site configuration will live here. Coming soon.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>

@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,8 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+
+  auth = inject(AuthService); 
   isScrolled = false;
   mobileMenuOpen = false;
   openDropdown: 'about' | 'administration' | 'academics' | null = null;
@@ -184,5 +187,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private isMobileViewport(): boolean {
     return this.isBrowser && window.innerWidth <= 836;
+  }
+
+  logout(): void { // 👈 NEW
+    this.auth.logout();
+    this.closeMobileMenu();
+    if (this.isBrowser) window.location.href = '/';
   }
 }

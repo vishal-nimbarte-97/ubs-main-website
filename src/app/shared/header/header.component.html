@@ -221,6 +221,24 @@
       </li>
     </ul>
 
+    <a *ngIf="!auth.isLoggedIn()"
+    routerLink="/admin/login"
+    class="admin-link"
+    aria-label="Admin login"
+    title="Admin login"
+  >
+    <i class="fa-solid fa-user-lock"></i>
+  </a>
+
+  <div *ngIf="auth.isLoggedIn()" class="admin-link admin-link--active">
+    <a routerLink="/admin/dashboard" title="Admin dashboard">
+      <i class="fa-solid fa-gauge"></i>
+    </a>
+    <button type="button" (click)="logout()" title="Logout">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </div>
+
     <button
       id="mobile-menu-toggle"
       class="burger"
