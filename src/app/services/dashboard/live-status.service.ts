@@ -11,11 +11,12 @@ interface LiveStatus {
 @Injectable({ providedIn: 'root' })
 export class LiveStatusService {
   private apiUrl = 'https://localhost:7257/api/Live';
+  private Produrl='http://ubsapi.xplorelogic.in/api/Live';
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   getStatus(): Observable<LiveStatus> {
-    return this.http.get<LiveStatus>(`${this.apiUrl}/GetStatus`);
+    return this.http.get<LiveStatus>(`${this.Produrl}/GetStatus`);
   }
 
   setStatus(isLive: boolean): Observable<LiveStatus> {
@@ -23,7 +24,7 @@ export class LiveStatusService {
       Authorization: `Bearer ${this.auth.getToken()}`,
     });
     return this.http.post<LiveStatus>(
-      `${this.apiUrl}/SetStatus`,
+      `${this.Produrl}/SetStatus`,
       { isLive },
       { headers }
     );

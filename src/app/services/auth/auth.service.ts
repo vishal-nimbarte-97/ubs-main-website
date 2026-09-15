@@ -12,12 +12,13 @@ interface LoginResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = 'https://localhost:7257/api/Auth';
+  private prodUrl='http://ubsapi.xplorelogic.in/api/Auth';
 
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/Login`, { email, password })
+      .post<LoginResponse>(`${this.prodUrl}/Login`, { email, password })
       .pipe(
         tap((res) => {
           if (res.isSuccess && res.token) {
