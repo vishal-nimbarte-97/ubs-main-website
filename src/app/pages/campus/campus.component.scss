@@ -78,7 +78,7 @@ blockquote {
   position: relative;
   min-height: 680px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   overflow: hidden;
   background: var(--navy-deep);
 }
@@ -105,8 +105,13 @@ blockquote {
 .hero__content {
   position: relative;
   z-index: 2;
+  width: min(100%, 760px);
   max-width: 760px;
+  margin-right: auto;
+  margin-left: 0;
+  padding-bottom: 7rem;
   color: var(--white);
+  text-align: left;
 }
 
 .hero__title {

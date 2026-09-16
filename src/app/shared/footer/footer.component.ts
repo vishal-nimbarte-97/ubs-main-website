@@ -36,7 +36,7 @@ export class FooterComponent {
     },
     {
       icon: 'fa-brands fa-instagram',
-      url: 'https://instagram.com',
+      url: 'https://www.instagram.com/ubspune_officialpage?stkn=dDU3dW9pZWw3Z2w3',
       label: 'Instagram',
     },
     {
@@ -51,7 +51,7 @@ export class FooterComponent {
     },
     {
       icon: 'fa-brands fa-youtube',
-      url: 'https://youtube.com',
+      url: 'https://youtube.com/@unionbsmedia?si=XVYjCuTex7hP68TL',
       label: 'YouTube',
     },
   ];
