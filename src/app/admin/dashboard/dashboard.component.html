@@ -1,74 +1,28 @@
-<div class="admin-shell">
-  <aside class="admin-sidebar" [class.open]="sidebarOpen">
-    <div class="sidebar-brand">
-      <div class="brand-mark">UBS</div>
-      <span>Admin Panel</span>
-    </div>
+<app-admin-shell
+  [sidebarOpen]="sidebarOpen"
+  [title]="currentSectionLabel"
+  (toggleSidebar)="sidebarOpen = !sidebarOpen"
+  (logout)="logout()"
+>
+  <app-admin-sidebar
+    sidebar-content
+    [items]="sections"
+    [activeId]="activeSection"
+    (selectItem)="onSidebarSelect($event)"
+  ></app-admin-sidebar>
 
-    <nav class="sidebar-nav">
-      <button
-        *ngFor="let section of sections"
-        class="sidebar-link"
-        [class.active]="activeSection === section.id"
-        (click)="setSection(section.id)"
-      >
-        <i class="fa-solid" [ngClass]="section.icon"></i>
-        <span>{{ section.label }}</span>
-      </button>
-    </nav>
+  <app-dashboard-overview
+    *ngIf="activeSection === 'overview'"
+    [isLive]="isLive"
+    [announcements]="announcements"
+    [eventItems]="eventItems"
+  ></app-dashboard-overview>
 
-    <button class="sidebar-logout" (click)="logout()">
-      <i class="fa-solid fa-right-from-bracket"></i>
-      <span>Log out</span>
-    </button>
-  </aside>
-
-  <div class="sidebar-scrim" *ngIf="sidebarOpen" (click)="sidebarOpen = false"></div>
-
-  <div class="admin-main">
-    <header class="admin-topbar">
-      <button class="burger-btn" (click)="sidebarOpen = !sidebarOpen" aria-label="Toggle menu">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-      <h1>{{ currentSectionLabel }}</h1>
-    </header>
-
-    <main class="admin-content">
-      <section *ngIf="activeSection === 'overview'" class="panel">
-        <p class="panel-intro">Welcome back. Use the sections on the left to manage the site.</p>
-
-        <div class="overview-grid">
-          <div class="overview-card">
-            <span class="overview-label">Live Broadcast</span>
-            <span class="overview-value" [class.on]="isLive">{{ isLive ? 'ON AIR' : 'Offline' }}</span>
-          </div>
-          <div class="overview-card">
-            <span class="overview-label">Announcements</span>
-            <span class="overview-value">{{ announcements.length }}</span>
-          </div>
-          <div class="overview-card">
-            <span class="overview-label">Upcoming Events</span>
-            <span class="overview-value">{{ eventItems.length }}</span>
-          </div>
-        </div>
-      </section>
-
-      <section *ngIf="activeSection === 'live'" class="panel">
-        <p class="panel-intro">
-          Toggle this on when a service or event is streaming live. The public homepage will display the live banner and channel link.
-        </p>
-
-        <div class="live-card">
-          <div class="live-status" [class.on]="isLive">
-            <span class="live-dot"></span>
-            {{ isLive ? 'Currently Live' : 'Currently Offline' }}
-          </div>
-
-          <button class="live-toggle" [class.active]="isLive" (click)="toggleLive()">
-            {{ isLive ? 'Stop Live' : 'Go Live' }}
-          </button>
-        </div>
-      </section>
+  <app-live-broadcast
+    *ngIf="activeSection === 'live'"
+    [isLive]="isLive"
+    (toggle)="toggleLive()"
+  ></app-live-broadcast>
 
       <section *ngIf="activeSection === 'notifications'" class="panel">
         <div class="content-form-card">
@@ -140,13 +94,327 @@
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'settings'" class="panel">
-        <div class="empty-state">
-          <i class="fa-solid fa-gear"></i>
-          <h3>Site Settings</h3>
-          <p>General site configuration will live here. Coming soon.</p>
+      <section *ngIf="activeSection === 'site-config'" class="panel">
+        <div class="content-form-card">
+          <h3>Site Configuration</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Admissions Email</span>
+              <input [(ngModel)]="siteConfig.admissionsEmail" type="email" />
+            </label>
+            <label>
+              <span>Registrar Email</span>
+              <input [(ngModel)]="siteConfig.registrarEmail" type="email" />
+            </label>
+            <label>
+              <span>Principal Email</span>
+              <input [(ngModel)]="siteConfig.principalEmail" type="email" />
+            </label>
+            <label>
+              <span>Library Email</span>
+              <input [(ngModel)]="siteConfig.libraryEmail" type="email" />
+            </label>
+            <label>
+              <span>Support Phone</span>
+              <input [(ngModel)]="siteConfig.supportPhone" type="text" />
+            </label>
+            <label>
+              <span>YouTube Channel URL</span>
+              <input [(ngModel)]="siteConfig.youtubeChannelUrl" type="url" />
+            </label>
+          </div>
+          <button class="primary-btn" type="button" (click)="saveSiteConfig()">Save config</button>
         </div>
       </section>
-    </main>
-  </div>
-</div>
+
+      <section *ngIf="activeSection === 'people'" class="panel">
+        <div class="content-form-card">
+          <h3>Add Principal / Librarian / Profile</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Name</span>
+              <input [(ngModel)]="newPerson.name" type="text" />
+            </label>
+            <label>
+              <span>Designation</span>
+              <input [(ngModel)]="newPerson.designation" type="text" />
+            </label>
+            <label>
+              <span>Category</span>
+              <select [(ngModel)]="newPerson.category">
+                <option value="principal">Principal</option>
+                <option value="librarian">Librarian</option>
+                <option value="faculty">Faculty</option>
+              </select>
+            </label>
+            <label class="full-width">
+              <span>Profile image</span>
+              <div class="image-upload-box">
+                <input type="file" accept="image/*" (change)="onImageSelected($event, 'person')" id="person-image-upload" hidden />
+                <label class="upload-button" for="person-image-upload">Upload image</label>
+                <img *ngIf="newPerson.imageUrl" [src]="newPerson.imageUrl" alt="Person preview" class="image-preview" />
+                <span class="upload-text" *ngIf="!newPerson.imageUrl">No image selected yet</span>
+              </div>
+            </label>
+            <label class="full-width">
+              <span>Quote</span>
+              <input [(ngModel)]="newPerson.quote" type="text" />
+            </label>
+            <label class="full-width">
+              <span>Bio</span>
+              <textarea [(ngModel)]="newPerson.bio" rows="4"></textarea>
+            </label>
+          </div>
+          <button class="primary-btn" type="button" (click)="savePerson()">Save person</button>
+        </div>
+
+        <div class="list-card">
+          <h4>People list</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of people; let i = index">
+              <div>
+                <strong>{{ item.name }}</strong>
+                <small>{{ item.designation }} · {{ item.category }}</small>
+              </div>
+              <button type="button" (click)="deletePerson(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section *ngIf="activeSection === 'tuition'" class="panel">
+        <div class="content-form-card">
+          <h3>Tuition & Fees</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Programme</span>
+              <input [(ngModel)]="newTuitionRow.programmeName" type="text" />
+            </label>
+            <label>
+              <span>Academic Year</span>
+              <input [(ngModel)]="newTuitionRow.academicYear" type="text" />
+            </label>
+            <label>
+              <span>Main Campus</span>
+              <input [(ngModel)]="newTuitionRow.mainCampus" type="text" />
+            </label>
+            <label>
+              <span>Online Campus</span>
+              <input [(ngModel)]="newTuitionRow.onlineCampus" type="text" />
+            </label>
+            <label>
+              <span>Extension</span>
+              <input [(ngModel)]="newTuitionRow.extension" type="text" />
+            </label>
+          </div>
+          <button class="primary-btn" type="button" (click)="saveTuitionRow()">Save fee row</button>
+        </div>
+
+        <div class="list-card">
+          <h4>Fee rows</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of tuitionRows; let i = index">
+              <div>
+                <strong>{{ item.programmeName }}</strong>
+                <small>{{ item.mainCampus }} / {{ item.onlineCampus }}</small>
+              </div>
+              <button type="button" (click)="deleteTuitionRow(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section *ngIf="activeSection === 'admissions'" class="panel">
+        <div class="content-form-card">
+          <h3>Admissions Essentials</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Programme Type</span>
+              <select [(ngModel)]="admissions.programmeType">
+                <option value="residential">Residential</option>
+                <option value="non-residential">Non-residential</option>
+                <option value="short-term">Short-term</option>
+              </select>
+            </label>
+            <label>
+              <span>Academic Year</span>
+              <input [(ngModel)]="admissions.academicYear" type="text" />
+            </label>
+          </div>
+
+          <div class="sub-section">
+            <h4>Application Fees</h4>
+            <div class="mini-list" *ngFor="let fee of admissions.fees; let i = index">
+              <input [(ngModel)]="fee.label" type="text" placeholder="Label" />
+              <input [(ngModel)]="fee.value" type="text" placeholder="Value" />
+              <button type="button" class="danger-btn" (click)="removeAdmissionFee(i)">Remove</button>
+            </div>
+            <button class="primary-btn small-btn" type="button" (click)="addAdmissionFee()">Add fee</button>
+          </div>
+
+          <div class="sub-section">
+            <h4>Deadlines</h4>
+            <div class="mini-list" *ngFor="let deadline of admissions.deadlines; let i = index">
+              <input [(ngModel)]="deadline.programme" type="text" placeholder="Programme" />
+              <input [(ngModel)]="deadline.date" type="text" placeholder="Date" />
+              <button type="button" class="danger-btn" (click)="removeAdmissionDeadline(i)">Remove</button>
+            </div>
+            <button class="primary-btn small-btn" type="button" (click)="addAdmissionDeadline()">Add deadline</button>
+          </div>
+
+          <div class="sub-section">
+            <h4>Contacts</h4>
+            <div class="mini-list" *ngFor="let contact of admissions.contacts; let i = index">
+              <input [(ngModel)]="contact.label" type="text" placeholder="Label" />
+              <input [(ngModel)]="contact.email" type="email" placeholder="Email" />
+              <button type="button" class="danger-btn" (click)="removeAdmissionContact(i)">Remove</button>
+            </div>
+            <button class="primary-btn small-btn" type="button" (click)="addAdmissionContact()">Add contact</button>
+          </div>
+
+          <button class="primary-btn" type="button" (click)="saveAdmissions()">Save admissions</button>
+        </div>
+      </section>
+
+      <section *ngIf="activeSection === 'publications'" class="panel">
+        <div class="content-form-card">
+          <h3>Add Publication</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Title</span>
+              <input [(ngModel)]="newPublication.title" type="text" />
+            </label>
+            <label>
+              <span>Category</span>
+              <input [(ngModel)]="newPublication.category" type="text" />
+            </label>
+            <label>
+              <span>Status</span>
+              <input [(ngModel)]="newPublication.status" type="text" />
+            </label>
+            <label>
+              <span>Date</span>
+              <input [(ngModel)]="newPublication.publishedDate" type="date" />
+            </label>
+            <label>
+              <span>Cover image</span>
+              <div class="image-upload-box">
+                <input type="file" accept="image/*" (change)="onImageSelected($event, 'publication')" id="publication-image-upload" hidden />
+                <label class="upload-button" for="publication-image-upload">Upload image</label>
+                <img *ngIf="newPublication.coverImageUrl" [src]="newPublication.coverImageUrl" alt="Publication preview" class="image-preview" />
+                <span class="upload-text" *ngIf="!newPublication.coverImageUrl">No image selected yet</span>
+              </div>
+            </label>
+            <label>
+              <span>Link</span>
+              <input [(ngModel)]="newPublication.link" type="url" />
+            </label>
+            <label class="full-width">
+              <span>Description</span>
+              <textarea [(ngModel)]="newPublication.description" rows="4"></textarea>
+            </label>
+          </div>
+          <button class="primary-btn" type="button" (click)="savePublication()">Save publication</button>
+        </div>
+
+        <div class="list-card">
+          <h4>Current publications</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of publications; let i = index">
+              <div>
+                <strong>{{ item.title }}</strong>
+                <small>{{ item.category }} · {{ item.status }}</small>
+              </div>
+              <button type="button" (click)="deletePublication(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section *ngIf="activeSection === 'gallery'" class="panel">
+        <div class="content-form-card">
+          <h3>Gallery Image</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Title</span>
+              <input [(ngModel)]="newGalleryItem.title" type="text" />
+            </label>
+            <label>
+              <span>Category</span>
+              <select [(ngModel)]="newGalleryItem.category">
+                <option value="Campus">Campus</option>
+                <option value="Learning">Learning</option>
+                <option value="Heritage">Heritage</option>
+                <option value="People">People</option>
+              </select>
+            </label>
+            <label>
+              <span>Image</span>
+              <div class="image-upload-box">
+                <input type="file" accept="image/*" (change)="onImageSelected($event, 'gallery')" id="gallery-image-upload" hidden />
+                <label class="upload-button" for="gallery-image-upload">Upload image</label>
+                <img *ngIf="newGalleryItem.imageUrl" [src]="newGalleryItem.imageUrl" alt="Gallery preview" class="image-preview" />
+                <span class="upload-text" *ngIf="!newGalleryItem.imageUrl">No image selected yet</span>
+              </div>
+            </label>
+            <label>
+              <span>Alt Text</span>
+              <input [(ngModel)]="newGalleryItem.altText" type="text" />
+            </label>
+          </div>
+          <button class="primary-btn" type="button" (click)="saveGalleryItem()">Save gallery item</button>
+        </div>
+
+        <div class="list-card">
+          <h4>Gallery items</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of gallery; let i = index">
+              <div>
+                <strong>{{ item.title }}</strong>
+                <small>{{ item.category }}</small>
+              </div>
+              <button type="button" (click)="deleteGalleryItem(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section *ngIf="activeSection === 'student-zone'" class="panel">
+        <div class="content-form-card">
+          <h3>Student Zone Images</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Title</span>
+              <input [(ngModel)]="newGalleryItem.title" type="text" />
+            </label>
+            <label>
+              <span>Image</span>
+              <div class="image-upload-box">
+                <input type="file" accept="image/*" (change)="onImageSelected($event, 'student-zone')" id="student-zone-image-upload" hidden />
+                <label class="upload-button" for="student-zone-image-upload">Upload image</label>
+                <img *ngIf="newGalleryItem.imageUrl" [src]="newGalleryItem.imageUrl" alt="Student zone preview" class="image-preview" />
+                <span class="upload-text" *ngIf="!newGalleryItem.imageUrl">No image selected yet</span>
+              </div>
+            </label>
+            <label>
+              <span>Alt Text</span>
+              <input [(ngModel)]="newGalleryItem.altText" type="text" />
+            </label>
+          </div>
+          <button class="primary-btn" type="button" (click)="saveStudentZoneItem()">Save student zone item</button>
+        </div>
+
+        <div class="list-card">
+          <h4>Student zone items</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of studentZone; let i = index">
+              <div>
+                <strong>{{ item.title }}</strong>
+                <small>{{ item.category }}</small>
+              </div>
+              <button type="button" (click)="deleteStudentZoneItem(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+</app-admin-shell>

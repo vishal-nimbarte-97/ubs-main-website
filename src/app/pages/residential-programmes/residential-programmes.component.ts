@@ -46,6 +46,18 @@ export class ResidentialProgrammesComponent {
       ],
     },
     {
+      name: 'Bachelor of Theology (B.Th.)',
+      type: 'Undergraduate',
+      duration: '3 years',
+      summary:
+        'A foundational residential programme that builds biblical literacy, theological reflection, and spiritual maturity for ministry and service.',
+      points: [
+        'Strong grounding in biblical interpretation and doctrine',
+        'Formation in worship, discipleship and Christian character',
+        'Ideal preparation for church leadership and further theological study',
+      ],
+    },
+    {
       name: 'Master of Theology (M.Th.)',
       type: 'Postgraduate',
       duration: '2 years',
@@ -55,6 +67,18 @@ export class ResidentialProgrammesComponent {
         'Specialisations: Old Testament, New Testament, Christian Theology, History of Christianity, Missiology',
         'Minimum one year of ministerial experience required after B.D. (except for women)',
         'Language requirements apply for Old Testament and New Testament tracks',
+      ],
+    },
+    {
+      name: 'Master of Divinity (M.Div.)',
+      type: 'Postgraduate',
+      duration: '3 years',
+      summary:
+        'Equips students for advanced pastoral leadership, preaching, theology, and contextual ministry with an emphasis on both scholarship and practical formation.',
+      points: [
+        'Biblical and theological foundations for leadership',
+        'Mission, pastoral care and church leadership training',
+        'Designed for those preparing for wider ministry responsibilities',
       ],
     },
     {

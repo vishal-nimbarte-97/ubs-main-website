@@ -1,0 +1,18 @@
+<section class="panel">
+  <p class="panel-intro">Welcome back. Use the sections on the left to manage the site.</p>
+
+  <div class="overview-grid">
+    <div class="overview-card">
+      <span class="overview-label">Live Broadcast</span>
+      <span class="overview-value" [class.on]="isLive">{{ isLive ? 'ON AIR' : 'Offline' }}</span>
+    </div>
+    <div class="overview-card">
+      <span class="overview-label">Announcements</span>
+      <span class="overview-value">{{ announcements.length }}</span>
+    </div>
+    <div class="overview-card">
+      <span class="overview-label">Upcoming Events</span>
+      <span class="overview-value">{{ eventItems.length }}</span>
+    </div>
+  </div>
+</section>

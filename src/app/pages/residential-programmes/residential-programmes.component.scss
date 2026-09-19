@@ -181,15 +181,24 @@ ul {
 }
 
 .programme-directory__heading {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.4fr);
+  gap: 1.5rem 2.5rem;
   align-items: end;
-  justify-content: space-between;
-  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
-.programme-directory__heading p {
-  max-width: 28rem;
+.programme-directory__heading > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.programme-directory__heading > p {
+  max-width: none;
   margin: 0;
+  color: var(--slate);
+  line-height: 1.8;
 }
 
 .downloads-heading {
@@ -420,8 +429,8 @@ ul {
   }
 
   .programme-directory__heading {
+    grid-template-columns: 1fr;
     align-items: start;
-    flex-direction: column;
   }
 
   .downloads-heading {

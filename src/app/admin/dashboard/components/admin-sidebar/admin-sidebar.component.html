@@ -1,0 +1,12 @@
+<nav class="sidebar-nav">
+  <button
+    *ngFor="let item of items"
+    type="button"
+    class="sidebar-link"
+    [class.active]="activeId === item.id"
+    (click)="selectItem.emit(item.id)"
+  >
+    <i class="fa-solid" [ngClass]="item.icon"></i>
+    <span>{{ item.label }}</span>
+  </button>
+</nav>

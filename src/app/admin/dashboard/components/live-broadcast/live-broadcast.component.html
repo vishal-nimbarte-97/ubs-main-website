@@ -1,0 +1,16 @@
+<section class="panel">
+  <p class="panel-intro">
+    Toggle this on when a service or event is streaming live. The public homepage will display the live banner and channel link.
+  </p>
+
+  <div class="live-card">
+    <div class="live-status" [class.on]="isLive">
+      <span class="live-dot"></span>
+      {{ isLive ? 'Currently Live' : 'Currently Offline' }}
+    </div>
+
+    <button class="live-toggle" [class.active]="isLive" type="button" (click)="toggle.emit()">
+      {{ isLive ? 'Stop Live' : 'Go Live' }}
+    </button>
+  </div>
+</section>

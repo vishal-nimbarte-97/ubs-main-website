@@ -13,30 +13,43 @@ interface LoginResponse {
 export class AuthService {
   private apiUrl = 'https://localhost:7257/api/Auth';
   private prodUrl='http://ubsapi.xplorelogic.in/api/Auth';
+  private readonly tokenKey = 'ubs-admin-token';
 
   constructor(private http: HttpClient) {}
+
+  private getSessionStorage(): Storage | null {
+    if (typeof window === 'undefined' || !window.sessionStorage) {
+      return null;
+    }
+
+    return window.sessionStorage;
+  }
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.prodUrl}/Login`, { email, password })
       .pipe(
         tap((res) => {
-          if (res.isSuccess && res.token) {
-            localStorage.setItem('ubs-admin-token', res.token);
+          const storage = this.getSessionStorage();
+          if (res.isSuccess && res.token && storage) {
+            storage.setItem(this.tokenKey, res.token);
           }
         })
       );
   }
 
   logout(): void {
-    localStorage.removeItem('ubs-admin-token');
+    const storage = this.getSessionStorage();
+    storage?.removeItem(this.tokenKey);
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('ubs-admin-token');
+    const storage = this.getSessionStorage();
+    return !!storage?.getItem(this.tokenKey);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('ubs-admin-token');
+    const storage = this.getSessionStorage();
+    return storage?.getItem(this.tokenKey) ?? null;
   }
 }

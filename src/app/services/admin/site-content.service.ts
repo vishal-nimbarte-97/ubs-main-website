@@ -26,15 +26,25 @@ export class SiteContentService {
     },
   };
 
+  private getSessionStorage(): Storage | null {
+    if (typeof window === 'undefined' || !window.sessionStorage) {
+      return null;
+    }
+
+    return window.sessionStorage;
+  }
+
   private readState(): SiteContentState {
     try {
-      const raw = localStorage.getItem(this.storageKey);
+      const storage = this.getSessionStorage();
+      const raw = storage?.getItem(this.storageKey);
       if (!raw) return this.defaultState;
 
+      const parsed = JSON.parse(raw);
       return {
         ...this.defaultState,
-        ...JSON.parse(raw),
-        live: { ...this.defaultState.live, ...(JSON.parse(raw)?.live ?? {}) },
+        ...parsed,
+        live: { ...this.defaultState.live, ...(parsed?.live ?? {}) },
       };
     } catch {
       return this.defaultState;
@@ -42,7 +52,12 @@ export class SiteContentService {
   }
 
   private saveState(state: SiteContentState): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(state));
+    const storage = this.getSessionStorage();
+    if (!storage) {
+      return;
+    }
+
+    storage.setItem(this.storageKey, JSON.stringify(state));
   }
 
   getAnnouncements(): string[] {

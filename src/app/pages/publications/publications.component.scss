@@ -129,6 +129,7 @@
 
 .publication-content {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 0.85rem;
 }
@@ -155,14 +156,20 @@
 }
 
 .publication-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: fit-content;
-  margin-top: 0.3rem;
-  padding: 0.8rem 1rem;
+  min-width: 9.5rem;
+  margin-top: auto;
+  padding: 0.8rem 1.1rem;
   border: none;
   border-radius: 6px;
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--white);
   font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
   cursor: not-allowed;
   opacity: 0.9;
 }

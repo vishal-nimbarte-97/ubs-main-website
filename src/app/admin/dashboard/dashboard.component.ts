@@ -5,8 +5,34 @@ import { Router } from '@angular/router';
 import { LiveStatusService } from '../../services/dashboard/live-status.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { SiteContentService } from '../../services/admin/site-content.service';
+import {
+  AdminContentService,
+  AdmissionsConfig,
+  GalleryItem,
+  NotificationItem,
+  PeopleProfile,
+  PublicationItem,
+  SiteConfig,
+  TuitionFeeRow,
+} from '../../services/admin/admin-content.service';
+import { AdminShellComponent } from './components/admin-shell/admin-shell.component';
+import { AdminSidebarComponent, AdminSidebarItem } from './components/admin-sidebar/admin-sidebar.component';
+import { DashboardOverviewComponent } from './components/overview/dashboard-overview.component';
+import { LiveBroadcastComponent } from './components/live-broadcast/live-broadcast.component';
 
-type SectionId = 'overview' | 'live' | 'notifications' | 'news' | 'events' | 'settings';
+type SectionId =
+  | 'overview'
+  | 'live'
+  | 'notifications'
+  | 'news'
+  | 'events'
+  | 'site-config'
+  | 'people'
+  | 'tuition'
+  | 'admissions'
+  | 'publications'
+  | 'gallery'
+  | 'student-zone';
 
 interface AdminSection {
   id: SectionId;
@@ -17,7 +43,7 @@ interface AdminSection {
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AdminShellComponent, AdminSidebarComponent, DashboardOverviewComponent, LiveBroadcastComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -28,6 +54,29 @@ export class DashboardComponent implements OnInit {
   newsItems: Array<{ title: string; excerpt: string }> = [];
   eventItems: Array<{ date: string; title: string; description: string }> = [];
 
+  notifications: NotificationItem[] = [];
+  people: PeopleProfile[] = [];
+  tuitionRows: TuitionFeeRow[] = [];
+  admissions: AdmissionsConfig = {
+    programmeType: 'residential',
+    academicYear: '2026-27',
+    fees: [],
+    deadlines: [],
+    contacts: [],
+  };
+  publications: PublicationItem[] = [];
+  gallery: GalleryItem[] = [];
+  studentZone: GalleryItem[] = [];
+
+  siteConfig: SiteConfig = {
+    admissionsEmail: '',
+    registrarEmail: '',
+    principalEmail: '',
+    libraryEmail: '',
+    supportPhone: '',
+    youtubeChannelUrl: '',
+  };
+
   newAnnouncement = '';
   newNewsTitle = '';
   newNewsExcerpt = '';
@@ -35,13 +84,65 @@ export class DashboardComponent implements OnInit {
   newEventTitle = '';
   newEventDescription = '';
 
-  sections: AdminSection[] = [
+  newNotification: NotificationItem = {
+    title: '',
+    description: '',
+    link: '',
+    isActive: true,
+  };
+
+  newPerson: PeopleProfile = {
+    name: '',
+    designation: '',
+    category: 'principal',
+    imageUrl: '',
+    quote: '',
+    bio: '',
+    isActive: true,
+  };
+
+  newTuitionRow: TuitionFeeRow = {
+    programmeName: '',
+    mainCampus: '',
+    onlineCampus: '',
+    extension: '',
+    academicYear: '2026-27',
+    isActive: true,
+  };
+
+  newPublication: PublicationItem = {
+    title: '',
+    description: '',
+    status: 'Draft',
+    category: 'Research',
+    coverImageUrl: '',
+    publishedDate: new Date().toISOString().slice(0, 10),
+    link: '',
+    isFeatured: false,
+    isActive: true,
+  };
+
+  newGalleryItem: GalleryItem = {
+    title: '',
+    category: 'Campus',
+    imageUrl: '',
+    altText: '',
+    isActive: true,
+  };
+
+  sections: AdminSidebarItem[] = [
     { id: 'overview', label: 'Overview', icon: 'fa-gauge-high' },
     { id: 'live', label: 'Live Broadcast', icon: 'fa-video' },
     { id: 'notifications', label: 'Announcements', icon: 'fa-bell' },
     { id: 'news', label: 'News', icon: 'fa-newspaper' },
     { id: 'events', label: 'Events', icon: 'fa-calendar-days' },
-    { id: 'settings', label: 'Site Settings', icon: 'fa-gear' },
+    { id: 'site-config', label: 'Site Config', icon: 'fa-gear' },
+    { id: 'people', label: 'People', icon: 'fa-user' },
+    { id: 'tuition', label: 'Tuition', icon: 'fa-indian-rupee-sign' },
+    { id: 'admissions', label: 'Admissions', icon: 'fa-clipboard-check' },
+    { id: 'publications', label: 'Publications', icon: 'fa-book' },
+    { id: 'gallery', label: 'Gallery', icon: 'fa-images' },
+    { id: 'student-zone', label: 'Student Zone', icon: 'fa-school' },
   ];
 
   activeSection: SectionId = 'overview';
@@ -51,11 +152,13 @@ export class DashboardComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private siteContent: SiteContentService,
+    private adminContent: AdminContentService,
   ) {}
 
   ngOnInit(): void {
     this.liveService.getStatus().subscribe((res) => (this.isLive = res.isLive));
     this.refreshContent();
+    this.loadBackendContent();
   }
 
   get currentSectionLabel(): string {
@@ -67,10 +170,52 @@ export class DashboardComponent implements OnInit {
     this.sidebarOpen = false;
   }
 
+  onSidebarSelect(id: string): void {
+    this.setSection(id as SectionId);
+  }
+
   refreshContent(): void {
     this.announcements = this.siteContent.getAnnouncements();
     this.newsItems = this.siteContent.getNews();
     this.eventItems = this.siteContent.getEvents();
+  }
+
+  loadBackendContent(): void {
+    this.adminContent.getLiveStatus().subscribe((res) => {
+      this.isLive = !!res.isLive;
+    });
+
+    this.adminContent.getSiteConfig().subscribe((res) => {
+      this.siteConfig = res;
+    });
+
+    this.adminContent.getNotifications().subscribe((res) => {
+      this.notifications = res;
+    });
+
+    this.adminContent.getPeople().subscribe((res) => {
+      this.people = res;
+    });
+
+    this.adminContent.getTuitionRows().subscribe((res) => {
+      this.tuitionRows = res;
+    });
+
+    this.adminContent.getAdmissions().subscribe((res) => {
+      this.admissions = res;
+    });
+
+    this.adminContent.getPublications().subscribe((res) => {
+      this.publications = res;
+    });
+
+    this.adminContent.getGalleryItems().subscribe((res) => {
+      this.gallery = res;
+    });
+
+    this.adminContent.getStudentZoneItems().subscribe((res) => {
+      this.studentZone = res;
+    });
   }
 
   addAnnouncement(): void {
@@ -122,7 +267,213 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleLive(): void {
-    this.liveService.setStatus(!this.isLive).subscribe((res) => (this.isLive = res.isLive));
+    this.liveService.setStatus(!this.isLive).subscribe((res) => {
+      this.isLive = res.isLive;
+    });
+  }
+
+  saveSiteConfig(): void {
+    this.adminContent.saveSiteConfig(this.siteConfig).subscribe((res) => {
+      this.siteConfig = res;
+    });
+  }
+
+  saveNotification(): void {
+    if (!this.newNotification.title.trim()) return;
+
+    this.adminContent.saveNotification(this.newNotification).subscribe((res) => {
+      this.notifications = [res, ...this.notifications];
+      this.newNotification = {
+        title: '',
+        description: '',
+        link: '',
+        isActive: true,
+      };
+    });
+  }
+
+  deleteNotification(index: number): void {
+    const item = this.notifications[index];
+    this.adminContent.deleteNotification(item.id).subscribe(() => {
+      this.notifications = this.notifications.filter((_, i) => i !== index);
+    });
+  }
+
+  savePerson(): void {
+    if (!this.newPerson.name.trim() || !this.newPerson.designation.trim()) return;
+
+    this.adminContent.savePerson(this.newPerson).subscribe((res) => {
+      this.people = [res, ...this.people];
+      this.newPerson = {
+        name: '',
+        designation: '',
+        category: 'principal',
+        imageUrl: '',
+        quote: '',
+        bio: '',
+        isActive: true,
+      };
+    });
+  }
+
+  deletePerson(index: number): void {
+    const item = this.people[index];
+    this.adminContent.deletePerson(item.id).subscribe(() => {
+      this.people = this.people.filter((_, i) => i !== index);
+    });
+  }
+
+  saveTuitionRow(): void {
+    if (!this.newTuitionRow.programmeName.trim()) return;
+
+    this.adminContent.saveTuitionRow(this.newTuitionRow).subscribe((res) => {
+      this.tuitionRows = [res, ...this.tuitionRows];
+      this.newTuitionRow = {
+        programmeName: '',
+        mainCampus: '',
+        onlineCampus: '',
+        extension: '',
+        academicYear: '2026-27',
+        isActive: true,
+      };
+    });
+  }
+
+  deleteTuitionRow(index: number): void {
+    const item = this.tuitionRows[index];
+    this.adminContent.deleteTuitionRow(item.id).subscribe(() => {
+      this.tuitionRows = this.tuitionRows.filter((_, i) => i !== index);
+    });
+  }
+
+  saveAdmissions(): void {
+    this.adminContent.saveAdmissions(this.admissions).subscribe((res) => {
+      this.admissions = res;
+    });
+  }
+
+  addAdmissionFee(): void {
+    this.admissions.fees = [...this.admissions.fees, { label: '', value: '' }];
+  }
+
+  removeAdmissionFee(index: number): void {
+    this.admissions.fees = this.admissions.fees.filter((_, i) => i !== index);
+  }
+
+  addAdmissionDeadline(): void {
+    this.admissions.deadlines = [...this.admissions.deadlines, { programme: '', date: '' }];
+  }
+
+  removeAdmissionDeadline(index: number): void {
+    this.admissions.deadlines = this.admissions.deadlines.filter((_, i) => i !== index);
+  }
+
+  addAdmissionContact(): void {
+    this.admissions.contacts = [...this.admissions.contacts, { label: '', email: '' }];
+  }
+
+  removeAdmissionContact(index: number): void {
+    this.admissions.contacts = this.admissions.contacts.filter((_, i) => i !== index);
+  }
+
+  savePublication(): void {
+    if (!this.newPublication.title.trim()) return;
+
+    this.adminContent.savePublication(this.newPublication).subscribe((res) => {
+      this.publications = [res, ...this.publications];
+      this.newPublication = {
+        title: '',
+        description: '',
+        status: 'Draft',
+        category: 'Research',
+        coverImageUrl: '',
+        publishedDate: new Date().toISOString().slice(0, 10),
+        link: '',
+        isFeatured: false,
+        isActive: true,
+      };
+    });
+  }
+
+  deletePublication(index: number): void {
+    const item = this.publications[index];
+    this.adminContent.deletePublication(item.id).subscribe(() => {
+      this.publications = this.publications.filter((_, i) => i !== index);
+    });
+  }
+
+  onImageSelected(event: Event, target: 'person' | 'publication' | 'gallery' | 'student-zone'): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+
+      if (target === 'person') {
+        this.newPerson.imageUrl = dataUrl;
+      } else if (target === 'publication') {
+        this.newPublication.coverImageUrl = dataUrl;
+      } else {
+        this.newGalleryItem.imageUrl = dataUrl;
+      }
+    };
+
+    reader.readAsDataURL(file);
+    input.value = '';
+  }
+
+  saveGalleryItem(): void {
+    if (!this.newGalleryItem.title.trim() || !this.newGalleryItem.imageUrl.trim()) return;
+
+    this.adminContent.saveGalleryItem(this.newGalleryItem).subscribe((res) => {
+      this.gallery = [res, ...this.gallery];
+      this.newGalleryItem = {
+        title: '',
+        category: 'Campus',
+        imageUrl: '',
+        altText: '',
+        isActive: true,
+      };
+    });
+  }
+
+  deleteGalleryItem(index: number): void {
+    const item = this.gallery[index];
+    this.adminContent.deleteGalleryItem(item.id).subscribe(() => {
+      this.gallery = this.gallery.filter((_, i) => i !== index);
+    });
+  }
+
+  saveStudentZoneItem(): void {
+    if (!this.newGalleryItem.title.trim() || !this.newGalleryItem.imageUrl.trim()) return;
+
+    const studentZoneItem: GalleryItem = {
+      ...this.newGalleryItem,
+      category: 'Student Zone',
+    };
+
+    this.adminContent.saveStudentZoneItem(studentZoneItem).subscribe((res) => {
+      this.studentZone = [res, ...this.studentZone];
+      this.newGalleryItem = {
+        title: '',
+        category: 'Campus',
+        imageUrl: '',
+        altText: '',
+        isActive: true,
+      };
+    });
+  }
+
+  deleteStudentZoneItem(index: number): void {
+    const item = this.studentZone[index];
+    this.adminContent.deleteStudentZoneItem(item.id).subscribe(() => {
+      this.studentZone = this.studentZone.filter((_, i) => i !== index);
+    });
   }
 
   logout(): void {

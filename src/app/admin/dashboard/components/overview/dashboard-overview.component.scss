@@ -1,0 +1,54 @@
+@use '../shared/admin-shared';
+
+:host {
+  display: block;
+}
+
+.panel {
+  display: grid;
+  gap: 20px;
+}
+
+.panel-intro {
+  max-width: 640px;
+  color: #5b6675;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 740px;
+}
+
+.overview-card {
+  background: #fff;
+  border: 1px solid rgba(11, 37, 69, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(11, 37, 69, 0.05);
+}
+
+.overview-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5b6675;
+}
+
+.overview-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0b2545;
+}
+
+.overview-value.on {
+  color: #b42318;
+}
