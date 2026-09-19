@@ -28,16 +28,34 @@
           and confidence.
         </p>
       </div>
-      <div class="journey-banner" aria-hidden="true"></div>
+      <div
+        class="journey-banner"
+        [style.background-image]="'linear-gradient(90deg, rgba(25, 0, 8, 0.58), rgba(25, 0, 8, 0.15)), url(' + selectedStep.image + ')'"
+        aria-label="Selected application stage"
+      >
+        <div class="journey-banner__content">
+          <span class="journey-badge">{{ selectedStep.badge }}</span>
+          <div>
+            <span class="journey-label">Current step</span>
+            <h3>{{ selectedStep.title }}</h3>
+          </div>
+        </div>
+      </div>
       <div class="steps-grid">
-        @for (step of steps; track step.number) {
-          <article class="step-card">
+        @for (step of steps; track step.title; let i = $index) {
+          <button
+            type="button"
+            class="step-card"
+            [class.active]="selectedStepIndex === i"
+            [attr.aria-pressed]="selectedStepIndex === i"
+            (click)="selectStep(i)"
+          >
             <div>
-              <span class="step-number">{{ step.number }}</span>
+              <span class="step-badge">{{ step.badge }}</span>
               <h3>{{ step.title }}</h3>
               <p>{{ step.description }}</p>
             </div>
-          </article>
+          </button>
         }
       </div>
     </div>

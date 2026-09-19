@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 interface ApplicationStep {
-  number: string;
+  badge: string;
   title: string;
   description: string;
   image: string;
@@ -20,33 +20,60 @@ interface Programme {
   templateUrl: './apply.component.html',
   styleUrl: './apply.component.scss',
 })
-export class ApplyComponent {
+export class ApplyComponent implements OnInit, OnDestroy {
+  selectedStepIndex = 0;
+  private autoCycleTimer?: number;
+
   readonly steps: ApplicationStep[] = [
     {
-      number: '1',
+      badge: 'C',
       title: 'Connect to us',
       description: 'Write to registrar@ubs.ac.in',
-      image: 'assets/apply/step-connect.webp',
+      image:
+        'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      number: '2',
+      badge: 'D',
       title: 'Download',
       description: 'Download the application.',
-      image: 'assets/apply/step-download.webp',
+      image:
+        'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      number: '3',
+      badge: 'A',
       title: 'Application',
       description: 'Duly fill the application.',
-      image: 'assets/apply/step-apply.webp',
+      image:
+        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
     },
     {
-      number: '4',
+      badge: 'R',
       title: 'Review',
       description: 'Send us the application.',
-      image: 'assets/apply/step-send.webp',
+      image:
+        'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80',
     },
   ];
+
+  ngOnInit(): void {
+    this.autoCycleTimer = window.setInterval(() => {
+      this.selectedStepIndex = (this.selectedStepIndex + 1) % this.steps.length;
+    }, 3000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.autoCycleTimer) {
+      window.clearInterval(this.autoCycleTimer);
+    }
+  }
+
+  get selectedStep(): ApplicationStep {
+    return this.steps[this.selectedStepIndex];
+  }
+
+  selectStep(index: number): void {
+    this.selectedStepIndex = index;
+  }
 
   readonly programmes: Programme[] = [
     {

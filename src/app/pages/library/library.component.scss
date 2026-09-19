@@ -529,18 +529,24 @@ h2 span {
 }
 
 .highlight-grid {
-  display: grid;
-  grid-template-columns: 1.25fr 0.9fr 0.9fr;
-
+  display: flex;
+  align-items: stretch;
   gap: 20px;
 }
 
 .highlight-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
   background: white;
-
   border: 1px solid var(--border);
-
+  overflow: hidden;
   transition: 0.35s ease;
+}
+
+.large-card {
+  flex: 1.25 1 0;
 }
 
 .highlight-card:hover {
@@ -551,28 +557,27 @@ h2 span {
 
 .card-image {
   position: relative;
-  height: 280px;
-
+  height: 240px;
   overflow: hidden;
+  background: #f4f0eb;
 }
 
 .large-card .card-image {
-  height: 340px;
+  height: 240px;
 }
 
 .card-image img {
   display: block;
   width: 100%;
   height: 100%;
-
   object-fit: cover;
-
+  object-position: center;
   transition: 0.6s ease;
 }
 
 .highlight-card:hover .card-image img {
-  transform: scale(1.08);
-  filter: saturate(1.12) contrast(1.04);
+  transform: scale(1.04);
+  filter: saturate(1.08) contrast(1.03);
 }
 
 .highlight-card:nth-child(2) .card-image img {
@@ -603,42 +608,40 @@ h2 span {
 
 .card-content {
   position: relative;
-
-  padding: 28px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 22px 20px 24px;
 }
 
 .card-content > span {
   color: var(--gold);
-
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
 .card-content h3 {
-  margin: 9px 0;
-
-  font-size: 26px;
+  margin: 10px 0 12px;
+  font-size: 22px;
+  line-height: 1.2;
 }
 
 .card-content p {
   margin: 0;
-
   color: var(--gray-500);
-
   font-size: 13px;
   line-height: 1.7;
 }
 
 .card-arrow {
-  position: absolute;
-
-  right: 24px;
-  bottom: 24px;
-
+  margin-top: auto;
+  align-self: flex-end;
   color: var(--navy);
-
   font-size: 20px;
+  line-height: 1;
+  padding-top: 18px;
 }
 
 /* =========================================================
@@ -1361,11 +1364,16 @@ h2 span {
   }
 
   .highlight-grid {
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .highlight-card {
+    flex: 1 1 calc(50% - 20px);
   }
 
   .large-card {
-    grid-column: span 2;
+    flex-basis: 100%;
   }
 
   .facility-grid {
@@ -1450,11 +1458,14 @@ h2 span {
   }
 
   .highlight-grid {
+    display: grid;
     grid-template-columns: 1fr;
   }
 
+  .highlight-card,
   .large-card {
-    grid-column: auto;
+    flex: none;
+    width: 100%;
   }
 
   .large-card .card-image,
