@@ -32,6 +32,7 @@ import {
   TESTIMONIALS,
 } from '../../data';
 import { LiveStatusService } from '../../services/dashboard/live-status.service';
+import { SiteContentService } from '../../services/admin/site-content.service';
 
 @Component({
   selector: 'app-home',
@@ -42,7 +43,8 @@ import { LiveStatusService } from '../../services/dashboard/live-status.service'
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private router = inject(Router);
-  private liveStatusService = inject(LiveStatusService); // 👈 NEW
+  private liveStatusService = inject(LiveStatusService);
+  private siteContentService = inject(SiteContentService);
   private routerSubscription?: Subscription;
 
   @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
@@ -174,6 +176,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.events = this.siteContentService.getEvents();
+    this.news = this.siteContentService.getNews();
     // Build static calendar data before the first template render.
     this.buildCalendar();
 

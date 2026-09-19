@@ -153,7 +153,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   padding: 12px 24px;
+  min-height: 84px;
 }
 
 .logo-wrapper {
@@ -161,6 +163,8 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
+  min-width: 0;
+  flex: 0 0 auto;
 }
 
 .logo-img {
@@ -195,6 +199,8 @@
   display: flex;
   flex-direction: column;
   line-height: 1.15;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .logo-mark {
@@ -213,6 +219,7 @@
   font-size: 25px;
   color: var(--navy);
   text-transform: lowercase;
+  white-space: nowrap;
 }
 
 .logo-tagline {
@@ -241,12 +248,23 @@
 
 .nav-links {
   display: flex;
-  gap: 22px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 20px;
   list-style: none;
   margin: 0;
   padding: 0;
-  align-items: center;
   z-index: 10;
+  flex: 1 1 auto;
+}
+
+.nav-links > li,
+.nav-dropdown,
+.nav-links > li > a,
+.nav-links > a,
+.nav-dropdown-trigger {
+  white-space: nowrap;
 }
 
 .nav-links > li > a,
@@ -254,7 +272,8 @@
   text-decoration: none;
   color: var(--navy);
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.97rem;
+  white-space: nowrap;
 }
 
 .nav-links > a.active,
@@ -276,6 +295,7 @@
   font-size: 1rem;
   cursor: pointer;
   text-align: left;
+  white-space: nowrap;
 }
 
 .subnav {
@@ -507,11 +527,22 @@
 // RESPONSIVE: Tablet band: applies only between 768px and 1024px viewport width.
 @media (min-width: 768px) and (max-width: 1024px) {
   .nav-links {
-    gap: 14px;
+    gap: 12px;
   }
 
   .nav-links > li > a {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .nav-links {
+    gap: 16px;
+  }
+
+  .nav-links > li > a,
+  .nav-dropdown-trigger {
+    font-size: 0.9rem;
   }
 }
 
@@ -535,14 +566,7 @@
   }
 
   .main-nav {
-    padding: 8px 24px; // was 12px 24px
-  }
-
-  // RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
-  @include mobile {
-    .main-nav {
-      padding: 6px 16px; // was 10px 16px
-    }
+    padding: 6px 16px;
   }
 
   .logo-img {
@@ -559,9 +583,17 @@
     font-size: 1.05rem;
   }
 
+  .logo-tagline {
+    display: none;
+  }
+
   .nav-links {
     width: 85%;
     padding: 80px 20px;
+  }
+
+  .admin-link {
+    font-size: 0.9rem;
   }
 
   .enquiry-panel,

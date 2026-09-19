@@ -1,5 +1,4 @@
 <div class="admin-shell">
-  <!-- ============ SIDEBAR ============ -->
   <aside class="admin-sidebar" [class.open]="sidebarOpen">
     <div class="sidebar-brand">
       <div class="brand-mark">UBS</div>
@@ -24,10 +23,8 @@
     </button>
   </aside>
 
-  <!-- overlay for mobile drawer -->
   <div class="sidebar-scrim" *ngIf="sidebarOpen" (click)="sidebarOpen = false"></div>
 
-  <!-- ============ MAIN AREA ============ -->
   <div class="admin-main">
     <header class="admin-topbar">
       <button class="burger-btn" (click)="sidebarOpen = !sidebarOpen" aria-label="Toggle menu">
@@ -37,7 +34,6 @@
     </header>
 
     <main class="admin-content">
-      <!-- ---------- OVERVIEW ---------- -->
       <section *ngIf="activeSection === 'overview'" class="panel">
         <p class="panel-intro">Welcome back. Use the sections on the left to manage the site.</p>
 
@@ -47,22 +43,19 @@
             <span class="overview-value" [class.on]="isLive">{{ isLive ? 'ON AIR' : 'Offline' }}</span>
           </div>
           <div class="overview-card">
-            <span class="overview-label">Notifications</span>
-            <span class="overview-value">—</span>
+            <span class="overview-label">Announcements</span>
+            <span class="overview-value">{{ announcements.length }}</span>
           </div>
           <div class="overview-card">
-            <span class="overview-label">Site Settings</span>
-            <span class="overview-value">—</span>
+            <span class="overview-label">Upcoming Events</span>
+            <span class="overview-value">{{ eventItems.length }}</span>
           </div>
         </div>
       </section>
 
-      <!-- ---------- LIVE BROADCAST ---------- -->
       <section *ngIf="activeSection === 'live'" class="panel">
         <p class="panel-intro">
-          Toggle this on when a service or event is streaming live. The
-          <strong>Live</strong> button on the public homepage will light up and link
-          visitors to the channel.
+          Toggle this on when a service or event is streaming live. The public homepage will display the live banner and channel link.
         </p>
 
         <div class="live-card">
@@ -77,16 +70,76 @@
         </div>
       </section>
 
-      <!-- ---------- NOTIFICATIONS (placeholder) ---------- -->
       <section *ngIf="activeSection === 'notifications'" class="panel">
-        <div class="empty-state">
-          <i class="fa-solid fa-bell"></i>
-          <h3>Notifications</h3>
-          <p>Manage official notices and circulars here. Coming soon.</p>
+        <div class="content-form-card">
+          <h3>Announcements</h3>
+          <div class="form-row">
+            <input [(ngModel)]="newAnnouncement" type="text" placeholder="Add a new announcement" />
+            <button class="primary-btn" type="button" (click)="addAnnouncement()">Add</button>
+          </div>
+        </div>
+
+        <div class="list-card">
+          <h4>Published announcements</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of announcements; let i = index">
+              <span>{{ item }}</span>
+              <button type="button" (click)="removeAnnouncement(i)">Remove</button>
+            </li>
+          </ul>
         </div>
       </section>
 
-      <!-- ---------- SITE SETTINGS (placeholder) ---------- -->
+      <section *ngIf="activeSection === 'news'" class="panel">
+        <div class="content-form-card">
+          <h3>News posts</h3>
+          <div class="form-stack">
+            <input [(ngModel)]="newNewsTitle" type="text" placeholder="News title" />
+            <textarea [(ngModel)]="newNewsExcerpt" rows="4" placeholder="Short summary"></textarea>
+            <button class="primary-btn" type="button" (click)="addNews()">Publish post</button>
+          </div>
+        </div>
+
+        <div class="list-card">
+          <h4>Current news</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of newsItems; let i = index">
+              <div>
+                <strong>{{ item.title }}</strong>
+                <small>{{ item.excerpt }}</small>
+              </div>
+              <button type="button" (click)="removeNews(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section *ngIf="activeSection === 'events'" class="panel">
+        <div class="content-form-card">
+          <h3>Events calendar</h3>
+          <div class="form-stack">
+            <input [(ngModel)]="newEventDate" type="date" />
+            <input [(ngModel)]="newEventTitle" type="text" placeholder="Event title" />
+            <textarea [(ngModel)]="newEventDescription" rows="4" placeholder="Event description"></textarea>
+            <button class="primary-btn" type="button" (click)="addEvent()">Save event</button>
+          </div>
+        </div>
+
+        <div class="list-card">
+          <h4>Published events</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of eventItems; let i = index">
+              <div>
+                <strong>{{ item.date }}</strong>
+                <small>{{ item.title }}</small>
+                <span>{{ item.description }}</span>
+              </div>
+              <button type="button" (click)="removeEvent(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <section *ngIf="activeSection === 'settings'" class="panel">
         <div class="empty-state">
           <i class="fa-solid fa-gear"></i>

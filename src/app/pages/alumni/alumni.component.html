@@ -9,24 +9,66 @@
     </div>
   </section>
 
-  <section class="alumni-story section">
+  <section class="early-pioneers section">
     <div class="container">
-      <div class="alumni-story__layout">
-        <div class="alumni-story__image-wrap">
-          <img
-            [src]="alumniStory.image"
-            [alt]="alumniStory.title"
-            loading="lazy"
-          />
-        </div>
+      <div class="pioneers-list">
+        <article
+          class="pioneer-card"
+          *ngFor="let pioneer of pioneers"
+          (click)="openPioneer(pioneer)"
+          (keydown.enter)="openPioneer(pioneer)"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'View details for ' + pioneer.name"
+        >
+          <div class="pioneer-image-wrap">
+            <img [src]="pioneer.image" [alt]="pioneer.name" loading="lazy" />
+            <div class="pioneer-image-info">
+              <span class="pioneer-period">{{ pioneer.period }}</span>
+              <h3>{{ pioneer.name }}</h3>
+            </div>
+          </div>
 
-        <div class="alumni-story__content">
-          <span class="section-label">OUR ALUMNI</span>
-          <h2>Faithful leaders shaped by <span>UBS</span></h2>
-          <p>{{ alumniStory.description }}</p>
-          <p>{{ alumniStory.highlight }}</p>
-        </div>
+          <div class="pioneer-body">
+            <p class="pioneer-role">{{ pioneer.title }}</p>
+            <h3>{{ pioneer.name }}</h3>
+            <p>{{ pioneer.summary }}</p>
+            <button type="button" class="read-more">View details</button>
+          </div>
+        </article>
       </div>
     </div>
   </section>
+
+  <div class="pioneer-modal" *ngIf="selectedPioneer" (click)="closePioneer()">
+    <div
+      class="pioneer-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pioneer-title"
+      (click)="$event.stopPropagation()"
+    >
+      <button type="button" class="close-btn" (click)="closePioneer()" aria-label="Close details">
+        ×
+      </button>
+
+      <div class="pioneer-modal__image">
+        <img [src]="selectedPioneer.image" [alt]="selectedPioneer.name" />
+      </div>
+
+      <div class="pioneer-modal__content">
+        <span class="pioneer-period">{{ selectedPioneer.period }}</span>
+        <h3 id="pioneer-title">{{ selectedPioneer.name }}</h3>
+        <p class="pioneer-role">{{ selectedPioneer.title }}</p>
+
+        <div *ngIf="selectedPioneer.introParagraphs?.length" class="pioneer-modal__story">
+          <p *ngFor="let paragraph of selectedPioneer.introParagraphs">
+            {{ paragraph }}
+          </p>
+        </div>
+
+        <p>{{ selectedPioneer.details }}</p>
+      </div>
+    </div>
+  </div>
 </div>

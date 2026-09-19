@@ -9,6 +9,7 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { SiteContentService } from '../../services/admin/site-content.service';
 
 @Component({
   selector: 'app-header',
@@ -19,16 +20,14 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  auth = inject(AuthService); 
+  auth = inject(AuthService);
+  siteContent = inject(SiteContentService);
   isScrolled = false;
   mobileMenuOpen = false;
   openDropdown: 'about' | 'administration' | 'academics' | null = null;
   announcementOpen = false;
 
-  announcements = [
-    'Applications open for the 2026–27 academic year — Bachelor of Divinity, M.Th. & D.Th.',
-    'UBS Foundation Day Celebration — 12th September 2026',
-  ];
+  announcements: string[] = [];
 
   admissionDeadline = new Date('2026-09-30T23:59:59');
   countdownText = '';
@@ -38,6 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private isBrowser = isPlatformBrowser(this.platformId);
 
   ngOnInit(): void {
+    this.announcements = this.siteContent.getAnnouncements();
     // Render the initial countdown immediately, then refresh it once per second.
     this.updateCountdown();
     if (!this.isBrowser) return;

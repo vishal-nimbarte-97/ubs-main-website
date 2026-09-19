@@ -1,7 +1,13 @@
-<app-header></app-header>
+<ng-container *ngIf="!isAdminRoute; else adminPortal">
+  <app-header></app-header>
 
-<main class="page-content" [class.is-home]="isHome">
+  <main class="page-content" [class.is-home]="isHome">
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer></app-footer>
+</ng-container>
+
+<ng-template #adminPortal>
   <router-outlet></router-outlet>
-</main>
-
-<app-footer></app-footer>
+</ng-template>
