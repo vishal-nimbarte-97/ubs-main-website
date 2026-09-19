@@ -170,15 +170,16 @@
 }
 
 .pioneers-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 26px;
-  justify-items: center;
+  align-items: center;
 }
 
 .pioneer-card {
-  width: min(100%, 980px);
+  width: min(100%, 420px);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: stretch;
   background: #fff;
   border: 1px solid var(--border);
@@ -198,16 +199,19 @@
 
 .pioneer-image-wrap {
   position: relative;
-  width: 280px;
-  min-width: 280px;
-  height: auto;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  background: #f4efe8;
 }
 
 .pioneer-image-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
   display: block;
+  object-fit: contain;
+  object-position: center center;
+  background: #f4efe8;
 }
 
 .pioneer-image-info {
@@ -230,8 +234,7 @@
 }
 
 .pioneer-body {
-  flex: 1;
-  padding: 26px 24px 22px;
+  padding: 22px 20px 20px;
 }
 
 .pioneer-period {
@@ -358,7 +361,7 @@
   .pioneer-image-wrap {
     width: 100%;
     min-width: 100%;
-    height: 280px;
+    height: 320px;
   }
 
   .pioneer-modal__dialog {
@@ -384,7 +387,7 @@
   }
 
   .pioneer-image-wrap {
-    height: 250px;
+    height: 290px;
   }
 
   .pioneer-modal__content {

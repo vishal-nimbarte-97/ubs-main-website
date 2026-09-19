@@ -10,6 +10,7 @@ interface Faculty {
   department: string;
   email: string;
   image: string;
+  pdfPath?: string;
 
   qualification: string[];
   specialization: string[];
@@ -334,6 +335,7 @@ export class FacultyComponent {
       department: 'History of Christianity',
       email: 'bimol@ubs.ac.in',
       image: '../../../assets/faculty/image_9.png',
+      pdfPath: 'assets/faculty-pdf/Dr. L. Bimol.pdf',
 
       qualification: [
         'Doctor of Theology - TTS/Senate of Serampore',

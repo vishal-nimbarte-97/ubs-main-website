@@ -305,11 +305,8 @@
 
       <div class="modal-footer">
         <a
-          [href]="
-            'assets/faculty-pdfs/faculty-' +
-            faculty.id +
-            '.pdf#toolbar=0&navpanes=0&scrollbar=1'
-          "
+          *ngIf="faculty.pdfPath"
+          [href]="faculty.pdfPath + '#toolbar=0&navpanes=0&scrollbar=1'"
           class="pdf-button"
           target="_blank"
           rel="noopener"
