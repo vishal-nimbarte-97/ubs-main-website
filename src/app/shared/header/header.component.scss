@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as *;
+
 .top-bar {
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--white);
@@ -16,7 +18,7 @@
 }
 
 .countdown-chip {
-  background: #c9962b;
+  background: var(--gold);
   color: var(--navy);
   padding: 12px 21px;
   border-radius: 5px;
@@ -170,7 +172,7 @@
 }
 
 // RESPONSIVE: Tablets / large phones (landscape): styles apply at 768px viewport width and below.
-@media (max-width: 768px) {
+@include tablet {
   .logo-img {
     width: 48px;
     height: 48px;
@@ -180,7 +182,7 @@
 }
 
 // RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
-@media (max-width: 600px) {
+@include mobile {
   .logo-img {
     width: 42px;
     height: 42px;
@@ -198,7 +200,7 @@
 .logo-mark {
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: var(--gold-light);
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-display);
   font-weight: 700;
   padding: 8px 12px;
   border-radius: var(--radius);
@@ -206,7 +208,7 @@
 }
 
 .logo-name {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 25px;
   color: var(--navy);
@@ -221,7 +223,7 @@
 }
 
 // RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
-@media (max-width: 600px) {
+@include mobile {
   .logo-name {
     font-size: 0.85rem;
   }
@@ -231,7 +233,7 @@
 }
 
 .logo-sub {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.92rem;
   color: var(--navy);
@@ -514,7 +516,7 @@
 }
 
 // RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
-@media (max-width: 600px) {
+@include mobile {
   .top-bar-inner {
     padding: 8px 16px;
     justify-content: center;
@@ -537,7 +539,7 @@
   }
 
   // RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
-  @media (max-width: 600px) {
+  @include mobile {
     .main-nav {
       padding: 6px 16px; // was 10px 16px
     }

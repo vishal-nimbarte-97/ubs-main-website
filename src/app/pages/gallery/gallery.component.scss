@@ -7,18 +7,16 @@
 :host {
   display: block;
 
+  /* Page-specific aliases only — gold/gold-light/white already
+     come from the global tokens, and font now follows the site
+     default (Roboto/Playfair) instead of Montserrat. */
   --black: #171313;
   --dark: var(--navy-2);
   --gray: var(--slate);
   --light: var(--parchment);
-  --white: #fff;
   --border: #ded4ce;
   --maroon: var(--navy);
   --maroon-dark: var(--navy-2);
-  --gold: #c9962b;
-  --gold-light: #e7c877;
-
-  font-family: "Montserrat", "Trebuchet MS", sans-serif;
 }
 
 * {

@@ -3,12 +3,11 @@
 }
 
 .apply-page {
-  --wine: #720020;
+  --wine: var(--maroon);
   --wine-deep: #39000f;
-  --gold: #e2b455;
-  --cream: #fbf8f2;
-  --ink: #241b1d;
-  --muted: #71676a;
+  --gold: var(--gold-mid);
+  --ink: var(--charcoal);
+  --muted: var(--taupe);
   color: var(--ink);
   overflow: hidden;
   background: var(--cream);
@@ -68,21 +67,11 @@
 
 .apply-hero__content {
   padding: 7rem 0 8rem;
-  color: #fff;
+  color: var(--white);
   animation: rise-in 0.8s both ease-out;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 1.1rem;
-  color: var(--gold);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-}
+/* .eyebrow now comes from the global stylesheet (styles.scss) */
 
 .eyebrow::before {
   width: 2rem;
@@ -99,14 +88,13 @@ h1,
 h2,
 h3 {
   margin-top: 0;
-  font-family: Georgia, "Times New Roman", serif;
   overflow-wrap: anywhere;
 }
 
 h1 {
   max-width: 700px;
   margin-bottom: 1.25rem;
-  color: #fff;
+  color: var(--white);
   font-size: clamp(3.3rem, 7.3vw, 6.75rem);
   line-height: 0.9;
   letter-spacing: -0.065em;
@@ -177,7 +165,7 @@ em {
 
 .button--light {
   color: var(--gold);
-  background: #fff;
+  background: var(--white);
 }
 
 .button--gold {
@@ -192,7 +180,7 @@ em {
 
 .steps-section {
   position: relative;
-  background: #fff;
+  background: var(--white);
 }
 
 .journey-banner {
@@ -212,7 +200,7 @@ em {
   left: -2%;
   height: 54px;
   content: "";
-  background: #720020;
+  background: var(--maroon);
   clip-path: polygon(
     0 56%,
     18% 41%,
@@ -285,7 +273,7 @@ em {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 50%;
-  color: #fff;
+  color: var(--white);
   background: radial-gradient(
     circle at 35% 28%,
     #36343d 0,
@@ -295,7 +283,7 @@ em {
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
     inset 0 1px 2px rgba(255, 255, 255, 0.25);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: clamp(3.3rem, 5vw, 5.25rem);
   font-weight: 800;
   line-height: 1;
@@ -314,7 +302,7 @@ em {
   background: radial-gradient(
     circle at 35% 28%,
     #8e1740 0,
-    #720020 48%,
+    var(--maroon) 48%,
     var(--navy) 100%
   );
   box-shadow:
@@ -326,7 +314,6 @@ em {
 .step-card h3 {
   margin: 0 0 0.3rem;
   color: #1e1b1c;
-  font-family: Arial, sans-serif;
   font-size: clamp(1rem, 1.7vw, 1.32rem);
   font-weight: 850;
   letter-spacing: -0.02em;
@@ -342,7 +329,7 @@ em {
 }
 
 .programme-section {
-  background: #fff;
+  background: var(--white);
 }
 
 .programme-grid {
@@ -359,7 +346,7 @@ em {
   overflow: hidden;
   color: inherit;
   border: 1px solid #eee7e4;
-  background: #fff;
+  background: var(--white);
   text-decoration: none;
   transition:
     transform 0.32s ease,
@@ -402,7 +389,7 @@ em {
   z-index: 1;
   bottom: 0.95rem;
   left: 1rem;
-  color: #fff;
+  color: var(--white);
   font-size: 0.66rem;
   font-weight: 850;
   letter-spacing: 0.12em;
@@ -453,7 +440,7 @@ em {
   width: 100%;
   margin-top: 1.4rem;
   padding: 0.78rem 0.9rem;
-  color: #fff;
+  color: var(--white);
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
   font-size: 0.66rem;
   font-weight: 850;
@@ -507,7 +494,7 @@ em {
 
 .contact-section h2 {
   margin-bottom: 1rem;
-  color: #fff;
+  color: var(--white);
 }
 
 .contact-section p {

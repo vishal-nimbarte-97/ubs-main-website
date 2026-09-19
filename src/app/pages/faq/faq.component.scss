@@ -1,11 +1,8 @@
 .academic-page {
-  --navy: #0b2545;
-  --navy-2: #123b6b;
-  --gold: #e2b455;
-  --paper: #fbf8f2;
-  --cream: #fbf8f2;
-  --ink: #241b1d;
-  --slate: #71676a;
+  --gold: var(--gold-mid);
+  --paper: var(--cream);
+  --ink: var(--charcoal);
+  --slate: var(--taupe);
   color: var(--ink);
   background: var(--cream);
 }
@@ -47,26 +44,17 @@
   );
 }
 
-.eyebrow {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: var(--gold);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
+/* .eyebrow now comes from the global stylesheet (styles.scss) */
 
 h1,
 h2 {
   color: var(--navy);
-  font-family: Georgia, "Times New Roman", serif;
   overflow-wrap: anywhere;
 }
 
 h1 {
   margin: 0;
-  color: #fff;
+  color: var(--white);
   font-size: clamp(3.3rem, 7.3vw, 6.75rem);
   line-height: 1;
 }
@@ -100,7 +88,7 @@ p {
 
   &__pill {
     padding: 0.55rem 1.1rem;
-    border: 1px solid #dfe4eb;
+    border: 1px solid var(--border-blue);
     border-radius: 999px;
     color: var(--navy);
     font-size: 0.85rem;
@@ -135,7 +123,7 @@ p {
 
 details {
   padding: 1.25rem 0;
-  border-bottom: 1px solid #dfe4eb;
+  border-bottom: 1px solid var(--border-blue);
 }
 
 summary {
@@ -171,7 +159,7 @@ details p {
   gap: 0.7rem;
   margin-top: 2rem;
   padding: 0.8rem 1rem;
-  color: #fff;
+  color: var(--white);
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
   text-decoration: none;
   font-weight: 700;
@@ -188,7 +176,7 @@ details p {
 .academic-contact {
   padding: clamp(3rem, 7vw, 5rem) 0;
   background: linear-gradient(135deg, var(--navy), var(--navy-2));
-  color: #fff;
+  color: var(--white);
 
   &__inner {
     display: flex;
@@ -200,7 +188,7 @@ details p {
 
   h2 {
     margin: 0;
-    color: #fff;
+    color: var(--white);
     font-size: clamp(1.5rem, 3.5vw, 2.2rem);
   }
 
@@ -210,7 +198,7 @@ details p {
     gap: 0.6rem;
 
     a {
-      color: #fff;
+      color: var(--white);
       font-weight: 700;
       text-decoration: none;
 

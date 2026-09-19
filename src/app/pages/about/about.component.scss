@@ -7,6 +7,9 @@
 }
 
 .about-page {
+  /* This page keeps its own burgundy/heritage accent colors
+     (distinct from the site's navy/gold theme) — intentional.
+     Font now follows the global site default (was Poppins). */
   --primary: #800020;
   --primary-dark: #5d0018;
   --primary-light: #a52a45;
@@ -14,14 +17,11 @@
   --navy: #24364b;
 
   --dark: #151515;
-  --text: #444;
-  --muted: #777;
+  --text: var(--gray-800);
+  --muted: var(--gray-500);
 
   --light: #f7f7f5;
-  --white: #ffffff;
   --border: #e7e2dd;
-
-  font-family: "Poppins", "Montserrat", Arial, sans-serif;
 
   color: var(--text);
   overflow: hidden;
@@ -105,7 +105,7 @@
 
 .journey-heading h3 {
   margin: 18px 0;
-  color: var(--dark);
+  color: var(--navy);
   font-size: clamp(32px, 4vw, 50px);
   line-height: 1.1;
 }
@@ -400,7 +400,7 @@
   font-size: clamp(32px, 4vw, 52px);
   line-height: 1.1;
 
-  color: var(--dark);
+  color: var(--navy);
 
   letter-spacing: -1.5px;
 }
@@ -566,7 +566,7 @@
 
   padding: 28px 30px 28px 48px;
 
-  background: #fff;
+  background: var(--white);
 
   border-left: 4px solid var(--primary);
 
@@ -579,7 +579,7 @@
   left: 17px;
   top: 8px;
 
-  font-family: Georgia, serif;
+  font-family: var(--font-display);
 
   font-size: 42px;
 
@@ -591,14 +591,14 @@
 .founder-quote p {
   margin: 0;
 
-  font-family: Georgia, serif;
+  font-family: var(--font-display);
 
   font-size: 17px;
   line-height: 1.7;
 
   font-style: italic;
 
-  color: #555;
+  color: var(--gray-700);
 }
 
 /* =========================================================
@@ -658,7 +658,7 @@
 
   padding: 14px;
 
-  background: #fff;
+  background: var(--white);
 
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
 
@@ -740,7 +740,7 @@
 
   background: var(--primary);
 
-  color: #fff;
+  color: var(--white);
 
   font-size: 10px;
 
@@ -782,7 +782,7 @@
   align-items: center;
   justify-content: center;
 
-  background: #fff;
+  background: var(--white);
 
   padding: 10px;
 
@@ -1055,7 +1055,7 @@
 
   overflow: hidden;
 
-  background: #ddd;
+  background: var(--gray-300);
 }
 
 .pioneer-image img {
@@ -1309,11 +1309,11 @@
 }
 
 .diversity-card .section-label {
-  color: #f4d783;
+  color: var(--gold-pale);
 }
 
 .diversity-card .section-label::before {
-  background: #f4d783;
+  background: var(--gold-pale);
 }
 
 .diversity-card h2 {
@@ -1327,7 +1327,7 @@
 }
 
 .diversity-card h2 span {
-  color: #f4d783;
+  color: var(--gold-pale);
 }
 
 .diversity-card p {
@@ -1380,11 +1380,11 @@
 }
 
 .cta-content .section-label {
-  color: #f4d783;
+  color: var(--gold-pale);
 }
 
 .cta-content .section-label::before {
-  background: #f4d783;
+  background: var(--gold-pale);
 }
 
 .cta-content h2 {
@@ -1447,7 +1447,7 @@
 }
 
 .cta-button:hover {
-  background: #f4d783;
+  background: var(--gold-pale);
 
   color: var(--dark);
 

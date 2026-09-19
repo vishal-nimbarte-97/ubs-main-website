@@ -1,19 +1,63 @@
 /* =========================================================
-   DESIGN TOKENS
+   GLOBAL DESIGN SYSTEM
    Palette: Ink Navy #0B2545 · Deep Navy #123B6B · Vesper Gold #C9962B
             Parchment #F7F4EC · Ink #1B2430 · Slate #5B6675
    Type: "Playfair Display" (display serif) + "Roboto" (body/UI)
+
+   Every component should read colors/fonts/spacing from the
+   variables below instead of redeclaring hex codes or font
+   stacks locally. Shared classes (.eyebrow, .wrap, .btn, etc.)
+   live here too so components can reuse them instead of
+   re-writing the same CSS in every file.
 ========================================================= */
+
 :root {
+  /* ---- Core brand palette ---- */
   --navy: #0b2545;
   --navy-2: #123b6b;
   --gold: #c9962b;
   --gold-light: #e7c877;
+  --gold-mid: #e2b455;
+  --gold-pale: #f4d783;
   --parchment: #f7f4ec;
+  --cream: #fbf8f2;
   --ink: #1b2430;
   --slate: #5b6675;
   --white: #ffffff;
+  --maroon: #720020;
+  --taupe: #71676a;
+  --charcoal: #241b1d;
+
+  /* ---- Neutral grayscale (shared across cards, borders, muted text) ---- */
+  --gray-100: #f7f5f2;
+  --gray-200: #eeeeee;
+  --gray-300: #dddddd;
+  --gray-400: #b9c6e3;
+  --gray-500: #777777;
+  --gray-600: #6e6e6e;
+  --gray-700: #555555;
+  --gray-800: #444444;
+  --gray-900: #222222;
+  --near-black: #171717;
+  --border-blue: #dfe4eb;
+
+  /* ---- Typography ---- */
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-body: "Roboto", system-ui, sans-serif;
+
+  --fs-h1: clamp(2rem, 4vw, 3rem);
+  --fs-h2: clamp(1.6rem, 3vw, 2.25rem);
+  --fs-h3: 1.5rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-eyebrow: 0.75rem;
+
+  /* ---- Effects / spacing ---- */
   --radius: 6px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 5px 20px rgba(0, 0, 0, 0.07);
+  --shadow-md: 0 15px 40px rgba(0, 0, 0, 0.12);
+  --transition: 0.25s ease;
 
   /* Header height — must match the real rendered height of .site-header
      (top-bar + main-nav combined). Used by app.component.scss to push
@@ -45,10 +89,18 @@ html {
 
 body {
   margin: 0;
-  font-family: "Roboto", system-ui, sans-serif;
+  font-family: var(--font-body);
   color: var(--ink);
   background: var(--white);
   overflow-x: hidden;
+}
+
+/* Images/media never overflow their container on small screens. */
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
 .wrap {
@@ -57,14 +109,128 @@ body {
   padding: 0 24px;
 }
 
+@media (max-width: 600px) {
+  .wrap {
+    padding: 0 16px;
+  }
+}
+
 h1,
 h2,
 h3,
 h4 {
-  font-family: "Playfair Display", "Georgia", serif;
+  font-family: var(--font-display);
   line-height: 1.15;
   margin: 0 0 0.5em;
   color: var(--navy);
+}
+
+h1 span,
+h2 span,
+h3 span,
+h4 span,
+h1 em,
+h2 em,
+h3 em,
+h4 em {
+  color: var(--gold) !important;
+  font-style: italic !important;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+}
+
+p {
+  color: var(--slate);
+  line-height: 1.7;
+  margin: 0 0 1em;
+}
+
+/* =========================================================
+   SHARED COMPONENT CLASSES
+   Reused across many pages — defined once here instead of
+   being copy-pasted (with tiny drift) into every component.
+========================================================= */
+
+/* Small uppercase label used above section headings site-wide. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 1rem;
+  color: var(--gold);
+  font-size: var(--fs-eyebrow);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Centered heading block used to introduce a page section. */
+.section-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 3rem;
+}
+
+.section-header p {
+  color: var(--slate);
+}
+
+/* Primary call-to-action button, used across pages (apply, tuition,
+   programmes, etc.) — was previously redefined per component. */
+.btn-primary,
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.85rem 1.9rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--gold);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.btn-primary:hover,
+.primary-btn:hover {
+  background: var(--navy-2);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.85rem 1.9rem;
+  border: 1.5px solid var(--navy);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--navy);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.btn-secondary:hover {
+  background: var(--navy);
+  color: var(--white);
 }
 
 body.menu-open {

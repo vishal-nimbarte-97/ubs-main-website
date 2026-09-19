@@ -3,20 +3,17 @@
 }
 
 .history-page {
-  --navy: #0b2545;
-  --navy-2: #123b6b;
-  --gold: #c9962b;
   --ubs-red: #8d0628;
   --ubs-red-dark: #69051f;
   --ubs-black: #151515;
-  --ubs-text: #555;
+  --ubs-text: var(--gray-700);
   --ubs-muted: #817a75;
-  --ubs-light: #f7f5f2;
+  --ubs-light: var(--gray-100);
   --ubs-border: #e7e2de;
-  --ubs-white: #fff;
+  --ubs-white: var(--white);
 
   color: var(--ubs-black);
-  background: #fff;
+  background: var(--white);
   overflow: hidden;
 }
 
@@ -416,7 +413,6 @@
 
   letter-spacing: -0.6px;
   text-transform: uppercase;
-  font-family: Georgia, "Times New Roman", serif;
   color: var(--navy);
 }
 
