@@ -8,11 +8,11 @@
     </video> -->
     <img class="hero-video" src="../../assets/img/home.png" alt="UBS campus" />
     <div class="hero-overlay">
-      <a [href]="liveChannelUrl" target="_blank" rel="noopener" class="hero-live-button" [class.is-live]="liveIsLive"
-        [attr.aria-disabled]="!liveIsLive" (click)="!liveIsLive && $event.preventDefault()">
+      <button type="button" class="hero-live-button" [class.is-live]="liveIsLive"
+        [attr.aria-disabled]="!liveIsLive" (click)="onLiveButtonClick()">
         <span class="live-dot" aria-hidden="true"></span>
-        Live
-      </a>
+        Live <span class="live-cta">· Click Here</span>
+      </button>
 
       <div class="tagline-swapper">
         <h1 *ngFor="let group of taglineGroups; let i = index" [class.active]="i === activeTaglineIndex">

@@ -1,16 +1,28 @@
 <div class="admin-login-wrapper">
   <div class="admin-login-panel brand-panel">
     <div class="brand-panel-content">
-      <div class="brand-mark">UBS</div>
+      <div class="brand-logo-row">
+        <img src="assets/img/ubs-logo.png" alt="UBS Logo" class="brand-logo-img" />
+        <div class="brand-logo-text">
+          <span class="brand-logo-name">Union Biblical<br />Seminary</span>
+          <span class="brand-logo-tagline">Speaking the Truth in Love</span>
+        </div>
+      </div>
       <h1>Admin Console</h1>
-      <p>Union Biblical Seminary — content &amp; broadcast management.</p>
+      <p>Content &amp; broadcast management for the UBS website.</p>
+
+      <ul class="brand-highlights">
+        <li><i class="fa-solid fa-shield-halved"></i> Secure, role-based access</li>
+        <li><i class="fa-solid fa-tower-broadcast"></i> Live broadcast controls</li>
+        <li><i class="fa-solid fa-file-pen"></i> Manage site content &amp; pages</li>
+      </ul>
     </div>
   </div>
 
   <div class="admin-login-panel form-panel">
     <form (ngSubmit)="onSubmit()" class="admin-login-form" novalidate>
-      <h2>Sign in</h2>
-      <p class="form-subtitle">Enter your credentials to access the admin panel.</p>
+      <h2>Welcome back</h2>
+      <p class="form-subtitle">Sign in with your credentials to access the admin panel.</p>
 
       <label for="email">Email</label>
       <div class="input-wrap">

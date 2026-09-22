@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // Controlled entirely by the backend now — no more localStorage,
   // no more visitor-entered URLs. Admin flips it on/off from /admin/dashboard.
   liveIsLive = false;
-  liveChannelUrl = 'https://youtube.com/@unionbsmedia?si=zYmglMFw-xPmCV4t';
+  liveChannelUrl = 'https://www.youtube.com/@unionbsmedia';
   private liveStatusTimer?: ReturnType<typeof setInterval>;
 
   /* ================= PROGRAMMES OFFERED BAR ================= */
@@ -289,6 +289,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   setTab(tab: 'programmes' | 'centres'): void {
     // Switch the data set displayed in the programmes/centres section.
     this.activeTab = tab;
+  }
+
+  /** Called when the hero "Live" button is clicked. Only navigates when actually live —
+   *  uses window.open() directly instead of relying on the anchor's href binding, since
+   *  that can be unreliable with SSR/hydration timing. */
+  onLiveButtonClick(): void {
+    if (!this.liveIsLive || !this.liveChannelUrl) return;
+    if (this.isBrowser) {
+      window.open(this.liveChannelUrl, '_blank', 'noopener,noreferrer');
+    }
   }
 
   /** Ask the backend whether the admin has gone live, and what the channel link is. */
