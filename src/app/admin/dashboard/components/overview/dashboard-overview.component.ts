@@ -11,5 +11,4 @@ import { Component, Input } from '@angular/core';
 export class DashboardOverviewComponent {
   @Input() isLive = false;
   @Input() announcements: string[] = [];
-  @Input() eventItems: Array<{ date: string; title: string; description: string }> = [];
 }

@@ -49,25 +49,25 @@
   <section class="principal">
     <div class="wrap principal__grid">
       <div class="principal__photo">
-        +
         <img
-          src="assets/campus/image_1.jpg"
-          alt="Dr. W.S. Annie, Principal"
+          [src]="principalProfile?.imageUrl || 'assets/campus/image_1.jpg'"
+          [alt]="principalProfile?.name || 'Principal'"
           loading="lazy"
         />
       </div>
       <div class="principal__copy">
         <span class="principal__mark">&#8220;</span>
         <blockquote class="principal__quote">
-          You sit under the Word four hours a day, establish friendships, and
-          sit in on conferences — a saturation effect where it soaks in to a
-          different degree.
+          {{ principalProfile?.quote || 'You sit under the Word four hours a day, establish friendships, and sit in on conferences — a saturation effect where it soaks in to a different degree.' }}
         </blockquote>
+        <p *ngIf="principalProfile?.bio" class="principal__bio">
+          {{ principalProfile?.bio }}
+        </p>
         <div class="principal__byline">
           <span class="principal__rule"></span>
           <div>
-            <strong>Dr. W.S. Annie</strong>
-            <span>Principal, Union Biblical Seminary</span>
+            <strong>{{ principalProfile?.name || 'Dr. W.S. Annie' }}</strong>
+            <span>{{ principalProfile?.designation || 'Principal, Union Biblical Seminary' }}</span>
           </div>
         </div>
       </div>

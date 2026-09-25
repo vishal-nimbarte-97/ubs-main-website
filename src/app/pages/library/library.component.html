@@ -120,31 +120,30 @@
         <div class="intro-title">
           <div class="intro-librarian-image">
             <img
-              [src]="images.librarian"
-              alt="Mr. Sungjemmeren Kijong Imchen, Librarian of UBS Library"
+              [src]="librarianProfile?.imageUrl || images.librarian"
+              [alt]="librarianProfile?.name || 'Librarian of UBS Library'"
             />
           </div>
         </div>
 
         <div class="intro-text">
           <p>
-            The UBS Library is an essential academic resource supporting
-            students, faculty and researchers with access to books, reference
-            materials, archives and digital resources.
+            {{ librarianProfile?.bio || 'The UBS Library is an essential academic resource supporting students, faculty and researchers with access to books, reference materials, archives and digital resources.' }}
           </p>
 
-          <p>
-            Designed as a quiet and focused environment, the library provides
-            spaces where knowledge, research and independent learning can
-            flourish.
+          <p *ngIf="librarianProfile?.quote">
+            {{ librarianProfile?.quote }}
           </p>
 
           <div class="intro-signature">
             <div class="signature-line"></div>
 
             <div>
-              <strong>Mr. Sungjemmeren Kijong Imchen</strong>
-              <span>Librarian, UBS Library</span>
+              <strong>{{ librarianProfile?.name || 'Mr. Sungjemmeren Kijong Imchen' }}</strong>
+              <span>{{ librarianProfile?.designation || 'Librarian, UBS Library' }}</span>
+              <a *ngIf="librarianProfile?.email" [href]="'mailto:' + librarianProfile?.email">
+                {{ librarianProfile?.email }}
+              </a>
             </div>
           </div>
         </div>

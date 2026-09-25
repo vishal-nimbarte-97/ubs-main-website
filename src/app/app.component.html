@@ -11,3 +11,21 @@
 <ng-template #adminPortal>
   <router-outlet></router-outlet>
 </ng-template>
+
+<div
+  *ngIf="loadingVisible$ | async"
+  class="global-loader"
+  role="status"
+  aria-live="polite"
+  aria-label="Loading"
+>
+  <div class="global-loader__panel">
+    <div
+      class="global-loader__ring"
+      [style.--loader-progress]="(loadingProgress$ | async) + '%'"
+    >
+      <div class="global-loader__value">{{ loadingProgress$ | async }}%</div>
+    </div>
+    <span class="global-loader__label">Loading</span>
+  </div>
+</div>

@@ -32,6 +32,11 @@ import {
   TESTIMONIALS,
 } from '../../data';
 import { LiveStatusService } from '../../services/dashboard/live-status.service';
+import {
+  AdminContentService,
+  NotificationItem,
+  PeopleProfile,
+} from '../../services/admin/admin-content.service';
 import { SiteContentService } from '../../services/admin/site-content.service';
 
 @Component({
@@ -45,6 +50,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private router = inject(Router);
   private liveStatusService = inject(LiveStatusService);
   private siteContentService = inject(SiteContentService);
+  private adminContentService = inject(AdminContentService);
   private routerSubscription?: Subscription;
 
   @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
@@ -97,6 +103,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* ================= NEWS ================= */
   news = NEWS;
+
+  /* ================= PEOPLE / PRINCIPAL ================= */
+  principalProfile: PeopleProfile | null = null;
+
+  /* ================= OFFICIAL NOTIFICATIONS ================= */
+  officialNotifications: NotificationItem[] = [];
 
   /* ================= BLOG CAROUSEL ================= */
   blogPosts = BLOG_POSTS;
@@ -175,9 +187,39 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  formatNotificationDate(value?: string): string {
+    if (!value) {
+      return 'Recently';
+    }
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return 'Recently';
+    }
+
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).format(date);
+  }
+
+  getNotificationType(notification: NotificationItem): 'NOTICE' | 'ANNOUNCEMENT' {
+    const title = notification.title?.toLowerCase() ?? '';
+    return title.includes('announcement') ? 'ANNOUNCEMENT' : 'NOTICE';
+  }
+
   ngOnInit(): void {
     this.events = this.siteContentService.getEvents();
     this.news = this.siteContentService.getNews();
+    this.adminContentService.getPeople().subscribe((people) => {
+      this.principalProfile =
+        people.find((person) => person.category?.toLowerCase() === 'principal') ?? null;
+    });
+    this.adminContentService.getNotifications().subscribe((items) => {
+      this.officialNotifications = items.filter((item) => item.isActive !== false);
+    });
+
     // Build static calendar data before the first template render.
     this.buildCalendar();
 

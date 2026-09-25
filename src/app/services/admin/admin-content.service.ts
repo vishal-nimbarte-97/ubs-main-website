@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { API_URLS } from '../../config/api-urls';
 
 export interface SiteConfig {
@@ -13,6 +13,8 @@ export interface SiteConfig {
   youtubeChannelUrl: string;
 }
 
+export type NotificationType = 'announcement' | 'news' | 'event';
+
 export interface NotificationItem {
   id?: number;
   title: string;
@@ -20,6 +22,7 @@ export interface NotificationItem {
   link: string;
   isActive: boolean;
   createdAt?: string;
+  type?: NotificationType;
 }
 
 export interface PeopleProfile {
@@ -31,6 +34,16 @@ export interface PeopleProfile {
   quote: string;
   bio: string;
   isActive: boolean;
+  email?: string;
+  department?: string;
+  qualificationTitle?: string;
+  qualification?: string[];
+  specialization?: string[];
+  books?: string[];
+  research?: string[];
+  articles?: string[];
+  journals?: string[];
+  pdfPath?: string;
 }
 
 export interface TuitionFeeRow {
@@ -95,8 +108,6 @@ export interface LiveStatus {
 
 @Injectable({ providedIn: 'root' })
 export class AdminContentService {
-  private readonly baseUrl = API_URLS.live.status.replace('/live/status', '');
-  private readonly fallbackBaseUrl = 'https://localhost:7257';
   private readonly sessionTokenKey = 'ubs-admin-token';
 
   private readonly fallbackSiteConfig: SiteConfig = {
@@ -216,13 +227,29 @@ export class AdminContentService {
     return () => of(fallback);
   }
 
+  private normalizeNotification(item: NotificationItem): NotificationItem {
+    const text = `${item.title ?? ''} ${item.description ?? ''}`.toLowerCase();
+
+    let type: NotificationType = 'announcement';
+    if (text.includes('event')) {
+      type = 'event';
+    } else if (text.includes('news')) {
+      type = 'news';
+    }
+
+    return {
+      ...item,
+      type: (item.type ?? type) as NotificationType,
+    };
+  }
+
   getLiveStatus(): Observable<LiveStatus> {
     return this.http
-      .get<LiveStatus>(API_URLS.live.status)
+      .get<LiveStatus>(API_URLS.live.getStatus, this.getRequestOptions())
       .pipe(
         catchError(() =>
           this.http
-            .get<LiveStatus>(API_URLS.live.statusLocal)
+            .get<LiveStatus>(API_URLS.live.getStatusLocal, this.getRequestOptions())
             .pipe(
               catchError(() =>
                 of({
@@ -243,32 +270,40 @@ export class AdminContentService {
     };
 
     return this.http
-      .put<LiveStatus>(API_URLS.live.status, payload, this.getRequestOptions())
+      .post<LiveStatus>(API_URLS.live.setStatus, payload, this.getRequestOptions())
       .pipe(catchError(() => of(payload)));
   }
 
   getSiteConfig(): Observable<SiteConfig> {
     return this.http
-      .get<SiteConfig>(API_URLS.siteConfig.root)
+      .get<SiteConfig>(API_URLS.siteConfig.get, this.getRequestOptions())
       .pipe(catchError(this.asFallback(this.fallbackSiteConfig)));
   }
 
   saveSiteConfig(config: SiteConfig): Observable<SiteConfig> {
     return this.http
-      .put<SiteConfig>(API_URLS.siteConfig.root, config, this.getRequestOptions())
+      .post<SiteConfig>(API_URLS.siteConfig.save, config, this.getRequestOptions())
       .pipe(catchError(() => of(config)));
   }
 
   getNotifications(): Observable<NotificationItem[]> {
     return this.http
-      .get<NotificationItem[]>(API_URLS.notifications.root)
-      .pipe(catchError(this.asFallback(this.fallbackNotifications)));
+      .get<NotificationItem[]>(API_URLS.notifications.getAll, this.getRequestOptions())
+      .pipe(
+        map((items) => (Array.isArray(items) ? items.map((item) => this.normalizeNotification(item)) : [])),
+        catchError(() => of(this.fallbackNotifications.map((item) => this.normalizeNotification(item)))),
+      );
   }
 
   saveNotification(item: NotificationItem): Observable<NotificationItem> {
+    const { type, ...payload } = item;
+
     return this.http
-      .post<NotificationItem>(API_URLS.notifications.root, item, this.getRequestOptions())
-      .pipe(catchError(() => of(item)));
+      .post<NotificationItem>(API_URLS.notifications.insert, payload, this.getRequestOptions())
+      .pipe(
+        map((res) => this.normalizeNotification({ ...item, ...(res ?? {}) })),
+        catchError(() => of(this.normalizeNotification(item))),
+      );
   }
 
   deleteNotification(id?: number): Observable<boolean> {
@@ -277,19 +312,19 @@ export class AdminContentService {
     }
 
     return this.http
-      .delete<boolean>(`${API_URLS.notifications.root}/${id}`, this.getRequestOptions())
+      .post<boolean>(API_URLS.notifications.delete(id), undefined, this.getRequestOptions())
       .pipe(catchError(() => of(true)));
   }
 
   getPeople(): Observable<PeopleProfile[]> {
     return this.http
-      .get<PeopleProfile[]>(API_URLS.people.root)
+      .get<PeopleProfile[]>(API_URLS.people.getAll, this.getRequestOptions())
       .pipe(catchError(this.asFallback(this.fallbackPeople)));
   }
 
   savePerson(person: PeopleProfile): Observable<PeopleProfile> {
     return this.http
-      .post<PeopleProfile>(API_URLS.people.root, person, this.getRequestOptions())
+      .post<PeopleProfile>(API_URLS.people.insert, person, this.getRequestOptions())
       .pipe(catchError(() => of(person)));
   }
 
@@ -299,19 +334,19 @@ export class AdminContentService {
     }
 
     return this.http
-      .delete<boolean>(`${API_URLS.people.root}/${id}`, this.getRequestOptions())
+      .post<boolean>(API_URLS.people.delete(id), undefined, this.getRequestOptions())
       .pipe(catchError(() => of(true)));
   }
 
   getTuitionRows(): Observable<TuitionFeeRow[]> {
     return this.http
-      .get<TuitionFeeRow[]>(API_URLS.fees.root)
+      .get<TuitionFeeRow[]>(API_URLS.fees.getAll, this.getRequestOptions())
       .pipe(catchError(this.asFallback(this.fallbackTuitionRows)));
   }
 
   saveTuitionRow(row: TuitionFeeRow): Observable<TuitionFeeRow> {
     return this.http
-      .post<TuitionFeeRow>(API_URLS.fees.root, row, this.getRequestOptions())
+      .post<TuitionFeeRow>(API_URLS.fees.insert, row, this.getRequestOptions())
       .pipe(catchError(() => of(row)));
   }
 
@@ -321,31 +356,31 @@ export class AdminContentService {
     }
 
     return this.http
-      .delete<boolean>(`${API_URLS.fees.root}/${id}`, this.getRequestOptions())
+      .post<boolean>(API_URLS.fees.delete(id), undefined, this.getRequestOptions())
       .pipe(catchError(() => of(true)));
   }
 
   getAdmissions(): Observable<AdmissionsConfig> {
     return this.http
-      .get<AdmissionsConfig>(API_URLS.admissions.essentials)
+      .get<AdmissionsConfig>(API_URLS.admissions.getEssentials, this.getRequestOptions())
       .pipe(catchError(this.asFallback(this.fallbackAdmissions)));
   }
 
   saveAdmissions(config: AdmissionsConfig): Observable<AdmissionsConfig> {
     return this.http
-      .put<AdmissionsConfig>(API_URLS.admissions.essentials, config, this.getRequestOptions())
+      .post<AdmissionsConfig>(API_URLS.admissions.saveEssentials, config, this.getRequestOptions())
       .pipe(catchError(() => of(config)));
   }
 
   getPublications(): Observable<PublicationItem[]> {
     return this.http
-      .get<PublicationItem[]>(API_URLS.publications.root)
+      .get<PublicationItem[]>(API_URLS.publications.getAll, this.getRequestOptions())
       .pipe(catchError(this.asFallback(this.fallbackPublications)));
   }
 
   savePublication(item: PublicationItem): Observable<PublicationItem> {
     return this.http
-      .post<PublicationItem>(API_URLS.publications.root, item, this.getRequestOptions())
+      .post<PublicationItem>(API_URLS.publications.insert, item, this.getRequestOptions())
       .pipe(catchError(() => of(item)));
   }
 
@@ -355,19 +390,19 @@ export class AdminContentService {
     }
 
     return this.http
-      .delete<boolean>(`${API_URLS.publications.root}/${id}`, this.getRequestOptions())
+      .post<boolean>(API_URLS.publications.delete(id), undefined, this.getRequestOptions())
       .pipe(catchError(() => of(true)));
   }
 
   getGalleryItems(): Observable<GalleryItem[]> {
     return this.http
-      .get<GalleryItem[]>(API_URLS.gallery.root)
+      .get<GalleryItem[]>(API_URLS.gallery.getAll, this.getRequestOptions())
       .pipe(catchError(this.asFallback(this.fallbackGallery)));
   }
 
   saveGalleryItem(item: GalleryItem): Observable<GalleryItem> {
     return this.http
-      .post<GalleryItem>(API_URLS.gallery.root, item, this.getRequestOptions())
+      .post<GalleryItem>(API_URLS.gallery.insert, item, this.getRequestOptions())
       .pipe(catchError(() => of(item)));
   }
 
@@ -377,19 +412,19 @@ export class AdminContentService {
     }
 
     return this.http
-      .delete<boolean>(`${API_URLS.gallery.root}/${id}`, this.getRequestOptions())
+      .post<boolean>(API_URLS.gallery.delete(id), undefined, this.getRequestOptions())
       .pipe(catchError(() => of(true)));
   }
 
   getStudentZoneItems(): Observable<GalleryItem[]> {
     return this.http
-      .get<GalleryItem[]>(API_URLS.studentZone.root)
+      .get<GalleryItem[]>(API_URLS.studentZone.getAll, this.getRequestOptions())
       .pipe(catchError(this.asFallback(this.fallbackGallery)));
   }
 
   saveStudentZoneItem(item: GalleryItem): Observable<GalleryItem> {
     return this.http
-      .post<GalleryItem>(API_URLS.studentZone.root, item, this.getRequestOptions())
+      .post<GalleryItem>(API_URLS.studentZone.insert, item, this.getRequestOptions())
       .pipe(catchError(() => of(item)));
   }
 
@@ -399,7 +434,7 @@ export class AdminContentService {
     }
 
     return this.http
-      .delete<boolean>(`${API_URLS.studentZone.root}/${id}`, this.getRequestOptions())
+      .post<boolean>(API_URLS.studentZone.delete(id), undefined, this.getRequestOptions())
       .pipe(catchError(() => of(true)));
   }
 }

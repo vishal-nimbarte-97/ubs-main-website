@@ -7,8 +7,13 @@ import {
   PLATFORM_ID,
   inject,
   HostListener,
+  OnInit,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {
+  AdminContentService,
+  PeopleProfile,
+} from '../../services/admin/admin-content.service';
 
 interface DayMoment {
   time: string;
@@ -33,9 +38,11 @@ interface FacilityGroup {
   templateUrl: './campus.component.html',
   styleUrls: ['./campus.component.scss'],
 })
-export class CampusComponent implements AfterViewInit, OnDestroy {
+export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
+  private adminContentService = inject(AdminContentService);
+  principalProfile: PeopleProfile | null = null;
 
   @ViewChild('heroVideoRef') heroVideoRef?: ElementRef<HTMLVideoElement>;
 
@@ -165,6 +172,13 @@ export class CampusComponent implements AfterViewInit, OnDestroy {
     'assets/campus/image_14.png',
     'assets/campus/image_15.png',
   ];
+
+  ngOnInit(): void {
+    this.adminContentService.getPeople().subscribe((people) => {
+      this.principalProfile =
+        people.find((person) => person.category?.toLowerCase() === 'principal') ?? null;
+    });
+  }
 
   ngAfterViewInit(): void {
     // Start browser-only media and timeline behavior after the view exists.

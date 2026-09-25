@@ -397,119 +397,42 @@
 
         <!-- Notification List -->
         <div class="notification-list">
-          <!-- Notification 1 -->
-          <div class="notification-item">
+          <div class="notification-item" *ngFor="let notification of officialNotifications">
+            <div class="notification-content">
+              <div class="notification-meta">
+                <span
+                  class="notice-type"
+                  [class.announcement]="getNotificationType(notification) === 'ANNOUNCEMENT'"
+                >
+                  {{ getNotificationType(notification) }}
+                </span>
+
+                <span class="notice-date">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M12 7v5l3 2"></path>
+                  </svg>
+                  {{ formatNotificationDate(notification.createdAt) }}
+                </span>
+              </div>
+
+              <h4>{{ notification.title }}</h4>
+              <p *ngIf="notification.description">{{ notification.description }}</p>
+            </div>
+
+            <button class="arrow-button" aria-label="Open notification">
+              →
+            </button>
+          </div>
+
+          <div class="notification-item" *ngIf="officialNotifications.length === 0">
             <div class="notification-content">
               <div class="notification-meta">
                 <span class="notice-type">NOTICE</span>
-
-                <span class="notice-date">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 7v5l3 2"></path>
-                  </svg>
-                  26 Jul 2026
-                </span>
+                <span class="notice-date">No notices</span>
               </div>
-
-              <h4>Important: Revised Academic Calendar 2025</h4>
+              <h4>No official notifications available right now.</h4>
             </div>
-
-            <button class="arrow-button" aria-label="Open notification">
-              →
-            </button>
-          </div>
-
-          <!-- Notification 2 -->
-          <div class="notification-item">
-            <div class="notification-content">
-              <div class="notification-meta">
-                <span class="notice-type">CIRCULAR</span>
-
-                <span class="notice-date">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 7v5l3 2"></path>
-                  </svg>
-                  24 Jul 2026
-                </span>
-              </div>
-
-              <h4>Circular: Assignment Submission Guidelines</h4>
-            </div>
-
-            <button class="arrow-button" aria-label="Open notification">
-              →
-            </button>
-          </div>
-
-          <!-- Notification 3 -->
-          <div class="notification-item">
-            <div class="notification-content">
-              <div class="notification-meta">
-                <span class="notice-type">NOTICE</span>
-
-                <span class="notice-date">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 7v5l3 2"></path>
-                  </svg>
-                  21 Jul 2026
-                </span>
-              </div>
-
-              <h4>Examination Fee Notice</h4>
-            </div>
-
-            <button class="arrow-button" aria-label="Open notification">
-              →
-            </button>
-          </div>
-
-          <!-- Notification 4 -->
-          <div class="notification-item">
-            <div class="notification-content">
-              <div class="notification-meta">
-                <span class="notice-type announcement"> ANNOUNCEMENT </span>
-
-                <span class="notice-date">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 7v5l3 2"></path>
-                  </svg>
-                  19 Jul 2026
-                </span>
-              </div>
-
-              <h4>Workshop on Research Methodology</h4>
-            </div>
-
-            <button class="arrow-button" aria-label="Open notification">
-              →
-            </button>
-          </div>
-
-          <!-- Notification 4 -->
-          <div class="notification-item">
-            <div class="notification-content">
-              <div class="notification-meta">
-                <span class="notice-type announcement"> ANNOUNCEMENT </span>
-
-                <span class="notice-date">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 7v5l3 2"></path>
-                  </svg>
-                  19 Jul 2026
-                </span>
-              </div>
-
-              <h4>Workshop on Research Methodology</h4>
-            </div>
-
-            <button class="arrow-button" aria-label="Open notification">
-              →
-            </button>
           </div>
         </div>
 
@@ -544,9 +467,13 @@
       <div class="message-box">
         <span class="quote">❝</span>
 
-        <h3 style="color: #fff">UBS is committed to upholding:</h3>
+        <h3 style="color: #fff">{{ principalProfile?.quote || 'UBS is committed to upholding:' }}</h3>
 
-        <ul>
+        <p *ngIf="principalProfile?.bio" style="color: #fff">
+          {{ principalProfile?.bio }}
+        </p>
+
+        <ul *ngIf="!principalProfile?.bio">
           <li>Holiness, Integrity and Accountability</li>
 
           <li>Diversity, Inclusiveness, Compassion and Service</li>
@@ -555,12 +482,12 @@
         </ul>
 
         <div class="principal">
-          <img src="assets/img/principal.png" alt="Principal" />
+          <img [src]="principalProfile?.imageUrl || 'assets/img/principal.png'" [alt]="principalProfile?.name || 'Principal'" />
 
           <div>
-            <h4 style="color: #fff">Dr. W.S. Annie</h4>
+            <h4 style="color: #fff">{{ principalProfile?.name || 'Dr. W.S. Annie' }}</h4>
 
-            <span style="color: #fff">PRINCIPAL</span>
+            <span style="color: #fff">{{ principalProfile?.designation || 'PRINCIPAL' }}</span>
           </div>
         </div>
       </div>

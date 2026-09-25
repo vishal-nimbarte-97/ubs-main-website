@@ -15,7 +15,6 @@
     *ngIf="activeSection === 'overview'"
     [isLive]="isLive"
     [announcements]="announcements"
-    [eventItems]="eventItems"
   ></app-dashboard-overview>
 
   <app-live-broadcast
@@ -24,77 +23,57 @@
     (toggle)="toggleLive()"
   ></app-live-broadcast>
 
-      <section *ngIf="activeSection === 'notifications'" class="panel">
+      <section *ngIf="activeSection === 'updates'" class="panel">
         <div class="content-form-card">
-          <h3>Announcements</h3>
-          <div class="form-row">
-            <input [(ngModel)]="newAnnouncement" type="text" placeholder="Add a new announcement" />
-            <button class="primary-btn" type="button" (click)="addAnnouncement()">Add</button>
+          <h3>Updates</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Type</span>
+              <select [(ngModel)]="newNotification.type">
+                <option value="announcement">Announcement</option>
+                <option value="news">News</option>
+                <option value="event">Event</option>
+              </select>
+            </label>
+            <label>
+              <span>Title</span>
+              <input [(ngModel)]="newNotification.title" type="text" placeholder="Title" />
+            </label>
+            <label class="full-width">
+              <span>Description</span>
+              <textarea [(ngModel)]="newNotification.description" rows="4" placeholder="Add details"></textarea>
+            </label>
+            <label class="full-width">
+              <span>Link</span>
+              <input [(ngModel)]="newNotification.link" type="url" placeholder="https://..." />
+            </label>
+            <label>
+              <span>Active</span>
+              <select [(ngModel)]="newNotification.isActive">
+                <option [ngValue]="true">Active</option>
+                <option [ngValue]="false">Inactive</option>
+              </select>
+            </label>
           </div>
+          <button class="primary-btn" type="button" (click)="saveNotification()">Save update</button>
         </div>
 
         <div class="list-card">
-          <h4>Published announcements</h4>
+          <h4>Published updates</h4>
           <ul class="content-list">
-            <li *ngFor="let item of announcements; let i = index">
-              <span>{{ item }}</span>
-              <button type="button" (click)="removeAnnouncement(i)">Remove</button>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section *ngIf="activeSection === 'news'" class="panel">
-        <div class="content-form-card">
-          <h3>News posts</h3>
-          <div class="form-stack">
-            <input [(ngModel)]="newNewsTitle" type="text" placeholder="News title" />
-            <textarea [(ngModel)]="newNewsExcerpt" rows="4" placeholder="Short summary"></textarea>
-            <button class="primary-btn" type="button" (click)="addNews()">Publish post</button>
-          </div>
-        </div>
-
-        <div class="list-card">
-          <h4>Current news</h4>
-          <ul class="content-list">
-            <li *ngFor="let item of newsItems; let i = index">
+            <li *ngFor="let item of notifications; let i = index">
               <div>
                 <strong>{{ item.title }}</strong>
-                <small>{{ item.excerpt }}</small>
-              </div>
-              <button type="button" (click)="removeNews(i)">Remove</button>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section *ngIf="activeSection === 'events'" class="panel">
-        <div class="content-form-card">
-          <h3>Events calendar</h3>
-          <div class="form-stack">
-            <input [(ngModel)]="newEventDate" type="date" />
-            <input [(ngModel)]="newEventTitle" type="text" placeholder="Event title" />
-            <textarea [(ngModel)]="newEventDescription" rows="4" placeholder="Event description"></textarea>
-            <button class="primary-btn" type="button" (click)="addEvent()">Save event</button>
-          </div>
-        </div>
-
-        <div class="list-card">
-          <h4>Published events</h4>
-          <ul class="content-list">
-            <li *ngFor="let item of eventItems; let i = index">
-              <div>
-                <strong>{{ item.date }}</strong>
-                <small>{{ item.title }}</small>
+                <small>{{ item.type || 'announcement' | titlecase }}</small>
                 <span>{{ item.description }}</span>
               </div>
-              <button type="button" (click)="removeEvent(i)">Remove</button>
+              <button type="button" (click)="deleteNotification(i)">Remove</button>
             </li>
           </ul>
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'site-config'" class="panel">
+      <!-- <section *ngIf="activeSection === 'site-config'" class="panel">
         <div class="content-form-card">
           <h3>Site Configuration</h3>
           <div class="form-grid two-col">
@@ -125,11 +104,11 @@
           </div>
           <button class="primary-btn" type="button" (click)="saveSiteConfig()">Save config</button>
         </div>
-      </section>
+      </section> -->
 
       <section *ngIf="activeSection === 'people'" class="panel">
         <div class="content-form-card">
-          <h3>Add Principal / Librarian / Profile</h3>
+          <h3>Add Principal / Librarian / Faculty</h3>
           <div class="form-grid two-col">
             <label>
               <span>Name</span>
@@ -147,6 +126,20 @@
                 <option value="faculty">Faculty</option>
               </select>
             </label>
+
+            <label *ngIf="newPerson.category === 'faculty'">
+              <span>Department</span>
+              <input [(ngModel)]="newPerson.department" type="text" />
+            </label>
+            <label>
+              <span>Official email</span>
+              <input [(ngModel)]="newPerson.email" type="email" />
+            </label>
+            <label *ngIf="newPerson.category === 'faculty'" class="full-width">
+              <span>Qualification Title</span>
+              <input [(ngModel)]="newPerson.qualificationTitle" type="text" />
+            </label>
+
             <label class="full-width">
               <span>Profile image</span>
               <div class="image-upload-box">
@@ -157,12 +150,42 @@
               </div>
             </label>
             <label class="full-width">
-              <span>Quote</span>
+              <span>{{ newPerson.category === 'principal' ? 'Principal message / quote' : 'Short description' }}</span>
               <input [(ngModel)]="newPerson.quote" type="text" />
             </label>
             <label class="full-width">
-              <span>Bio</span>
+              <span>{{ newPerson.category === 'faculty' ? 'Biography' : 'Description' }}</span>
               <textarea [(ngModel)]="newPerson.bio" rows="4"></textarea>
+            </label>
+
+            <label *ngIf="newPerson.category !== 'faculty'">
+              <span>Profile PDF URL</span>
+              <input [(ngModel)]="newPerson.pdfPath" type="url" />
+            </label>
+
+            <label *ngIf="newPerson.category === 'faculty'" class="full-width">
+              <span>Qualification</span>
+              <textarea [(ngModel)]="facultyQualificationText" rows="3" placeholder="One item per line"></textarea>
+            </label>
+            <label *ngIf="newPerson.category === 'faculty'" class="full-width">
+              <span>Specialization</span>
+              <textarea [(ngModel)]="facultySpecializationText" rows="3" placeholder="One item per line"></textarea>
+            </label>
+            <label *ngIf="newPerson.category === 'faculty'" class="full-width">
+              <span>Books</span>
+              <textarea [(ngModel)]="facultyBooksText" rows="3" placeholder="One item per line"></textarea>
+            </label>
+            <label *ngIf="newPerson.category === 'faculty'" class="full-width">
+              <span>Research</span>
+              <textarea [(ngModel)]="facultyResearchText" rows="3" placeholder="One item per line"></textarea>
+            </label>
+            <label *ngIf="newPerson.category === 'faculty'" class="full-width">
+              <span>Articles</span>
+              <textarea [(ngModel)]="facultyArticlesText" rows="3" placeholder="One item per line"></textarea>
+            </label>
+            <label *ngIf="newPerson.category === 'faculty'" class="full-width">
+              <span>Journals</span>
+              <textarea [(ngModel)]="facultyJournalsText" rows="3" placeholder="One item per line"></textarea>
             </label>
           </div>
           <button class="primary-btn" type="button" (click)="savePerson()">Save person</button>

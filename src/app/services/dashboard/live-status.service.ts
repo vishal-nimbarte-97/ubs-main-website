@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { API_URLS } from '../../config/api-urls';
 
 interface LiveStatus {
   isLive: boolean;
@@ -10,13 +11,10 @@ interface LiveStatus {
 
 @Injectable({ providedIn: 'root' })
 export class LiveStatusService {
-  private apiUrl = 'https://localhost:7257/api/Live';
-  private Produrl='http://ubsapi.xplorelogic.in/api/Live';
-
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   getStatus(): Observable<LiveStatus> {
-    return this.http.get<LiveStatus>(`${this.Produrl}/GetStatus`);
+    return this.http.get<LiveStatus>(API_URLS.live.getStatus);
   }
 
   setStatus(isLive: boolean): Observable<LiveStatus> {
@@ -24,8 +22,8 @@ export class LiveStatusService {
       Authorization: `Bearer ${this.auth.getToken()}`,
     });
     return this.http.post<LiveStatus>(
-      `${this.Produrl}/SetStatus`,
-      { isLive },
+      API_URLS.live.setStatus,
+      { isLive, channelUrl: 'https://youtube.com/@unionbsmedia' },
       { headers }
     );
   }

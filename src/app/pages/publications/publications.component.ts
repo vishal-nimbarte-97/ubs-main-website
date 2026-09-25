@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AdminContentService } from '../../services/admin/admin-content.service';
 
 interface Publication {
   title: string;
@@ -15,7 +16,7 @@ interface Publication {
   templateUrl: './publications.component.html',
   styleUrls: ['./publications.component.scss'],
 })
-export class PublicationsComponent {
+export class PublicationsComponent implements OnInit {
   publications: Publication[] = [
     {
       title: 'Future Publication',
@@ -36,4 +37,20 @@ export class PublicationsComponent {
       status: 'Coming Soon',
     },
   ];
+
+  constructor(private readonly adminContent: AdminContentService) {}
+
+  ngOnInit(): void {
+    this.adminContent.getPublications().subscribe((items) => {
+      if (items.length) {
+        this.publications = items
+          .filter((item) => item.isActive)
+          .map((item) => ({
+            title: item.title,
+            description: item.description,
+            status: item.status,
+          }));
+      }
+    });
+  }
 }

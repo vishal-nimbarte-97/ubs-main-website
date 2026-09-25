@@ -5,3 +5,59 @@
 // .page-content.is-home {
 //   padding-top: 0; // home page's hero starts at y=0, sitting behind the transparent header
 // }
+
+.global-loader {
+	position: fixed;
+	inset: 0;
+	z-index: 10000;
+	display: grid;
+	place-items: center;
+	background: rgba(11, 37, 69, 0.38);
+	backdrop-filter: blur(3px);
+}
+
+.global-loader__panel {
+	display: grid;
+	justify-items: center;
+	gap: 0.8rem;
+	min-width: 132px;
+	padding: 1.25rem 1.4rem;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.96);
+	box-shadow: 0 18px 50px rgba(11, 37, 69, 0.24);
+}
+
+.global-loader__ring {
+	--loader-progress: 0%;
+	display: grid;
+	width: 76px;
+	aspect-ratio: 1;
+	place-items: center;
+	border-radius: 50%;
+	background: conic-gradient(var(--gold) var(--loader-progress), #e5e8ed 0);
+	position: relative;
+}
+
+.global-loader__ring::before {
+	content: '';
+	position: absolute;
+	inset: 7px;
+	border-radius: inherit;
+	background: var(--white);
+}
+
+.global-loader__value {
+	position: relative;
+	color: var(--navy);
+	font-size: 0.95rem;
+	font-weight: 800;
+}
+
+.global-loader__label {
+	color: var(--navy);
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}

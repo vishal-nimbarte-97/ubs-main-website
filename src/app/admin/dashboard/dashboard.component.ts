@@ -23,9 +23,7 @@ import { LiveBroadcastComponent } from './components/live-broadcast/live-broadca
 type SectionId =
   | 'overview'
   | 'live'
-  | 'notifications'
-  | 'news'
-  | 'events'
+  | 'updates'
   | 'site-config'
   | 'people'
   | 'tuition'
@@ -51,9 +49,6 @@ export class DashboardComponent implements OnInit {
   isLive = false;
   sidebarOpen = false;
   announcements: string[] = [];
-  newsItems: Array<{ title: string; excerpt: string }> = [];
-  eventItems: Array<{ date: string; title: string; description: string }> = [];
-
   notifications: NotificationItem[] = [];
   people: PeopleProfile[] = [];
   tuitionRows: TuitionFeeRow[] = [];
@@ -77,18 +72,12 @@ export class DashboardComponent implements OnInit {
     youtubeChannelUrl: '',
   };
 
-  newAnnouncement = '';
-  newNewsTitle = '';
-  newNewsExcerpt = '';
-  newEventDate = new Date().toISOString().slice(0, 10);
-  newEventTitle = '';
-  newEventDescription = '';
-
   newNotification: NotificationItem = {
     title: '',
     description: '',
     link: '',
     isActive: true,
+    type: 'announcement',
   };
 
   newPerson: PeopleProfile = {
@@ -99,7 +88,24 @@ export class DashboardComponent implements OnInit {
     quote: '',
     bio: '',
     isActive: true,
+    email: '',
+    department: '',
+    qualificationTitle: '',
+    qualification: [],
+    specialization: [],
+    books: [],
+    research: [],
+    articles: [],
+    journals: [],
+    pdfPath: '',
   };
+
+  facultyQualificationText = '';
+  facultySpecializationText = '';
+  facultyBooksText = '';
+  facultyResearchText = '';
+  facultyArticlesText = '';
+  facultyJournalsText = '';
 
   newTuitionRow: TuitionFeeRow = {
     programmeName: '',
@@ -133,10 +139,8 @@ export class DashboardComponent implements OnInit {
   sections: AdminSidebarItem[] = [
     { id: 'overview', label: 'Overview', icon: 'fa-gauge-high' },
     { id: 'live', label: 'Live Broadcast', icon: 'fa-video' },
-    { id: 'notifications', label: 'Announcements', icon: 'fa-bell' },
-    { id: 'news', label: 'News', icon: 'fa-newspaper' },
-    { id: 'events', label: 'Events', icon: 'fa-calendar-days' },
-    { id: 'site-config', label: 'Site Config', icon: 'fa-gear' },
+    { id: 'updates', label: 'Updates', icon: 'fa-bell' },
+    // { id: 'site-config', label: 'Site Config', icon: 'fa-gear' },
     { id: 'people', label: 'People', icon: 'fa-user' },
     { id: 'tuition', label: 'Tuition', icon: 'fa-indian-rupee-sign' },
     { id: 'admissions', label: 'Admissions', icon: 'fa-clipboard-check' },
@@ -176,8 +180,6 @@ export class DashboardComponent implements OnInit {
 
   refreshContent(): void {
     this.announcements = this.siteContent.getAnnouncements();
-    this.newsItems = this.siteContent.getNews();
-    this.eventItems = this.siteContent.getEvents();
   }
 
   loadBackendContent(): void {
@@ -218,54 +220,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  addAnnouncement(): void {
-    if (!this.newAnnouncement.trim()) return;
-    this.siteContent.addAnnouncement(this.newAnnouncement);
-    this.newAnnouncement = '';
-    this.refreshContent();
-  }
-
-  removeAnnouncement(index: number): void {
-    this.siteContent.removeAnnouncement(index);
-    this.refreshContent();
-  }
-
-  addNews(): void {
-    if (!this.newNewsTitle.trim() || !this.newNewsExcerpt.trim()) return;
-    this.siteContent.addNews({
-      title: this.newNewsTitle,
-      excerpt: this.newNewsExcerpt,
-    });
-    this.newNewsTitle = '';
-    this.newNewsExcerpt = '';
-    this.refreshContent();
-  }
-
-  removeNews(index: number): void {
-    this.siteContent.removeNews(index);
-    this.refreshContent();
-  }
-
-  addEvent(): void {
-    if (!this.newEventDate || !this.newEventTitle.trim() || !this.newEventDescription.trim()) {
-      return;
-    }
-    this.siteContent.addEvent({
-      date: this.newEventDate,
-      title: this.newEventTitle,
-      description: this.newEventDescription,
-    });
-    this.newEventDate = new Date().toISOString().slice(0, 10);
-    this.newEventTitle = '';
-    this.newEventDescription = '';
-    this.refreshContent();
-  }
-
-  removeEvent(index: number): void {
-    this.siteContent.removeEvent(index);
-    this.refreshContent();
-  }
-
   toggleLive(): void {
     this.liveService.setStatus(!this.isLive).subscribe((res) => {
       this.isLive = res.isLive;
@@ -281,13 +235,19 @@ export class DashboardComponent implements OnInit {
   saveNotification(): void {
     if (!this.newNotification.title.trim()) return;
 
-    this.adminContent.saveNotification(this.newNotification).subscribe((res) => {
+    const payload: NotificationItem = {
+      ...this.newNotification,
+      type: this.newNotification.type ?? 'announcement',
+    };
+
+    this.adminContent.saveNotification(payload).subscribe((res) => {
       this.notifications = [res, ...this.notifications];
       this.newNotification = {
         title: '',
         description: '',
         link: '',
         isActive: true,
+        type: 'announcement',
       };
     });
   }
@@ -299,10 +259,55 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  private parseTextList(value: string): string[] {
+    return value
+      .split(/\n|,/) 
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0);
+  }
+
+  private resetFacultyTextFields(): void {
+    this.facultyQualificationText = '';
+    this.facultySpecializationText = '';
+    this.facultyBooksText = '';
+    this.facultyResearchText = '';
+    this.facultyArticlesText = '';
+    this.facultyJournalsText = '';
+  }
+
   savePerson(): void {
     if (!this.newPerson.name.trim() || !this.newPerson.designation.trim()) return;
 
-    this.adminContent.savePerson(this.newPerson).subscribe((res) => {
+    const person: PeopleProfile = {
+      ...this.newPerson,
+      category: this.newPerson.category || 'principal',
+      qualification:
+        this.newPerson.category === 'faculty'
+          ? this.parseTextList(this.facultyQualificationText)
+          : this.newPerson.qualification ?? [],
+      specialization:
+        this.newPerson.category === 'faculty'
+          ? this.parseTextList(this.facultySpecializationText)
+          : this.newPerson.specialization ?? [],
+      books:
+        this.newPerson.category === 'faculty'
+          ? this.parseTextList(this.facultyBooksText)
+          : this.newPerson.books ?? [],
+      research:
+        this.newPerson.category === 'faculty'
+          ? this.parseTextList(this.facultyResearchText)
+          : this.newPerson.research ?? [],
+      articles:
+        this.newPerson.category === 'faculty'
+          ? this.parseTextList(this.facultyArticlesText)
+          : this.newPerson.articles ?? [],
+      journals:
+        this.newPerson.category === 'faculty'
+          ? this.parseTextList(this.facultyJournalsText)
+          : this.newPerson.journals ?? [],
+    };
+
+    this.adminContent.savePerson(person).subscribe((res) => {
       this.people = [res, ...this.people];
       this.newPerson = {
         name: '',
@@ -312,7 +317,18 @@ export class DashboardComponent implements OnInit {
         quote: '',
         bio: '',
         isActive: true,
+        email: '',
+        department: '',
+        qualificationTitle: '',
+        qualification: [],
+        specialization: [],
+        books: [],
+        research: [],
+        articles: [],
+        journals: [],
+        pdfPath: '',
       };
+      this.resetFacultyTextFields();
     });
   }
 

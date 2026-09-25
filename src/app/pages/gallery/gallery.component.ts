@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AdminContentService } from '../../services/admin/admin-content.service';
 
 type Category = 'All' | 'Campus' | 'Learning' | 'Heritage' | 'People';
 
@@ -18,7 +19,7 @@ interface GalleryPhoto {
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss',
 })
-export class GalleryComponent {
+export class GalleryComponent implements OnInit {
   readonly categories: Category[] = [
     'All',
     'Campus',
@@ -62,7 +63,7 @@ export class GalleryComponent {
     },
   ];
 
-  readonly photos: GalleryPhoto[] = [
+  photos: GalleryPhoto[] = [
     // ---- Campus life ----
     {
       src: 'assets/gallery/image_1.jpg',
@@ -275,6 +276,24 @@ export class GalleryComponent {
       category: 'People',
     },
   ];
+
+  constructor(private readonly adminContent: AdminContentService) {}
+
+  ngOnInit(): void {
+    this.adminContent.getGalleryItems().subscribe((items) => {
+      const activeItems = items.filter((item) => item.isActive);
+      if (activeItems.length) {
+        this.photos = activeItems.map((item) => ({
+          src: item.imageUrl,
+          alt: item.altText || item.title,
+          title: item.title,
+          category: this.categories.includes(item.category as Category)
+            ? (item.category as Exclude<Category, 'All'>)
+            : 'Campus',
+        }));
+      }
+    });
+  }
 
   get filteredPhotos(): GalleryPhoto[] {
     return this.activeCategory === 'All'

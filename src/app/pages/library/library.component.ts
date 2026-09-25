@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  AdminContentService,
+  PeopleProfile,
+} from '../../services/admin/admin-content.service';
 
 interface LibraryPolicy {
   number: string;
@@ -19,8 +23,9 @@ interface ReadingZone {
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss'],
 })
-export class LibraryComponent {
+export class LibraryComponent implements OnInit {
   activePolicy: number = 0;
+  librarianProfile: PeopleProfile | null = null;
 
   readonly images = {
     hero: 'assets/library/hero-library.jpg',
@@ -35,6 +40,15 @@ export class LibraryComponent {
     journalZone: 'assets/library/journal-zone.jpg',
     coffeeTableZone: 'assets/library/coffee-table-zone.jpg',
   };
+
+  constructor(private adminContentService: AdminContentService) {}
+
+  ngOnInit(): void {
+    this.adminContentService.getPeople().subscribe((people) => {
+      this.librarianProfile =
+        people.find((person) => person.category?.toLowerCase() === 'librarian') ?? null;
+    });
+  }
 
   policies: LibraryPolicy[] = [
     {

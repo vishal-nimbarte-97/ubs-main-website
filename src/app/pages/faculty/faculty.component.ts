@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AdminContentService } from '../../services/admin/admin-content.service';
 
 interface Faculty {
   id: number;
@@ -29,8 +30,43 @@ interface Faculty {
   templateUrl: './faculty.component.html',
   styleUrls: ['./faculty.component.scss'],
 })
-export class FacultyComponent {
+export class FacultyComponent implements OnInit {
   selectedFaculty: Faculty | null = null;
+
+  constructor(private adminContentService: AdminContentService) {}
+
+  ngOnInit(): void {
+    const fallbackFacultyList = [...this.facultyList];
+
+    this.adminContentService.getPeople().subscribe((people) => {
+      const facultyPeople = people.filter(
+        (person) => person.category?.toLowerCase() === 'faculty',
+      );
+
+      if (!facultyPeople.length) {
+        this.facultyList = fallbackFacultyList;
+        return;
+      }
+
+      this.facultyList = facultyPeople.map((person) => ({
+        id: person.id ?? 0,
+        name: person.name,
+        qualificationTitle: person.qualificationTitle ?? person.designation,
+        designation: person.designation,
+        additionalDesignation: person.quote || '',
+        department: person.department ?? 'Faculty',
+        email: person.email ?? '',
+        image: person.imageUrl || 'assets/images/faculty/default-faculty.jpg',
+        pdfPath: person.pdfPath,
+        qualification: person.qualification ?? [],
+        specialization: person.specialization ?? [],
+        books: person.books ?? [],
+        research: person.research ?? [],
+        articles: person.articles ?? [],
+        journals: person.journals ?? [],
+      }));
+    });
+  }
 
   facultyList: Faculty[] = [
     // =========================================================

@@ -4,6 +4,7 @@ import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { LoadingService } from './services/loading/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,10 @@ export class AppComponent implements OnInit {
   title = 'ubs-website';
   isHome = true;
   isAdminRoute = false;
+  readonly loadingVisible$ = this.loadingService.visible$;
+  readonly loadingProgress$ = this.loadingService.progress$;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.updateRouteState(this.router.url);

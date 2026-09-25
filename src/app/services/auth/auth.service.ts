@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { API_URLS } from '../../config/api-urls';
 
 interface LoginResponse {
   isSuccess: boolean;
@@ -11,8 +12,6 @@ interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'https://localhost:7257/api/Auth';
-  private prodUrl='http://ubsapi.xplorelogic.in/api/Auth';
   private readonly tokenKey = 'ubs-admin-token';
 
   constructor(private http: HttpClient) {}
@@ -27,7 +26,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.prodUrl}/Login`, { email, password })
+      .post<LoginResponse>(API_URLS.auth.login, { email, password })
       .pipe(
         tap((res) => {
           const storage = this.getSessionStorage();

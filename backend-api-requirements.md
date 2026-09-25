@@ -157,30 +157,206 @@ Example model:
 ---
 
 ### 3.4 People / Profiles API
-Base: `/api/people`
 
-Endpoints:
-- GET `/api/people`
-- GET `/api/people?category=principal`
-- GET `/api/people?category=librarian`
-- GET `/api/people/{id}`
-- POST `/api/people`
-- PUT `/api/people/{id}`
-- DELETE `/api/people/{id}`
+This is the shared module for Principal, Librarian, and Faculty profiles. The
+frontend uses the same model for all three categories and selects the public
+content by the `category` value.
 
-Example model:
+Base URL currently used by the frontend: `http://ubsapi.xplorelogic.in/api`
+
+#### Endpoints currently called by the frontend
+
+| Operation | Method | URL | Request body |
+|---|---|---|---|
+| Get all profiles | GET | `/People/GetAll` | None |
+| Create profile | POST | `/People/Insert` | `PeopleInsertRequest` JSON |
+| Delete profile | POST | `/People/Delete/{id}` | None |
+
+The current frontend does not call `PUT` for editing an existing profile. If
+edit support is required later, add `PUT /People/Update/{id}` or
+`PUT /People/Update` and update the frontend service at the same time.
+
+#### People response model
+
+`GET /People/GetAll` must return a JSON array. Property names should use the
+same camelCase names shown below because Angular maps these names directly.
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Dr. W.S. Annie",
+    "designation": "Principal, Union Biblical Seminary",
+    "category": "principal",
+    "imageUrl": "/uploads/people/principal.jpg",
+    "quote": "Speaking the Truth in Love",
+    "bio": "Principal profile description.",
+    "isActive": true,
+    "email": "principal@ubs.ac.in",
+    "department": null,
+    "qualificationTitle": null,
+    "qualification": [],
+    "specialization": [],
+    "books": [],
+    "research": [],
+    "articles": [],
+    "journals": [],
+    "pdfPath": null
+  }
+]
+```
+
+#### Insert request model
+
+`POST /People/Insert` receives this JSON payload. The `id` field must not be
+required for inserts and may be omitted or set by the database.
+
 ```json
 {
-  "id": 1,
+  "name": "string, required",
+  "designation": "string, required",
+  "category": "principal | librarian | faculty, required",
+  "imageUrl": "string, required; stored image URL or base64 data URL",
+  "quote": "string, optional; use empty string when not provided",
+  "bio": "string, optional; use empty string when not provided",
+  "isActive": true,
+  "email": "string, optional",
+  "department": "string, optional",
+  "qualificationTitle": "string, optional",
+  "qualification": ["string"],
+  "specialization": ["string"],
+  "books": ["string"],
+  "research": ["string"],
+  "articles": ["string"],
+  "journals": ["string"],
+  "pdfPath": "string, optional"
+}
+```
+
+#### Principal payload example
+
+```json
+{
   "name": "Dr. W.S. Annie",
-  "designation": "Principal",
+  "designation": "Principal, Union Biblical Seminary",
   "category": "principal",
   "imageUrl": "/uploads/people/principal.jpg",
   "quote": "Speaking the Truth in Love",
-  "bio": "Short profile description",
-  "isActive": true
+  "bio": "The principal's profile and message shown on the home and campus pages.",
+  "isActive": true,
+  "email": "principal@ubs.ac.in",
+  "department": null,
+  "qualificationTitle": null,
+  "qualification": [],
+  "specialization": [],
+  "books": [],
+  "research": [],
+  "articles": [],
+  "journals": [],
+  "pdfPath": null
 }
 ```
+
+#### Librarian payload example
+
+```json
+{
+  "name": "Mr. Sungjemmeren Kijong Imchen",
+  "designation": "Librarian, UBS Library",
+  "category": "librarian",
+  "imageUrl": "/uploads/people/librarian.jpg",
+  "quote": "Knowledge is a gift to be shared.",
+  "bio": "The librarian profile and library description shown on the library page.",
+  "isActive": true,
+  "email": "library@ubs.ac.in",
+  "department": null,
+  "qualificationTitle": null,
+  "qualification": [],
+  "specialization": [],
+  "books": [],
+  "research": [],
+  "articles": [],
+  "journals": [],
+  "pdfPath": null
+}
+```
+
+#### Faculty payload example
+
+```json
+{
+  "name": "Dr. Lanuwabang Jamir",
+  "designation": "Associate Professor, New Testament",
+  "category": "faculty",
+  "imageUrl": "/uploads/people/lanuwabang-jamir.jpg",
+  "quote": "",
+  "bio": "Faculty biography.",
+  "isActive": true,
+  "email": "lanu@ubs.ac.in",
+  "department": "Biblical Studies: New Testament",
+  "qualificationTitle": "PhD",
+  "qualification": [
+    "PhD - Middlesex University, 2012"
+  ],
+  "specialization": [
+    "Pauline Studies"
+  ],
+  "books": [
+    "Published book or chapter title"
+  ],
+  "research": [
+    "Research area or project"
+  ],
+  "articles": [
+    "Published article title"
+  ],
+  "journals": [
+    "Journal publication title"
+  ],
+  "pdfPath": "/uploads/people/lanuwabang-jamir.pdf"
+}
+```
+
+#### Category validation rules
+
+- `category` must be lowercase: `principal`, `librarian`, or `faculty`.
+- `name`, `designation`, `category`, `imageUrl`, and `isActive` are common
+  fields for every profile.
+- Only one active Principal and one active Librarian should normally be
+  allowed. The frontend displays the first matching active record.
+- Faculty records may have multiple active entries.
+- Faculty fields must be returned as JSON arrays, never comma-separated strings.
+  Empty arrays are preferred over `null`.
+- `email`, `department`, `qualificationTitle`, and `pdfPath` may be `null` or
+  an empty string when they are not applicable.
+
+#### Image handling requirement
+
+The current admin form reads an image file as a base64 data URL and sends that
+string in `imageUrl`, for example:
+
+```text
+data:image/png;base64,iVBORw0KGgoAAA...
+```
+
+The backend should either accept and store this value, or preferably decode it,
+save the file under an uploads folder, and return a normal public URL in
+`imageUrl`. Returning a normal URL is recommended because storing large base64
+strings directly in the database increases payload and database size.
+
+#### Delete response
+
+`POST /People/Delete/{id}` receives no request body. Return HTTP 200 with a
+boolean or a small success object, for example:
+
+```json
+{
+  "success": true
+}
+```
+
+The frontend only requires the request to complete successfully and then
+removes the record from the admin list.
 
 ---
 

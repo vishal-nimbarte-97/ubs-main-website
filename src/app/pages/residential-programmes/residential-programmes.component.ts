@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { AdminContentService } from '../../services/admin/admin-content.service';
 
 interface Programme {
   name: string;
@@ -22,7 +23,7 @@ interface Eligibility {
   templateUrl: './residential-programmes.component.html',
   styleUrl: './residential-programmes.component.scss',
 })
-export class ResidentialProgrammesComponent {
+export class ResidentialProgrammesComponent implements OnInit {
   activeType = 'All programmes';
 
   readonly programmeTypes = [
@@ -142,4 +143,16 @@ export class ResidentialProgrammesComponent {
       { label: 'CCM admissions', email: 'ccm@ubs.ac.in' },
     ],
   };
+
+  constructor(private readonly adminContent: AdminContentService) {}
+
+  ngOnInit(): void {
+    this.adminContent.getAdmissions().subscribe((admissions) => {
+      this.admissionInfo = {
+        fees: admissions.fees,
+        deadlines: admissions.deadlines,
+        contacts: admissions.contacts,
+      };
+    });
+  }
 }
