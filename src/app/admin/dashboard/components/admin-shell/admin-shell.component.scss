@@ -115,6 +115,10 @@
 }
 
 @media (max-width: 860px) {
+  .admin-shell {
+    position: relative;
+  }
+
   .admin-sidebar {
     position: fixed;
     top: 0;
@@ -144,6 +148,14 @@
 
   .burger-btn {
     display: inline-flex;
+  }
+
+  .topbar-logout {
+    padding: 9px 12px;
+  }
+
+  .topbar-logout span {
+    display: none;
   }
 
   .admin-content {

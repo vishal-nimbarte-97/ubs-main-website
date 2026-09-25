@@ -52,3 +52,32 @@
 .overview-value.on {
   color: #b42318;
 }
+
+@media (max-width: 760px) {
+  .panel {
+    gap: 16px;
+  }
+
+  .panel-intro {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: none;
+  }
+
+  .overview-card {
+    padding: 16px 14px;
+  }
+
+  .overview-label {
+    font-size: 0.68rem;
+  }
+
+  .overview-value {
+    font-size: 1rem;
+  }
+}
