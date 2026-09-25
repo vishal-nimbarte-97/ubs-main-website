@@ -5,3 +5,4 @@ export * from './news-item.model';
 export * from './blog-post.model';
 export * from './testimonial.model';
 export * from './why-reason.model';
+export * from './tuition.model';

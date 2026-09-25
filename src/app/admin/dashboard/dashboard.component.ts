@@ -108,10 +108,13 @@ export class DashboardComponent implements OnInit {
   facultyJournalsText = '';
 
   newTuitionRow: TuitionFeeRow = {
-    programmeName: '',
-    mainCampus: '',
-    onlineCampus: '',
-    extension: '',
+    programmeType: 'residential',
+    course: '',
+    singleStudent: '',
+    marriedStudentWithQuarters: '',
+    english: '',
+    hindi: '',
+    marathi: '',
     academicYear: '2026-27',
     isActive: true,
   };
@@ -340,15 +343,40 @@ export class DashboardComponent implements OnInit {
   }
 
   saveTuitionRow(): void {
-    if (!this.newTuitionRow.programmeName.trim()) return;
+    const courseName = (this.newTuitionRow.course ?? '').trim();
+    if (!courseName) return;
 
-    this.adminContent.saveTuitionRow(this.newTuitionRow).subscribe((res) => {
+    const payload: TuitionFeeRow = {
+      ...this.newTuitionRow,
+      course: courseName,
+      programmeType: this.newTuitionRow.programmeType ?? 'residential',
+      academicYear: this.newTuitionRow.academicYear ?? '2026-27',
+      isActive: true,
+      programmeName: courseName,
+      mainCampus:
+        this.newTuitionRow.programmeType === 'residential'
+          ? this.newTuitionRow.singleStudent ?? ''
+          : this.newTuitionRow.english ?? '',
+      onlineCampus:
+        this.newTuitionRow.programmeType === 'residential'
+          ? this.newTuitionRow.marriedStudentWithQuarters ?? ''
+          : this.newTuitionRow.hindi ?? '',
+      extension:
+        this.newTuitionRow.programmeType === 'residential'
+          ? ''
+          : this.newTuitionRow.marathi ?? '',
+    };
+
+    this.adminContent.saveTuitionRow(payload).subscribe((res) => {
       this.tuitionRows = [res, ...this.tuitionRows];
       this.newTuitionRow = {
-        programmeName: '',
-        mainCampus: '',
-        onlineCampus: '',
-        extension: '',
+        programmeType: 'residential',
+        course: '',
+        singleStudent: '',
+        marriedStudentWithQuarters: '',
+        english: '',
+        hindi: '',
+        marathi: '',
         academicYear: '2026-27',
         isActive: true,
       };

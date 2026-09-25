@@ -217,41 +217,71 @@ em {
   background: var(--gold);
   box-shadow: 0 0 0 0.22rem rgba(226, 180, 85, 0.18);
 }
+.fee-table-groups {
+  display: grid;
+  gap: 2rem;
+}
+
+.fee-table-group {
+  border: 1px solid #d9d3d1;
+  background: var(--white);
+}
+
+.fee-table-group__title {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #d9d3d1;
+  background: #f4f1ee;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+}
+
 .table-scroll {
   overflow-x: auto;
 }
-table {
+
+.fee-table {
   width: 100%;
-  min-width: 43rem;
+  min-width: 42rem;
   border-collapse: collapse;
 }
-th,
-td {
-  padding: 1.2rem 1.5rem;
-  border-bottom: 1px solid #eee7e4;
+
+.fee-table th,
+.fee-table td {
+  padding: 0.9rem 1rem;
+  border: 1px solid #d9d3d1;
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
 }
-thead th {
-  color: var(--wine-deep);
-  background: var(--cream);
-  font-size: 0.73rem;
-  font-weight: 850;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-tbody th {
+
+.fee-table thead th {
+  background: #f7f3f1;
   color: var(--ink);
-  font-weight: 750;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
-tbody td {
-  color: var(--muted);
+
+.fee-table tbody th,
+.fee-table tbody td {
+  color: var(--ink);
+  background: var(--white);
 }
-tbody tr {
-  transition: background 0.2s ease;
+
+.fee-table tbody th {
+  font-weight: 600;
 }
-tbody tr:hover {
-  background: #fdf9f6;
+
+.fee-table tbody tr:nth-child(even) td,
+.fee-table tbody tr:nth-child(even) th {
+  background: #fcfaf8;
+}
+
+.fee-table tbody tr:hover td,
+.fee-table tbody tr:hover th {
+  background: #f7f4f2;
 }
 .finance-card__footer {
   display: flex;

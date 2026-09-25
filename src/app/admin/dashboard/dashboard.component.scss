@@ -483,6 +483,61 @@ label span {
   gap: 10px;
 }
 
+.tuition-admin-preview {
+  display: grid;
+  gap: 20px;
+}
+
+.tuition-admin-table {
+  border: 1px solid rgba(11, 37, 69, 0.12);
+  background: #fff;
+  overflow: hidden;
+}
+
+.tuition-admin-table h4 {
+  margin: 0;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(11, 37, 69, 0.12);
+  background: #f7f4f2;
+  color: var(--navy);
+  text-align: center;
+}
+
+.tuition-admin-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tuition-admin-table th,
+.tuition-admin-table td {
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(11, 37, 69, 0.12);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tuition-admin-table thead th {
+  background: #f4f1ee;
+  color: var(--navy);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.tuition-admin-table tbody th {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tuition-admin-table tbody td,
+.tuition-admin-table tbody th {
+  background: #fff;
+}
+
+.tuition-admin-table tbody tr:nth-child(even) td,
+.tuition-admin-table tbody tr:nth-child(even) th {
+  background: #fcfaf9;
+}
+
 @media (max-width: 760px) {
   .two-col,
   .mini-list {

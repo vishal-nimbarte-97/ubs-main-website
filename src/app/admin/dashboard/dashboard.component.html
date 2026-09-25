@@ -210,25 +210,46 @@
           <h3>Tuition & Fees</h3>
           <div class="form-grid two-col">
             <label>
-              <span>Programme</span>
-              <input [(ngModel)]="newTuitionRow.programmeName" type="text" />
+              <span>Programme Type</span>
+              <select [(ngModel)]="newTuitionRow.programmeType">
+                <option value="residential">Residential</option>
+                <option value="non-residential">Non-Residential</option>
+              </select>
             </label>
             <label>
               <span>Academic Year</span>
               <input [(ngModel)]="newTuitionRow.academicYear" type="text" />
             </label>
-            <label>
-              <span>Main Campus</span>
-              <input [(ngModel)]="newTuitionRow.mainCampus" type="text" />
+            <label class="full-width">
+              <span>Course / Programme</span>
+              <input [(ngModel)]="newTuitionRow.course" type="text" placeholder="Bachelor of Divinity" />
             </label>
-            <label>
-              <span>Online Campus</span>
-              <input [(ngModel)]="newTuitionRow.onlineCampus" type="text" />
-            </label>
-            <label>
-              <span>Extension</span>
-              <input [(ngModel)]="newTuitionRow.extension" type="text" />
-            </label>
+
+            <ng-container *ngIf="newTuitionRow.programmeType === 'residential'">
+              <label>
+                <span>Single Student</span>
+                <input [(ngModel)]="newTuitionRow.singleStudent" type="text" placeholder="Rs. 1,36,510/-" />
+              </label>
+              <label>
+                <span>Married Student with Quarters</span>
+                <input [(ngModel)]="newTuitionRow.marriedStudentWithQuarters" type="text" placeholder="Rs. 1,36,510/-" />
+              </label>
+            </ng-container>
+
+            <ng-container *ngIf="newTuitionRow.programmeType === 'non-residential'">
+              <label>
+                <span>English</span>
+                <input [(ngModel)]="newTuitionRow.english" type="text" placeholder="To be updated soon" />
+              </label>
+              <label>
+                <span>Hindi</span>
+                <input [(ngModel)]="newTuitionRow.hindi" type="text" placeholder="To be updated soon" />
+              </label>
+              <label class="full-width">
+                <span>Marathi</span>
+                <input [(ngModel)]="newTuitionRow.marathi" type="text" placeholder="To be updated soon" />
+              </label>
+            </ng-container>
           </div>
           <button class="primary-btn" type="button" (click)="saveTuitionRow()">Save fee row</button>
         </div>
@@ -238,8 +259,12 @@
           <ul class="content-list">
             <li *ngFor="let item of tuitionRows; let i = index">
               <div>
-                <strong>{{ item.programmeName }}</strong>
-                <small>{{ item.mainCampus }} / {{ item.onlineCampus }}</small>
+                <strong>{{ item.course || item.programmeName }}</strong>
+                <small>
+                  {{ item.programmeType || 'residential' }} ·
+                  {{ item.singleStudent || item.mainCampus || '—' }} /
+                  {{ item.marriedStudentWithQuarters || item.onlineCampus || '—' }}
+                </small>
               </div>
               <button type="button" (click)="deleteTuitionRow(i)">Remove</button>
             </li>

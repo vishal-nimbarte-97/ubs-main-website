@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { API_URLS } from '../../config/api-urls';
+import { TuitionFeeRow } from '../../models/tuition.model';
+
+export type { TuitionFeeRow } from '../../models/tuition.model';
 
 export interface SiteConfig {
   admissionsEmail: string;
@@ -44,16 +47,6 @@ export interface PeopleProfile {
   articles?: string[];
   journals?: string[];
   pdfPath?: string;
-}
-
-export interface TuitionFeeRow {
-  id?: number;
-  programmeName: string;
-  mainCampus: string;
-  onlineCampus: string;
-  extension: string;
-  academicYear: string;
-  isActive?: boolean;
 }
 
 export interface AdmissionContact {
