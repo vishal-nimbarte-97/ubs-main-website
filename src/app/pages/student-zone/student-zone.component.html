@@ -67,13 +67,83 @@
       </div>
 
       <div class="nav-links">
+        <a href="#ubssf">UBSSF</a>
+        <a href="#objectives">Objectives</a>
+        <a href="#council">Council</a>
         <a href="#committees">Committees</a>
         <a href="#get-involved">Get Involved</a>
+        <a routerLink="/gallery" fragment="ubssf-gallery">UBSSF Gallery</a>
       </div>
 
       <a href="mailto:info&#64;ubs.ac.in" class="nav-button"> Contact Us </a>
     </div>
   </nav>
+
+  <section id="ubssf" class="ubssf-intro">
+    <div class="container intro-grid">
+      <div>
+        <span class="section-label">UBSSF</span>
+        <h2>
+          The Union Biblical Seminary
+          <span>Students' Fellowship.</span>
+        </h2>
+      </div>
+
+      <p>
+        UBSSF is a non-profit student body fellowship made up of the Executive
+        Council and various committees. Together, students lead, serve, learn,
+        and grow in fellowship with God and one another.
+      </p>
+    </div>
+  </section>
+
+  <section id="objectives" class="objectives-section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <span class="section-label">OUR PURPOSE</span>
+          <h2>Eight ways we <span>grow together.</span></h2>
+        </div>
+        <p>UBSSF creates a shared rhythm of Christian growth, service, mission, creativity, and responsible community life.</p>
+      </div>
+
+      <ol class="objectives-list">
+        <li *ngFor="let objective of ubssfObjectives; let i = index">
+          <span>{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</span>
+          <p>{{ objective }}</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="council" class="council-section">
+    <div class="container council-grid">
+      <div>
+        <span class="section-label">LEADERSHIP</span>
+        <h2>The Executive <span>Council.</span></h2>
+        <p>
+          The Executive Council carries on the affairs of the Fellowship and
+          coordinates the work of every committee.
+        </p>
+      </div>
+
+      <div class="council-details">
+        <div class="council-block">
+          <h3>Officers</h3>
+          <ul>
+            <li *ngFor="let officer of executiveCouncil">{{ officer }}</li>
+          </ul>
+        </div>
+
+        <div class="council-block">
+          <h3>Functions</h3>
+          <ol>
+            <li *ngFor="let function of executiveCouncilFunctions">{{ function }}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- =========================
        STUDENT COMMITTEES
@@ -129,6 +199,10 @@
             <h3>{{ committee.title }}</h3>
 
             <p>{{ committee.description }}</p>
+
+            <ul class="committee-duties" *ngIf="committeeDuties[committee.title] as duties">
+              <li *ngFor="let duty of duties">{{ duty }}</li>
+            </ul>
           </div>
         </article>
       </div>

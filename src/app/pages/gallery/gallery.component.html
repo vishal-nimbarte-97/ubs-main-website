@@ -30,9 +30,20 @@
       </div>
 
       <figure class="hero-image">
-        <img src="assets/gallery/image_1.jpg" alt="UBS campus" />
+        <div class="hero-collage-grid">
+          <img
+            class="hero-collage-main"
+            src="assets/gallery/image_1.jpg"
+            alt="UBS campus"
+          />
+          <img src="assets/gallery/study-space.jpg" alt="UBS learning space" />
+          <img src="assets/gallery/heritage-7.png" alt="UBS heritage" />
+          <img src="assets/gallery/people-about-2.png" alt="UBS community" />
+          <img src="assets/gallery/image_11.jpg" alt="UBS campus gathering" />
+          <img src="assets/gallery/people-about-5.png" alt="UBS student community" />
+        </div>
         <figcaption>
-          Union Biblical Seminary <span>Pune, India</span>
+          Union Biblical Seminary <span>Campus & community</span>
         </figcaption>
       </figure>
     </div>
@@ -103,6 +114,34 @@
             <span class="item-title">{{ photo.title }}</span>
             <span class="item-zoom" aria-hidden="true">&#x2922;</span>
           </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="ubssf-gallery" class="ubssf-gallery-section">
+    <div class="container">
+      <div class="section-head ubssf-gallery-head">
+        <div class="section-label">UBSSF COMMUNITY</div>
+        <h2>Student committees, <span>in action.</span></h2>
+        <p>
+          Meet the ten committees that shape prayer, service, mission, creativity,
+          sport, and everyday fellowship at UBS.
+        </p>
+      </div>
+
+      <div class="ubssf-gallery-grid">
+        <figure
+          class="ubssf-gallery-card"
+          *ngFor="let committee of ubssfCommitteeGallery; let i = index"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'Open images for ' + committee.title"
+          (click)="openCommitteeGallery(i)"
+          (keydown.enter)="openCommitteeGallery(i)"
+        >
+          <img [src]="committee.images[0]" [alt]="committee.title" loading="lazy" />
+          <figcaption>{{ committee.title }}</figcaption>
         </figure>
       </div>
     </div>
@@ -242,6 +281,64 @@
       class="lightbox__nav lightbox__nav--next"
       (click)="nextPhoto($event)"
       aria-label="Next image"
+    >
+      &#10095;
+    </button>
+  </div>
+
+  <div
+    *ngIf="selectedCommittee as committee"
+    class="committee-lightbox"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="committee.title"
+    (click)="closeCommitteeGallery()"
+  >
+    <button
+      type="button"
+      class="committee-lightbox__close"
+      aria-label="Close committee gallery"
+      (click)="closeCommitteeGallery()"
+    >
+      &times;
+    </button>
+
+    <button
+      type="button"
+      class="committee-lightbox__nav committee-lightbox__nav--previous"
+      aria-label="Previous committee image"
+      (click)="previousCommitteeImage($event)"
+    >
+      &#10094;
+    </button>
+
+    <figure class="committee-lightbox__figure" (click)="$event.stopPropagation()">
+      <img
+        [src]="committee.images[selectedCommitteeImageIndex]"
+        [alt]="committee.title"
+      />
+      <figcaption>
+        <strong>{{ committee.title }}</strong>
+        <span>{{ selectedCommitteeImageIndex + 1 }} / {{ committee.images.length }}</span>
+      </figcaption>
+      <div class="committee-lightbox__thumbs">
+        <button
+          *ngFor="let image of committee.images; let i = index"
+          type="button"
+          [class.is-active]="i === selectedCommitteeImageIndex"
+          [attr.aria-label]="'Show image ' + (i + 1)"
+          (click)="selectedCommitteeImageIndex = i"
+        >
+          <img [src]="image" [alt]="committee.title + ' thumbnail ' + (i + 1)" />
+        </button>
+      </div>
+    </figure>
+
+    <button
+      type="button"
+      class="committee-lightbox__nav committee-lightbox__nav--next"
+      aria-label="Next committee image"
+      (click)="nextCommitteeImage($event)"
     >
       &#10095;
     </button>

@@ -128,8 +128,28 @@
             </label>
 
             <label *ngIf="newPerson.category === 'faculty'">
-              <span>Department</span>
-              <input [(ngModel)]="newPerson.department" type="text" />
+              <span>Faculty Type / Department</span>
+              <select [(ngModel)]="facultyTypeSelection">
+                <option value="">Select faculty type</option>
+                <option
+                  *ngFor="let department of facultyDepartmentOptions"
+                  [value]="department"
+                >{{ department }}</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+            <label
+              *ngIf="
+                newPerson.category === 'faculty' &&
+                facultyTypeSelection === 'other'
+              "
+            >
+              <span>Custom Faculty Type</span>
+              <input
+                [(ngModel)]="customFacultyType"
+                type="text"
+                placeholder="Enter custom faculty type"
+              />
             </label>
             <label>
               <span>Official email</span>
@@ -422,6 +442,85 @@
                 <small>{{ item.category }}</small>
               </div>
               <button type="button" (click)="deleteGalleryItem(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section *ngIf="activeSection === 'community'" class="panel">
+        <div class="content-form-card">
+          <h3>UBSSF Community Gallery</h3>
+          <div class="form-grid two-col">
+            <label class="full-width">
+              <span>Community / Committee Type</span>
+              <select [(ngModel)]="communityTypeSelection">
+                <option value="">Select a community type</option>
+                <option
+                  *ngFor="let type of communityTypeOptions"
+                  [value]="type"
+                >
+                  {{ type }}
+                </option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+            <label class="full-width" *ngIf="communityTypeSelection === 'other'">
+              <span>Custom Community Type</span>
+              <input
+                [(ngModel)]="customCommunityType"
+                type="text"
+                placeholder="Enter a new community type"
+              />
+            </label>
+            <label class="full-width">
+              <span>Community Images</span>
+              <div class="image-upload-box">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  (change)="onCommunityImagesSelected($event)"
+                  id="community-images-upload"
+                  hidden
+                />
+                <label class="upload-button" for="community-images-upload">
+                  Upload multiple images
+                </label>
+                <div class="community-preview-grid" *ngIf="communityImageUrls.length">
+                  <div
+                    class="community-preview"
+                    *ngFor="let image of communityImageUrls; let i = index"
+                  >
+                    <img [src]="image" [alt]="communityName || 'Community preview'" />
+                    <button
+                      type="button"
+                      (click)="removeCommunityImage(i)"
+                      [attr.aria-label]="'Remove image ' + (i + 1)"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                </div>
+                <span class="upload-text" *ngIf="!communityImageUrls.length">
+                  No community images selected yet
+                </span>
+              </div>
+            </label>
+          </div>
+          <button class="primary-btn" type="button" (click)="saveCommunity()">
+            Save community images
+          </button>
+        </div>
+
+        <div class="list-card">
+          <h4>Saved community images</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of communityImages; let i = index">
+              <div>
+                <strong>{{ item.title }}</strong>
+                <small>UBSSF Community</small>
+              </div>
+              <button type="button" (click)="deleteCommunityImage(i)">Remove</button>
             </li>
           </ul>
         </div>

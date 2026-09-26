@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LiveStatusService } from '../../services/dashboard/live-status.service';
+import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { SiteContentService } from '../../services/admin/site-content.service';
 import {
@@ -30,6 +31,7 @@ type SectionId =
   | 'admissions'
   | 'publications'
   | 'gallery'
+  | 'community'
   | 'student-zone';
 
 interface AdminSection {
@@ -62,6 +64,7 @@ export class DashboardComponent implements OnInit {
   publications: PublicationItem[] = [];
   gallery: GalleryItem[] = [];
   studentZone: GalleryItem[] = [];
+  communityImages: GalleryItem[] = [];
 
   siteConfig: SiteConfig = {
     admissionsEmail: '',
@@ -106,6 +109,17 @@ export class DashboardComponent implements OnInit {
   facultyResearchText = '';
   facultyArticlesText = '';
   facultyJournalsText = '';
+  facultyTypeSelection = '';
+
+  facultyDepartmentOptions = [
+    'Biblical Studies: Old Testament',
+    'Biblical Studies: New Testament',
+    'Christian Theology',
+    'History of Christianity',
+    'Christian Ministry',
+    'Missiology',
+  ];
+  customFacultyType = '';
 
   newTuitionRow: TuitionFeeRow = {
     programmeType: 'residential',
@@ -139,6 +153,23 @@ export class DashboardComponent implements OnInit {
     isActive: true,
   };
 
+  communityName = '';
+  communityImageUrls: string[] = [];
+  communityTypeSelection = '';
+  customCommunityType = '';
+  communityTypeOptions = [
+    'Prayer Committee',
+    'Missionary Project Committee',
+    'Social and Cultural Committee',
+    'Handicraft Committee',
+    'Literary, Debate, and Publication Committee',
+    'Service Committee',
+    'Sports and Games Committee',
+    'Missionary Conference Committee',
+    'Campus Care Committee',
+    'Days of Challenge Committee',
+  ];
+
   sections: AdminSidebarItem[] = [
     { id: 'overview', label: 'Overview', icon: 'fa-gauge-high' },
     { id: 'live', label: 'Live Broadcast', icon: 'fa-video' },
@@ -149,6 +180,7 @@ export class DashboardComponent implements OnInit {
     { id: 'admissions', label: 'Admissions', icon: 'fa-clipboard-check' },
     { id: 'publications', label: 'Publications', icon: 'fa-book' },
     { id: 'gallery', label: 'Gallery', icon: 'fa-images' },
+    { id: 'community', label: 'Community', icon: 'fa-people-group' },
     { id: 'student-zone', label: 'Student Zone', icon: 'fa-school' },
   ];
 
@@ -220,6 +252,9 @@ export class DashboardComponent implements OnInit {
 
     this.adminContent.getStudentZoneItems().subscribe((res) => {
       this.studentZone = res;
+      this.communityImages = res.filter(
+        (item) => item.category === 'UBSSF Community',
+      );
     });
   }
 
@@ -281,9 +316,18 @@ export class DashboardComponent implements OnInit {
   savePerson(): void {
     if (!this.newPerson.name.trim() || !this.newPerson.designation.trim()) return;
 
+    const facultyDepartment =
+      this.facultyTypeSelection === 'other'
+        ? this.customFacultyType.trim()
+        : this.facultyTypeSelection;
+
     const person: PeopleProfile = {
       ...this.newPerson,
       category: this.newPerson.category || 'principal',
+      department:
+        this.newPerson.category === 'faculty'
+          ? facultyDepartment
+          : this.newPerson.department,
       qualification:
         this.newPerson.category === 'faculty'
           ? this.parseTextList(this.facultyQualificationText)
@@ -332,6 +376,8 @@ export class DashboardComponent implements OnInit {
         pdfPath: '',
       };
       this.resetFacultyTextFields();
+      this.facultyTypeSelection = '';
+      this.customFacultyType = '';
     });
   }
 
@@ -469,6 +515,65 @@ export class DashboardComponent implements OnInit {
 
     reader.readAsDataURL(file);
     input.value = '';
+  }
+
+  onCommunityImagesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.communityImageUrls = [
+          ...this.communityImageUrls,
+          reader.result as string,
+        ];
+      };
+      reader.readAsDataURL(file);
+    });
+
+    input.value = '';
+  }
+
+  removeCommunityImage(index: number): void {
+    this.communityImageUrls = this.communityImageUrls.filter(
+      (_, imageIndex) => imageIndex !== index,
+    );
+  }
+
+  saveCommunity(): void {
+    const name =
+      this.communityTypeSelection === 'other'
+        ? this.customCommunityType.trim()
+        : this.communityTypeSelection || this.communityName.trim();
+    if (!name || !this.communityImageUrls.length) return;
+
+    const requests = this.communityImageUrls.map((imageUrl) =>
+      this.adminContent.saveStudentZoneItem({
+        title: name,
+        category: 'UBSSF Community',
+        imageUrl,
+        altText: `${name} community image`,
+        isActive: true,
+      }),
+    );
+
+    forkJoin(requests).subscribe((savedItems) => {
+      this.communityImages = [...savedItems, ...this.communityImages];
+      this.studentZone = [...savedItems, ...this.studentZone];
+      this.communityName = '';
+      this.communityImageUrls = [];
+      this.communityTypeSelection = '';
+      this.customCommunityType = '';
+    });
+  }
+
+  deleteCommunityImage(index: number): void {
+    const item = this.communityImages[index];
+    this.adminContent.deleteStudentZoneItem(item.id).subscribe(() => {
+      this.communityImages = this.communityImages.filter((_, i) => i !== index);
+      this.studentZone = this.studentZone.filter((candidate) => candidate.id !== item.id);
+    });
   }
 
   saveGalleryItem(): void {

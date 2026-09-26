@@ -12,6 +12,11 @@ interface GalleryPhoto {
   category: Exclude<Category, 'All'>;
 }
 
+interface CommitteeGalleryPhoto {
+  title: string;
+  images: string[];
+}
+
 @Component({
   selector: 'app-gallery',
   standalone: true,
@@ -29,6 +34,8 @@ export class GalleryComponent implements OnInit {
   ];
   activeCategory: Category = 'All';
   selectedIndex = -1;
+  selectedCommitteeIndex = -1;
+  selectedCommitteeImageIndex = 0;
 
   readonly featuredEvents = [
     {
@@ -61,6 +68,19 @@ export class GalleryComponent implements OnInit {
         'assets/gallery/people-about-5.png',
       ],
     },
+  ];
+
+  ubssfCommitteeGallery: CommitteeGalleryPhoto[] = [
+    { title: 'Prayer Committee', images: ['assets/gallery/people-1.png', 'assets/gallery/people-4.png', 'assets/gallery/people-7.png'] },
+    { title: 'Missionary Project Committee', images: ['assets/gallery/image_1.jpg', 'assets/gallery/image_2.jpg', 'assets/gallery/image_3.jpg'] },
+    { title: 'Social and Cultural Committee', images: ['assets/gallery/image_4.jpg', 'assets/gallery/image_5.jpg'] },
+    { title: 'Handicraft Committee', images: ['assets/gallery/image_6.jpg', 'assets/gallery/image_7.jpg'] },
+    { title: 'Literary, Debate, and Publication Committee', images: ['assets/gallery/image_8.jpg', 'assets/gallery/image_9.jpg'] },
+    { title: 'Service Committee', images: ['assets/gallery/image_10.png', 'assets/gallery/image_11.jpg'] },
+    { title: 'Sports and Games Committee', images: ['assets/gallery/image_12.png', 'assets/gallery/image_13.png'] },
+    { title: 'Missionary Conference Committee', images: ['assets/gallery/image_14.png', 'assets/gallery/image_15.png'] },
+    { title: 'Campus Care Committee', images: ['assets/gallery/heritage-1.png', 'assets/gallery/heritage-3.png'] },
+    { title: 'Days of Challenge Committee', images: ['assets/gallery/heritage-5.png', 'assets/gallery/heritage-7.png'] },
   ];
 
   photos: GalleryPhoto[] = [
@@ -293,6 +313,25 @@ export class GalleryComponent implements OnInit {
         }));
       }
     });
+
+    this.adminContent.getStudentZoneItems().subscribe((items) => {
+      const communityItems = items.filter(
+        (item) => item.isActive && item.category === 'UBSSF Community',
+      );
+
+      if (!communityItems.length) return;
+
+      const grouped = new Map<string, string[]>();
+      communityItems.forEach((item) => {
+        const images = grouped.get(item.title) ?? [];
+        grouped.set(item.title, [...images, item.imageUrl]);
+      });
+
+      this.ubssfCommitteeGallery = Array.from(grouped, ([title, images]) => ({
+        title,
+        images,
+      }));
+    });
   }
 
   get filteredPhotos(): GalleryPhoto[] {
@@ -342,9 +381,49 @@ export class GalleryComponent implements OnInit {
     }
   }
 
+  get selectedCommittee(): CommitteeGalleryPhoto | null {
+    return this.selectedCommitteeIndex >= 0
+      ? this.ubssfCommitteeGallery[this.selectedCommitteeIndex]
+      : null;
+  }
+
+  openCommitteeGallery(index: number): void {
+    this.selectedCommitteeIndex = index;
+    this.selectedCommitteeImageIndex = 0;
+  }
+
+  closeCommitteeGallery(): void {
+    this.selectedCommitteeIndex = -1;
+    this.selectedCommitteeImageIndex = 0;
+  }
+
+  previousCommitteeImage(event?: Event): void {
+    event?.stopPropagation();
+    const images = this.selectedCommittee?.images ?? [];
+    this.selectedCommitteeImageIndex =
+      this.selectedCommitteeImageIndex > 0
+        ? this.selectedCommitteeImageIndex - 1
+        : images.length - 1;
+  }
+
+  nextCommitteeImage(event?: Event): void {
+    event?.stopPropagation();
+    const images = this.selectedCommittee?.images ?? [];
+    this.selectedCommitteeImageIndex =
+      this.selectedCommitteeImageIndex < images.length - 1
+        ? this.selectedCommitteeImageIndex + 1
+        : 0;
+  }
+
   @HostListener('document:keydown', ['$event'])
   handleKeyboard(event: KeyboardEvent): void {
     // Provide the same lightbox controls to keyboard users as the buttons.
+    if (this.selectedCommitteeIndex >= 0) {
+      if (event.key === 'Escape') this.closeCommitteeGallery();
+      if (event.key === 'ArrowLeft') this.previousCommitteeImage();
+      if (event.key === 'ArrowRight') this.nextCommitteeImage();
+      return;
+    }
     if (this.selectedIndex < 0) return;
     if (event.key === 'Escape') this.closeLightbox();
     if (event.key === 'ArrowLeft') this.previousPhoto();

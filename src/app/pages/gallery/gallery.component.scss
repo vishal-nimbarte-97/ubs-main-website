@@ -75,6 +75,28 @@
   animation: heroImageDrift 16s ease-in-out infinite alternate;
 }
 
+.hero-collage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.72fr;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.hero-collage-grid img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  animation: none;
+}
+
+.hero-collage-grid .hero-collage-main {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+
 .hero-image figcaption {
   position: absolute;
   right: 22px;
@@ -560,6 +582,83 @@
 }
 
 /* =========================================================
+   UBSSF COMMUNITY GALLERY
+========================================================= */
+
+.ubssf-gallery-section {
+  padding: clamp(64px, 8vw, 104px) 0;
+  background: var(--white);
+}
+
+.ubssf-gallery-head {
+  max-width: 760px;
+  margin-bottom: 36px;
+}
+
+.ubssf-gallery-head p {
+  max-width: 620px;
+  margin: 18px 0 0;
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.ubssf-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ubssf-gallery-card {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 4 / 4.8;
+  margin: 0;
+  overflow: hidden;
+  background: var(--maroon-dark);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.ubssf-gallery-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease, filter 0.35s ease;
+}
+
+.ubssf-gallery-card::after {
+  content: "";
+  position: absolute;
+  inset: 35% 0 0;
+  background: linear-gradient(transparent, rgba(11, 37, 69, 0.92));
+  pointer-events: none;
+}
+
+.ubssf-gallery-card figcaption {
+  position: absolute;
+  z-index: 1;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  color: var(--white);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.ubssf-gallery-card:hover img {
+  transform: scale(1.06);
+  filter: saturate(1.08);
+}
+
+.ubssf-gallery-card:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* =========================================================
    STATS STRIP
 ========================================================= */
 
@@ -874,6 +973,120 @@
   outline-offset: 3px;
 }
 
+.committee-lightbox {
+  position: fixed;
+  z-index: 2100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 40px 100px;
+  background: rgba(7, 22, 42, 0.96);
+  backdrop-filter: blur(10px);
+}
+
+.committee-lightbox__figure {
+  width: min(100%, 900px);
+  margin: 0;
+  text-align: center;
+}
+
+.committee-lightbox__figure > img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: min(65vh, 620px);
+  margin: 0 auto;
+  object-fit: contain;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+}
+
+.committee-lightbox__figure figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 16px 0;
+  color: var(--white);
+}
+
+.committee-lightbox__figure figcaption span {
+  color: var(--gold-light);
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+}
+
+.committee-lightbox__thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0 8px;
+}
+
+.committee-lightbox__thumbs button {
+  flex: 0 0 66px;
+  height: 54px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+}
+
+.committee-lightbox__thumbs button.is-active {
+  border-color: var(--gold);
+}
+
+.committee-lightbox__thumbs img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.committee-lightbox__close,
+.committee-lightbox__nav {
+  position: absolute;
+  border: 0;
+  color: var(--white);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+
+.committee-lightbox__close {
+  top: 18px;
+  right: 24px;
+  padding: 10px;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.committee-lightbox__nav {
+  top: 50%;
+  padding: 14px;
+  font-size: 2rem;
+  transform: translateY(-50%);
+}
+
+.committee-lightbox__nav:hover,
+.committee-lightbox__close:hover {
+  color: var(--gold-light);
+}
+
+.committee-lightbox__nav--previous {
+  left: 30px;
+}
+
+.committee-lightbox__nav--next {
+  right: 30px;
+}
+
+.committee-lightbox button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
 /* =========================================================
    RESPONSIVE
 ========================================================= */
@@ -892,6 +1105,10 @@
   .masonry-item:nth-child(7n + 1),
   .masonry-item:nth-child(7n + 5) {
     grid-column: auto;
+  }
+
+  .ubssf-gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -992,6 +1209,39 @@
     grid-column: auto;
     grid-row: auto;
     aspect-ratio: 4 / 3;
+  }
+
+  .ubssf-gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .ubssf-gallery-card figcaption {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.76rem;
+  }
+
+  .committee-lightbox {
+    padding: 24px 16px;
+  }
+
+  .committee-lightbox__figure > img {
+    max-height: 58vh;
+  }
+
+  .committee-lightbox__figure figcaption {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .committee-lightbox__nav--previous {
+    left: 2px;
+  }
+
+  .committee-lightbox__nav--next {
+    right: 2px;
   }
 
   .event-card__images {
