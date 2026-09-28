@@ -74,4 +74,11 @@ export const API_URLS = {
     register: `${API_BASE_URL}/Auth/Register`,
     registerLocal: `${API_BASE_URL_LOCAL}/Auth/Register`,
   },
+  faculty: {
+    getAll: `${API_BASE_URL}/Faculty/GetAll`,
+    getById: (id: number) => `${API_BASE_URL}/Faculty/GetById/${id}`,
+    insert: `${API_BASE_URL}/Faculty/Insert`,
+    update: `${API_BASE_URL}/Faculty/Update`,
+    delete: (id: number) => `${API_BASE_URL}/Faculty/Delete/${id}`,
+  },
 };

@@ -230,9 +230,9 @@ export class DashboardComponent implements OnInit {
       this.notifications = res;
     });
 
-    this.adminContent.getPeople().subscribe((res) => {
-      this.people = res;
-    });
+    forkJoin([this.adminContent.getPeople(), this.adminContent.getFaculty()]).subscribe(([people, faculty]) => {
+           this.people = [...people.filter((p) => p.category !== 'faculty'), ...faculty];
+          });
 
     this.adminContent.getTuitionRows().subscribe((res) => {
       this.tuitionRows = res;
@@ -354,7 +354,11 @@ export class DashboardComponent implements OnInit {
           : this.newPerson.journals ?? [],
     };
 
-    this.adminContent.savePerson(person).subscribe((res) => {
+    const save$ = person.category === 'faculty'
+      ? this.adminContent.saveFaculty(person)
+      : this.adminContent.savePerson(person);
+
+    save$.subscribe((res) => {
       this.people = [res, ...this.people];
       this.newPerson = {
         name: '',
@@ -383,7 +387,11 @@ export class DashboardComponent implements OnInit {
 
   deletePerson(index: number): void {
     const item = this.people[index];
-    this.adminContent.deletePerson(item.id).subscribe(() => {
+    const delete$ = item.category === 'faculty'
+      ? this.adminContent.deleteFaculty(item.id)
+      : this.adminContent.deletePerson(item.id);
+
+    delete$.subscribe(() => {
       this.people = this.people.filter((_, i) => i !== index);
     });
   }

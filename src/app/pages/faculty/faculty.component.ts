@@ -38,10 +38,8 @@ export class FacultyComponent implements OnInit {
   ngOnInit(): void {
     const fallbackFacultyList = [...this.facultyList];
 
-    this.adminContentService.getPeople().subscribe((people) => {
-      const facultyPeople = people.filter(
-        (person) => person.category?.toLowerCase() === 'faculty',
-      );
+    this.adminContentService.getFaculty().subscribe((facultyPeople) => {
+      facultyPeople = facultyPeople.filter((person) => person.isActive);
 
       if (!facultyPeople.length) {
         this.facultyList = fallbackFacultyList;
@@ -53,7 +51,7 @@ export class FacultyComponent implements OnInit {
         name: person.name,
         qualificationTitle: person.qualificationTitle ?? person.designation,
         designation: person.designation,
-        additionalDesignation: person.quote || '',
+        additionalDesignation: person.additionalDesignation || '',
         department: person.department ?? 'Faculty',
         email: person.email ?? '',
         image: person.imageUrl || 'assets/images/faculty/default-faculty.jpg',

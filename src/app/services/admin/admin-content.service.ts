@@ -47,6 +47,7 @@ export interface PeopleProfile {
   articles?: string[];
   journals?: string[];
   pdfPath?: string;
+  additionalDesignation?: string;
 }
 
 export interface AdmissionContact {
@@ -428,6 +429,26 @@ export class AdminContentService {
 
     return this.http
       .post<boolean>(API_URLS.studentZone.delete(id), undefined, this.getRequestOptions())
+      .pipe(catchError(() => of(true)));
+  }
+
+  getFaculty(): Observable<PeopleProfile[]> {
+    return this.http
+      .get<PeopleProfile[]>(API_URLS.faculty.getAll, this.getRequestOptions())
+      .pipe(catchError(() => of([])));
+  }
+
+  saveFaculty(person: PeopleProfile): Observable<PeopleProfile> {
+    const payload = { ...person, additionalDesignation: person.additionalDesignation ?? person.quote ?? '' };
+    return this.http
+      .post<PeopleProfile>(API_URLS.faculty.insert, payload, this.getRequestOptions())
+      .pipe(catchError(() => of(person)));
+  }
+
+  deleteFaculty(id?: number): Observable<boolean> {
+    if (!id) return of(true);
+    return this.http
+      .post<boolean>(API_URLS.faculty.delete(id), undefined, this.getRequestOptions())
       .pipe(catchError(() => of(true)));
   }
 }
