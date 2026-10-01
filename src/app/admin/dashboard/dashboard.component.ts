@@ -235,9 +235,9 @@ export class DashboardComponent implements OnInit {
            this.people = [...people.filter((p) => p.category !== 'faculty'), ...faculty];
           });
 
-    this.adminContent.getTuitionRows().subscribe((res) => {
-      this.tuitionRows = res;
-    });
+          this.adminContent.getTuitionRows().subscribe((res) => {
+            this.tuitionRows = res.map((r) => this.normalizeTuitionRow(r));
+          });
 
     this.adminContent.getAdmissions().subscribe((res) => {
       this.admissions = res;
@@ -459,33 +459,48 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  private normalizeTuitionRow(row: TuitionFeeRow): TuitionFeeRow {
+    return {
+      ...row,
+      programmeType: row.programmeType ?? 'residential',
+      course: row.course || row.programmeName || '',
+      singleStudent: row.singleStudent ?? row.mainCampus ?? '',
+      marriedStudentWithQuarters: row.marriedStudentWithQuarters ?? row.onlineCampus ?? '',
+      english: row.english ?? '',
+      hindi: row.hindi ?? '',
+      marathi: row.marathi ?? '',
+    };
+  }
+
   saveTuitionRow(): void {
     const courseName = (this.newTuitionRow.course ?? '').trim();
     if (!courseName) return;
-
+  
+    const type = this.newTuitionRow.programmeType ?? 'residential';
+    const isResidential = type === 'residential';
+    const r = this.newTuitionRow;
+  
     const payload: TuitionFeeRow = {
-      ...this.newTuitionRow,
+      programmeType: type,
       course: courseName,
-      programmeType: this.newTuitionRow.programmeType ?? 'residential',
-      academicYear: this.newTuitionRow.academicYear ?? '2026-27',
-      isActive: true,
       programmeName: courseName,
-      mainCampus:
-        this.newTuitionRow.programmeType === 'residential'
-          ? this.newTuitionRow.singleStudent ?? ''
-          : this.newTuitionRow.english ?? '',
-      onlineCampus:
-        this.newTuitionRow.programmeType === 'residential'
-          ? this.newTuitionRow.marriedStudentWithQuarters ?? ''
-          : this.newTuitionRow.hindi ?? '',
-      extension:
-        this.newTuitionRow.programmeType === 'residential'
-          ? ''
-          : this.newTuitionRow.marathi ?? '',
+      academicYear: r.academicYear ?? '2026-27',
+      isActive: true,
+  
+      singleStudent: isResidential ? r.singleStudent ?? '' : '',
+      marriedStudentWithQuarters: isResidential ? r.marriedStudentWithQuarters ?? '' : '',
+      english: isResidential ? '' : r.english ?? '',
+      hindi: isResidential ? '' : r.hindi ?? '',
+      marathi: isResidential ? '' : r.marathi ?? '',
+  
+      // legacy mapping
+      mainCampus: isResidential ? r.singleStudent ?? '' : r.english ?? '',
+      onlineCampus: isResidential ? r.marriedStudentWithQuarters ?? '' : r.hindi ?? '',
+      extension: isResidential ? '' : r.marathi ?? '',
     };
-
+  
     this.adminContent.saveTuitionRow(payload).subscribe((res) => {
-      this.tuitionRows = [res, ...this.tuitionRows];
+      this.tuitionRows = [this.normalizeTuitionRow(res), ...this.tuitionRows];
       this.newTuitionRow = {
         programmeType: 'residential',
         course: '',

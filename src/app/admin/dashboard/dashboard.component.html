@@ -295,12 +295,18 @@
           <ul class="content-list">
             <li *ngFor="let item of tuitionRows; let i = index">
               <div>
-                <strong>{{ item.course || item.programmeName }}</strong>
-                <small>
-                  {{ item.programmeType || 'residential' }} ·
-                  {{ item.singleStudent || item.mainCampus || '—' }} /
-                  {{ item.marriedStudentWithQuarters || item.onlineCampus || '—' }}
-                </small>
+                <strong>{{ item.course }}</strong>
+                <small>{{ item.programmeType | titlecase }} · {{ item.academicYear }}</small>
+            
+                <span *ngIf="item.programmeType === 'residential'">
+                  Single: {{ item.singleStudent || '—' }} ·
+                  Married: {{ item.marriedStudentWithQuarters || '—' }}
+                </span>
+                <span *ngIf="item.programmeType === 'non-residential'">
+                  English: {{ item.english || '—' }} ·
+                  Hindi: {{ item.hindi || '—' }} ·
+                  Marathi: {{ item.marathi || '—' }}
+                </span>
               </div>
               <button type="button" (click)="deleteTuitionRow(i)">Remove</button>
             </li>
