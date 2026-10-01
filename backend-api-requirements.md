@@ -1,5 +1,7 @@
 # UBS Website Backend API Requirements
 
+> **Current contract:** Use [backend-api-handoff.md](backend-api-handoff.md) as the authoritative implementation document. This file contains earlier planning notes and REST-style suggestions that differ from the controller-style routes currently called by Angular.
+
 This document is for the backend developer to understand the dynamic sections required by the client for the UBS website.
 
 ## 1. Project Context

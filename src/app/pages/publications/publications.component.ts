@@ -7,6 +7,8 @@ interface Publication {
   title: string;
   description: string;
   status: string;
+  coverImageUrl?: string;
+  link?: string;
 }
 
 @Component({
@@ -43,14 +45,21 @@ export class PublicationsComponent implements OnInit {
   ngOnInit(): void {
     this.adminContent.getPublications().subscribe((items) => {
       if (items.length) {
-        this.publications = items
-          .filter((item) => item.isActive)
-          .map((item) => ({
-            title: item.title,
-            description: item.description,
-            status: item.status,
-          }));
+        const activeItems = items.filter((item) => item.isActive);
+        if (!activeItems.length) return;
+
+        this.publications = activeItems.map((item) => ({
+          title: item.title,
+          description: item.description,
+          status: item.status,
+          coverImageUrl: item.coverImageUrl,
+          link: item.link,
+        }));
       }
     });
+  }
+
+  onCoverImageError(publication: Publication): void {
+    publication.coverImageUrl = '';
   }
 }

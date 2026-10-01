@@ -302,16 +302,23 @@ export class GalleryComponent implements OnInit {
   ngOnInit(): void {
     this.adminContent.getGalleryItems().subscribe((items) => {
       const activeItems = items.filter((item) => item.isActive);
-      if (activeItems.length) {
-        this.photos = activeItems.map((item) => ({
+      const existingSources = new Set(this.photos.map((photo) => photo.src));
+      const addedPhotos = activeItems
+        .map((item) => ({
           src: item.imageUrl,
           alt: item.altText || item.title,
           title: item.title,
           category: this.categories.includes(item.category as Category)
             ? (item.category as Exclude<Category, 'All'>)
             : 'Campus',
-        }));
-      }
+        }))
+        .filter((photo) => {
+          if (existingSources.has(photo.src)) return false;
+          existingSources.add(photo.src);
+          return true;
+        });
+
+      this.photos = [...this.photos, ...addedPhotos];
     });
 
     this.adminContent.getStudentZoneItems().subscribe((items) => {

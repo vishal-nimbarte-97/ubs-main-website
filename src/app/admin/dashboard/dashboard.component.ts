@@ -110,6 +110,7 @@ export class DashboardComponent implements OnInit {
   facultyArticlesText = '';
   facultyJournalsText = '';
   facultyTypeSelection = '';
+  editingFacultyId: number | null = null;
 
   facultyDepartmentOptions = [
     'Biblical Studies: Old Testament',
@@ -278,8 +279,10 @@ export class DashboardComponent implements OnInit {
       type: this.newNotification.type ?? 'announcement',
     };
 
-    this.adminContent.saveNotification(payload).subscribe((res) => {
-      this.notifications = [res, ...this.notifications];
+    this.adminContent.saveNotification(payload).subscribe(() => {
+      this.adminContent.getNotifications().subscribe((notifications) => {
+        this.notifications = notifications;
+      });
       this.newNotification = {
         title: '',
         description: '',
@@ -355,11 +358,16 @@ export class DashboardComponent implements OnInit {
     };
 
     const save$ = person.category === 'faculty'
-      ? this.adminContent.saveFaculty(person)
+      ? this.editingFacultyId !== null
+        ? this.adminContent.updateFaculty({ ...person, id: this.editingFacultyId })
+        : this.adminContent.saveFaculty(person)
       : this.adminContent.savePerson(person);
 
     save$.subscribe((res) => {
-      this.people = [res, ...this.people];
+      this.people = this.editingFacultyId !== null
+        ? this.people.map((item) => item.id === this.editingFacultyId ? res : item)
+        : [res, ...this.people];
+      this.editingFacultyId = null;
       this.newPerson = {
         name: '',
         designation: '',
@@ -383,6 +391,61 @@ export class DashboardComponent implements OnInit {
       this.facultyTypeSelection = '';
       this.customFacultyType = '';
     });
+  }
+
+  editFaculty(person: PeopleProfile): void {
+    if (person.id === undefined) return;
+
+    this.adminContent.getFacultyById(person.id).subscribe((faculty) => {
+      this.editingFacultyId = person.id ?? null;
+      this.newPerson = {
+        ...this.newPerson,
+        ...faculty,
+        category: 'faculty',
+        quote: faculty.additionalDesignation ?? faculty.quote ?? '',
+      };
+      this.facultyTypeSelection = this.facultyDepartmentOptions.includes(faculty.department ?? '')
+        ? faculty.department ?? ''
+        : faculty.department
+          ? 'other'
+          : '';
+      this.customFacultyType = this.facultyTypeSelection === 'other'
+        ? faculty.department ?? ''
+        : '';
+      this.facultyQualificationText = (faculty.qualification ?? []).join('\n');
+      this.facultySpecializationText = (faculty.specialization ?? []).join('\n');
+      this.facultyBooksText = (faculty.books ?? []).join('\n');
+      this.facultyResearchText = (faculty.research ?? []).join('\n');
+      this.facultyArticlesText = (faculty.articles ?? []).join('\n');
+      this.facultyJournalsText = (faculty.journals ?? []).join('\n');
+      this.activeSection = 'people';
+    });
+  }
+
+  cancelFacultyEdit(): void {
+    this.editingFacultyId = null;
+    this.newPerson = {
+      name: '',
+      designation: '',
+      category: 'principal',
+      imageUrl: '',
+      quote: '',
+      bio: '',
+      isActive: true,
+      email: '',
+      department: '',
+      qualificationTitle: '',
+      qualification: [],
+      specialization: [],
+      books: [],
+      research: [],
+      articles: [],
+      journals: [],
+      pdfPath: '',
+    };
+    this.resetFacultyTextFields();
+    this.facultyTypeSelection = '';
+    this.customFacultyType = '';
   }
 
   deletePerson(index: number): void {

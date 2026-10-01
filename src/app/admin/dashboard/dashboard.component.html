@@ -120,7 +120,10 @@
             </label>
             <label>
               <span>Category</span>
-              <select [(ngModel)]="newPerson.category">
+              <select
+                [(ngModel)]="newPerson.category"
+                [disabled]="editingFacultyId !== null"
+              >
                 <option value="principal">Principal</option>
                 <option value="librarian">Librarian</option>
                 <option value="faculty">Faculty</option>
@@ -208,7 +211,15 @@
               <textarea [(ngModel)]="facultyJournalsText" rows="3" placeholder="One item per line"></textarea>
             </label>
           </div>
-          <button class="primary-btn" type="button" (click)="savePerson()">Save person</button>
+          <button class="primary-btn" type="button" (click)="savePerson()">
+            {{ editingFacultyId !== null ? 'Update faculty' : 'Save person' }}
+          </button>
+          <button
+            *ngIf="editingFacultyId !== null"
+            class="danger-btn"
+            type="button"
+            (click)="cancelFacultyEdit()"
+          >Cancel edit</button>
         </div>
 
         <div class="list-card">
@@ -219,6 +230,11 @@
                 <strong>{{ item.name }}</strong>
                 <small>{{ item.designation }} · {{ item.category }}</small>
               </div>
+              <button
+                *ngIf="item.category === 'faculty'"
+                type="button"
+                (click)="editFaculty(item)"
+              >Edit</button>
               <button type="button" (click)="deletePerson(i)">Remove</button>
             </li>
           </ul>

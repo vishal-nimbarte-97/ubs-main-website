@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { API_URLS } from '../../config/api-urls';
+import { API_ROOT_URL, API_URLS } from '../../config/api-urls';
 import { TuitionFeeRow } from '../../models/tuition.model';
 
 export type { TuitionFeeRow } from '../../models/tuition.model';
@@ -48,6 +48,17 @@ export interface PeopleProfile {
   journals?: string[];
   pdfPath?: string;
   additionalDesignation?: string;
+}
+
+export interface FacultyProfile extends PeopleProfile {
+  createdAt?: string;
+}
+
+export interface WeatherForecast {
+  date: string;
+  temperatureC: number;
+  temperatureF: number;
+  summary: string;
 }
 
 export interface AdmissionContact {
@@ -204,7 +215,10 @@ export class AdminContentService {
   constructor(private http: HttpClient) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = sessionStorage.getItem(this.sessionTokenKey);
+    const token =
+      typeof window === 'undefined'
+        ? null
+        : window.sessionStorage?.getItem(this.sessionTokenKey) ?? null;
 
     if (!token) {
       return new HttpHeaders();
@@ -215,6 +229,22 @@ export class AdminContentService {
 
   private getRequestOptions() {
     return { headers: this.getAuthHeaders() };
+  }
+
+  private normalizeApiImageUrl(imageUrl?: string): string {
+    const normalizedUrl = imageUrl?.trim() ?? '';
+    const apiUploadPath = /^\/?uploads\//i.test(normalizedUrl);
+
+    return apiUploadPath
+      ? new URL(`/${normalizedUrl.replace(/^\/+/, '')}`, API_ROOT_URL).toString()
+      : normalizedUrl;
+  }
+
+  private normalizePeopleProfile(person: PeopleProfile): PeopleProfile {
+    return {
+      ...person,
+      imageUrl: this.normalizeApiImageUrl(person.imageUrl),
+    };
   }
 
   private asFallback<T>(fallback: T) {
@@ -290,7 +320,12 @@ export class AdminContentService {
   }
 
   saveNotification(item: NotificationItem): Observable<NotificationItem> {
-    const { type, ...payload } = item;
+    const payload: NotificationItem = {
+      ...item,
+      id: item.id ?? 0,
+      type: item.type ?? 'announcement',
+      createdAt: item.createdAt ?? new Date().toISOString(),
+    };
 
     return this.http
       .post<NotificationItem>(API_URLS.notifications.insert, payload, this.getRequestOptions())
@@ -313,13 +348,23 @@ export class AdminContentService {
   getPeople(): Observable<PeopleProfile[]> {
     return this.http
       .get<PeopleProfile[]>(API_URLS.people.getAll, this.getRequestOptions())
-      .pipe(catchError(this.asFallback(this.fallbackPeople)));
+      .pipe(
+        map((people) =>
+          Array.isArray(people) ? people.map((person) => this.normalizePeopleProfile(person)) : [],
+        ),
+        catchError(() =>
+          of(this.fallbackPeople.map((person) => this.normalizePeopleProfile(person))),
+        ),
+      );
   }
 
   savePerson(person: PeopleProfile): Observable<PeopleProfile> {
     return this.http
       .post<PeopleProfile>(API_URLS.people.insert, person, this.getRequestOptions())
-      .pipe(catchError(() => of(person)));
+      .pipe(
+        map((res) => this.normalizePeopleProfile({ ...person, ...(res ?? {}) })),
+        catchError(() => of(this.normalizePeopleProfile(person))),
+      );
   }
 
   deletePerson(id?: number): Observable<boolean> {
@@ -369,13 +414,32 @@ export class AdminContentService {
   getPublications(): Observable<PublicationItem[]> {
     return this.http
       .get<PublicationItem[]>(API_URLS.publications.getAll, this.getRequestOptions())
-      .pipe(catchError(this.asFallback(this.fallbackPublications)));
+      .pipe(
+        map((items) =>
+          Array.isArray(items)
+            ? items.map((item) => ({
+                ...item,
+                coverImageUrl: this.normalizeApiImageUrl(item.coverImageUrl),
+              }))
+            : [],
+        ),
+        catchError(this.asFallback(this.fallbackPublications)),
+      );
   }
 
   savePublication(item: PublicationItem): Observable<PublicationItem> {
     return this.http
       .post<PublicationItem>(API_URLS.publications.insert, item, this.getRequestOptions())
-      .pipe(catchError(() => of(item)));
+      .pipe(
+        map((res) => ({
+          ...item,
+          ...(res ?? {}),
+          coverImageUrl: this.normalizeApiImageUrl(res?.coverImageUrl ?? item.coverImageUrl),
+        })),
+        catchError(() =>
+          of({ ...item, coverImageUrl: this.normalizeApiImageUrl(item.coverImageUrl) }),
+        ),
+      );
   }
 
   deletePublication(id?: number): Observable<boolean> {
@@ -391,13 +455,37 @@ export class AdminContentService {
   getGalleryItems(): Observable<GalleryItem[]> {
     return this.http
       .get<GalleryItem[]>(API_URLS.gallery.getAll, this.getRequestOptions())
-      .pipe(catchError(this.asFallback(this.fallbackGallery)));
+      .pipe(
+        map((items) =>
+          Array.isArray(items)
+            ? items.map((item) => ({
+                ...item,
+                imageUrl: this.normalizeApiImageUrl(item.imageUrl),
+              }))
+            : [],
+        ),
+        catchError(() =>
+          of(this.fallbackGallery.map((item) => ({
+            ...item,
+            imageUrl: this.normalizeApiImageUrl(item.imageUrl),
+          }))),
+        ),
+      );
   }
 
   saveGalleryItem(item: GalleryItem): Observable<GalleryItem> {
     return this.http
       .post<GalleryItem>(API_URLS.gallery.insert, item, this.getRequestOptions())
-      .pipe(catchError(() => of(item)));
+      .pipe(
+        map((res) => ({
+          ...item,
+          ...(res ?? {}),
+          imageUrl: this.normalizeApiImageUrl(res?.imageUrl ?? item.imageUrl),
+        })),
+        catchError(() =>
+          of({ ...item, imageUrl: this.normalizeApiImageUrl(item.imageUrl) }),
+        ),
+      );
   }
 
   deleteGalleryItem(id?: number): Observable<boolean> {
@@ -438,11 +526,41 @@ export class AdminContentService {
       .pipe(catchError(() => of([])));
   }
 
+  getFacultyById(id: number): Observable<FacultyProfile> {
+    return this.http.get<FacultyProfile>(
+      API_URLS.faculty.getById(id),
+      this.getRequestOptions(),
+    );
+  }
+
   saveFaculty(person: PeopleProfile): Observable<PeopleProfile> {
     const payload = { ...person, additionalDesignation: person.additionalDesignation ?? person.quote ?? '' };
     return this.http
       .post<PeopleProfile>(API_URLS.faculty.insert, payload, this.getRequestOptions())
       .pipe(catchError(() => of(person)));
+  }
+
+  updateFaculty(person: FacultyProfile): Observable<FacultyProfile> {
+    const payload = {
+      ...person,
+      additionalDesignation: person.additionalDesignation ?? person.quote ?? '',
+    };
+    return this.http.post<FacultyProfile>(
+      API_URLS.faculty.update,
+      payload,
+      this.getRequestOptions(),
+    ).pipe(map((res) => ({ ...payload, ...(res ?? {}) })));
+  }
+
+  getFile(fileId: string): Observable<Blob> {
+    return this.http.get(API_URLS.files.get(fileId), {
+      ...this.getRequestOptions(),
+      responseType: 'blob',
+    });
+  }
+
+  getWeatherForecast(): Observable<WeatherForecast[]> {
+    return this.http.get<WeatherForecast[]>(API_URLS.weatherForecast);
   }
 
   deleteFaculty(id?: number): Observable<boolean> {

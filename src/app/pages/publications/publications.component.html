@@ -15,7 +15,16 @@
       <div class="publication-grid">
         <article class="publication-card" *ngFor="let item of publications">
           <div class="publication-visual">
-            <div class="publication-icon">P</div>
+            <img
+              *ngIf="item.coverImageUrl; else publicationPlaceholder"
+              class="publication-cover"
+              [src]="item.coverImageUrl"
+              [alt]="item.title + ' cover'"
+              (error)="onCoverImageError(item)"
+            />
+            <ng-template #publicationPlaceholder>
+              <div class="publication-icon">P</div>
+            </ng-template>
             <span class="publication-badge">{{ item.status }}</span>
           </div>
 
@@ -23,9 +32,20 @@
             <span class="publication-tag">To be announced</span>
             <h2>{{ item.title }}</h2>
             <p>{{ item.description }}</p>
-            <button type="button" class="publication-button" disabled>
+            <a
+              *ngIf="item.link; else publicationComingSoon"
+              class="publication-button"
+              [href]="item.link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Show More Details
+            </a>
+            <ng-template #publicationComingSoon>
+              <button type="button" class="publication-button" disabled>
               Coming soon
-            </button>
+              </button>
+            </ng-template>
           </div>
         </article>
       </div>

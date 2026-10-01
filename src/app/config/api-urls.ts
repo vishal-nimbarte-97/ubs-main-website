@@ -1,4 +1,5 @@
-export const API_BASE_URL = 'http://ubsapi.xplorelogic.in/api';
+export const API_ROOT_URL = 'http://ubsapi.xplorelogic.in';
+export const API_BASE_URL = `${API_ROOT_URL}/api`;
 export const API_BASE_URL_LOCAL = 'https://localhost:7257/api';
 
 export const API_URLS = {
@@ -74,6 +75,10 @@ export const API_URLS = {
     register: `${API_BASE_URL}/Auth/Register`,
     registerLocal: `${API_BASE_URL_LOCAL}/Auth/Register`,
   },
+  files: {
+    get: (fileId: string) => `${API_BASE_URL}/Files/${encodeURIComponent(fileId)}`,
+  },
+  weatherForecast: `${API_ROOT_URL}/WeatherForecast`,
   faculty: {
     getAll: `${API_BASE_URL}/Faculty/GetAll`,
     getById: (id: number) => `${API_BASE_URL}/Faculty/GetById/${id}`,

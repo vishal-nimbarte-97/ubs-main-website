@@ -378,8 +378,15 @@
             </div>
           </div>
 
-          <button class="view-button">
-            View All Notices
+          <button
+            *ngIf="officialNotifications.length > 3"
+            class="view-button"
+            type="button"
+            [attr.aria-expanded]="showAllNotifications"
+            aria-controls="official-notification-list"
+            (click)="toggleNotifications()"
+          >
+            {{ showAllNotifications ? 'Show Fewer' : 'View All Notices' }}
             <span>→</span>
           </button>
         </div>
@@ -396,8 +403,8 @@
         </div> -->
 
         <!-- Notification List -->
-        <div class="notification-list">
-          <div class="notification-item" *ngFor="let notification of officialNotifications">
+        <div class="notification-list" id="official-notification-list">
+          <div class="notification-item" *ngFor="let notification of visibleOfficialNotifications">
             <div class="notification-content">
               <div class="notification-meta">
                 <span
@@ -420,9 +427,14 @@
               <p *ngIf="notification.description">{{ notification.description }}</p>
             </div>
 
-            <button class="arrow-button" aria-label="Open notification">
+            <a
+              *ngIf="notification.link"
+              class="arrow-button"
+              [href]="notification.link"
+              [attr.aria-label]="'Open notification: ' + notification.title"
+            >
               →
-            </button>
+            </a>
           </div>
 
           <div class="notification-item" *ngIf="officialNotifications.length === 0">
@@ -436,13 +448,6 @@
           </div>
         </div>
 
-        <!-- Footer -->
-        <div class="card-footer">
-          <a href="#">
-            Browse All Official Notices
-            <span>→</span>
-          </a>
-        </div>
       </div>
     </div>
   </section>

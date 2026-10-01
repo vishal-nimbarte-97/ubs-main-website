@@ -109,6 +109,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* ================= OFFICIAL NOTIFICATIONS ================= */
   officialNotifications: NotificationItem[] = [];
+  showAllNotifications = false;
 
   /* ================= BLOG CAROUSEL ================= */
   blogPosts = BLOG_POSTS;
@@ -204,9 +205,27 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }).format(date);
   }
 
-  getNotificationType(notification: NotificationItem): 'NOTICE' | 'ANNOUNCEMENT' {
+  getNotificationType(notification: NotificationItem): 'NOTICE' | 'ANNOUNCEMENT' | 'NEWS' | 'EVENT' {
+    if (notification.type === 'news') return 'NEWS';
+    if (notification.type === 'event') return 'EVENT';
+    if (notification.type === 'announcement') return 'ANNOUNCEMENT';
+
     const title = notification.title?.toLowerCase() ?? '';
     return title.includes('announcement') ? 'ANNOUNCEMENT' : 'NOTICE';
+  }
+
+  isExternalNotificationLink(link: string): boolean {
+    return /^https?:\/\//i.test(link);
+  }
+
+  get visibleOfficialNotifications(): NotificationItem[] {
+    return this.showAllNotifications
+      ? this.officialNotifications
+      : this.officialNotifications.slice(0, 3);
+  }
+
+  toggleNotifications(): void {
+    this.showAllNotifications = !this.showAllNotifications;
   }
 
   ngOnInit(): void {

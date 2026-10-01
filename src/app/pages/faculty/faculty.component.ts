@@ -36,33 +36,39 @@ export class FacultyComponent implements OnInit {
   constructor(private adminContentService: AdminContentService) {}
 
   ngOnInit(): void {
-    const fallbackFacultyList = [...this.facultyList];
-
     this.adminContentService.getFaculty().subscribe((facultyPeople) => {
-      facultyPeople = facultyPeople.filter((person) => person.isActive);
+      const existingFaculty = new Set(
+        this.facultyList.map((faculty) => this.getFacultyKey(faculty)),
+      );
+      const addedFaculty = facultyPeople
+        .filter((person) => person.isActive)
+        .map((person) => ({
+          id: person.id ?? 0,
+          name: person.name,
+          qualificationTitle: person.qualificationTitle ?? person.designation,
+          designation: person.designation,
+          additionalDesignation: person.additionalDesignation || '',
+          department: person.department ?? 'Faculty',
+          email: person.email ?? '',
+          image: person.imageUrl || 'assets/images/faculty/default-faculty.jpg',
+          pdfPath: person.pdfPath,
+          qualification: person.qualification ?? [],
+          specialization: person.specialization ?? [],
+          books: person.books ?? [],
+          research: person.research ?? [],
+          articles: person.articles ?? [],
+          journals: person.journals ?? [],
+        }))
+        .filter((faculty) => {
+          const key = this.getFacultyKey(faculty);
+          if (existingFaculty.has(key)) {
+            return false;
+          }
+          existingFaculty.add(key);
+          return true;
+        });
 
-      if (!facultyPeople.length) {
-        this.facultyList = fallbackFacultyList;
-        return;
-      }
-
-      this.facultyList = facultyPeople.map((person) => ({
-        id: person.id ?? 0,
-        name: person.name,
-        qualificationTitle: person.qualificationTitle ?? person.designation,
-        designation: person.designation,
-        additionalDesignation: person.additionalDesignation || '',
-        department: person.department ?? 'Faculty',
-        email: person.email ?? '',
-        image: person.imageUrl || 'assets/images/faculty/default-faculty.jpg',
-        pdfPath: person.pdfPath,
-        qualification: person.qualification ?? [],
-        specialization: person.specialization ?? [],
-        books: person.books ?? [],
-        research: person.research ?? [],
-        articles: person.articles ?? [],
-        journals: person.journals ?? [],
-      }));
+      this.facultyList = [...this.facultyList, ...addedFaculty];
     });
   }
 
@@ -524,6 +530,10 @@ export class FacultyComponent implements OnInit {
     return this.facultyList.filter(
       (faculty) => faculty.department === department,
     );
+  }
+
+  private getFacultyKey(faculty: Pick<Faculty, 'name' | 'department'>): string {
+    return `${faculty.name.trim().toLowerCase()}|${faculty.department.trim().toLowerCase()}`;
   }
 
   /** Open the selected faculty profile and lock the page behind the modal. */

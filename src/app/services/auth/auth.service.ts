@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { API_URLS } from '../../config/api-urls';
 
@@ -35,6 +35,15 @@ export class AuthService {
           }
         })
       );
+  }
+
+  register(email: string, password: string, setupKey: string): Observable<LoginResponse> {
+    const headers = new HttpHeaders({ 'X-Setup-Key': setupKey });
+    return this.http.post<LoginResponse>(
+      API_URLS.auth.register,
+      { email, password },
+      { headers },
+    );
   }
 
   logout(): void {
