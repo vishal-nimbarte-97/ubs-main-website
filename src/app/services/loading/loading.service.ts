@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+const MAX_REQUEST_LOADER_TIME_MS = 15_000;
+
 @Injectable({ providedIn: 'root' })
 export class LoadingService {
   private activeRequests = 0;
@@ -12,37 +14,55 @@ export class LoadingService {
   readonly progress$: Observable<number> = this.progressSubject.asObservable();
   readonly visible$: Observable<boolean> = this.visibleSubject.asObservable();
 
-  start(): void {
+  start(): () => void {
     this.activeRequests += 1;
 
-    if (this.activeRequests !== 1) {
-      return;
+    if (this.activeRequests === 1) {
+      if (this.hideTimer) {
+        clearTimeout(this.hideTimer);
+        this.hideTimer = null;
+      }
+
+      this.visibleSubject.next(true);
+      this.progressSubject.next(8);
+      this.startProgressTimer();
     }
 
-    if (this.hideTimer) {
-      clearTimeout(this.hideTimer);
-      this.hideTimer = null;
-    }
+    let released = false;
+    let requestTimer: ReturnType<typeof setTimeout> | null = null;
+    const release = (completed = true): void => {
+      if (released) {
+        return;
+      }
+      released = true;
+      if (requestTimer) {
+        clearTimeout(requestTimer);
+        requestTimer = null;
+      }
 
-    this.visibleSubject.next(true);
-    this.progressSubject.next(8);
-    this.startProgressTimer();
-  }
+      this.activeRequests = Math.max(0, this.activeRequests - 1);
 
-  finish(): void {
-    this.activeRequests = Math.max(0, this.activeRequests - 1);
+      if (this.activeRequests > 0) {
+        return;
+      }
 
-    if (this.activeRequests > 0) {
-      return;
-    }
+      this.stopProgressTimer();
+      if (completed) {
+        this.progressSubject.next(100);
+      }
+      this.hideTimer = setTimeout(() => {
+        this.hideTimer = null;
+        if (this.activeRequests > 0) {
+          return;
+        }
 
-    this.stopProgressTimer();
-    this.progressSubject.next(100);
-    this.hideTimer = setTimeout(() => {
-      this.visibleSubject.next(false);
-      this.progressSubject.next(0);
-      this.hideTimer = null;
-    }, 220);
+        this.visibleSubject.next(false);
+        this.progressSubject.next(0);
+      }, 220);
+    };
+
+    requestTimer = setTimeout(() => release(false), MAX_REQUEST_LOADER_TIME_MS);
+    return () => release();
   }
 
   private startProgressTimer(): void {

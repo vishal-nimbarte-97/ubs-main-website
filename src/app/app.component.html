@@ -13,7 +13,7 @@
 </ng-template>
 
 <div
-  *ngIf="loadingVisible$ | async"
+  *ngIf="isAdminRoute && (loadingVisible$ | async)"
   class="global-loader"
   role="status"
   aria-live="polite"

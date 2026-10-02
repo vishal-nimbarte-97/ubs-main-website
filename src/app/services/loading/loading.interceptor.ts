@@ -1,12 +1,13 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { finalize } from 'rxjs';
+import { defer, finalize } from 'rxjs';
 import { LoadingService } from './loading.service';
 
 export const loadingInterceptor: HttpInterceptorFn = (request, next) => {
   const loadingService = inject(LoadingService);
 
-  loadingService.start();
-
-  return next(request).pipe(finalize(() => loadingService.finish()));
+  return defer(() => {
+    const releaseLoading = loadingService.start();
+    return defer(() => next(request)).pipe(finalize(releaseLoading));
+  });
 };

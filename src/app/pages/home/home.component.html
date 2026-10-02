@@ -427,14 +427,6 @@
               <p *ngIf="notification.description">{{ notification.description }}</p>
             </div>
 
-            <a
-              *ngIf="notification.link"
-              class="arrow-button"
-              [href]="notification.link"
-              [attr.aria-label]="'Open notification: ' + notification.title"
-            >
-              →
-            </a>
           </div>
 
           <div class="notification-item" *ngIf="officialNotifications.length === 0">
