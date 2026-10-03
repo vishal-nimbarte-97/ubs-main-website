@@ -9,6 +9,7 @@ import { SiteContentService } from '../../services/admin/site-content.service';
 import {
   AdminContentService,
   AdmissionsConfig,
+  BannerItem,
   GalleryItem,
   NotificationItem,
   PeopleProfile,
@@ -25,6 +26,7 @@ type SectionId =
   | 'overview'
   | 'live'
   | 'updates'
+  | 'banners'
   | 'site-config'
   | 'people'
   | 'tuition'
@@ -51,6 +53,7 @@ export class DashboardComponent implements OnInit {
   isLive = false;
   sidebarOpen = false;
   announcements: string[] = [];
+  banners: BannerItem[] = [];
   notifications: NotificationItem[] = [];
   people: PeopleProfile[] = [];
   tuitionRows: TuitionFeeRow[] = [];
@@ -79,9 +82,22 @@ export class DashboardComponent implements OnInit {
     title: '',
     description: '',
     link: '',
+    imageUrl: '',
     isActive: true,
     type: 'announcement',
   };
+
+  newBanner: BannerItem = {
+    title: '',
+    description: '',
+    imageUrl: '',
+    link: '',
+    isActive: true,
+  };
+  bannerImageUrls: string[] = [];
+  bannerFileNames: string[] = [];
+  bannerError = '';
+  bannerSaving = false;
 
   newPerson: PeopleProfile = {
     name: '',
@@ -111,6 +127,10 @@ export class DashboardComponent implements OnInit {
   facultyJournalsText = '';
   facultyTypeSelection = '';
   editingFacultyId: number | null = null;
+  facultyPdfFileName = '';
+  facultyPdfError = '';
+  publicationPdfFileName = '';
+  publicationPdfError = '';
 
   facultyDepartmentOptions = [
     'Biblical Studies: Old Testament',
@@ -140,6 +160,7 @@ export class DashboardComponent implements OnInit {
     status: 'Draft',
     category: 'Research',
     coverImageUrl: '',
+    pdfPath: '',
     publishedDate: new Date().toISOString().slice(0, 10),
     link: '',
     isFeatured: false,
@@ -172,9 +193,10 @@ export class DashboardComponent implements OnInit {
   ];
 
   sections: AdminSidebarItem[] = [
-    { id: 'overview', label: 'Overview', icon: 'fa-gauge-high' },
+    // { id: 'overview', label: 'Overview', icon: 'fa-gauge-high' },
     { id: 'live', label: 'Live Broadcast', icon: 'fa-video' },
     { id: 'updates', label: 'Updates', icon: 'fa-bell' },
+    { id: 'banners', label: 'Banners', icon: 'fa-images' },
     // { id: 'site-config', label: 'Site Config', icon: 'fa-gear' },
     { id: 'people', label: 'People', icon: 'fa-user' },
     { id: 'tuition', label: 'Tuition', icon: 'fa-indian-rupee-sign' },
@@ -182,10 +204,10 @@ export class DashboardComponent implements OnInit {
     { id: 'publications', label: 'Publications', icon: 'fa-book' },
     { id: 'gallery', label: 'Gallery', icon: 'fa-images' },
     { id: 'community', label: 'Community', icon: 'fa-people-group' },
-    { id: 'student-zone', label: 'Student Zone', icon: 'fa-school' },
+    // { id: 'student-zone', label: 'Student Zone', icon: 'fa-school' },
   ];
 
-  activeSection: SectionId = 'overview';
+  activeSection: SectionId = 'live';
 
   constructor(
     private liveService: LiveStatusService,
@@ -229,6 +251,15 @@ export class DashboardComponent implements OnInit {
 
     this.adminContent.getNotifications().subscribe((res) => {
       this.notifications = res;
+    });
+
+    this.adminContent.getBanners().subscribe({
+      next: (res) => {
+        this.banners = res;
+      },
+      error: () => {
+        this.bannerError = 'Unable to load banners. Please try again.';
+      },
     });
 
     forkJoin([this.adminContent.getPeople(), this.adminContent.getFaculty()]).subscribe(([people, faculty]) => {
@@ -287,6 +318,7 @@ export class DashboardComponent implements OnInit {
         title: '',
         description: '',
         link: '',
+        imageUrl: '',
         isActive: true,
         type: 'announcement',
       };
@@ -297,6 +329,102 @@ export class DashboardComponent implements OnInit {
     const item = this.notifications[index];
     this.adminContent.deleteNotification(item.id).subscribe(() => {
       this.notifications = this.notifications.filter((_, i) => i !== index);
+    });
+  }
+
+  async onBannerSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+    this.bannerError = '';
+
+    if (!files.length) {
+      return;
+    }
+
+    if (files.some((file) => !file.type.startsWith('image/'))) {
+      this.bannerError = 'Please select image files only.';
+      input.value = '';
+      return;
+    }
+
+    input.value = '';
+
+    try {
+      const imageUrls = await Promise.all(
+        files.map(
+          (file) =>
+            new Promise<string>((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => {
+                if (typeof reader.result === 'string') {
+                  resolve(reader.result);
+                } else {
+                  reject(new Error(`Unable to read ${file.name}.`));
+                }
+              };
+              reader.onerror = () => reject(new Error(`Unable to read ${file.name}.`));
+              reader.readAsDataURL(file);
+            }),
+        ),
+      );
+
+      this.bannerImageUrls = [...this.bannerImageUrls, ...imageUrls];
+      this.bannerFileNames = [...this.bannerFileNames, ...files.map((file) => file.name)];
+    } catch (error) {
+      this.bannerError =
+        error instanceof Error ? error.message : 'The selected images could not be read.';
+    }
+  }
+
+  removeBannerImage(index: number): void {
+    this.bannerImageUrls = this.bannerImageUrls.filter((_, imageIndex) => imageIndex !== index);
+    this.bannerFileNames = this.bannerFileNames.filter((_, fileIndex) => fileIndex !== index);
+    this.bannerError = '';
+  }
+
+  saveBanner(): void {
+    if (!this.bannerImageUrls.length) {
+      this.bannerError = 'Upload at least one image before saving the banners.';
+      return;
+    }
+
+    this.bannerSaving = true;
+    forkJoin(
+      this.bannerImageUrls.map((imageUrl) =>
+        this.adminContent.saveBanner({ ...this.newBanner, imageUrl }),
+      ),
+    ).subscribe({
+      next: (savedBanners) => {
+        this.banners = [...savedBanners, ...this.banners];
+        this.newBanner = {
+          title: '',
+          description: '',
+          imageUrl: '',
+          link: '',
+          isActive: true,
+        };
+        this.bannerImageUrls = [];
+        this.bannerFileNames = [];
+        this.bannerError = '';
+        this.bannerSaving = false;
+      },
+      error: () => {
+        this.bannerError = 'Unable to save banner images. Please try again.';
+        this.bannerSaving = false;
+      },
+    });
+  }
+
+  deleteBanner(index: number): void {
+    const banner = this.banners[index];
+    this.adminContent.deleteBanner(banner.id).subscribe({
+      next: () => {
+        this.banners = this.banners.filter((_, bannerIndex) => bannerIndex !== index);
+        this.bannerError = '';
+      },
+      error: () => {
+        this.bannerError = 'Unable to remove banner. Please try again.';
+      },
     });
   }
 
@@ -390,6 +518,8 @@ export class DashboardComponent implements OnInit {
       this.resetFacultyTextFields();
       this.facultyTypeSelection = '';
       this.customFacultyType = '';
+      this.facultyPdfFileName = '';
+      this.facultyPdfError = '';
     });
   }
 
@@ -418,6 +548,8 @@ export class DashboardComponent implements OnInit {
       this.facultyResearchText = (faculty.research ?? []).join('\n');
       this.facultyArticlesText = (faculty.articles ?? []).join('\n');
       this.facultyJournalsText = (faculty.journals ?? []).join('\n');
+      this.facultyPdfFileName = '';
+      this.facultyPdfError = '';
       this.activeSection = 'people';
     });
   }
@@ -446,6 +578,8 @@ export class DashboardComponent implements OnInit {
     this.resetFacultyTextFields();
     this.facultyTypeSelection = '';
     this.customFacultyType = '';
+    this.facultyPdfFileName = '';
+    this.facultyPdfError = '';
   }
 
   deletePerson(index: number): void {
@@ -563,11 +697,14 @@ export class DashboardComponent implements OnInit {
         status: 'Draft',
         category: 'Research',
         coverImageUrl: '',
+        pdfPath: '',
         publishedDate: new Date().toISOString().slice(0, 10),
         link: '',
         isFeatured: false,
         isActive: true,
       };
+      this.publicationPdfFileName = '';
+      this.publicationPdfError = '';
     });
   }
 
@@ -578,7 +715,10 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  onImageSelected(event: Event, target: 'person' | 'publication' | 'gallery' | 'student-zone'): void {
+  onImageSelected(
+    event: Event,
+    target: 'person' | 'publication' | 'gallery' | 'student-zone' | 'notification',
+  ): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
@@ -594,6 +734,8 @@ export class DashboardComponent implements OnInit {
         this.newPerson.imageUrl = dataUrl;
       } else if (target === 'publication') {
         this.newPublication.coverImageUrl = dataUrl;
+      } else if (target === 'notification') {
+        this.newNotification.imageUrl = dataUrl;
       } else {
         this.newGalleryItem.imageUrl = dataUrl;
       }
@@ -601,6 +743,82 @@ export class DashboardComponent implements OnInit {
 
     reader.readAsDataURL(file);
     input.value = '';
+  }
+
+  onFacultyPdfSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    this.facultyPdfError = '';
+
+    if (!file) {
+      return;
+    }
+
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      this.facultyPdfError = 'Please select a PDF file.';
+      input.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== 'string') {
+        this.facultyPdfError = 'The selected PDF could not be read.';
+        return;
+      }
+
+      this.newPerson.pdfPath = reader.result;
+      this.facultyPdfFileName = file.name;
+    };
+    reader.onerror = () => {
+      this.facultyPdfError = 'The selected PDF could not be read.';
+    };
+    reader.readAsDataURL(file);
+    input.value = '';
+  }
+
+  onPublicationPdfSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    this.publicationPdfError = '';
+
+    if (!file) {
+      return;
+    }
+
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      this.publicationPdfError = 'Please select a PDF file.';
+      input.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== 'string') {
+        this.publicationPdfError = 'The selected PDF could not be read.';
+        return;
+      }
+
+      this.newPublication.pdfPath = reader.result;
+      this.publicationPdfFileName = file.name;
+    };
+    reader.onerror = () => {
+      this.publicationPdfError = 'The selected PDF could not be read.';
+    };
+    reader.readAsDataURL(file);
+    input.value = '';
+  }
+
+  clearPublicationPdf(): void {
+    this.newPublication.pdfPath = '';
+    this.publicationPdfFileName = '';
+    this.publicationPdfError = '';
+  }
+
+  clearFacultyPdf(): void {
+    this.newPerson.pdfPath = '';
+    this.facultyPdfFileName = '';
+    this.facultyPdfError = '';
   }
 
   onCommunityImagesSelected(event: Event): void {

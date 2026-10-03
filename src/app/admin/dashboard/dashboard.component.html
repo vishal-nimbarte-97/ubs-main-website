@@ -11,11 +11,13 @@
     (selectItem)="onSidebarSelect($event)"
   ></app-admin-sidebar>
 
+  <!-- Overview module is temporarily unused.
   <app-dashboard-overview
     *ngIf="activeSection === 'overview'"
     [isLive]="isLive"
     [announcements]="announcements"
   ></app-dashboard-overview>
+  -->
 
   <app-live-broadcast
     *ngIf="activeSection === 'live'"
@@ -47,6 +49,26 @@
               <span>Link</span>
               <input [(ngModel)]="newNotification.link" type="url" placeholder="https://..." />
             </label>
+            <label class="full-width">
+              <span>Notification image (optional)</span>
+              <div class="image-upload-box">
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="onImageSelected($event, 'notification')"
+                  id="notification-image-upload"
+                  hidden
+                />
+                <label class="upload-button" for="notification-image-upload">Upload image</label>
+                <img
+                  *ngIf="newNotification.imageUrl"
+                  [src]="newNotification.imageUrl"
+                  alt="Notification preview"
+                  class="image-preview"
+                />
+                <span class="upload-text" *ngIf="!newNotification.imageUrl">No image selected yet</span>
+              </div>
+            </label>
             <label>
               <span>Active</span>
               <select [(ngModel)]="newNotification.isActive">
@@ -68,6 +90,82 @@
                 <span>{{ item.description }}</span>
               </div>
               <button type="button" (click)="deleteNotification(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section *ngIf="activeSection === 'banners'" class="panel">
+        <div class="content-form-card">
+          <h3>Home Page Banners</h3>
+          <p>Upload banners for the centered home page slider. Active banners appear on each visit to the home page.</p>
+          <div class="form-grid two-col">
+            <label>
+              <span>Banner title (optional)</span>
+              <input [(ngModel)]="newBanner.title" type="text" placeholder="Banner title" />
+            </label>
+            <label>
+              <span>Link (optional)</span>
+              <input [(ngModel)]="newBanner.link" type="url" placeholder="https://..." />
+            </label>
+            <label class="full-width">
+              <span>Description (optional)</span>
+              <textarea [(ngModel)]="newBanner.description" rows="3" placeholder="Short banner description"></textarea>
+            </label>
+            <label class="full-width">
+              <span>Banner image</span>
+              <div class="image-upload-box">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  (change)="onBannerSelected($event)"
+                  id="home-banner-upload"
+                  hidden
+                />
+                <label class="upload-button" for="home-banner-upload">Upload banner images</label>
+                <div class="community-preview-grid" *ngIf="bannerImageUrls.length">
+                  <div class="community-preview" *ngFor="let imageUrl of bannerImageUrls; let i = index">
+                    <img [src]="imageUrl" [alt]="bannerFileNames[i]" />
+                    <button
+                      type="button"
+                      (click)="removeBannerImage(i)"
+                      [attr.aria-label]="'Remove ' + bannerFileNames[i]"
+                    >&times;</button>
+                  </div>
+                </div>
+                <span class="upload-text" *ngIf="bannerImageUrls.length">
+                  {{ bannerImageUrls.length }} image(s) selected: {{ bannerFileNames.join(', ') }}
+                </span>
+                <span class="upload-text" *ngIf="!bannerImageUrls.length">No images selected</span>
+                <span class="upload-text" *ngIf="bannerError" role="alert">{{ bannerError }}</span>
+              </div>
+            </label>
+            <label>
+              <span>Status</span>
+              <select [(ngModel)]="newBanner.isActive">
+                <option [ngValue]="true">Active</option>
+                <option [ngValue]="false">Inactive</option>
+              </select>
+            </label>
+          </div>
+          <button
+            class="primary-btn"
+            type="button"
+            [disabled]="bannerSaving"
+            (click)="saveBanner()"
+          >{{ bannerSaving ? 'Saving banners...' : 'Save banners' }}</button>
+        </div>
+
+        <div class="list-card">
+          <h4>Saved banners</h4>
+          <ul class="content-list">
+            <li *ngFor="let banner of banners; let i = index">
+              <div>
+                <strong>{{ banner.title || 'Home page banner' }}</strong>
+                <small>{{ banner.isActive ? 'Active' : 'Inactive' }}</small>
+              </div>
+              <button type="button" (click)="deleteBanner(i)">Remove</button>
             </li>
           </ul>
         </div>
@@ -111,14 +209,6 @@
           <h3>Add Principal / Librarian / Faculty</h3>
           <div class="form-grid two-col">
             <label>
-              <span>Name</span>
-              <input [(ngModel)]="newPerson.name" type="text" />
-            </label>
-            <label>
-              <span>Designation</span>
-              <input [(ngModel)]="newPerson.designation" type="text" />
-            </label>
-            <label>
               <span>Category</span>
               <select
                 [(ngModel)]="newPerson.category"
@@ -128,6 +218,14 @@
                 <option value="librarian">Librarian</option>
                 <option value="faculty">Faculty</option>
               </select>
+            </label>
+            <label>
+              <span>Designation</span>
+              <input [(ngModel)]="newPerson.designation" type="text" />
+            </label>
+            <label>
+              <span>Name</span>
+              <input [(ngModel)]="newPerson.name" type="text" />
             </label>
 
             <label *ngIf="newPerson.category === 'faculty'">
@@ -184,6 +282,29 @@
             <label *ngIf="newPerson.category !== 'faculty'">
               <span>Profile PDF URL</span>
               <input [(ngModel)]="newPerson.pdfPath" type="url" />
+            </label>
+            <label *ngIf="newPerson.category === 'faculty'" class="full-width">
+              <span>Faculty PDF profile (optional)</span>
+              <div class="image-upload-box">
+                <input
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  (change)="onFacultyPdfSelected($event)"
+                  id="faculty-pdf-upload"
+                  hidden
+                />
+                <label class="upload-button" for="faculty-pdf-upload">Upload PDF</label>
+                <span class="upload-text" *ngIf="facultyPdfFileName">{{ facultyPdfFileName }}</span>
+                <span class="upload-text" *ngIf="!facultyPdfFileName && newPerson.pdfPath">An existing PDF is attached</span>
+                <span class="upload-text" *ngIf="!facultyPdfFileName && !newPerson.pdfPath">No PDF selected</span>
+                <button
+                  *ngIf="newPerson.pdfPath"
+                  class="danger-btn"
+                  type="button"
+                  (click)="clearFacultyPdf()"
+                >Remove PDF</button>
+                <span class="upload-text" *ngIf="facultyPdfError" role="alert">{{ facultyPdfError }}</span>
+              </div>
             </label>
 
             <label *ngIf="newPerson.category === 'faculty'" class="full-width">
@@ -396,6 +517,28 @@
               </div>
             </label>
             <label>
+              <span>Publication PDF (optional)</span>
+              <div class="image-upload-box">
+                <input
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  (change)="onPublicationPdfSelected($event)"
+                  id="publication-pdf-upload"
+                  hidden
+                />
+                <label class="upload-button" for="publication-pdf-upload">Upload PDF</label>
+                <span class="upload-text" *ngIf="publicationPdfFileName">{{ publicationPdfFileName }}</span>
+                <span class="upload-text" *ngIf="!publicationPdfFileName && !newPublication.pdfPath">No PDF selected</span>
+                <button
+                  *ngIf="newPublication.pdfPath"
+                  class="danger-btn"
+                  type="button"
+                  (click)="clearPublicationPdf()"
+                >Remove PDF</button>
+                <span class="upload-text" *ngIf="publicationPdfError" role="alert">{{ publicationPdfError }}</span>
+              </div>
+            </label>
+            <label>
               <span>Link</span>
               <input [(ngModel)]="newPublication.link" type="url" />
             </label>
@@ -548,6 +691,7 @@
         </div>
       </section>
 
+      <!-- Student Zone module is temporarily unused.
       <section *ngIf="activeSection === 'student-zone'" class="panel">
         <div class="content-form-card">
           <h3>Student Zone Images</h3>
@@ -586,4 +730,5 @@
           </ul>
         </div>
       </section>
+      -->
 </app-admin-shell>

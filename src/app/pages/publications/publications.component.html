@@ -32,23 +32,57 @@
             <span class="publication-tag">To be announced</span>
             <h2>{{ item.title }}</h2>
             <p>{{ item.description }}</p>
-            <a
-              *ngIf="item.link; else publicationComingSoon"
-              class="publication-button"
-              [href]="item.link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Show More Details
-            </a>
-            <ng-template #publicationComingSoon>
-              <button type="button" class="publication-button" disabled>
-              Coming soon
+            <ng-container *ngIf="item.pdfPath; else publicationLink">
+              <button
+                type="button"
+                class="publication-button"
+                (click)="openPublicationPdf(item)"
+              >
+                Show More Details
               </button>
+            </ng-container>
+            <ng-template #publicationLink>
+              <a
+                *ngIf="item.link; else publicationComingSoon"
+                class="publication-button"
+                [href]="item.link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Show More Details</a>
+            </ng-template>
+            <ng-template #publicationComingSoon>
+              <button type="button" class="publication-button" disabled>Coming soon</button>
             </ng-template>
           </div>
         </article>
       </div>
     </div>
   </section>
+
+  <div
+    *ngIf="selectedPublication && selectedPdfUrl"
+    class="publication-pdf-overlay"
+    role="presentation"
+    (click)="closePublicationPdf()"
+  >
+    <section
+      class="publication-pdf-dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="'PDF for ' + selectedPublication.title"
+      (click)="$event.stopPropagation()"
+    >
+      <header class="publication-pdf-header">
+        <h2>{{ selectedPublication.title }}</h2>
+        <button type="button" class="publication-pdf-close" (click)="closePublicationPdf()" aria-label="Close PDF viewer">
+          &times;
+        </button>
+      </header>
+      <iframe
+        class="publication-pdf-frame"
+        [src]="selectedPdfUrl"
+        [title]="'PDF viewer for ' + selectedPublication.title"
+      ></iframe>
+    </section>
+  </div>
 </main>

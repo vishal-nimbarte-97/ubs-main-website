@@ -25,6 +25,112 @@
     </div>
   </section>
 
+  <section class="updates-section" aria-labelledby="updates-title">
+    <div class="updates-heading">
+      <span class="updates-eyebrow">Stay informed</span>
+      <h2 id="updates-title">
+        Latest <span>Updates</span> &amp; <span>Seminars</span>
+      </h2>
+      <span class="heading-line"></span>
+
+      <p>
+        Official Senate announcements, examination schedules, academic
+        circulars, and upcoming<br class="desktop-break" />
+        national/international seminars.
+      </p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="updates-grid">
+      <!-- ================= NOTIFICATIONS ================= -->
+      <div class="updates-card notifications-card">
+        <!-- Card Header -->
+        <div class="card-header notification-header">
+          <div class="header-left">
+            <div class="header-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                <path d="M10 21h4"></path>
+              </svg>
+            </div>
+
+            <div>
+              <h3>Official Notifications</h3>
+              <p>Categorized announcements &amp; notices</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Categories -->
+        <!-- <div class="notification-tabs">
+          <button class="tab active">All</button>
+          <button class="tab">Admission</button>
+          <button class="tab">Examination</button>
+          <button class="tab">General</button>
+          <button class="tab">Career</button>
+          <button class="tab">Student</button>
+          <button class="tab">Circular</button>
+        </div> -->
+
+        <!-- Notification List -->
+        <div
+          class="notification-list"
+          id="official-notification-list"
+          role="region"
+          aria-label="Official notifications"
+          tabindex="0"
+        >
+          <div class="notification-item" *ngFor="let notification of visibleOfficialNotifications">
+            <div class="notification-content">
+              <div class="notification-meta">
+                <span
+                  class="notice-type"
+                  [class.announcement]="getNotificationType(notification) === 'ANNOUNCEMENT'"
+                >
+                  {{ getNotificationType(notification) }}
+                </span>
+
+                <span class="notice-date">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M12 7v5l3 2"></path>
+                  </svg>
+                  {{ formatNotificationDate(notification.createdAt) }}
+                </span>
+              </div>
+
+              <h4>{{ notification.title }}</h4>
+              <p *ngIf="notification.description">{{ notification.description }}</p>
+            </div>
+            <a
+              *ngIf="notification.imageUrl"
+              class="notification-image-link"
+              [href]="notification.imageUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="'View image for ' + notification.title"
+            >
+              View image
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="notification-item" *ngIf="officialNotifications.length === 0">
+            <div class="notification-content">
+              <div class="notification-meta">
+                <span class="notice-type">NOTICE</span>
+                <span class="notice-date">No notices</span>
+              </div>
+              <h4>No official notifications available right now.</h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <section class="about-intro-section" #aboutIntroSection>
     <div class="wrap about-intro-grid">
       <div class="about-intro-left" [class.in-view]="introInView">
@@ -341,109 +447,6 @@
     </div>
   </section>
 
-  <section class="updates-section">
-    <h2 class="section-title">
-      Latest <span>Updates</span> &amp; <span>Seminars</span>
-    </h2>
-
-    <!-- Section Heading -->
-    <div class="updates-heading">
-      <!-- <h2>Latest Updates &amp; Seminars</h2> -->
-      <span class="heading-line"></span>
-
-      <p>
-        Official Senate announcements, examination schedules, academic
-        circulars, and upcoming<br class="desktop-break" />
-        national/international seminars.
-      </p>
-    </div>
-
-    <!-- Main Content -->
-    <div class="updates-grid">
-      <!-- ================= NOTIFICATIONS ================= -->
-      <div class="updates-card notifications-card">
-        <!-- Card Header -->
-        <div class="card-header notification-header">
-          <div class="header-left">
-            <div class="header-icon">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-                <path d="M10 21h4"></path>
-              </svg>
-            </div>
-
-            <div>
-              <h3>Official Notifications</h3>
-              <p>Categorized announcements &amp; notices</p>
-            </div>
-          </div>
-
-          <button
-            *ngIf="officialNotifications.length > 3"
-            class="view-button"
-            type="button"
-            [attr.aria-expanded]="showAllNotifications"
-            aria-controls="official-notification-list"
-            (click)="toggleNotifications()"
-          >
-            {{ showAllNotifications ? 'Show Fewer' : 'View All Notices' }}
-            <span>→</span>
-          </button>
-        </div>
-
-        <!-- Categories -->
-        <!-- <div class="notification-tabs">
-          <button class="tab active">All</button>
-          <button class="tab">Admission</button>
-          <button class="tab">Examination</button>
-          <button class="tab">General</button>
-          <button class="tab">Career</button>
-          <button class="tab">Student</button>
-          <button class="tab">Circular</button>
-        </div> -->
-
-        <!-- Notification List -->
-        <div class="notification-list" id="official-notification-list">
-          <div class="notification-item" *ngFor="let notification of visibleOfficialNotifications">
-            <div class="notification-content">
-              <div class="notification-meta">
-                <span
-                  class="notice-type"
-                  [class.announcement]="getNotificationType(notification) === 'ANNOUNCEMENT'"
-                >
-                  {{ getNotificationType(notification) }}
-                </span>
-
-                <span class="notice-date">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 7v5l3 2"></path>
-                  </svg>
-                  {{ formatNotificationDate(notification.createdAt) }}
-                </span>
-              </div>
-
-              <h4>{{ notification.title }}</h4>
-              <p *ngIf="notification.description">{{ notification.description }}</p>
-            </div>
-
-          </div>
-
-          <div class="notification-item" *ngIf="officialNotifications.length === 0">
-            <div class="notification-content">
-              <div class="notification-meta">
-                <span class="notice-type">NOTICE</span>
-                <span class="notice-date">No notices</span>
-              </div>
-              <h4>No official notifications available right now.</h4>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- ============ Message from the Principal's Desk ============ -->
 
   <section class="principal-section">
@@ -704,6 +707,78 @@
   </section> -->
 </main>
 
+<div
+  *ngIf="bannerModalOpen"
+  class="home-banner-backdrop"
+  role="presentation"
+  (click)="closeBannerModal()"
+>
+  <section
+    *ngIf="currentBanner as banner"
+    class="home-banner-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Featured banners"
+    (click)="$event.stopPropagation()"
+    (mouseenter)="pauseBannerRotation()"
+    (mouseleave)="resumeBannerRotation()"
+  >
+    <button
+      type="button"
+      class="home-banner-close"
+      aria-label="Close banners"
+      (click)="closeBannerModal()"
+    >&times;</button>
+
+    <div class="home-banner-slide" aria-live="polite">
+      <img
+        class="home-banner-image"
+        [src]="banner.imageUrl"
+        [alt]="banner.title || 'Union Biblical Seminary banner'"
+      />
+      <div class="home-banner-caption" *ngIf="banner.title || banner.description || banner.link">
+        <div class="home-banner-copy" *ngIf="banner.title || banner.description">
+          <h2 *ngIf="banner.title">{{ banner.title }}</h2>
+          <p *ngIf="banner.description">{{ banner.description }}</p>
+        </div>
+        <a
+          *ngIf="banner.link"
+          class="home-banner-link"
+          [href]="banner.link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Learn more <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+
+    <div class="home-banner-controls" *ngIf="homeBanners.length > 1">
+      <button
+        type="button"
+        class="home-banner-arrow"
+        aria-label="Previous banner"
+        (click)="showBanner(activeBannerIndex - 1)"
+      >‹</button>
+      <div class="home-banner-dots" aria-label="Choose a banner">
+        <button
+          *ngFor="let item of homeBanners; let i = index"
+          type="button"
+          class="home-banner-dot"
+          [class.active]="i === activeBannerIndex"
+          [attr.aria-label]="'Show banner ' + (i + 1)"
+          [attr.aria-current]="i === activeBannerIndex ? 'true' : null"
+          (click)="showBanner(i)"
+        ></button>
+      </div>
+      <button
+        type="button"
+        class="home-banner-arrow"
+        aria-label="Next banner"
+        (click)="showBanner(activeBannerIndex + 1)"
+      >›</button>
+    </div>
+  </section>
+</div>
+
 <br />
 
 <!-- ============ FLOATING CALL BUTTON ============ -->
@@ -715,17 +790,26 @@
 <!-- ============ ROTATING ADMISSION ENQUIRY TAB ============ -->
 <div class="enquiry-tab" [class.open]="enquiryOpen">
   <button class="enquiry-tab-toggle" (click)="toggleEnquiry()">
-    Admission Enquiry
+    General Enquiry
   </button>
 
   <div class="enquiry-panel" *ngIf="enquiryOpen">
     <button class="enquiry-close" (click)="toggleEnquiry()">✕</button>
-    <h4>Admission Enquiry</h4>
+    <h4>General Enquiry</h4>
+    <p class="enquiry-description">
+      Interested in studying at UBS? Share your contact details and our admissions team will get in touch.
+    </p>
 
     <form (ngSubmit)="submitEnquiry()" *ngIf="!enquirySubmitted">
       <input type="text" placeholder="Full name" [(ngModel)]="enquiryName" name="enquiryName" required />
       <input type="email" placeholder="Email address" [(ngModel)]="enquiryEmail" name="enquiryEmail" required />
       <input type="tel" placeholder="Phone number" [(ngModel)]="enquiryPhone" name="enquiryPhone" />
+      <textarea
+        placeholder="Your enquiry"
+        [(ngModel)]="enquiryMessage"
+        name="enquiryMessage"
+        rows="4"
+      ></textarea>
       <button type="submit" class="btn-gold">Submit Enquiry</button>
     </form>
 

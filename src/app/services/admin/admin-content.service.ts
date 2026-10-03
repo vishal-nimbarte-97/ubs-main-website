@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { API_ROOT_URL, API_URLS } from '../../config/api-urls';
 import { TuitionFeeRow } from '../../models/tuition.model';
@@ -23,9 +23,19 @@ export interface NotificationItem {
   title: string;
   description: string;
   link: string;
+  imageUrl?: string;
   isActive: boolean;
   createdAt?: string;
   type?: NotificationType;
+}
+
+export interface BannerItem {
+  id?: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  link: string;
+  isActive: boolean;
 }
 
 export interface PeopleProfile {
@@ -91,6 +101,7 @@ export interface PublicationItem {
   status: string;
   category: string;
   coverImageUrl: string;
+  pdfPath?: string;
   publishedDate: string;
   link: string;
   isFeatured: boolean;
@@ -114,6 +125,7 @@ export interface LiveStatus {
 @Injectable({ providedIn: 'root' })
 export class AdminContentService {
   private readonly sessionTokenKey = 'ubs-admin-token';
+  private readonly bannersStorageKey = 'ubs-home-banners';
 
   private readonly fallbackSiteConfig: SiteConfig = {
     admissionsEmail: 'admissions@ubs.ac.in',
@@ -244,6 +256,7 @@ export class AdminContentService {
     return {
       ...person,
       imageUrl: this.normalizeApiImageUrl(person.imageUrl),
+      pdfPath: this.normalizeApiImageUrl(person.pdfPath),
     };
   }
 
@@ -264,6 +277,7 @@ export class AdminContentService {
     return {
       ...item,
       type: (item.type ?? type) as NotificationType,
+      imageUrl: this.normalizeApiImageUrl(item.imageUrl),
     };
   }
 
@@ -317,6 +331,125 @@ export class AdminContentService {
         map((items) => (Array.isArray(items) ? items.map((item) => this.normalizeNotification(item)) : [])),
         catchError(() => of(this.fallbackNotifications.map((item) => this.normalizeNotification(item)))),
       );
+  }
+
+  getBanners(): Observable<BannerItem[]> {
+    return this.http
+      .get<BannerItem[]>(API_URLS.banners.getAll, this.getRequestOptions())
+      .pipe(
+        map((items) =>
+          this.mergeAndStoreBanners(
+            Array.isArray(items)
+              ? items.map((item) => ({
+                  ...item,
+                  imageUrl: this.normalizeApiImageUrl(item.imageUrl),
+                }))
+              : [],
+          ),
+        ),
+        catchError(() => of(this.readStoredBanners())),
+      );
+  }
+
+  saveBanner(item: BannerItem): Observable<BannerItem> {
+    return this.http
+      .post<BannerItem>(API_URLS.banners.insert, item, this.getRequestOptions())
+      .pipe(
+        map((res) => this.storeBanner({
+          ...item,
+          ...(res ?? {}),
+          imageUrl: this.normalizeApiImageUrl(res?.imageUrl ?? item.imageUrl),
+        })),
+        catchError(() => of(this.storeBannerLocally(item))),
+      );
+  }
+
+  deleteBanner(id?: number): Observable<boolean> {
+    if (!id) {
+      return throwError(() => new Error('A saved banner ID is required for deletion.'));
+    }
+
+    return this.http
+      .post<boolean>(API_URLS.banners.delete(id), undefined, this.getRequestOptions())
+      .pipe(
+        map((deleted) => {
+          this.removeStoredBanner(id);
+          return deleted;
+        }),
+        catchError(() => of(this.removeStoredBanner(id))),
+      );
+  }
+
+  private readStoredBanners(): BannerItem[] {
+    if (typeof window === 'undefined') {
+      return [];
+    }
+
+    const stored = window.localStorage.getItem(this.bannersStorageKey);
+    if (!stored) {
+      return [];
+    }
+
+    const parsed: unknown = JSON.parse(stored);
+    if (!Array.isArray(parsed)) {
+      throw new Error('Stored banners have an invalid format.');
+    }
+
+    return parsed.filter(
+      (item): item is BannerItem =>
+        typeof item === 'object' &&
+        item !== null &&
+        typeof item.title === 'string' &&
+        typeof item.description === 'string' &&
+        typeof item.imageUrl === 'string' &&
+        typeof item.link === 'string' &&
+        typeof item.isActive === 'boolean',
+    );
+  }
+
+  private writeStoredBanners(banners: BannerItem[]): void {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(this.bannersStorageKey, JSON.stringify(banners));
+    }
+  }
+
+  private mergeAndStoreBanners(remoteBanners: BannerItem[]): BannerItem[] {
+    const combined = [...remoteBanners, ...this.readStoredBanners()];
+    const unique = new Map<string, BannerItem>();
+
+    combined.forEach((banner) => {
+      const key = banner.id !== undefined
+        ? `id:${banner.id}`
+        : `content:${banner.title}|${banner.imageUrl}`;
+      unique.set(key, banner);
+    });
+
+    const banners = [...unique.values()];
+    this.writeStoredBanners(banners);
+    return banners;
+  }
+
+  private storeBanner(banner: BannerItem): BannerItem {
+    const banners = this.mergeAndStoreBanners([banner]);
+    return banners.find((item) => item.id === banner.id) ?? banner;
+  }
+
+  private storeBannerLocally(banner: BannerItem): BannerItem {
+    const stored = this.readStoredBanners();
+    const highestId = stored.reduce((maxId, item) => Math.max(maxId, item.id ?? 0), 0);
+    const localBanner = {
+      ...banner,
+      id: Math.max(Date.now(), highestId + 1),
+    };
+
+    this.writeStoredBanners([localBanner, ...stored]);
+    return localBanner;
+  }
+
+  private removeStoredBanner(id: number): boolean {
+    const stored = this.readStoredBanners();
+    this.writeStoredBanners(stored.filter((banner) => banner.id !== id));
+    return true;
   }
 
   saveNotification(item: NotificationItem): Observable<NotificationItem> {
@@ -420,6 +553,7 @@ export class AdminContentService {
             ? items.map((item) => ({
                 ...item,
                 coverImageUrl: this.normalizeApiImageUrl(item.coverImageUrl),
+                pdfPath: this.normalizeApiImageUrl(item.pdfPath),
               }))
             : [],
         ),
@@ -435,9 +569,14 @@ export class AdminContentService {
           ...item,
           ...(res ?? {}),
           coverImageUrl: this.normalizeApiImageUrl(res?.coverImageUrl ?? item.coverImageUrl),
+          pdfPath: this.normalizeApiImageUrl(res?.pdfPath ?? item.pdfPath),
         })),
         catchError(() =>
-          of({ ...item, coverImageUrl: this.normalizeApiImageUrl(item.coverImageUrl) }),
+          of({
+            ...item,
+            coverImageUrl: this.normalizeApiImageUrl(item.coverImageUrl),
+            pdfPath: this.normalizeApiImageUrl(item.pdfPath),
+          }),
         ),
       );
   }
@@ -523,21 +662,28 @@ export class AdminContentService {
   getFaculty(): Observable<PeopleProfile[]> {
     return this.http
       .get<PeopleProfile[]>(API_URLS.faculty.getAll, this.getRequestOptions())
-      .pipe(catchError(() => of([])));
+      .pipe(
+        map((people) =>
+          Array.isArray(people) ? people.map((person) => this.normalizePeopleProfile(person)) : [],
+        ),
+        catchError(() => of([])),
+      );
   }
 
   getFacultyById(id: number): Observable<FacultyProfile> {
-    return this.http.get<FacultyProfile>(
-      API_URLS.faculty.getById(id),
-      this.getRequestOptions(),
-    );
+    return this.http
+      .get<FacultyProfile>(API_URLS.faculty.getById(id), this.getRequestOptions())
+      .pipe(map((person) => this.normalizePeopleProfile(person)));
   }
 
   saveFaculty(person: PeopleProfile): Observable<PeopleProfile> {
     const payload = { ...person, additionalDesignation: person.additionalDesignation ?? person.quote ?? '' };
     return this.http
       .post<PeopleProfile>(API_URLS.faculty.insert, payload, this.getRequestOptions())
-      .pipe(catchError(() => of(person)));
+      .pipe(
+        map((res) => this.normalizePeopleProfile({ ...person, ...(res ?? {}) })),
+        catchError(() => of(person)),
+      );
   }
 
   updateFaculty(person: FacultyProfile): Observable<FacultyProfile> {
@@ -549,7 +695,7 @@ export class AdminContentService {
       API_URLS.faculty.update,
       payload,
       this.getRequestOptions(),
-    ).pipe(map((res) => ({ ...payload, ...(res ?? {}) })));
+    ).pipe(map((res) => this.normalizePeopleProfile({ ...payload, ...(res ?? {}) })));
   }
 
   getFile(fileId: string): Observable<Blob> {

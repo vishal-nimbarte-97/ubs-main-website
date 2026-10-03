@@ -37,10 +37,7 @@ export class FacultyComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminContentService.getFaculty().subscribe((facultyPeople) => {
-      const existingFaculty = new Set(
-        this.facultyList.map((faculty) => this.getFacultyKey(faculty)),
-      );
-      const addedFaculty = facultyPeople
+      const apiFaculty = facultyPeople
         .filter((person) => person.isActive)
         .map((person) => ({
           id: person.id ?? 0,
@@ -58,15 +55,28 @@ export class FacultyComponent implements OnInit {
           research: person.research ?? [],
           articles: person.articles ?? [],
           journals: person.journals ?? [],
-        }))
-        .filter((faculty) => {
-          const key = this.getFacultyKey(faculty);
-          if (existingFaculty.has(key)) {
-            return false;
-          }
-          existingFaculty.add(key);
-          return true;
-        });
+        }));
+
+      const facultyByKey = new Map(
+        apiFaculty.map((faculty) => [this.getFacultyKey(faculty), faculty]),
+      );
+
+      this.facultyList = this.facultyList.map((faculty) => {
+        const apiProfile = facultyByKey.get(this.getFacultyKey(faculty));
+        return apiProfile ? { ...faculty, pdfPath: apiProfile.pdfPath } : faculty;
+      });
+
+      const existingFaculty = new Set(
+        this.facultyList.map((faculty) => this.getFacultyKey(faculty)),
+      );
+      const addedFaculty = apiFaculty.filter((faculty) => {
+        const key = this.getFacultyKey(faculty);
+        if (existingFaculty.has(key)) {
+          return false;
+        }
+        existingFaculty.add(key);
+        return true;
+      });
 
       this.facultyList = [...this.facultyList, ...addedFaculty];
     });

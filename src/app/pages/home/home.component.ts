@@ -4,6 +4,7 @@ import {
   OnInit,
   AfterViewInit,
   OnDestroy,
+  HostListener,
   ViewChild,
   PLATFORM_ID,
   inject,
@@ -34,6 +35,7 @@ import {
 import { LiveStatusService } from '../../services/dashboard/live-status.service';
 import {
   AdminContentService,
+  BannerItem,
   NotificationItem,
   PeopleProfile,
 } from '../../services/admin/admin-content.service';
@@ -52,6 +54,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private siteContentService = inject(SiteContentService);
   private adminContentService = inject(AdminContentService);
   private routerSubscription?: Subscription;
+  private bannerSubscription?: Subscription;
 
   @ViewChild('countersSection') countersSection?: ElementRef<HTMLElement>;
   @ViewChild('campusVideoRef') campusVideoRef?: ElementRef<HTMLVideoElement>;
@@ -70,7 +73,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // Controlled entirely by the backend now — no more localStorage,
   // no more visitor-entered URLs. Admin flips it on/off from /admin/dashboard.
   liveIsLive = false;
-  liveChannelUrl = 'https://www.youtube.com/@unionbsmedia';
+  liveChannelUrl = 'https://youtube.com/@unionbsmedia?si=FN7j-UXDvr_usk9J';
   private liveStatusTimer?: ReturnType<typeof setInterval>;
 
   /* ================= PROGRAMMES OFFERED BAR ================= */
@@ -109,7 +112,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* ================= OFFICIAL NOTIFICATIONS ================= */
   officialNotifications: NotificationItem[] = [];
-  showAllNotifications = false;
+
+  /* ================= HOME PAGE BANNER SLIDER ================= */
+  homeBanners: BannerItem[] = [];
+  activeBannerIndex = 0;
+  bannerModalOpen = false;
+  private bannerTimer?: ReturnType<typeof setInterval>;
 
   /* ================= BLOG CAROUSEL ================= */
   blogPosts = BLOG_POSTS;
@@ -125,6 +133,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   enquiryName = '';
   enquiryEmail = '';
   enquiryPhone = '';
+  enquiryMessage = '';
   enquirySubmitted = false;
 
   /** Angular sets this to 'browser' or 'server' depending on which pass is
@@ -219,13 +228,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get visibleOfficialNotifications(): NotificationItem[] {
-    return this.showAllNotifications
-      ? this.officialNotifications
-      : this.officialNotifications.slice(0, 3);
-  }
-
-  toggleNotifications(): void {
-    this.showAllNotifications = !this.showAllNotifications;
+    return this.officialNotifications;
   }
 
   ngOnInit(): void {
@@ -237,6 +240,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.adminContentService.getNotifications().subscribe((items) => {
       this.officialNotifications = items.filter((item) => item.isActive !== false);
+    });
+    this.bannerSubscription = this.adminContentService.getBanners().subscribe({
+      next: (items) => {
+        this.homeBanners = items.filter((item) => item.isActive && !!item.imageUrl);
+        if (this.isBrowser && this.homeBanners.length) {
+          this.activeBannerIndex = 0;
+          this.bannerModalOpen = true;
+          this.startBannerRotation();
+        }
+      },
+      error: (error: unknown) => {
+        console.error('Unable to load home page banners.', error);
+      },
     });
 
     // Build static calendar data before the first template render.
@@ -318,10 +334,70 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     // Release subscriptions, timers, and observers when the home page is removed.
     this.routerSubscription?.unsubscribe();
+    this.bannerSubscription?.unsubscribe();
+    this.stopBannerRotation();
     if (this.taglineTimer) clearInterval(this.taglineTimer);
     if (this.testimonialTimer) clearInterval(this.testimonialTimer);
     if (this.liveStatusTimer) clearInterval(this.liveStatusTimer);
     this.countersObserver?.disconnect();
+  }
+
+  get currentBanner(): BannerItem | undefined {
+    return this.homeBanners[this.activeBannerIndex];
+  }
+
+  showBanner(index: number): void {
+    if (!this.homeBanners.length) {
+      return;
+    }
+
+    this.activeBannerIndex =
+      (index + this.homeBanners.length) % this.homeBanners.length;
+    this.restartBannerRotation();
+  }
+
+  closeBannerModal(): void {
+    this.bannerModalOpen = false;
+    this.stopBannerRotation();
+  }
+
+  @HostListener('document:keydown.escape')
+  closeBannerOnEscape(): void {
+    if (this.bannerModalOpen) {
+      this.closeBannerModal();
+    }
+  }
+
+  pauseBannerRotation(): void {
+    this.stopBannerRotation();
+  }
+
+  resumeBannerRotation(): void {
+    if (this.bannerModalOpen) {
+      this.startBannerRotation();
+    }
+  }
+
+  private startBannerRotation(): void {
+    this.stopBannerRotation();
+    if (!this.isBrowser || !this.bannerModalOpen || this.homeBanners.length < 2) {
+      return;
+    }
+
+    this.bannerTimer = setInterval(() => {
+      this.activeBannerIndex = (this.activeBannerIndex + 1) % this.homeBanners.length;
+    }, 5000);
+  }
+
+  private restartBannerRotation(): void {
+    this.startBannerRotation();
+  }
+
+  private stopBannerRotation(): void {
+    if (this.bannerTimer) {
+      clearInterval(this.bannerTimer);
+      this.bannerTimer = undefined;
+    }
   }
 
   /* ---------- helpers ---------- */
@@ -486,6 +562,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.enquiryName = '';
     this.enquiryEmail = '';
     this.enquiryPhone = '';
+    this.enquiryMessage = '';
     setTimeout(() => {
       this.enquirySubmitted = false;
       this.enquiryOpen = false;
