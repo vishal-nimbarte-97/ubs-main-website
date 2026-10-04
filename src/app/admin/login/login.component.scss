@@ -223,18 +223,40 @@ label {
   box-shadow: 0 0 0 3px rgba(201, 150, 43, 0.18);
 }
 
+.input-wrap input.password-input {
+  padding-right: 48px;
+}
+
+.input-wrap input.password-input::-ms-reveal {
+  display: none;
+}
+
 .toggle-visibility {
   position: absolute;
-  right: 10px;
+  top: 50%;
+  right: 8px;
+  z-index: 1;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  transform: translateY(-50%);
   background: none;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   color: var(--slate);
-  padding: 6px;
+  padding: 0;
+  line-height: 1;
 }
 
 .toggle-visibility:hover {
   color: var(--navy);
+}
+
+.toggle-visibility:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
 }
 
 .error {

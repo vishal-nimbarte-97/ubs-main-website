@@ -1,16 +1,14 @@
 import {
   Component,
   inject,
-  OnDestroy,
-  OnInit,
   PLATFORM_ID,
   HostListener,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
-import { SiteContentService } from '../../services/admin/site-content.service';
 
+/** Site navigation and its responsive interaction state. */
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -18,37 +16,14 @@ import { SiteContentService } from '../../services/admin/site-content.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-
+export class HeaderComponent {
   auth = inject(AuthService);
-  siteContent = inject(SiteContentService);
   isScrolled = false;
   mobileMenuOpen = false;
   openDropdown: 'about' | 'administration' | 'academics' | null = null;
-  announcementOpen = false;
-
-  announcements: string[] = [];
-
-  admissionDeadline = new Date('2026-09-30T23:59:59');
-  countdownText = '';
-  private countdownTimer?: ReturnType<typeof setInterval>;
 
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
-
-  ngOnInit(): void {
-    this.announcements = this.siteContent.getAnnouncements();
-    // Render the initial countdown immediately, then refresh it once per second.
-    this.updateCountdown();
-    if (!this.isBrowser) return;
-
-    this.countdownTimer = setInterval(() => this.updateCountdown(), 1000);
-  }
-
-  ngOnDestroy(): void {
-    // Stop the timer when the header is removed to prevent background work.
-    if (this.countdownTimer) clearInterval(this.countdownTimer);
-  }
 
   onWindowScroll(): void {
     // Add the compact header state after the user scrolls past the top area.
@@ -127,16 +102,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.openDropdown === menu) this.openDropdown = null;
   }
 
-  onEscapeKey(): void {
-    // Provide a direct template handler for closing the mobile drawer.
-    if (this.mobileMenuOpen) this.closeMobileMenu();
-  }
-
-  toggleAnnouncement(): void {
-    // Toggle the announcement panel without changing the current route.
-    this.announcementOpen = !this.announcementOpen;
-  }
-
   closeMobileMenu(): void {
     // Reset mobile navigation state and restore normal document scrolling.
     this.mobileMenuOpen = false;
@@ -161,28 +126,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  handleEscape(_event: KeyboardEvent): void {
+  @HostListener('document:keydown.escape')
+  handleEscape(): void {
     if (this.mobileMenuOpen) this.closeMobileMenu();
-  }
-
-  private updateCountdown(): void {
-    // Calculate the remaining admission time from the configured deadline.
-    const now = new Date().getTime();
-    const distance = this.admissionDeadline.getTime() - now;
-    if (distance <= 0) {
-      this.countdownText = 'Admissions closed';
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-    );
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    this.countdownText = `Time left to apply: ${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 
   private isMobileViewport(): boolean {

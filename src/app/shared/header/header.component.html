@@ -1,36 +1,11 @@
+<!-- Shared navigation for public pages and the admin portal. -->
 <header
   class="site-header"
   [class.scrolled]="isScrolled"
   [class.menu-open]="mobileMenuOpen"
   (window:scroll)="onWindowScroll()"
   (window:resize)="onWindowResize()"
-  (window:keydown.escape)="onEscapeKey()"
 >
-  <!-- <div>
-    <div class="wrap top-bar-inner">
-      <div class="countdown-chip">{{ countdownText }}</div>
-      <div class="top-bar-actions">
-        <button class="announce-btn" (click)="toggleAnnouncement()">
-          <i class="fa-solid fa-bullhorn"></i>
-          Announcements
-          <i class="fa-solid fa-angle-down"></i>
-        </button>
-        <a routerLink="/admissions" class="apply-btn" (click)="closeMobileMenu()">Apply Now</a>
-      </div>
-    </div>
-
-    <div class="announce-panel" *ngIf="announcementOpen">
-      <div class="wrap">
-        <button class="close-x" (click)="toggleAnnouncement()">✕</button>
-        <ul>
-          <li *ngFor="let a of announcements">
-            <i class="fa-solid fa-arrow-right"></i>
-            {{ a }}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div> -->
   <nav class="wrap main-nav">
     <a routerLink="/" class="logo-wrapper me-auto" (click)="closeMobileMenu()">
       <img src="assets/img/ubs-logo.png" alt="UBS Logo" class="logo-img" />

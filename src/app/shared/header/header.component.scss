@@ -1,115 +1,5 @@
+/* Responsive styles for the shared site navigation. */
 @use "../../styles/mixins" as *;
-
-.top-bar {
-  background: linear-gradient(135deg, var(--navy), var(--navy-2));
-  color: var(--white);
-  font-size: 0.82rem;
-  position: relative;
-  z-index: 60;
-}
-
-.top-bar-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 24px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.countdown-chip {
-  background: var(--gold);
-  color: var(--navy);
-  padding: 12px 21px;
-  border-radius: 5px;
-  font-weight: 700;
-  font-size: 0.76rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.top-bar-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.announce-btn {
-  z-index: 1080;
-  background-color: rgba(106, 4, 15, 1);
-  color: white;
-  cursor: pointer;
-  border-width: medium;
-  border-style: none;
-  border-color: currentcolor;
-  border-image: none;
-  border-radius: 5px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-decoration: none;
-  padding: 12px 21px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.apply-btn {
-  background: var(--gold);
-  color: var(--navy);
-  padding: 12px 21px;
-  border-radius: var(--radius);
-  font-weight: 700;
-  text-decoration: none;
-  font-size: 0.8rem;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.announce-panel {
-  background: var(--navy-2);
-  border-top: 1px solid rgba(243, 239, 239, 0.15);
-  padding: 14px 0;
-}
-
-.announce-panel .wrap {
-  position: relative;
-}
-
-.close-x {
-  position: absolute;
-  top: -12px;
-  right: 12px;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  color: var(--white);
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.announce-panel ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.announce-panel li {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.85rem;
-  padding: 4px 0;
-}
-
-.announce-panel i {
-  color: var(--gold-light);
-  margin-right: 8px;
-}
 
 .site-header {
   position: sticky;
@@ -129,12 +19,6 @@
   background: var(--white);
   box-shadow: 0 2px 16px rgba(11, 37, 69, 0.08);
 
-  .top-bar-inner,
-  .announce-panel {
-    background: var(--white);
-  }
-
-  .logo-sub,
   .nav-links > li > a {
     color: var(--navy);
   }
@@ -203,16 +87,6 @@
   white-space: nowrap;
 }
 
-.logo-mark {
-  background: linear-gradient(135deg, var(--navy), var(--navy-2));
-  color: var(--gold-light);
-  font-family: var(--font-display);
-  font-weight: 700;
-  padding: 8px 12px;
-  border-radius: var(--radius);
-  font-size: 1.3rem;
-}
-
 .logo-name {
   font-family: var(--font-display);
   font-weight: 700;
@@ -237,13 +111,6 @@
   .logo-tagline {
     font-size: 0.6rem;
   }
-}
-
-.logo-sub {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.92rem;
-  color: var(--navy);
 }
 
 .nav-links {
@@ -548,23 +415,6 @@
 
 // RESPONSIVE: Large phones: styles apply at 600px viewport width and below.
 @include mobile {
-  .top-bar-inner {
-    padding: 8px 16px;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .countdown-chip {
-    padding: 8px 14px;
-    font-size: 0.7rem;
-  }
-
-  .announce-btn,
-  .apply-btn {
-    padding: 8px 14px;
-    font-size: 0.72rem;
-  }
-
   .main-nav {
     padding: 6px 16px;
   }
@@ -572,15 +422,6 @@
   .logo-img {
     width: 40px;
     height: 40px;
-  }
-
-  .logo-sub {
-    font-size: 0.78rem;
-  }
-
-  .logo-mark {
-    padding: 6px 9px;
-    font-size: 1.05rem;
   }
 
   .logo-tagline {
@@ -596,31 +437,10 @@
     font-size: 0.9rem;
   }
 
-  .enquiry-panel,
-  .announce-panel li {
-    font-size: 0.82rem;
-  }
 }
 
 // RESPONSIVE: Small / narrow mobile phones: styles apply at 360px viewport width and below.
 @media (max-width: 360px) {
-  .top-bar-actions {
-    gap: 8px;
-  }
-
-  .countdown-chip {
-    padding: 7px 10px;
-    font-size: 0.65rem;
-  }
-
-  .announce-btn span,
-  .announce-btn {
-    font-size: 0.68rem;
-  }
-
-  .logo-sub {
-    font-size: 0.7rem;
-  }
 }
 
 .admin-link {

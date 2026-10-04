@@ -19,7 +19,6 @@ import {
 } from '../../services/admin/admin-content.service';
 import { AdminShellComponent } from './components/admin-shell/admin-shell.component';
 import { AdminSidebarComponent, AdminSidebarItem } from './components/admin-sidebar/admin-sidebar.component';
-import { DashboardOverviewComponent } from './components/overview/dashboard-overview.component';
 import { LiveBroadcastComponent } from './components/live-broadcast/live-broadcast.component';
 
 type SectionId =
@@ -36,16 +35,10 @@ type SectionId =
   | 'community'
   | 'student-zone';
 
-interface AdminSection {
-  id: SectionId;
-  label: string;
-  icon: string;
-}
-
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminShellComponent, AdminSidebarComponent, DashboardOverviewComponent, LiveBroadcastComponent],
+  imports: [CommonModule, FormsModule, AdminShellComponent, AdminSidebarComponent, LiveBroadcastComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })

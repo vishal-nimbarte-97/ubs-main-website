@@ -11,11 +11,6 @@ interface Programme {
   points: string[];
 }
 
-interface Eligibility {
-  name: string;
-  criteria: string[];
-}
-
 @Component({
   selector: 'app-residential-programmes',
   standalone: true,
