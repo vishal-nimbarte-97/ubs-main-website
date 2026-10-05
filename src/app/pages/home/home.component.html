@@ -87,17 +87,27 @@
               <h4>{{ notification.title }}</h4>
               <p *ngIf="notification.description">{{ notification.description }}</p>
             </div>
-            <a
+            <button
               *ngIf="notification.imageUrl"
-              class="notification-image-link"
-              [href]="notification.imageUrl"
-              target="_blank"
-              rel="noopener noreferrer"
+              type="button"
+              class="notification-image-button"
               [attr.aria-label]="'View image for ' + notification.title"
+              [attr.aria-busy]="notificationImageLoading && selectedNotificationImage === notification"
+              [class.loading]="notificationImageLoading && selectedNotificationImage === notification"
+              (click)="openNotificationImage(notification)"
             >
-              View image
-              <span aria-hidden="true">↗</span>
-            </a>
+              Click here
+              <span
+                *ngIf="notificationImageLoading && selectedNotificationImage === notification"
+                class="notification-button-spinner"
+                aria-hidden="true"
+              ></span>
+              <span
+                *ngIf="!notificationImageLoading || selectedNotificationImage !== notification"
+                class="notification-image-icon"
+                aria-hidden="true"
+              >↗</span>
+            </button>
           </div>
 
           <div class="notification-item" *ngIf="officialNotifications.length === 0">
@@ -114,6 +124,51 @@
       </div>
     </div>
   </section>
+
+  <div
+    *ngIf="selectedNotificationImage as notification"
+    class="notification-image-backdrop"
+    role="presentation"
+    (click)="closeNotificationImage()"
+  >
+    <section
+      class="notification-image-dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="'Image for ' + notification.title"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        type="button"
+        class="notification-image-close"
+        aria-label="Close image"
+        (click)="closeNotificationImage()"
+      >&times;</button>
+      <div class="notification-image-stage" [class.is-loading]="notificationImageLoading">
+        <div
+          *ngIf="notificationImageLoading"
+          class="notification-image-loader"
+          role="status"
+          aria-live="polite"
+        >
+          <span class="notification-modal-spinner" aria-hidden="true"></span>
+          <span>Loading image...</span>
+        </div>
+        <p *ngIf="notificationImageError" class="notification-image-error" role="alert">
+          This image could not be loaded. Please try again later.
+        </p>
+        <img
+          [src]="notification.imageUrl"
+          [alt]="notification.title || 'Notification image'"
+          [class.is-loaded]="!notificationImageLoading && !notificationImageError"
+          [attr.aria-hidden]="notificationImageLoading || notificationImageError"
+          (load)="onNotificationImageLoad()"
+          (error)="onNotificationImageError()"
+        />
+      </div>
+      <h2 *ngIf="notification.title">{{ notification.title }}</h2>
+    </section>
+  </div>
 
   <section class="about-intro-section" #aboutIntroSection>
     <div class="wrap about-intro-grid">
@@ -794,9 +849,12 @@
         name="enquiryMessage"
         rows="4"
       ></textarea>
-      <button type="submit" class="btn-gold">Submit Enquiry</button>
+      <button type="submit" class="btn-gold" [disabled]="enquirySubmitting">
+        {{ enquirySubmitting ? 'Submitting...' : 'Submit Enquiry' }}
+      </button>
     </form>
 
+    <p class="enquiry-error" *ngIf="enquiryError" role="alert">{{ enquiryError }}</p>
     <p class="enquiry-success" *ngIf="enquirySubmitted">
       Thank you — we'll be in touch shortly.
     </p>

@@ -23,6 +23,9 @@ export const API_URLS = {
     delete: (id: number) => `${API_BASE_URL}/Notifications/Delete/${id}`,
     deleteLocal: (id: number) => `${API_BASE_URL_LOCAL}/Notifications/Delete/${id}`,
   },
+  enquiry: {
+    submit: `${API_BASE_URL}/Enquiry/Submit`,
+  },
   banners: {
     getAll: `${API_BASE_URL}/Banners/GetAll`,
     insert: `${API_BASE_URL}/Banners/Insert`,

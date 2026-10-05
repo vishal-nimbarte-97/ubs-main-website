@@ -112,6 +112,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* ================= OFFICIAL NOTIFICATIONS ================= */
   officialNotifications: NotificationItem[] = [];
+  selectedNotificationImage: NotificationItem | null = null;
+  notificationImageLoading = false;
+  notificationImageError = false;
 
   /* ================= HOME PAGE BANNER SLIDER ================= */
   homeBanners: BannerItem[] = [];
@@ -135,6 +138,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   enquiryPhone = '';
   enquiryMessage = '';
   enquirySubmitted = false;
+  enquirySubmitting = false;
+  enquiryError = '';
 
   /** Angular sets this to 'browser' or 'server' depending on which pass is
    *  currently rendering. Used to skip DOM/timer-only APIs during SSR/SSG. */
@@ -361,11 +366,34 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stopBannerRotation();
   }
 
+  openNotificationImage(notification: NotificationItem): void {
+    this.selectedNotificationImage = notification;
+    this.notificationImageLoading = true;
+    this.notificationImageError = false;
+  }
+
+  onNotificationImageLoad(): void {
+    this.notificationImageLoading = false;
+    this.notificationImageError = false;
+  }
+
+  onNotificationImageError(): void {
+    this.notificationImageLoading = false;
+    this.notificationImageError = true;
+  }
+
+  closeNotificationImage(): void {
+    this.selectedNotificationImage = null;
+    this.notificationImageLoading = false;
+    this.notificationImageError = false;
+  }
+
   @HostListener('document:keydown.escape')
-  closeBannerOnEscape(): void {
+  closeModalsOnEscape(): void {
     if (this.bannerModalOpen) {
       this.closeBannerModal();
     }
+    this.closeNotificationImage();
   }
 
   pauseBannerRotation(): void {
@@ -557,16 +585,39 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   submitEnquiry(): void {
-    if (!this.enquiryName || !this.enquiryEmail) return;
-    this.enquirySubmitted = true;
-    this.enquiryName = '';
-    this.enquiryEmail = '';
-    this.enquiryPhone = '';
-    this.enquiryMessage = '';
-    setTimeout(() => {
-      this.enquirySubmitted = false;
-      this.enquiryOpen = false;
-    }, 2500);
+    if (this.enquirySubmitting) return;
+
+    const name = this.enquiryName.trim();
+    const email = this.enquiryEmail.trim();
+    if (!name || !email) return;
+
+    this.enquirySubmitting = true;
+    this.enquiryError = '';
+    this.adminContentService
+      .submitEnquiry({
+        name,
+        email,
+        phone: this.enquiryPhone.trim(),
+        message: this.enquiryMessage.trim(),
+      })
+      .subscribe({
+        next: () => {
+          this.enquirySubmitted = true;
+          this.enquiryName = '';
+          this.enquiryEmail = '';
+          this.enquiryPhone = '';
+          this.enquiryMessage = '';
+          this.enquirySubmitting = false;
+          setTimeout(() => {
+            this.enquirySubmitted = false;
+            this.enquiryOpen = false;
+          }, 2500);
+        },
+        error: () => {
+          this.enquirySubmitting = false;
+          this.enquiryError = 'Unable to submit your enquiry. Please try again.';
+        },
+      });
   }
 
   /* ================= LEGACY / GENESIS OF UBS ================= */

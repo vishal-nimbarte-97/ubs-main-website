@@ -60,8 +60,34 @@ export interface PeopleProfile {
   additionalDesignation?: string;
 }
 
-export interface FacultyProfile extends PeopleProfile {
-  createdAt?: string;
+export type FacultyProfile = FacultyApiProfile;
+
+export interface FacultyApiProfile {
+  id?: number | null;
+  name?: string | null;
+  designation?: string | null;
+  additionalDesignation?: string | null;
+  department?: string | null;
+  qualificationTitle?: string | null;
+  email?: string | null;
+  imageUrl?: string | null;
+  bio?: string | null;
+  pdfPath?: string | null;
+  isActive: boolean;
+  createdAt?: string | null;
+  qualification?: string[] | null;
+  specialization?: string[] | null;
+  books?: string[] | null;
+  research?: string[] | null;
+  articles?: string[] | null;
+  journals?: string[] | null;
+}
+
+export interface EnquiryRequest {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
 }
 
 export interface WeatherForecast {
@@ -125,7 +151,6 @@ export interface LiveStatus {
 @Injectable({ providedIn: 'root' })
 export class AdminContentService {
   private readonly sessionTokenKey = 'ubs-admin-token';
-  private readonly bannersStorageKey = 'ubs-home-banners';
 
   private readonly fallbackSiteConfig: SiteConfig = {
     admissionsEmail: 'admissions@ubs.ac.in',
@@ -260,6 +285,60 @@ export class AdminContentService {
     };
   }
 
+  private normalizeFacultyProfile(faculty: FacultyApiProfile): FacultyApiProfile {
+    return {
+      ...faculty,
+      imageUrl: this.normalizeApiImageUrl(faculty.imageUrl ?? undefined),
+      pdfPath: this.normalizeApiImageUrl(faculty.pdfPath ?? undefined),
+    };
+  }
+
+  private toPeopleProfile(faculty: FacultyApiProfile): PeopleProfile {
+    return {
+      id: faculty.id ?? undefined,
+      name: faculty.name ?? '',
+      designation: faculty.designation ?? '',
+      additionalDesignation: faculty.additionalDesignation ?? '',
+      category: 'faculty',
+      imageUrl: faculty.imageUrl ?? '',
+      quote: faculty.additionalDesignation ?? '',
+      bio: faculty.bio ?? '',
+      isActive: faculty.isActive,
+      email: faculty.email ?? '',
+      department: faculty.department ?? '',
+      qualificationTitle: faculty.qualificationTitle ?? '',
+      qualification: faculty.qualification ?? [],
+      specialization: faculty.specialization ?? [],
+      books: faculty.books ?? [],
+      research: faculty.research ?? [],
+      articles: faculty.articles ?? [],
+      journals: faculty.journals ?? [],
+      pdfPath: faculty.pdfPath ?? '',
+    };
+  }
+
+  private toFacultyApiProfile(person: PeopleProfile): FacultyApiProfile {
+    return {
+      id: person.id,
+      name: person.name,
+      designation: person.designation,
+      additionalDesignation: person.additionalDesignation ?? person.quote ?? '',
+      department: person.department ?? '',
+      qualificationTitle: person.qualificationTitle ?? '',
+      email: person.email ?? '',
+      imageUrl: person.imageUrl,
+      bio: person.bio,
+      pdfPath: person.pdfPath ?? '',
+      isActive: person.isActive,
+      qualification: person.qualification ?? [],
+      specialization: person.specialization ?? [],
+      books: person.books ?? [],
+      research: person.research ?? [],
+      articles: person.articles ?? [],
+      journals: person.journals ?? [],
+    };
+  }
+
   private asFallback<T>(fallback: T) {
     return () => of(fallback);
   }
@@ -338,16 +417,13 @@ export class AdminContentService {
       .get<BannerItem[]>(API_URLS.banners.getAll, this.getRequestOptions())
       .pipe(
         map((items) =>
-          this.mergeAndStoreBanners(
-            Array.isArray(items)
-              ? items.map((item) => ({
-                  ...item,
-                  imageUrl: this.normalizeApiImageUrl(item.imageUrl),
-                }))
-              : [],
-          ),
+          Array.isArray(items)
+            ? items.map((item) => ({
+                ...item,
+                imageUrl: this.normalizeApiImageUrl(item.imageUrl),
+              }))
+            : [],
         ),
-        catchError(() => of(this.readStoredBanners())),
       );
   }
 
@@ -355,12 +431,11 @@ export class AdminContentService {
     return this.http
       .post<BannerItem>(API_URLS.banners.insert, item, this.getRequestOptions())
       .pipe(
-        map((res) => this.storeBanner({
+        map((res) => ({
           ...item,
           ...(res ?? {}),
           imageUrl: this.normalizeApiImageUrl(res?.imageUrl ?? item.imageUrl),
         })),
-        catchError(() => of(this.storeBannerLocally(item))),
       );
   }
 
@@ -373,83 +448,12 @@ export class AdminContentService {
       .post<boolean>(API_URLS.banners.delete(id), undefined, this.getRequestOptions())
       .pipe(
         map((deleted) => {
-          this.removeStoredBanner(id);
-          return deleted;
+          if (!deleted) {
+            throw new Error('The banner could not be deleted.');
+          }
+          return true;
         }),
-        catchError(() => of(this.removeStoredBanner(id))),
       );
-  }
-
-  private readStoredBanners(): BannerItem[] {
-    if (typeof window === 'undefined') {
-      return [];
-    }
-
-    const stored = window.localStorage.getItem(this.bannersStorageKey);
-    if (!stored) {
-      return [];
-    }
-
-    const parsed: unknown = JSON.parse(stored);
-    if (!Array.isArray(parsed)) {
-      throw new Error('Stored banners have an invalid format.');
-    }
-
-    return parsed.filter(
-      (item): item is BannerItem =>
-        typeof item === 'object' &&
-        item !== null &&
-        typeof item.title === 'string' &&
-        typeof item.description === 'string' &&
-        typeof item.imageUrl === 'string' &&
-        typeof item.link === 'string' &&
-        typeof item.isActive === 'boolean',
-    );
-  }
-
-  private writeStoredBanners(banners: BannerItem[]): void {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(this.bannersStorageKey, JSON.stringify(banners));
-    }
-  }
-
-  private mergeAndStoreBanners(remoteBanners: BannerItem[]): BannerItem[] {
-    const combined = [...remoteBanners, ...this.readStoredBanners()];
-    const unique = new Map<string, BannerItem>();
-
-    combined.forEach((banner) => {
-      const key = banner.id !== undefined
-        ? `id:${banner.id}`
-        : `content:${banner.title}|${banner.imageUrl}`;
-      unique.set(key, banner);
-    });
-
-    const banners = [...unique.values()];
-    this.writeStoredBanners(banners);
-    return banners;
-  }
-
-  private storeBanner(banner: BannerItem): BannerItem {
-    const banners = this.mergeAndStoreBanners([banner]);
-    return banners.find((item) => item.id === banner.id) ?? banner;
-  }
-
-  private storeBannerLocally(banner: BannerItem): BannerItem {
-    const stored = this.readStoredBanners();
-    const highestId = stored.reduce((maxId, item) => Math.max(maxId, item.id ?? 0), 0);
-    const localBanner = {
-      ...banner,
-      id: Math.max(Date.now(), highestId + 1),
-    };
-
-    this.writeStoredBanners([localBanner, ...stored]);
-    return localBanner;
-  }
-
-  private removeStoredBanner(id: number): boolean {
-    const stored = this.readStoredBanners();
-    this.writeStoredBanners(stored.filter((banner) => banner.id !== id));
-    return true;
   }
 
   saveNotification(item: NotificationItem): Observable<NotificationItem> {
@@ -462,20 +466,28 @@ export class AdminContentService {
 
     return this.http
       .post<NotificationItem>(API_URLS.notifications.insert, payload, this.getRequestOptions())
-      .pipe(
-        map((res) => this.normalizeNotification({ ...item, ...(res ?? {}) })),
-        catchError(() => of(this.normalizeNotification(item))),
-      );
+      .pipe(map((res) => this.normalizeNotification({ ...payload, ...(res ?? {}) })));
   }
 
   deleteNotification(id?: number): Observable<boolean> {
     if (!id) {
-      return of(true);
+      return throwError(() => new Error('A saved notification ID is required for deletion.'));
     }
 
     return this.http
       .post<boolean>(API_URLS.notifications.delete(id), undefined, this.getRequestOptions())
-      .pipe(catchError(() => of(true)));
+      .pipe(
+        map((deleted) => {
+          if (!deleted) {
+            throw new Error('The notification could not be deleted.');
+          }
+          return true;
+        }),
+      );
+  }
+
+  submitEnquiry(enquiry: EnquiryRequest): Observable<unknown> {
+    return this.http.post<unknown>(API_URLS.enquiry.submit, enquiry);
   }
 
   getPeople(): Observable<PeopleProfile[]> {
@@ -562,33 +574,40 @@ export class AdminContentService {
   }
 
   savePublication(item: PublicationItem): Observable<PublicationItem> {
+    const payload = {
+      ...item,
+      publishedDate: /^\d{4}-\d{2}-\d{2}$/.test(item.publishedDate)
+        ? `${item.publishedDate}T00:00:00.000Z`
+        : item.publishedDate,
+    };
+
     return this.http
-      .post<PublicationItem>(API_URLS.publications.insert, item, this.getRequestOptions())
+      .post<PublicationItem>(API_URLS.publications.insert, payload, this.getRequestOptions())
       .pipe(
         map((res) => ({
-          ...item,
+          ...payload,
           ...(res ?? {}),
-          coverImageUrl: this.normalizeApiImageUrl(res?.coverImageUrl ?? item.coverImageUrl),
-          pdfPath: this.normalizeApiImageUrl(res?.pdfPath ?? item.pdfPath),
+          coverImageUrl: this.normalizeApiImageUrl(res?.coverImageUrl ?? payload.coverImageUrl),
+          pdfPath: this.normalizeApiImageUrl(res?.pdfPath ?? payload.pdfPath),
         })),
-        catchError(() =>
-          of({
-            ...item,
-            coverImageUrl: this.normalizeApiImageUrl(item.coverImageUrl),
-            pdfPath: this.normalizeApiImageUrl(item.pdfPath),
-          }),
-        ),
       );
   }
 
   deletePublication(id?: number): Observable<boolean> {
     if (!id) {
-      return of(true);
+      return throwError(() => new Error('A saved publication ID is required for deletion.'));
     }
 
     return this.http
       .post<boolean>(API_URLS.publications.delete(id), undefined, this.getRequestOptions())
-      .pipe(catchError(() => of(true)));
+      .pipe(
+        map((deleted) => {
+          if (!deleted) {
+            throw new Error('The publication could not be deleted.');
+          }
+          return true;
+        }),
+      );
   }
 
   getGalleryItems(): Observable<GalleryItem[]> {
@@ -661,41 +680,55 @@ export class AdminContentService {
 
   getFaculty(): Observable<PeopleProfile[]> {
     return this.http
-      .get<PeopleProfile[]>(API_URLS.faculty.getAll, this.getRequestOptions())
+      .get<FacultyApiProfile[]>(API_URLS.faculty.getAll, this.getRequestOptions())
       .pipe(
         map((people) =>
-          Array.isArray(people) ? people.map((person) => this.normalizePeopleProfile(person)) : [],
+          Array.isArray(people)
+            ? people.map((person) =>
+                this.toPeopleProfile(this.normalizeFacultyProfile(person)),
+              )
+            : [],
         ),
         catchError(() => of([])),
       );
   }
 
-  getFacultyById(id: number): Observable<FacultyProfile> {
+  getFacultyById(id: number): Observable<PeopleProfile> {
     return this.http
-      .get<FacultyProfile>(API_URLS.faculty.getById(id), this.getRequestOptions())
-      .pipe(map((person) => this.normalizePeopleProfile(person)));
-  }
-
-  saveFaculty(person: PeopleProfile): Observable<PeopleProfile> {
-    const payload = { ...person, additionalDesignation: person.additionalDesignation ?? person.quote ?? '' };
-    return this.http
-      .post<PeopleProfile>(API_URLS.faculty.insert, payload, this.getRequestOptions())
+      .get<FacultyApiProfile>(API_URLS.faculty.getById(id), this.getRequestOptions())
       .pipe(
-        map((res) => this.normalizePeopleProfile({ ...person, ...(res ?? {}) })),
-        catchError(() => of(person)),
+        map((faculty) =>
+          this.toPeopleProfile(this.normalizeFacultyProfile(faculty)),
+        ),
       );
   }
 
-  updateFaculty(person: FacultyProfile): Observable<FacultyProfile> {
-    const payload = {
-      ...person,
-      additionalDesignation: person.additionalDesignation ?? person.quote ?? '',
-    };
-    return this.http.post<FacultyProfile>(
+  saveFaculty(person: PeopleProfile): Observable<PeopleProfile> {
+    const payload = this.toFacultyApiProfile(person);
+    return this.http
+      .post<FacultyApiProfile>(API_URLS.faculty.insert, payload, this.getRequestOptions())
+      .pipe(
+        map((res) =>
+          this.toPeopleProfile(
+            this.normalizeFacultyProfile({ ...payload, ...(res ?? {}) }),
+          ),
+        ),
+      );
+  }
+
+  updateFaculty(person: PeopleProfile): Observable<PeopleProfile> {
+    const payload = this.toFacultyApiProfile(person);
+    return this.http.post<FacultyApiProfile>(
       API_URLS.faculty.update,
       payload,
       this.getRequestOptions(),
-    ).pipe(map((res) => this.normalizePeopleProfile({ ...payload, ...(res ?? {}) })));
+    ).pipe(
+      map((res) =>
+        this.toPeopleProfile(
+          this.normalizeFacultyProfile({ ...payload, ...(res ?? {}) }),
+        ),
+      ),
+    );
   }
 
   getFile(fileId: string): Observable<Blob> {
@@ -710,9 +743,18 @@ export class AdminContentService {
   }
 
   deleteFaculty(id?: number): Observable<boolean> {
-    if (!id) return of(true);
+    if (!id) {
+      return throwError(() => new Error('A saved faculty ID is required for deletion.'));
+    }
     return this.http
       .post<boolean>(API_URLS.faculty.delete(id), undefined, this.getRequestOptions())
-      .pipe(catchError(() => of(true)));
+      .pipe(
+        map((deleted) => {
+          if (!deleted) {
+            throw new Error('The faculty profile could not be deleted.');
+          }
+          return true;
+        }),
+      );
   }
 }

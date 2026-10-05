@@ -48,6 +48,9 @@ export class DashboardComponent implements OnInit {
   announcements: string[] = [];
   banners: BannerItem[] = [];
   notifications: NotificationItem[] = [];
+  notificationError = '';
+  peopleError = '';
+  publicationError = '';
   people: PeopleProfile[] = [];
   tuitionRows: TuitionFeeRow[] = [];
   admissions: AdmissionsConfig = {
@@ -298,6 +301,7 @@ export class DashboardComponent implements OnInit {
   saveNotification(): void {
     if (!this.newNotification.title.trim()) return;
 
+    this.notificationError = '';
     const payload: NotificationItem = {
       ...this.newNotification,
       type: this.newNotification.type ?? 'announcement',
@@ -315,13 +319,18 @@ export class DashboardComponent implements OnInit {
         isActive: true,
         type: 'announcement',
       };
+    }, () => {
+      this.notificationError = 'Unable to save update. Please try again.';
     });
   }
 
   deleteNotification(index: number): void {
     const item = this.notifications[index];
+    this.notificationError = '';
     this.adminContent.deleteNotification(item.id).subscribe(() => {
       this.notifications = this.notifications.filter((_, i) => i !== index);
+    }, () => {
+      this.notificationError = 'Unable to remove update. Please try again.';
     });
   }
 
@@ -440,6 +449,7 @@ export class DashboardComponent implements OnInit {
   savePerson(): void {
     if (!this.newPerson.name.trim() || !this.newPerson.designation.trim()) return;
 
+    this.peopleError = '';
     const facultyDepartment =
       this.facultyTypeSelection === 'other'
         ? this.customFacultyType.trim()
@@ -513,19 +523,22 @@ export class DashboardComponent implements OnInit {
       this.customFacultyType = '';
       this.facultyPdfFileName = '';
       this.facultyPdfError = '';
+    }, () => {
+      this.peopleError = 'Unable to save this profile. Please try again.';
     });
   }
 
   editFaculty(person: PeopleProfile): void {
     if (person.id === undefined) return;
 
+    this.peopleError = '';
     this.adminContent.getFacultyById(person.id).subscribe((faculty) => {
       this.editingFacultyId = person.id ?? null;
       this.newPerson = {
         ...this.newPerson,
         ...faculty,
         category: 'faculty',
-        quote: faculty.additionalDesignation ?? faculty.quote ?? '',
+        quote: faculty.additionalDesignation ?? '',
       };
       this.facultyTypeSelection = this.facultyDepartmentOptions.includes(faculty.department ?? '')
         ? faculty.department ?? ''
@@ -544,6 +557,8 @@ export class DashboardComponent implements OnInit {
       this.facultyPdfFileName = '';
       this.facultyPdfError = '';
       this.activeSection = 'people';
+    }, () => {
+      this.peopleError = 'Unable to load this faculty profile. Please try again.';
     });
   }
 
@@ -577,12 +592,15 @@ export class DashboardComponent implements OnInit {
 
   deletePerson(index: number): void {
     const item = this.people[index];
+    this.peopleError = '';
     const delete$ = item.category === 'faculty'
       ? this.adminContent.deleteFaculty(item.id)
       : this.adminContent.deletePerson(item.id);
 
     delete$.subscribe(() => {
       this.people = this.people.filter((_, i) => i !== index);
+    }, () => {
+      this.peopleError = 'Unable to remove this profile. Please try again.';
     });
   }
 
@@ -682,6 +700,7 @@ export class DashboardComponent implements OnInit {
   savePublication(): void {
     if (!this.newPublication.title.trim()) return;
 
+    this.publicationError = '';
     this.adminContent.savePublication(this.newPublication).subscribe((res) => {
       this.publications = [res, ...this.publications];
       this.newPublication = {
@@ -698,13 +717,18 @@ export class DashboardComponent implements OnInit {
       };
       this.publicationPdfFileName = '';
       this.publicationPdfError = '';
+    }, () => {
+      this.publicationError = 'Unable to save publication. Please try again.';
     });
   }
 
   deletePublication(index: number): void {
     const item = this.publications[index];
+    this.publicationError = '';
     this.adminContent.deletePublication(item.id).subscribe(() => {
       this.publications = this.publications.filter((_, i) => i !== index);
+    }, () => {
+      this.publicationError = 'Unable to remove publication. Please try again.';
     });
   }
 

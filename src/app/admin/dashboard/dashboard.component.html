@@ -77,6 +77,7 @@
               </select>
             </label>
           </div>
+          <p *ngIf="notificationError" role="alert">{{ notificationError }}</p>
           <button class="primary-btn" type="button" (click)="saveNotification()">Save update</button>
         </div>
 
@@ -345,6 +346,7 @@
 
         <div class="list-card">
           <h4>People list</h4>
+          <p *ngIf="peopleError" role="alert">{{ peopleError }}</p>
           <ul class="content-list">
             <li *ngFor="let item of people; let i = index">
               <div>
@@ -547,6 +549,7 @@
               <textarea [(ngModel)]="newPublication.description" rows="4"></textarea>
             </label>
           </div>
+          <p *ngIf="publicationError" role="alert">{{ publicationError }}</p>
           <button class="primary-btn" type="button" (click)="savePublication()">Save publication</button>
         </div>
 
