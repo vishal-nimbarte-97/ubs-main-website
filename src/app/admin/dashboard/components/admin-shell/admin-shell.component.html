@@ -1,8 +1,13 @@
 <div class="admin-shell">
   <aside class="admin-sidebar" [class.open]="sidebarOpen">
     <div class="sidebar-brand">
-      <div class="brand-mark">UBS</div>
-      <span>Admin Panel</span>
+      <div class="brand-mark">
+        <img src="assets/img/ubs-logo.png" alt="Union Biblical Seminary logo" />
+      </div>
+      <div class="brand-copy">
+        <span>Union Biblical Seminary</span>
+        <small>Admin Panel</small>
+      </div>
     </div>
 
     <ng-content select="[sidebar-content]"></ng-content>
@@ -13,15 +18,30 @@
   <div class="admin-main">
     <header class="admin-topbar">
       <div class="topbar-left">
-        <button class="burger-btn" type="button" (click)="toggleSidebar.emit()" aria-label="Toggle menu">
+        <button
+          class="burger-btn"
+          type="button"
+          (click)="toggleSidebar.emit()"
+          aria-label="Toggle menu"
+        >
           <i class="fa-solid fa-bars"></i>
         </button>
-        <h1>{{ title }}</h1>
+        <div class="topbar-heading">
+          <span class="topbar-eyebrow">UBS ADMINISTRATION</span>
+          <h1>{{ title }}</h1>
+        </div>
       </div>
 
       <div class="topbar-actions">
-        <button class="topbar-logout" type="button" (click)="logout.emit()">
-          <i class="fa-solid fa-right-from-bracket"></i>
+        <button
+          class="topbar-logout"
+          type="button"
+          aria-label="Log out"
+          (click)="logout.emit()"
+        >
+          <span class="logout-icon" aria-hidden="true">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </span>
           <span>Log out</span>
         </button>
       </div>

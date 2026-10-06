@@ -13,19 +13,43 @@
 </ng-template>
 
 <div
-  *ngIf="isAdminRoute && (loadingVisible$ | async)"
-  class="global-loader"
+  *ngIf="isAdminDashboardRoute && (loadingVisible$ | async)"
+  class="admin-skeleton"
   role="status"
   aria-live="polite"
-  aria-label="Loading"
+  aria-label="Loading dashboard"
 >
-  <div class="global-loader__panel">
-    <div
-      class="global-loader__ring"
-      [style.--loader-progress]="(loadingProgress$ | async) + '%'"
-    >
-      <div class="global-loader__value">{{ loadingProgress$ | async }}%</div>
+  <aside class="admin-skeleton__sidebar" aria-hidden="true">
+    <div class="admin-skeleton__brand"></div>
+    <div class="admin-skeleton__nav">
+      <span *ngFor="let item of [1, 2, 3, 4, 5, 6, 7]"></span>
     </div>
-    <span class="global-loader__label">Loading</span>
-  </div>
+  </aside>
+
+  <section class="admin-skeleton__main" aria-hidden="true">
+    <header class="admin-skeleton__topbar">
+      <div>
+        <span class="admin-skeleton__eyebrow"></span>
+        <span class="admin-skeleton__title"></span>
+      </div>
+      <span class="admin-skeleton__logout"></span>
+    </header>
+
+    <main class="admin-skeleton__content">
+      <div class="admin-skeleton__intro"></div>
+      <div class="admin-skeleton__form">
+        <span class="admin-skeleton__section-title"></span>
+        <div class="admin-skeleton__fields">
+          <span *ngFor="let field of [1, 2, 3, 4]"></span>
+        </div>
+        <span class="admin-skeleton__button"></span>
+      </div>
+      <div class="admin-skeleton__list">
+        <span class="admin-skeleton__section-title"></span>
+        <span *ngFor="let row of [1, 2, 3]"></span>
+      </div>
+    </main>
+  </section>
+
+  <span class="admin-skeleton__sr-only">Loading dashboard</span>
 </div>

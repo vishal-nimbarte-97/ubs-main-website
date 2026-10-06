@@ -203,6 +203,16 @@
             <ul class="committee-duties" *ngIf="committeeDuties[committee.title] as duties">
               <li *ngFor="let duty of duties">{{ duty }}</li>
             </ul>
+
+            <a
+              class="committee-gallery-link"
+              [routerLink]="['/gallery']"
+              [queryParams]="{ community: committee.title }"
+              fragment="ubssf-gallery"
+            >
+              View community photos
+              <span aria-hidden="true">→</span>
+            </a>
           </div>
         </article>
       </div>

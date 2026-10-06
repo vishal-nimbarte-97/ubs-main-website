@@ -17,8 +17,8 @@ export class AppComponent implements OnInit {
   title = 'ubs-website';
   isHome = true;
   isAdminRoute = false;
+  isAdminDashboardRoute = false;
   readonly loadingVisible$ = this.loadingService.visible$;
-  readonly loadingProgress$ = this.loadingService.progress$;
 
   constructor(private router: Router, private loadingService: LoadingService) {}
 
@@ -36,5 +36,6 @@ export class AppComponent implements OnInit {
     const path = url.split(/[?#]/)[0];
     this.isHome = path === '/' || path === '';
     this.isAdminRoute = path.startsWith('/admin');
+    this.isAdminDashboardRoute = path.startsWith('/admin/dashboard');
   }
 }

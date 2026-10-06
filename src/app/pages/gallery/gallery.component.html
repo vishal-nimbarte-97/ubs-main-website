@@ -123,14 +123,32 @@
     <div class="container">
       <div class="section-head ubssf-gallery-head">
         <div class="section-label">UBSSF COMMUNITY</div>
-        <h2>Student committees, <span>in action.</span></h2>
+        <h2 *ngIf="selectedCommunity as community; else allCommunityTitle">
+          Photos from <span>{{ community.title }}</span>
+        </h2>
+        <ng-template #allCommunityTitle>
+          <h2>Student committees, <span>in action.</span></h2>
+        </ng-template>
         <p>
-          Meet the ten committees that shape prayer, service, mission, creativity,
-          sport, and everyday fellowship at UBS.
+          <ng-container *ngIf="selectedCommunity; else allCommunityDescription">
+            Moments from this student-led community at UBS.
+          </ng-container>
+          <ng-template #allCommunityDescription>
+            Meet the ten committees that shape prayer, service, mission,
+            creativity, sport, and everyday fellowship at UBS.
+          </ng-template>
         </p>
+        <a
+          *ngIf="selectedCommunityTitle"
+          class="community-gallery-reset"
+          routerLink="/gallery"
+          fragment="ubssf-gallery"
+        >
+          View all communities
+        </a>
       </div>
 
-      <div class="ubssf-gallery-grid">
+      <div class="ubssf-gallery-grid" *ngIf="!selectedCommunityTitle">
         <figure
           class="ubssf-gallery-card"
           *ngFor="let committee of ubssfCommitteeGallery; let i = index"
@@ -144,6 +162,29 @@
           <figcaption>{{ committee.title }}</figcaption>
         </figure>
       </div>
+
+      <div
+        class="ubssf-community-photos"
+        *ngIf="selectedCommunity as community"
+        [attr.aria-label]="'Photos from ' + community.title"
+      >
+        <figure *ngFor="let image of community.images; let i = index">
+          <img
+            [src]="image"
+            [alt]="community.title + ' photo ' + (i + 1)"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+
+      <p
+        class="community-gallery-empty"
+        *ngIf="selectedCommunityTitle && !selectedCommunity"
+        role="status"
+      >
+        No photos are available for “{{ selectedCommunityTitle }}”.
+        <a routerLink="/gallery" fragment="ubssf-gallery">View all communities</a>
+      </p>
     </div>
   </section>
 

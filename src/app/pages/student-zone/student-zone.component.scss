@@ -627,6 +627,31 @@ h2 span {
   padding-left: 4px;
 }
 
+.committee-gallery-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 22px;
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.committee-gallery-link span {
+  color: var(--gold);
+  transition: transform 0.2s ease;
+}
+
+.committee-gallery-link:hover span {
+  transform: translateX(4px);
+}
+
+.committee-gallery-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
 /* =========================================================
    IMAGE FALLBACK
 ========================================================= */

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AdminContentService } from '../../services/admin/admin-content.service';
 
 type Category = 'All' | 'Campus' | 'Learning' | 'Heritage' | 'People';
@@ -297,9 +297,18 @@ export class GalleryComponent implements OnInit {
     },
   ];
 
-  constructor(private readonly adminContent: AdminContentService) {}
+  selectedCommunityTitle = '';
+
+  constructor(
+    private readonly adminContent: AdminContentService,
+    private readonly route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      this.selectedCommunityTitle = params.get('community')?.trim() ?? '';
+    });
+
     this.adminContent.getGalleryItems().subscribe((items) => {
       const activeItems = items.filter((item) => item.isActive);
       const existingSources = new Set(this.photos.map((photo) => photo.src));
@@ -339,6 +348,15 @@ export class GalleryComponent implements OnInit {
         images,
       }));
     });
+  }
+
+  get selectedCommunity(): CommitteeGalleryPhoto | null {
+    const requestedTitle = this.selectedCommunityTitle.toLocaleLowerCase();
+    return (
+      this.ubssfCommitteeGallery.find(
+        (committee) => committee.title.toLocaleLowerCase() === requestedTitle,
+      ) ?? null
+    );
   }
 
   get filteredPhotos(): GalleryPhoto[] {
