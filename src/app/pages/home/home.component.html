@@ -3,8 +3,8 @@
   <section class="hero">
     <img class="hero-video" src="../../assets/img/home.png" alt="UBS campus" />
     <div class="hero-overlay">
-      <button type="button" class="hero-live-button" [class.is-live]="liveIsLive"
-        [attr.aria-disabled]="!liveIsLive" (click)="onLiveButtonClick()">
+      <button type="button" class="hero-live-button" [class.is-live]="liveIsLive" [attr.aria-disabled]="!liveIsLive"
+        (click)="onLiveButtonClick()">
         <span class="live-dot" aria-hidden="true"></span>
         Live <span class="live-cta">· Click Here</span>
       </button>
@@ -58,20 +58,12 @@
         </div>
 
         <!-- Notification List -->
-        <div
-          class="notification-list"
-          id="official-notification-list"
-          role="region"
-          aria-label="Official notifications"
-          tabindex="0"
-        >
+        <div class="notification-list" id="official-notification-list" role="region" aria-label="Official notifications"
+          tabindex="0">
           <div class="notification-item" *ngFor="let notification of visibleOfficialNotifications">
             <div class="notification-content">
               <div class="notification-meta">
-                <span
-                  class="notice-type"
-                  [class.announcement]="getNotificationType(notification) === 'ANNOUNCEMENT'"
-                >
+                <span class="notice-type" [class.announcement]="getNotificationType(notification) === 'ANNOUNCEMENT'">
                   {{ getNotificationType(notification) }}
                 </span>
 
@@ -87,26 +79,16 @@
               <h4>{{ notification.title }}</h4>
               <p *ngIf="notification.description">{{ notification.description }}</p>
             </div>
-            <button
-              *ngIf="notification.imageUrl"
-              type="button"
-              class="notification-image-button"
+            <button *ngIf="notification.imageUrl" type="button" class="notification-image-button"
               [attr.aria-label]="'View image for ' + notification.title"
               [attr.aria-busy]="notificationImageLoading && selectedNotificationImage === notification"
               [class.loading]="notificationImageLoading && selectedNotificationImage === notification"
-              (click)="openNotificationImage(notification)"
-            >
+              (click)="openNotificationImage(notification)">
               Click here
-              <span
-                *ngIf="notificationImageLoading && selectedNotificationImage === notification"
-                class="notification-button-spinner"
-                aria-hidden="true"
-              ></span>
-              <span
-                *ngIf="!notificationImageLoading || selectedNotificationImage !== notification"
-                class="notification-image-icon"
-                aria-hidden="true"
-              >↗</span>
+              <span *ngIf="notificationImageLoading && selectedNotificationImage === notification"
+                class="notification-button-spinner" aria-hidden="true"></span>
+              <span *ngIf="!notificationImageLoading || selectedNotificationImage !== notification"
+                class="notification-image-icon" aria-hidden="true">↗</span>
             </button>
           </div>
 
@@ -125,46 +107,26 @@
     </div>
   </section>
 
-  <div
-    *ngIf="selectedNotificationImage as notification"
-    class="notification-image-backdrop"
-    role="presentation"
-    (click)="closeNotificationImage()"
-  >
-    <section
-      class="notification-image-dialog"
-      role="dialog"
-      aria-modal="true"
-      [attr.aria-label]="'Image for ' + notification.title"
-      (click)="$event.stopPropagation()"
-    >
-      <button
-        type="button"
-        class="notification-image-close"
-        aria-label="Close image"
-        (click)="closeNotificationImage()"
-      >&times;</button>
+  <div *ngIf="selectedNotificationImage as notification" class="notification-image-backdrop" role="presentation"
+    (click)="closeNotificationImage()">
+    <section class="notification-image-dialog" role="dialog" aria-modal="true"
+      [attr.aria-label]="'Image for ' + notification.title" (click)="$event.stopPropagation()">
+      <button type="button" class="notification-image-close" aria-label="Close image"
+        (click)="closeNotificationImage()">&times;</button>
       <div class="notification-image-stage" [class.is-loading]="notificationImageLoading">
-        <div
-          *ngIf="notificationImageLoading"
-          class="notification-image-loader"
-          role="status"
-          aria-live="polite"
-        >
+        <div *ngIf="notificationImageLoading" class="notification-image-loader" role="status" aria-live="polite">
           <span class="notification-modal-spinner" aria-hidden="true"></span>
           <span>Loading image...</span>
         </div>
         <p *ngIf="notificationImageError" class="notification-image-error" role="alert">
           This image could not be loaded. Please try again later.
         </p>
-        <img
-          [src]="notification.imageUrl"
-          [alt]="notification.title || 'Notification image'"
+        <img [src]="notification.imageUrl" [alt]="notification.title || 'Notification image'"
           [class.is-loaded]="!notificationImageLoading && !notificationImageError"
+          [class.zoomed]="notificationImageZoomed"
           [attr.aria-hidden]="notificationImageLoading || notificationImageError"
-          (load)="onNotificationImageLoad()"
-          (error)="onNotificationImageError()"
-        />
+          (click)="toggleNotificationImageZoom()" (load)="onNotificationImageLoad()"
+          (error)="onNotificationImageError()" />
       </div>
       <h2 *ngIf="notification.title">{{ notification.title }}</h2>
     </section>
@@ -521,7 +483,8 @@
         </ul>
 
         <div class="principal">
-          <img [src]="principalProfile?.imageUrl || 'assets/img/principal.png'" [alt]="principalProfile?.name || 'Principal'" />
+          <img [src]="principalProfile?.imageUrl || 'assets/img/principal.png'"
+            [alt]="principalProfile?.name || 'Principal'" />
 
           <div>
             <h4 style="color: #fff">{{ principalProfile?.name || 'Dr. W.S. Annie' }}</h4>
@@ -746,74 +709,35 @@
   </section> -->
 </main>
 
-<div
-  *ngIf="bannerModalOpen"
-  class="home-banner-backdrop"
-  role="presentation"
-  (click)="closeBannerModal()"
->
-  <section
-    *ngIf="currentBanner as banner"
-    class="home-banner-dialog"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Featured banners"
-    (click)="$event.stopPropagation()"
-    (mouseenter)="pauseBannerRotation()"
-    (mouseleave)="resumeBannerRotation()"
-  >
-    <button
-      type="button"
-      class="home-banner-close"
-      aria-label="Close banners"
-      (click)="closeBannerModal()"
-    >&times;</button>
+<div *ngIf="bannerModalOpen" class="home-banner-backdrop" role="presentation" (click)="closeBannerModal()">
+  <section *ngIf="currentBanner as banner" class="home-banner-dialog" role="dialog" aria-modal="true"
+    aria-label="Featured banners" (click)="$event.stopPropagation()" (mouseenter)="pauseBannerRotation()"
+    (mouseleave)="resumeBannerRotation()">
+    <button type="button" class="home-banner-close" aria-label="Close banners"
+      (click)="closeBannerModal()">&times;</button>
 
     <div class="home-banner-slide" aria-live="polite">
-      <img
-        class="home-banner-image"
-        [src]="banner.imageUrl"
-        [alt]="banner.title || 'Union Biblical Seminary banner'"
-      />
+      <img class="home-banner-image" [src]="banner.imageUrl" [alt]="banner.title || 'Union Biblical Seminary banner'" />
       <div class="home-banner-caption" *ngIf="banner.title || banner.description || banner.link">
         <div class="home-banner-copy" *ngIf="banner.title || banner.description">
           <h2 *ngIf="banner.title">{{ banner.title }}</h2>
           <p *ngIf="banner.description">{{ banner.description }}</p>
         </div>
-        <a
-          *ngIf="banner.link"
-          class="home-banner-link"
-          [href]="banner.link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >Learn more <span aria-hidden="true">↗</span></a>
+        <a *ngIf="banner.link" class="home-banner-link" [href]="banner.link" target="_blank"
+          rel="noopener noreferrer">Learn more <span aria-hidden="true">↗</span></a>
       </div>
     </div>
 
     <div class="home-banner-controls" *ngIf="homeBanners.length > 1">
-      <button
-        type="button"
-        class="home-banner-arrow"
-        aria-label="Previous banner"
-        (click)="showBanner(activeBannerIndex - 1)"
-      >‹</button>
+      <button type="button" class="home-banner-arrow" aria-label="Previous banner"
+        (click)="showBanner(activeBannerIndex - 1)">‹</button>
       <div class="home-banner-dots" aria-label="Choose a banner">
-        <button
-          *ngFor="let item of homeBanners; let i = index"
-          type="button"
-          class="home-banner-dot"
-          [class.active]="i === activeBannerIndex"
-          [attr.aria-label]="'Show banner ' + (i + 1)"
-          [attr.aria-current]="i === activeBannerIndex ? 'true' : null"
-          (click)="showBanner(i)"
-        ></button>
+        <button *ngFor="let item of homeBanners; let i = index" type="button" class="home-banner-dot"
+          [class.active]="i === activeBannerIndex" [attr.aria-label]="'Show banner ' + (i + 1)"
+          [attr.aria-current]="i === activeBannerIndex ? 'true' : null" (click)="showBanner(i)"></button>
       </div>
-      <button
-        type="button"
-        class="home-banner-arrow"
-        aria-label="Next banner"
-        (click)="showBanner(activeBannerIndex + 1)"
-      >›</button>
+      <button type="button" class="home-banner-arrow" aria-label="Next banner"
+        (click)="showBanner(activeBannerIndex + 1)">›</button>
     </div>
   </section>
 </div>
@@ -843,12 +767,7 @@
       <input type="text" placeholder="Full name" [(ngModel)]="enquiryName" name="enquiryName" required />
       <input type="email" placeholder="Email address" [(ngModel)]="enquiryEmail" name="enquiryEmail" required />
       <input type="tel" placeholder="Phone number" [(ngModel)]="enquiryPhone" name="enquiryPhone" />
-      <textarea
-        placeholder="Your enquiry"
-        [(ngModel)]="enquiryMessage"
-        name="enquiryMessage"
-        rows="4"
-      ></textarea>
+      <textarea placeholder="Your enquiry" [(ngModel)]="enquiryMessage" name="enquiryMessage" rows="4"></textarea>
       <button type="submit" class="btn-gold" [disabled]="enquirySubmitting">
         {{ enquirySubmitting ? 'Submitting...' : 'Submit Enquiry' }}
       </button>

@@ -727,4 +727,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       (this.legacyVoiceIndex - 1 + this.legacyVoices.length) %
       this.legacyVoices.length;
   }
+
+  notificationImageZoomed = false;
+
+toggleNotificationImageZoom(): void {
+  this.notificationImageZoomed = !this.notificationImageZoomed;
+}
 }
