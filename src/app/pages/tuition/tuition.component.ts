@@ -74,6 +74,7 @@ export class TuitionComponent implements OnInit {
     }>,
   ): FeeTable[] {
     const normalized = rows
+      .sort((a: any, b: any) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0))
       .filter((row) => (row.course ?? row.programmeName ?? '').trim())
       .map((row) => ({
         programmeType: row.programmeType ?? (/(non|non-residential)/i.test(row.programmeName ?? '') ? 'non-residential' : 'residential'),

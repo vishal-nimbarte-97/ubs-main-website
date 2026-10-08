@@ -544,6 +544,22 @@ export class AdminContentService {
       .pipe(catchError(() => of(true)));
   }
 
+  updateTuitionRow(row: TuitionFeeRow): Observable<TuitionFeeRow> {
+    return this.http.post<TuitionFeeRow>(
+      API_URLS.fees.update,
+      row,
+      this.getRequestOptions(),
+    );
+  }
+  
+  reorderTuitionRows(orderedIds: number[]): Observable<boolean> {
+    return this.http.post<boolean>(
+      API_URLS.fees.reorder,
+      orderedIds,
+      this.getRequestOptions(),
+    );
+  }
+
   getAdmissions(): Observable<AdmissionsConfig> {
     return this.http
       .get<AdmissionsConfig>(API_URLS.admissions.getEssentials, this.getRequestOptions())

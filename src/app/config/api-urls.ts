@@ -46,6 +46,12 @@ export const API_URLS = {
     insertLocal: `${API_BASE_URL_LOCAL}/TuitionFees/Insert`,
     delete: (id: number) => `${API_BASE_URL}/TuitionFees/Delete/${id}`,
     deleteLocal: (id: number) => `${API_BASE_URL_LOCAL}/TuitionFees/Delete/${id}`,
+
+    update: `${API_BASE_URL}/TuitionFees/Update`,   
+    reorder: `${API_BASE_URL}/TuitionFees/Reorder`,  
+
+    updateLocal: `${API_BASE_URL_LOCAL}/TuitionFees/Update`,
+    reorderLocal: `${API_BASE_URL_LOCAL}/TuitionFees/Reorder`,
   },
   admissions: {
     getEssentials: `${API_BASE_URL}/Admissions/GetEssentials`,

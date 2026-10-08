@@ -742,3 +742,5 @@ label span {
     flex-direction: column;
   }
 }
+
+.content-list button:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }

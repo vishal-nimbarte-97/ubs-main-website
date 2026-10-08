@@ -65,6 +65,8 @@ export class DashboardComponent implements OnInit {
   studentZone: GalleryItem[] = [];
   communityImages: GalleryItem[] = [];
 
+  editingTuitionId: number | null = null;
+
   siteConfig: SiteConfig = {
     admissionsEmail: '',
     registrarEmail: '',
@@ -617,6 +619,20 @@ export class DashboardComponent implements OnInit {
     };
   }
 
+  private emptyTuitionRow(): TuitionFeeRow {
+    return {
+      programmeType: 'residential',
+      course: '',
+      singleStudent: '',
+      marriedStudentWithQuarters: '',
+      english: '',
+      hindi: '',
+      marathi: '',
+      academicYear: '2026-27',
+      isActive: true,
+    };
+  }
+  
   saveTuitionRow(): void {
     const courseName = (this.newTuitionRow.course ?? '').trim();
     if (!courseName) return;
@@ -644,20 +660,64 @@ export class DashboardComponent implements OnInit {
       extension: isResidential ? '' : r.marathi ?? '',
     };
   
+    if (this.editingTuitionId !== null) {
+      // UPDATE
+      this.adminContent
+        .updateTuitionRow({ ...payload, id: this.editingTuitionId })
+        .subscribe((res) => {
+          this.tuitionRows = this.tuitionRows.map((row) =>
+            row.id === this.editingTuitionId ? this.normalizeTuitionRow(res) : row,
+          );
+          this.cancelTuitionEdit();
+        });
+      return;
+    }
+  
+    // INSERT (new rows are added at the end, matching the SP)
     this.adminContent.saveTuitionRow(payload).subscribe((res) => {
-      this.tuitionRows = [this.normalizeTuitionRow(res), ...this.tuitionRows];
-      this.newTuitionRow = {
-        programmeType: 'residential',
-        course: '',
-        singleStudent: '',
-        marriedStudentWithQuarters: '',
-        english: '',
-        hindi: '',
-        marathi: '',
-        academicYear: '2026-27',
-        isActive: true,
-      };
+      this.tuitionRows = [...this.tuitionRows, this.normalizeTuitionRow(res)];
+      this.newTuitionRow = this.emptyTuitionRow();
     });
+  }
+  
+  editTuitionRow(item: TuitionFeeRow): void {
+    this.editingTuitionId = item.id ?? null;
+    this.newTuitionRow = { ...item };
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
+  cancelTuitionEdit(): void {
+    this.editingTuitionId = null;
+    this.newTuitionRow = this.emptyTuitionRow();
+  }
+  
+  // Move a row up (-1) or down (+1) within its own programme type
+  canMoveTuition(item: TuitionFeeRow, direction: -1 | 1): boolean {
+    const group = this.tuitionRows.filter((r) => r.programmeType === item.programmeType);
+    const pos = group.indexOf(item);
+    const target = pos + direction;
+    return pos !== -1 && target >= 0 && target < group.length;
+  }
+  
+  moveTuitionRow(item: TuitionFeeRow, direction: -1 | 1): void {
+    if (!this.canMoveTuition(item, direction)) return;
+  
+    const sameType = this.tuitionRows
+      .map((row, index) => ({ row, index }))
+      .filter((x) => x.row.programmeType === item.programmeType);
+  
+    const pos = sameType.findIndex((x) => x.row === item);
+    const a = sameType[pos].index;
+    const b = sameType[pos + direction].index;
+  
+    const previous = this.tuitionRows;
+    const rows = [...this.tuitionRows];
+    [rows[a], rows[b]] = [rows[b], rows[a]];
+    this.tuitionRows = rows;
+  
+    this.adminContent
+      .reorderTuitionRows(rows.map((r) => r.id!))
+      .subscribe({ error: () => (this.tuitionRows = previous) }); // revert if the save fails
   }
 
   deleteTuitionRow(index: number): void {

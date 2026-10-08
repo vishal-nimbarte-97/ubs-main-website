@@ -366,7 +366,7 @@
 
       <section *ngIf="activeSection === 'tuition'" class="panel">
         <div class="content-form-card">
-          <h3>Tuition & Fees</h3>
+          <h3>{{ editingTuitionId !== null ? 'Edit Tuition & Fees' : 'Tuition & Fees' }}</h3>
           <div class="form-grid two-col">
             <label>
               <span>Programme Type</span>
@@ -383,7 +383,7 @@
               <span>Course / Programme</span>
               <input [(ngModel)]="newTuitionRow.course" type="text" placeholder="Bachelor of Divinity" />
             </label>
-
+      
             <ng-container *ngIf="newTuitionRow.programmeType === 'residential'">
               <label>
                 <span>Single Student</span>
@@ -394,7 +394,7 @@
                 <input [(ngModel)]="newTuitionRow.marriedStudentWithQuarters" type="text" placeholder="Rs. 1,36,510/-" />
               </label>
             </ng-container>
-
+      
             <ng-container *ngIf="newTuitionRow.programmeType === 'non-residential'">
               <label>
                 <span>English</span>
@@ -410,9 +410,20 @@
               </label>
             </ng-container>
           </div>
-          <button class="primary-btn" type="button" (click)="saveTuitionRow()">Save fee row</button>
+      
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="primary-btn" type="button" (click)="saveTuitionRow()">
+              {{ editingTuitionId !== null ? 'Update fee row' : 'Save fee row' }}
+            </button>
+            <button
+              *ngIf="editingTuitionId !== null"
+              class="danger-btn"
+              type="button"
+              (click)="cancelTuitionEdit()"
+            >Cancel edit</button>
+          </div>
         </div>
-
+      
         <div class="list-card">
           <h4>Fee rows</h4>
           <ul class="content-list">
@@ -420,7 +431,7 @@
               <div>
                 <strong>{{ item.course }}</strong>
                 <small>{{ item.programmeType | titlecase }} · {{ item.academicYear }}</small>
-            
+      
                 <span *ngIf="item.programmeType === 'residential'">
                   Single: {{ item.singleStudent || '—' }} ·
                   Married: {{ item.marriedStudentWithQuarters || '—' }}
@@ -431,7 +442,17 @@
                   Marathi: {{ item.marathi || '—' }}
                 </span>
               </div>
-              <button type="button" (click)="deleteTuitionRow(i)">Remove</button>
+      
+              <div style="display: flex; gap: 6px; flex-shrink: 0;">
+                <button type="button" title="Move up"
+                        [disabled]="!canMoveTuition(item, -1)"
+                        (click)="moveTuitionRow(item, -1)">↑</button>
+                <button type="button" title="Move down"
+                        [disabled]="!canMoveTuition(item, 1)"
+                        (click)="moveTuitionRow(item, 1)">↓</button>
+                <button type="button" (click)="editTuitionRow(item)">Edit</button>
+                <button type="button" (click)="deleteTuitionRow(i)">Remove</button>
+              </div>
             </li>
           </ul>
         </div>
