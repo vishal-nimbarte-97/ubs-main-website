@@ -224,6 +224,8 @@ The TypeScript service supports this module, but its Dashboard UI section is cur
 
 ## 6. Notifications / Updates
 
+The Updates description supports rich text. `description` remains a string in the request/response and may contain HTML from the Quill editor. Persist and return the formatted string without HTML-encoding it; the website sanitizes this value before rendering.
+
 ### Endpoints
 
 ```http

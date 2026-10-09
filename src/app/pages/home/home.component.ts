@@ -40,11 +40,12 @@ import {
   PeopleProfile,
 } from '../../services/admin/admin-content.service';
 import { SiteContentService } from '../../services/admin/site-content.service';
+import { SafeRichTextPipe } from '../../shared/pipes/safe-rich-text.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SafeRichTextPipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

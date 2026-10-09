@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { QuillModule, QuillModules } from 'ngx-quill';
 import { LiveStatusService } from '../../services/dashboard/live-status.service';
 import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
@@ -20,6 +22,7 @@ import {
 import { AdminShellComponent } from './components/admin-shell/admin-shell.component';
 import { AdminSidebarComponent, AdminSidebarItem } from './components/admin-sidebar/admin-sidebar.component';
 import { LiveBroadcastComponent } from './components/live-broadcast/live-broadcast.component';
+import { SafeRichTextPipe, sanitizeRichTextHtml } from '../../shared/pipes/safe-rich-text.pipe';
 
 type SectionId =
   | 'overview'
@@ -38,11 +41,45 @@ type SectionId =
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminShellComponent, AdminSidebarComponent, LiveBroadcastComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    QuillModule,
+    SafeRichTextPipe,
+    AdminShellComponent,
+    AdminSidebarComponent,
+    LiveBroadcastComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  readonly notificationEditorModules: QuillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      [{ size: ['small', false, 'large', 'huge'] }],
+      [{ font: [] }],
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ align: [] }],
+      [{ color: [] }],
+      ['link'],
+      ['clean'],
+    ],
+  };
+  readonly notificationEditorFormats = [
+    'header',
+    'size',
+    'font',
+    'bold',
+    'italic',
+    'underline',
+    'list',
+    'align',
+    'color',
+    'link',
+  ];
+
   isLive = false;
   sidebarOpen = false;
   announcements: string[] = [];
@@ -213,6 +250,8 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private siteContent: SiteContentService,
     private adminContent: AdminContentService,
+    private sanitizer: DomSanitizer,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
   ngOnInit(): void {
@@ -306,6 +345,11 @@ export class DashboardComponent implements OnInit {
     this.notificationError = '';
     const payload: NotificationItem = {
       ...this.newNotification,
+      description: sanitizeRichTextHtml(
+        this.newNotification.description,
+        this.sanitizer,
+        this.platformId,
+      ),
       type: this.newNotification.type ?? 'announcement',
     };
 

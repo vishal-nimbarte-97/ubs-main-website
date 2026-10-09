@@ -41,10 +41,22 @@
               <span>Title</span>
               <input [(ngModel)]="newNotification.title" type="text" placeholder="Title" />
             </label>
-            <label class="full-width">
+            <div class="full-width notification-description-field">
               <span>Description</span>
-              <textarea [(ngModel)]="newNotification.description" rows="4" placeholder="Add details"></textarea>
-            </label>
+              <quill-editor
+                class="notification-description-editor"
+                [(ngModel)]="newNotification.description"
+                [ngModelOptions]="{ standalone: true }"
+                [modules]="notificationEditorModules"
+                [formats]="notificationEditorFormats"
+                [placeholder]="'Add details'"
+                [readOnly]="false"
+                [sanitize]="false"
+                [compareValues]="true"
+                format="html"
+                theme="snow"
+              ></quill-editor>
+            </div>
             <label class="full-width">
               <span>Link</span>
               <input [(ngModel)]="newNotification.link" type="url" placeholder="https://..." />
@@ -88,7 +100,7 @@
               <div>
                 <strong>{{ item.title }}</strong>
                 <small>{{ item.type || 'announcement' | titlecase }}</small>
-                <span>{{ item.description }}</span>
+                <div class="notification-list-description" [innerHTML]="item.description | safeRichText"></div>
               </div>
               <button type="button" (click)="deleteNotification(i)">Remove</button>
             </li>

@@ -2917,12 +2917,27 @@ body {
   font-weight: 600;
 }
 
-.notification-content p {
+.notification-content p,
+.notification-content .notification-rich-content {
   margin: 6px 0 0;
   color: #64748b;
   font-size: 0.9rem;
   line-height: 1.6;
   overflow-wrap: anywhere;
+}
+
+.notification-rich-content > :first-child {
+  margin-top: 0;
+}
+
+.notification-rich-content > :last-child {
+  margin-bottom: 0;
+}
+
+.notification-rich-content ul,
+.notification-rich-content ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
 }
 
 .arrow-button {
@@ -3331,7 +3346,8 @@ body {
     line-height: 1.35;
   }
 
-  .notification-content p {
+  .notification-content p,
+  .notification-content .notification-rich-content {
     font-size: 0.78rem;
   }
 

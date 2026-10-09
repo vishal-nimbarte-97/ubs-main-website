@@ -77,7 +77,11 @@
               </div>
 
               <h4>{{ notification.title }}</h4>
-              <p *ngIf="notification.description">{{ notification.description }}</p>
+              <div
+                *ngIf="notification.description"
+                class="notification-rich-content"
+                [innerHTML]="notification.description | safeRichText"
+              ></div>
             </div>
             <button *ngIf="notification.imageUrl" type="button" class="notification-image-button"
               [attr.aria-label]="'View image for ' + notification.title"
