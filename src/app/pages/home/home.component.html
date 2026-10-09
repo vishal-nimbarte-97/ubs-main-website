@@ -78,7 +78,7 @@
               <h4>{{ notification.title }}</h4>
               <div
                 *ngIf="notification.description"
-                class="notification-rich-content"
+                class="notification-rich-content rich-text-content"
                 [innerHTML]="notification.description | safeRichText"
               ></div>
             </div>
@@ -471,11 +471,16 @@
       <div class="message-box">
         <span class="quote">❝</span>
 
-        <h3 style="color: #fff">{{ principalProfile?.quote || 'UBS is committed to upholding:' }}</h3>
+        <div
+          class="message-box-rich-quote rich-text-content"
+          [innerHTML]="(principalProfile?.quote || 'UBS is committed to upholding:') | safeRichText"
+        ></div>
 
-        <p *ngIf="principalProfile?.bio" style="color: #fff">
-          {{ principalProfile?.bio }}
-        </p>
+        <div
+          *ngIf="principalProfile?.bio"
+          class="message-box-rich-bio rich-text-content"
+          [innerHTML]="principalProfile?.bio | safeRichText"
+        ></div>
 
         <ul *ngIf="!principalProfile?.bio">
           <li>Holiness, Integrity and Accountability</li>
@@ -724,7 +729,11 @@
       <div class="home-banner-caption" *ngIf="banner.title || banner.description || banner.link">
         <div class="home-banner-copy" *ngIf="banner.title || banner.description">
           <h2 *ngIf="banner.title">{{ banner.title }}</h2>
-          <p *ngIf="banner.description">{{ banner.description }}</p>
+          <div
+            *ngIf="banner.description"
+            class="home-banner-description rich-text-content"
+            [innerHTML]="banner.description | safeRichText"
+          ></div>
         </div>
         <a *ngIf="banner.link" class="home-banner-link" [href]="banner.link" target="_blank"
           rel="noopener noreferrer">Learn more <span aria-hidden="true">↗</span></a>

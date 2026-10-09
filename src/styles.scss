@@ -152,6 +152,34 @@ p {
   margin: 0 0 1em;
 }
 
+.rich-text-content {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.rich-text-content > :first-child {
+  margin-block-start: 0;
+}
+
+.rich-text-content > :last-child {
+  margin-block-end: 0;
+}
+
+.rich-text-content ul,
+.rich-text-content ol {
+  margin: 0.5em 0;
+  padding-inline-start: 1.5em;
+}
+
+.rich-text-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 /* =========================================================
    SHARED COMPONENT CLASSES
    Reused across many pages — defined once here instead of

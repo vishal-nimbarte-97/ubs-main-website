@@ -2008,10 +2008,35 @@ body {
   margin-bottom: 10px;
 }
 
-.message-box h3 {
+.message-box h3,
+.message-box-rich-quote {
+  color: #fff;
   font-size: clamp(19px, 4.5vw, 34px);
-
   margin-bottom: clamp(18px, 4vw, 30px);
+}
+
+.message-box-rich-bio {
+  color: #fff;
+}
+
+:host ::ng-deep .home-banner-description,
+:host ::ng-deep .home-banner-description p {
+  color: var(--slate);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+:host ::ng-deep .home-banner-description {
+  margin: 4px 0 0;
+}
+
+:host ::ng-deep .home-banner-description p {
+  margin: 0;
+}
+
+:host ::ng-deep .message-box-rich-quote > *,
+:host ::ng-deep .message-box-rich-bio > * {
+  color: inherit;
 }
 
 .message-box ul {
@@ -2092,7 +2117,8 @@ body {
     padding: 35px;
   }
 
-  .message-box h3 {
+  .message-box h3,
+  .message-box-rich-quote {
     font-size: 28px;
   }
 
@@ -2127,7 +2153,8 @@ body {
     font-size: 60px;
   }
 
-  .message-box h3 {
+  .message-box h3,
+  .message-box-rich-quote {
     font-size: 22px;
   }
 

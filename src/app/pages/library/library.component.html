@@ -127,13 +127,16 @@
         </div>
 
         <div class="intro-text">
-          <p>
-            {{ librarianProfile?.bio || 'The UBS Library is an essential academic resource supporting students, faculty and researchers with access to books, reference materials, archives and digital resources.' }}
-          </p>
+          <div
+            class="librarian-rich-text rich-text-content"
+            [innerHTML]="(librarianProfile?.bio || 'The UBS Library is an essential academic resource supporting students, faculty and researchers with access to books, reference materials, archives and digital resources.') | safeRichText"
+          ></div>
 
-          <p *ngIf="librarianProfile?.quote">
-            {{ librarianProfile?.quote }}
-          </p>
+          <div
+            *ngIf="librarianProfile?.quote"
+            class="librarian-rich-text rich-text-content"
+            [innerHTML]="librarianProfile?.quote | safeRichText"
+          ></div>
 
           <div class="intro-signature">
             <div class="signature-line"></div>

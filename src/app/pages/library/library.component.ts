@@ -4,6 +4,7 @@ import {
   AdminContentService,
   PeopleProfile,
 } from '../../services/admin/admin-content.service';
+import { SafeRichTextPipe } from '../../shared/pipes/safe-rich-text.pipe';
 
 interface LibraryPolicy {
   number: string;
@@ -19,7 +20,7 @@ interface ReadingZone {
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SafeRichTextPipe],
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss'],
 })

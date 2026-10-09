@@ -57,12 +57,15 @@
       </div>
       <div class="principal__copy">
         <span class="principal__mark">&#8220;</span>
-        <blockquote class="principal__quote">
-          {{ principalProfile?.quote || 'You sit under the Word four hours a day, establish friendships, and sit in on conferences — a saturation effect where it soaks in to a different degree.' }}
-        </blockquote>
-        <p *ngIf="principalProfile?.bio" class="principal__bio">
-          {{ principalProfile?.bio }}
-        </p>
+        <blockquote
+          class="principal__quote rich-text-content"
+          [innerHTML]="(principalProfile?.quote || 'You sit under the Word four hours a day, establish friendships, and sit in on conferences — a saturation effect where it soaks in to a different degree.') | safeRichText"
+        ></blockquote>
+        <div
+          *ngIf="principalProfile?.bio"
+          class="principal__bio rich-text-content"
+          [innerHTML]="principalProfile?.bio | safeRichText"
+        ></div>
         <div class="principal__byline">
           <span class="principal__rule"></span>
           <div>

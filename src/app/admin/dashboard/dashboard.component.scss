@@ -491,6 +491,23 @@ label span {
   cursor: pointer;
 }
 
+.publication-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.publication-admin-actions button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.publication-sample-note {
+  margin: -8px 0 0;
+  color: var(--slate);
+  font-size: 0.82rem;
+}
+
 .form-grid {
   display: grid;
   gap: 16px;
@@ -778,19 +795,18 @@ quill-editor.notification-description-editor {
   margin-right: 0;
 }
 
-.notification-description-editor:focus-within {
-  border-color: rgba(11, 37, 69, 0.38);
-  box-shadow: 0 0 0 3px rgba(11, 37, 69, 0.06);
+:host ::ng-deep .notification-description-editor .ql-container.ql-snow {
+  height: auto;
 }
 
-.notification-list-description {
+:host ::ng-deep .notification-description-editor .ql-editor {
+  min-height: 150px;
+  max-height: 280px;
+  overflow-y: auto;
   overflow-wrap: anywhere;
 }
 
-.notification-list-description > :first-child {
-  margin-top: 0;
-}
-
-.notification-list-description > :last-child {
-  margin-bottom: 0;
+.notification-description-editor:focus-within {
+  border-color: rgba(11, 37, 69, 0.38);
+  box-shadow: 0 0 0 3px rgba(11, 37, 69, 0.06);
 }

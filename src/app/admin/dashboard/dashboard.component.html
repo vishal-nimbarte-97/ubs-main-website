@@ -100,7 +100,10 @@
               <div>
                 <strong>{{ item.title }}</strong>
                 <small>{{ item.type || 'announcement' | titlecase }}</small>
-                <div class="notification-list-description" [innerHTML]="item.description | safeRichText"></div>
+                <div
+                  class="notification-list-description rich-text-content"
+                  [innerHTML]="item.description | safeRichText"
+                ></div>
               </div>
               <button type="button" (click)="deleteNotification(i)">Remove</button>
             </li>
@@ -121,10 +124,22 @@
               <span>Link (optional)</span>
               <input [(ngModel)]="newBanner.link" type="url" placeholder="https://..." />
             </label>
-            <label class="full-width">
+            <div class="full-width notification-description-field">
               <span>Description (optional)</span>
-              <textarea [(ngModel)]="newBanner.description" rows="3" placeholder="Short banner description"></textarea>
-            </label>
+              <quill-editor
+                class="notification-description-editor"
+                [(ngModel)]="newBanner.description"
+                [ngModelOptions]="{ standalone: true }"
+                [modules]="notificationEditorModules"
+                [formats]="notificationEditorFormats"
+                [placeholder]="'Add details'"
+                [readOnly]="false"
+                [sanitize]="false"
+                [compareValues]="true"
+                format="html"
+                theme="snow"
+              ></quill-editor>
+            </div>
             <label class="full-width">
               <span>Banner image</span>
               <div class="image-upload-box">
@@ -283,14 +298,38 @@
                 <span class="upload-text" *ngIf="!newPerson.imageUrl">No image selected yet</span>
               </div>
             </label>
-            <label class="full-width">
+            <div class="full-width notification-description-field">
               <span>{{ newPerson.category === 'principal' ? 'Principal message / quote' : 'Short description' }}</span>
-              <input [(ngModel)]="newPerson.quote" type="text" />
-            </label>
-            <label class="full-width">
+              <quill-editor
+                class="notification-description-editor"
+                [(ngModel)]="newPerson.quote"
+                [ngModelOptions]="{ standalone: true }"
+                [modules]="notificationEditorModules"
+                [formats]="notificationEditorFormats"
+                [placeholder]="'Add details'"
+                [readOnly]="false"
+                [sanitize]="false"
+                [compareValues]="true"
+                format="html"
+                theme="snow"
+              ></quill-editor>
+            </div>
+            <div class="full-width notification-description-field">
               <span>{{ newPerson.category === 'faculty' ? 'Biography' : 'Description' }}</span>
-              <textarea [(ngModel)]="newPerson.bio" rows="4"></textarea>
-            </label>
+              <quill-editor
+                class="notification-description-editor"
+                [(ngModel)]="newPerson.bio"
+                [ngModelOptions]="{ standalone: true }"
+                [modules]="notificationEditorModules"
+                [formats]="notificationEditorFormats"
+                [placeholder]="'Add details'"
+                [readOnly]="false"
+                [sanitize]="false"
+                [compareValues]="true"
+                format="html"
+                theme="snow"
+              ></quill-editor>
+            </div>
 
             <label *ngIf="newPerson.category !== 'faculty'">
               <span>Profile PDF URL</span>
@@ -577,27 +616,41 @@
               <span>Link</span>
               <input [(ngModel)]="newPublication.link" type="url" />
             </label>
-            <label class="full-width">
+            <div class="full-width notification-description-field">
               <span>Description</span>
-              <textarea [(ngModel)]="newPublication.description" rows="4"></textarea>
-            </label>
+              <quill-editor
+                class="notification-description-editor"
+                [(ngModel)]="newPublication.description"
+                [ngModelOptions]="{ standalone: true }"
+                [modules]="notificationEditorModules"
+                [formats]="notificationEditorFormats"
+                [placeholder]="'Add details'"
+                [readOnly]="false"
+                [sanitize]="false"
+                [compareValues]="true"
+                format="html"
+                theme="snow"
+              ></quill-editor>
+            </div>
           </div>
           <p *ngIf="publicationError" role="alert">{{ publicationError }}</p>
-          <button class="primary-btn" type="button" (click)="savePublication()">Save publication</button>
+          <p *ngIf="publicationSampleMessage" role="status">{{ publicationSampleMessage }}</p>
+          <div class="publication-admin-actions">
+            <button class="primary-btn" type="button" (click)="savePublication()">Save publication</button>
+            <button
+              class="btn-secondary"
+              type="button"
+              [disabled]="samplePublicationsSaving"
+              (click)="addSamplePublications()"
+            >
+              {{ samplePublicationsSaving ? 'Adding sample publications...' : 'Add six sample publications' }}
+            </button>
+          </div>
+          <p class="publication-sample-note">
+            Sample publications are clearly marked demo content and will appear on the public Publications page.
+          </p>
         </div>
 
-        <div class="list-card">
-          <h4>Current publications</h4>
-          <ul class="content-list">
-            <li *ngFor="let item of publications; let i = index">
-              <div>
-                <strong>{{ item.title }}</strong>
-                <small>{{ item.category }} · {{ item.status }}</small>
-              </div>
-              <button type="button" (click)="deletePublication(i)">Remove</button>
-            </li>
-          </ul>
-        </div>
       </section>
 
       <section *ngIf="activeSection === 'gallery'" class="panel">

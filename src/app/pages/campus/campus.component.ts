@@ -14,6 +14,7 @@ import {
   AdminContentService,
   PeopleProfile,
 } from '../../services/admin/admin-content.service';
+import { SafeRichTextPipe } from '../../shared/pipes/safe-rich-text.pipe';
 
 interface DayMoment {
   time: string;
@@ -34,7 +35,7 @@ interface FacilityGroup {
 @Component({
   selector: 'app-campus',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SafeRichTextPipe],
   templateUrl: './campus.component.html',
   styleUrls: ['./campus.component.scss'],
 })
