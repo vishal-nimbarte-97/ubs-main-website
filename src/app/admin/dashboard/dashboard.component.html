@@ -634,23 +634,21 @@
             </div>
           </div>
           <p *ngIf="publicationError" role="alert">{{ publicationError }}</p>
-          <p *ngIf="publicationSampleMessage" role="status">{{ publicationSampleMessage }}</p>
-          <div class="publication-admin-actions">
-            <button class="primary-btn" type="button" (click)="savePublication()">Save publication</button>
-            <button
-              class="btn-secondary"
-              type="button"
-              [disabled]="samplePublicationsSaving"
-              (click)="addSamplePublications()"
-            >
-              {{ samplePublicationsSaving ? 'Adding sample publications...' : 'Add six sample publications' }}
-            </button>
-          </div>
-          <p class="publication-sample-note">
-            Sample publications are clearly marked demo content and will appear on the public Publications page.
-          </p>
+          <button class="primary-btn" type="button" (click)="savePublication()">Save publication</button>
         </div>
 
+        <div class="list-card">
+          <h4>Current publications</h4>
+          <ul class="content-list">
+            <li *ngFor="let item of publications; let i = index">
+              <div>
+                <strong>{{ item.title }}</strong>
+                <small>{{ item.category }} · {{ item.status }}</small>
+              </div>
+              <button type="button" (click)="deletePublication(i)">Remove</button>
+            </li>
+          </ul>
+        </div>
       </section>
 
       <section *ngIf="activeSection === 'gallery'" class="panel">

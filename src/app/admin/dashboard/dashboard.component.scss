@@ -491,23 +491,6 @@ label span {
   cursor: pointer;
 }
 
-.publication-admin-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.publication-admin-actions button:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-.publication-sample-note {
-  margin: -8px 0 0;
-  color: var(--slate);
-  font-size: 0.82rem;
-}
-
 .form-grid {
   display: grid;
   gap: 16px;

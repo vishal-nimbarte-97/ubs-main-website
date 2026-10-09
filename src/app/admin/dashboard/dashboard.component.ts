@@ -5,8 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { QuillModule, QuillModules } from 'ngx-quill';
 import { LiveStatusService } from '../../services/dashboard/live-status.service';
-import { forkJoin, from } from 'rxjs';
-import { concatMap, finalize, tap, toArray } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { SiteContentService } from '../../services/admin/site-content.service';
 import {
@@ -89,7 +88,6 @@ export class DashboardComponent implements OnInit {
   notificationError = '';
   peopleError = '';
   publicationError = '';
-  publicationSampleMessage = '';
   people: PeopleProfile[] = [];
   tuitionRows: TuitionFeeRow[] = [];
   admissions: AdmissionsConfig = {
@@ -100,7 +98,6 @@ export class DashboardComponent implements OnInit {
     contacts: [],
   };
   publications: PublicationItem[] = [];
-  samplePublicationsSaving = false;
   gallery: GalleryItem[] = [];
   studentZone: GalleryItem[] = [];
   communityImages: GalleryItem[] = [];
@@ -169,81 +166,6 @@ export class DashboardComponent implements OnInit {
   facultyPdfError = '';
   publicationPdfFileName = '';
   publicationPdfError = '';
-
-  readonly samplePublications: PublicationItem[] = [
-    {
-      title: 'Sample: Faith and Community',
-      description: '<p>Sample reflection on faith, shared life, and community practice.</p><p>Demo content for previewing publication cards and PDF downloads.</p>',
-      status: 'Sample',
-      category: 'Biblical Studies',
-      coverImageUrl: 'assets/library/books.jpg',
-      pdfPath: 'assets/publications/sample-faith-and-community.pdf',
-      publishedDate: '2026-10-09',
-      link: '',
-      isFeatured: false,
-      isActive: true,
-    },
-    {
-      title: 'Sample: Scripture and Context',
-      description: '<p>Sample study of reading scripture within local contexts.</p><p>This placeholder demonstrates a short academic publication description.</p>',
-      status: 'Sample',
-      category: 'Biblical Studies',
-      coverImageUrl: 'assets/library/rare-books.jpg',
-      pdfPath: 'assets/publications/sample-scripture-and-context.pdf',
-      publishedDate: '2026-10-09',
-      link: '',
-      isFeatured: false,
-      isActive: true,
-    },
-    {
-      title: 'Sample: Theology and Public Life',
-      description: '<p>Sample essay on theological reflection and public responsibility.</p><p>Demo content only; replace with an approved publication before production use.</p>',
-      status: 'Sample',
-      category: 'Theology',
-      coverImageUrl: 'assets/library/journal-zone.jpg',
-      pdfPath: 'assets/publications/sample-theology-and-public-life.pdf',
-      publishedDate: '2026-10-09',
-      link: '',
-      isFeatured: false,
-      isActive: true,
-    },
-    {
-      title: 'Sample: Mission and Ministry',
-      description: '<p>Sample reflection on mission, service, and ministry formation.</p><p>Demo content for the public publications page.</p>',
-      status: 'Sample',
-      category: 'Ministry',
-      coverImageUrl: 'assets/library/study-space.jpg',
-      pdfPath: 'assets/publications/sample-mission-and-ministry.pdf',
-      publishedDate: '2026-10-09',
-      link: '',
-      isFeatured: false,
-      isActive: true,
-    },
-    {
-      title: 'Sample: Learning and Formation',
-      description: '<p>Sample note on theological education and lifelong learning.</p><p>This placeholder demonstrates an academic publication preview.</p>',
-      status: 'Sample',
-      category: 'Education',
-      coverImageUrl: 'assets/library/reference.jpg',
-      pdfPath: 'assets/publications/sample-learning-and-formation.pdf',
-      publishedDate: '2026-10-09',
-      link: '',
-      isFeatured: false,
-      isActive: true,
-    },
-    {
-      title: 'Sample: Archives and Memory',
-      description: '<p>Sample note on archives, memory, and institutional history.</p><p>Demo content only; it is not an official UBS publication.</p>',
-      status: 'Sample',
-      category: 'History',
-      coverImageUrl: 'assets/library/archives.jpg',
-      pdfPath: 'assets/publications/sample-archives-and-memory.pdf',
-      publishedDate: '2026-10-09',
-      link: '',
-      isFeatured: false,
-      isActive: true,
-    },
-  ];
 
   facultyDepartmentOptions = [
     'Biblical Studies: Old Testament',
@@ -917,56 +839,6 @@ export class DashboardComponent implements OnInit {
     }, () => {
       this.publicationError = 'Unable to save publication. Please try again.';
     });
-  }
-
-  addSamplePublications(): void {
-    if (this.samplePublicationsSaving) return;
-
-    const existingTitles = new Set(
-      this.publications.map((publication) => publication.title.trim().toLowerCase()),
-    );
-    const missingSamples = this.samplePublications.filter(
-      (publication) => !existingTitles.has(publication.title.trim().toLowerCase()),
-    );
-
-    if (!missingSamples.length) {
-      this.publicationSampleMessage = 'All six sample publications are already in the list.';
-      return;
-    }
-
-    this.publicationError = '';
-    this.publicationSampleMessage = '';
-    this.samplePublicationsSaving = true;
-    from(missingSamples)
-      .pipe(
-        concatMap((publication) =>
-          this.adminContent.savePublication({
-            ...publication,
-            description: sanitizeRichTextHtml(
-              publication.description,
-              this.sanitizer,
-              this.platformId,
-            ),
-          }).pipe(
-            tap((savedPublication) => {
-              this.publications = [...this.publications, savedPublication];
-            }),
-          ),
-        ),
-        toArray(),
-        finalize(() => {
-          this.samplePublicationsSaving = false;
-        }),
-      )
-      .subscribe({
-        next: (savedPublications) => {
-          this.publicationSampleMessage = `${savedPublications.length} sample publication(s) added. They are now visible on the public Publications page.`;
-        },
-        error: () => {
-          this.publicationError =
-            'Could not add every sample. Any saved items are shown below; retry to add the remaining ones.';
-        },
-      });
   }
 
   deletePublication(index: number): void {
