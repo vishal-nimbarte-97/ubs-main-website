@@ -41,18 +41,18 @@ export class ResidentialProgrammesComponent implements OnInit {
         'Interdisciplinary approach to biblical, theological and historical study',
       ],
     },
-    {
-      name: 'Bachelor of Theology (B.Th.)',
-      type: 'Undergraduate',
-      duration: '3 years',
-      summary:
-        'A foundational residential programme that builds biblical literacy, theological reflection, and spiritual maturity for ministry and service.',
-      points: [
-        'Strong grounding in biblical interpretation and doctrine',
-        'Formation in worship, discipleship and Christian character',
-        'Ideal preparation for church leadership and further theological study',
-      ],
-    },
+    // {
+    //   name: 'Bachelor of Theology (B.Th.)',
+    //   type: 'Undergraduate',
+    //   duration: '3 years',
+    //   summary:
+    //     'A foundational residential programme that builds biblical literacy, theological reflection, and spiritual maturity for ministry and service.',
+    //   points: [
+    //     'Strong grounding in biblical interpretation and doctrine',
+    //     'Formation in worship, discipleship and Christian character',
+    //     'Ideal preparation for church leadership and further theological study',
+    //   ],
+    // },
     {
       name: 'Master of Theology (M.Th.)',
       type: 'Postgraduate',
