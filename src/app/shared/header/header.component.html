@@ -22,7 +22,13 @@
       aria-label="Main navigation"
     >
       <li class="mobile-drawer-heading">
-        <span>Explore UBS</span>
+        <a routerLink="/" class="mobile-drawer-brand" (click)="closeMobileMenu()">
+          <img src="assets/img/ubs-logo.png" alt="UBS Logo" />
+          <span class="logo-text">
+            <span class="logo-name">union biblical seminary</span>
+            <span class="logo-tagline">Speaking the Truth in Love</span>
+          </span>
+        </a>
       </li>
       <li>
         <a
