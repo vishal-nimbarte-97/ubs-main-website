@@ -726,7 +726,7 @@
 
     <div class="home-banner-slide" aria-live="polite">
       <img class="home-banner-image" [src]="banner.imageUrl" [alt]="banner.title || 'Union Biblical Seminary banner'" />
-      <div class="home-banner-caption" *ngIf="banner.title || banner.description || banner.link">
+      <div class="home-banner-caption" *ngIf="banner.title || banner.description">
         <div class="home-banner-copy" *ngIf="banner.title || banner.description">
           <h2 *ngIf="banner.title">{{ banner.title }}</h2>
           <div
@@ -735,8 +735,6 @@
             [innerHTML]="banner.description | safeRichText"
           ></div>
         </div>
-        <a *ngIf="banner.link" class="home-banner-link" [href]="banner.link" target="_blank"
-          rel="noopener noreferrer">Learn more <span aria-hidden="true">↗</span></a>
       </div>
     </div>
 
