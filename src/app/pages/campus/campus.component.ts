@@ -59,32 +59,53 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
 
   dayMoments: DayMoment[] = [
     {
-      time: '6:00 AM',
-      title: 'Morning Chapel',
-      desc: 'The whole community gathers in the chapel before sunrise — a quiet, unhurried half hour of prayer and scripture that sets the tone before lectures, assignments and the rest of the day begin. Students take turns leading worship through the term, so no two mornings sound quite the same.',
-      img: 'assets/campus/image_3.jpg', // was: https://ubs.ac.in/Admin/assets/img/1_Chapel.jpg
-      heroImg: 'assets/campus/image_8.jpg', // was: .../25648c736fd22fdbb08cb2f9c29ca9cf.JPG
+      time: '6:00 AM – 6:30 AM',
+      title: 'Personal Devotion',
+      desc: 'A dedicated, quiet time at the start of the day for spiritual focus, reflection, and connection with God. It grounds our mindset, priorities, and intentions before daily responsibilities begin.',
+      img: 'assets/campus/day-devotion.png',
+      heroImg: 'assets/campus/day-devotion.png',
     },
     {
-      time: '9:00 AM',
-      title: 'Classes & Study',
-      desc: 'Lectures run through the late morning in bright, modern classrooms, followed by hours of reading and writing in the private study cubicles that ring the library. It\u2019s this daily rhythm — four hours a day under the Word, students say — that shapes a person more than any single class.',
+      time: '8:10 AM – 12:55 PM',
+      title: 'Classes',
+      desc: 'Classes bring the community together for a morning of theological learning and formation.',
       img: 'assets/campus/image_10.png', // was: .../DSC_0263.JPG
       heroImg: 'assets/campus/image_7.jpg', // was: .../f454c22f66ec8accf2fcdaa4e2494093.JPG
     },
     {
-      time: '5:00 PM',
-      title: 'Sports Ground',
-      desc: 'Books close and the grounds open up. Football, badminton and volleyball games run most evenings on the shared courts, mixing years and departments into the same teams. It\u2019s less about competition than about unwinding together before dinner.',
+      time: '10:05 AM – 10:45 AM',
+      title: 'Chapel',
+      desc: 'Worship is an integral part of theological education and spiritual formation. The UBS community comes together to spend time in God’s presence.',
+      img: 'assets/campus/day-chapel.png',
+      heroImg: 'assets/campus/day-chapel.png',
+    },
+    {
+      time: '10:45 AM – 11:10 AM',
+      title: 'Announcements',
+      desc: 'All official announcements concerning the seminary are addressed during the tea break at the Dining Hall.',
+      img: 'assets/campus/day-announcements.png',
+      heroImg: 'assets/campus/day-announcements.png',
+    },
+    {
+      time: '2:00–5:00 PM',
+      title: 'Library',
+      desc: 'The Library is the intellectual and spiritual laboratory of our seminary, with more than 70,000 volumes covering all departments of theological curricula, alongside online resources including EBSCO, SAGE Journals, JSTOR Collection, and Global Digital Theological Library.',
+      img: 'assets/campus/day-library.png',
+      heroImg: 'assets/campus/day-library.png',
+    },
+    {
+      time: '5:00 PM – 7:00 PM',
+      title: 'Sports',
+      desc: 'Books close and the grounds open up. Football, badminton and volleyball games run on the shared courts, bringing the community together to unwind.',
       img: 'assets/campus/image_11.jpg', // was: .../1_athyal_court.jpg
       heroImg: 'assets/campus/image_6.jpg', // was: .../c532653745b71fa500f5bc1228fcdab1.JPG
     },
     {
-      time: '7:30 PM',
-      title: 'Singspiration',
-      desc: 'The day closes the way it opened — together. Singspiration gathers the whole campus for an evening of music and worship, student-led and open to anyone who wants to bring an instrument, or just their voice.',
-      img: 'assets/campus/image_5.jpg', // was: .../c59fff473aaa506fd8270edc71a82690.jpg
-      heroImg: 'assets/campus/image_3.jpg', // was: .../cd793155f49d7cb81deba9c27adc428c.JPG
+      time: '8:00–10:00 PM',
+      title: 'Library',
+      desc: 'The Library is the intellectual and spiritual laboratory of our seminary, with more than 70,000 volumes covering all departments of theological curricula, alongside online resources including EBSCO, SAGE Journals, JSTOR Collection, and Global Digital Theological Library.',
+      img: 'assets/campus/day-library.png',
+      heroImg: 'assets/campus/day-library.png',
     },
   ];
 
