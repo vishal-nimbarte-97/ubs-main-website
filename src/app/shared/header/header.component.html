@@ -15,7 +15,15 @@
       </div>
     </a>
 
-    <ul id="primary-nav-links" class="nav-links" [class.open]="mobileMenuOpen">
+    <ul
+      id="primary-nav-links"
+      class="nav-links"
+      [class.open]="mobileMenuOpen"
+      aria-label="Main navigation"
+    >
+      <li class="mobile-drawer-heading">
+        <span>Explore UBS</span>
+      </li>
       <li>
         <a
           routerLink="/"
@@ -216,6 +224,7 @@
 
     <button
       id="mobile-menu-toggle"
+      type="button"
       class="burger"
       [class.open]="mobileMenuOpen"
       (click)="toggleMobileMenu()"
