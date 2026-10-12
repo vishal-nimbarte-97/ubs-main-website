@@ -14,15 +14,15 @@
           UBS GALLERY
         </div>
 
-        <h1>Moments that <span>shape</span> our story.</h1>
+        <h1>Life at UBS, <span>frame by frame.</span></h1>
 
         <p>
-          A glimpse into the spaces, people and moments that make Union Biblical
-          Seminary feel like home.
+          Step into the places, learning, heritage and people that make Union
+          Biblical Seminary feel like home.
         </p>
 
         <div class="hero-actions">
-          <a href="#gallery-grid" class="primary-btn">
+          <a href="#gallery-categories" class="primary-btn">
             Explore Gallery
             <span>&darr;</span>
           </a>
@@ -61,63 +61,82 @@
     </div>
   </section>
 
-  <!-- =========================
-       STICKY FILTER BAR
-  ========================== -->
-  <nav class="gallery-nav" aria-label="Gallery filters">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        <span class="brand-dot"></span>
-        {{ filteredPhotos.length }} Photographs
+  <section
+    id="gallery-categories"
+    class="category-section"
+    aria-labelledby="category-heading"
+  >
+    <div class="container">
+      <div class="category-section__intro">
+        <div class="section-label">— LIFE AT UBS</div>
+        <h2 id="category-heading">
+          Everything within a <span>five-minute walk.</span>
+        </h2>
+        <p>Choose a collection to explore campus life, one moment at a time.</p>
       </div>
 
-      <div class="filter-pills" role="tablist">
+      <div class="category-cards">
         <button
-          *ngFor="let category of categories"
+          *ngFor="let category of categoryCards; let i = index"
           type="button"
-          role="tab"
-          [class.is-active]="activeCategory === category"
-          [attr.aria-selected]="activeCategory === category"
-          (click)="selectCategory(category)"
+          class="category-card"
+          [style.--i]="i"
+          [attr.aria-expanded]="activeGalleryCategory === category.title"
+          (click)="openCategoryGallery(category.title)"
         >
-          {{ category }}
+          <span class="category-card__index">{{ i + 1 | number: '2.0' }}</span>
+          <span class="category-card__photo">
+            <img [src]="category.image" [alt]="category.title + ' at UBS'" loading="lazy" />
+          </span>
+          <span class="category-card__title">{{ category.title }}</span>
+          <span class="category-card__meta">
+            {{ category.photoCount }}
+            {{ category.photoCount === 1 ? 'moment' : 'moments' }}
+          </span>
+          <span class="category-card__cta">View gallery <span aria-hidden="true">&rarr;</span></span>
         </button>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <!-- =========================
-       MASONRY GRID
-  ========================== -->
-  <section id="gallery-grid" class="grid-section">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-label">THE COLLECTION</div>
-        <h2>Life at UBS, <span>frame by frame.</span></h2>
+  <div
+    class="category-modal"
+    *ngIf="activeGalleryCategory as category"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="category + ' gallery'"
+    (click)="closeCategoryGallery()"
+  >
+    <div class="category-modal__panel" (click)="$event.stopPropagation()">
+      <button
+        type="button"
+        class="category-modal__close"
+        (click)="closeCategoryGallery()"
+        aria-label="Close category gallery"
+      >
+        &times;
+      </button>
+
+      <div class="category-modal__heading">
+        <div class="section-label">— LIFE AT UBS</div>
+        <h2>{{ category }} <span>Gallery</span></h2>
+        <p>{{ categoryPhotos.length }} moments from life at UBS.</p>
       </div>
 
-      <div class="masonry">
-        <figure
-          *ngFor="let photo of filteredPhotos; let i = index"
-          class="masonry-item"
-          [style.animation-delay.ms]="(i % 12) * 70"
-          tabindex="0"
-          role="button"
-          [attr.aria-label]="'Open ' + photo.title"
+      <div class="category-modal__gallery">
+        <button
+          *ngFor="let photo of categoryPhotos; let i = index"
+          type="button"
+          class="category-modal__photo"
+          [attr.aria-label]="'View ' + photo.title"
           (click)="openLightbox(i)"
-          (keydown.enter)="openLightbox(i)"
         >
           <img [src]="photo.src" [alt]="photo.alt" loading="lazy" />
-
-          <figcaption class="item-overlay">
-            <span class="item-category">{{ photo.category }}</span>
-            <span class="item-title">{{ photo.title }}</span>
-            <span class="item-zoom" aria-hidden="true">&#x2922;</span>
-          </figcaption>
-        </figure>
+          <span>{{ photo.title }}</span>
+        </button>
       </div>
     </div>
-  </section>
+  </div>
 
   <section id="ubssf-gallery" class="ubssf-gallery-section">
     <div class="container">
@@ -310,7 +329,7 @@
       <img [src]="selectedPhoto.src" [alt]="selectedPhoto.alt" />
       <figcaption>
         <span class="lightbox__counter"
-          >{{ selectedIndex + 1 }} / {{ filteredPhotos.length }}</span
+          >{{ selectedIndex + 1 }} / {{ categoryPhotos.length }}</span
         >
         <span class="lightbox__title">{{ selectedPhoto.title }}</span>
         <span class="lightbox__category">{{ selectedPhoto.category }}</span>

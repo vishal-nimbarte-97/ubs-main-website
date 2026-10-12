@@ -179,7 +179,7 @@
           <div class="committee-gallery">
             <div
               class="committee-gallery-item"
-              *ngFor="let photo of committee.images; let first = first"
+              *ngFor="let photo of (committee.images | slice: 0 : 3); let first = first"
               [class.main]="first"
             >
               <img

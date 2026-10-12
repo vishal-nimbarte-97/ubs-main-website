@@ -13,6 +13,7 @@ import {
   AdmissionsConfig,
   BannerItem,
   GalleryItem,
+  GALLERY_EVENT_CATEGORY,
   NotificationItem,
   PeopleProfile,
   PublicationItem,
@@ -99,6 +100,67 @@ export class DashboardComponent implements OnInit {
   };
   publications: PublicationItem[] = [];
   gallery: GalleryItem[] = [];
+  readonly otherGalleryCategoryValue = '__other_gallery_category__';
+  selectedGalleryCategory = '';
+  customGalleryCategory = '';
+  galleryUploadPreviews: { fileName: string; imageUrl: string }[] = [];
+  galleryError = '';
+  gallerySaving = false;
+  newGalleryEvent = { title: '', description: '' };
+  galleryEventUploadPreviews: { fileName: string; imageUrl: string }[] = [];
+  galleryEventError = '';
+  galleryEventSaving = false;
+
+  get galleryCategoryOptions(): string[] {
+    return Array.from(
+      new Set([
+        'Campus',
+        'Learning',
+        'Heritage',
+        'People',
+        ...this.gallery
+          .map((item) => item.category.trim())
+          .filter(
+            (category) =>
+              category &&
+              category !== this.otherGalleryCategoryValue &&
+              category !== GALLERY_EVENT_CATEGORY,
+          ),
+      ]),
+    );
+  }
+
+  get galleryGroups(): { category: string; items: GalleryItem[] }[] {
+    const groups = new Map<string, GalleryItem[]>();
+    this.gallery
+      .filter((item) => item.category.trim() !== GALLERY_EVENT_CATEGORY)
+      .forEach((item) => {
+        const category = item.category.trim() || 'Campus';
+        groups.set(category, [...(groups.get(category) ?? []), item]);
+      });
+
+    return Array.from(groups, ([category, items]) => ({ category, items }));
+  }
+
+  get galleryEventGroups(): {
+    title: string;
+    description: string;
+    items: GalleryItem[];
+  }[] {
+    const groups = new Map<string, GalleryItem[]>();
+    this.gallery
+      .filter((item) => item.category.trim() === GALLERY_EVENT_CATEGORY)
+      .forEach((item) => {
+        groups.set(item.title, [...(groups.get(item.title) ?? []), item]);
+      });
+
+    return Array.from(groups, ([title, items]) => ({
+      title,
+      description: items[0]?.altText ?? '',
+      items,
+    }));
+  }
+
   studentZone: GalleryItem[] = [];
   communityImages: GalleryItem[] = [];
 
@@ -853,7 +915,7 @@ export class DashboardComponent implements OnInit {
 
   onImageSelected(
     event: Event,
-    target: 'person' | 'publication' | 'gallery' | 'student-zone' | 'notification',
+    target: 'person' | 'publication' | 'student-zone' | 'notification',
   ): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -879,6 +941,105 @@ export class DashboardComponent implements OnInit {
 
     reader.readAsDataURL(file);
     input.value = '';
+  }
+
+  onGalleryImagesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+    input.value = '';
+
+    if (!files.length) return;
+    const nonImages = files.filter((file) => !file.type.startsWith('image/'));
+    if (nonImages.length) {
+      this.galleryError = `Only image files can be added. Please remove: ${nonImages
+        .map((file) => file.name)
+        .join(', ')}.`;
+      return;
+    }
+
+    this.galleryError = '';
+    const reads = files.map(
+      (file) =>
+        new Promise<{ fileName: string; imageUrl: string }>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (typeof reader.result !== 'string') {
+              reject(new Error(`Unable to read ${file.name}.`));
+              return;
+            }
+            resolve({ fileName: file.name, imageUrl: reader.result });
+          };
+          reader.onerror = () =>
+            reject(new Error(`Unable to read ${file.name}.`));
+          reader.readAsDataURL(file);
+        }),
+    );
+
+    Promise.all(reads)
+      .then((previews) => {
+        this.galleryUploadPreviews = [
+          ...this.galleryUploadPreviews,
+          ...previews,
+        ];
+      })
+      .catch((error: Error) => {
+        this.galleryError = error.message;
+      });
+  }
+
+  onGalleryEventImagesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+    input.value = '';
+
+    if (!files.length) return;
+    const nonImages = files.filter((file) => !file.type.startsWith('image/'));
+    if (nonImages.length) {
+      this.galleryEventError = `Only image files can be added. Please remove: ${nonImages
+        .map((file) => file.name)
+        .join(', ')}.`;
+      return;
+    }
+
+    this.galleryEventError = '';
+    const reads = files.map(
+      (file) =>
+        new Promise<{ fileName: string; imageUrl: string }>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (typeof reader.result !== 'string') {
+              reject(new Error(`Unable to read ${file.name}.`));
+              return;
+            }
+            resolve({ fileName: file.name, imageUrl: reader.result });
+          };
+          reader.onerror = () =>
+            reject(new Error(`Unable to read ${file.name}.`));
+          reader.readAsDataURL(file);
+        }),
+    );
+
+    Promise.all(reads)
+      .then((previews) => {
+        this.galleryEventUploadPreviews = [
+          ...this.galleryEventUploadPreviews,
+          ...previews,
+        ];
+      })
+      .catch((error: Error) => {
+        this.galleryEventError = error.message;
+      });
+  }
+
+  removeGalleryEventUpload(index: number): void {
+    this.galleryEventUploadPreviews =
+      this.galleryEventUploadPreviews.filter((_, i) => i !== index);
+  }
+
+  removeGalleryUpload(index: number): void {
+    this.galleryUploadPreviews = this.galleryUploadPreviews.filter(
+      (_, i) => i !== index,
+    );
   }
 
   onFacultyPdfSelected(event: Event): void {
@@ -1017,24 +1178,120 @@ export class DashboardComponent implements OnInit {
   }
 
   saveGalleryItem(): void {
-    if (!this.newGalleryItem.title.trim() || !this.newGalleryItem.imageUrl.trim()) return;
+    const category =
+      this.selectedGalleryCategory === this.otherGalleryCategoryValue
+        ? this.customGalleryCategory.trim()
+        : this.selectedGalleryCategory.trim();
+    if (!category) {
+      this.galleryError =
+        this.selectedGalleryCategory === this.otherGalleryCategoryValue
+          ? 'Enter a name for your custom gallery category.'
+          : 'Choose a gallery category.';
+      return;
+    }
+    if (!this.galleryUploadPreviews.length) {
+      this.galleryError = 'Choose at least one image to add to this category.';
+      return;
+    }
 
-    this.adminContent.saveGalleryItem(this.newGalleryItem).subscribe((res) => {
-      this.gallery = [res, ...this.gallery];
-      this.newGalleryItem = {
-        title: '',
-        category: 'Campus',
-        imageUrl: '',
-        altText: '',
+    const requestedTitle = this.newGalleryItem.title.trim();
+    const requestedAltText = this.newGalleryItem.altText.trim();
+    const images = this.galleryUploadPreviews;
+    const requests = images.map((image) => {
+      const fileTitle = image.fileName
+        .replace(/\.[^.]+$/, '')
+        .replace(/[_-]+/g, ' ')
+        .trim();
+      const title =
+        images.length === 1 && requestedTitle ? requestedTitle : fileTitle;
+
+      return this.adminContent.saveGalleryItem({
+        title: title || 'Gallery image',
+        category,
+        imageUrl: image.imageUrl,
+        altText: requestedAltText || title || 'UBS gallery image',
         isActive: true,
-      };
+      });
+    });
+
+    this.galleryError = '';
+    this.gallerySaving = true;
+    forkJoin(requests).subscribe({
+      next: (savedItems) => {
+        this.gallery = [...savedItems, ...this.gallery];
+        this.newGalleryItem = {
+          title: '',
+          category,
+          imageUrl: '',
+          altText: '',
+          isActive: true,
+        };
+        this.selectedGalleryCategory = category;
+        this.customGalleryCategory = '';
+        this.galleryUploadPreviews = [];
+        this.gallerySaving = false;
+      },
+      error: () => {
+        this.galleryError =
+          'Unable to save the selected gallery images. Please try again.';
+        this.gallerySaving = false;
+      },
+    });
+  }
+
+  saveGalleryEvent(): void {
+    const title = this.newGalleryEvent.title.trim();
+    const description = this.newGalleryEvent.description.trim();
+    if (!title || !description) {
+      this.galleryEventError = 'Enter an event title and description.';
+      return;
+    }
+    if (!this.galleryEventUploadPreviews.length) {
+      this.galleryEventError = 'Choose at least one event image.';
+      return;
+    }
+
+    const requests = this.galleryEventUploadPreviews.map((image) =>
+      this.adminContent.saveGalleryItem({
+        title,
+        category: GALLERY_EVENT_CATEGORY,
+        imageUrl: image.imageUrl,
+        altText: description,
+        isActive: true,
+      }),
+    );
+
+    this.galleryEventError = '';
+    this.galleryEventSaving = true;
+    forkJoin(requests).subscribe({
+      next: (savedItems) => {
+        this.gallery = [...savedItems, ...this.gallery];
+        this.newGalleryEvent = { title: '', description: '' };
+        this.galleryEventUploadPreviews = [];
+        this.galleryEventSaving = false;
+      },
+      error: () => {
+        this.galleryEventError =
+          'Unable to save this event. Please try again.';
+        this.galleryEventSaving = false;
+      },
     });
   }
 
   deleteGalleryItem(index: number): void {
     const item = this.gallery[index];
-    this.adminContent.deleteGalleryItem(item.id).subscribe(() => {
-      this.gallery = this.gallery.filter((_, i) => i !== index);
+    this.adminContent.deleteGalleryItem(item.id).subscribe({
+      next: () => {
+        this.gallery = this.gallery.filter((_, i) => i !== index);
+      },
+      error: () => {
+        const errorMessage = 'Unable to remove this gallery item. Please try again.';
+        if (item.category.trim() === GALLERY_EVENT_CATEGORY) {
+          this.galleryEventError = errorMessage;
+        } else {
+          this.galleryError = errorMessage;
+        }
+      },
     });
   }
 

@@ -235,22 +235,48 @@ export class StudentZoneComponent implements OnInit {
   ngOnInit(): void {
     this.adminContent.getStudentZoneItems().subscribe((items) => {
       const communityItems = items.filter(
-        (item) => item.isActive && item.category === 'UBSSF Community',
+        (item) =>
+          item.isActive && item.category.trim() === 'UBSSF Community',
       );
 
       if (!communityItems.length) return;
 
       const grouped = new Map<string, string[]>();
       communityItems.forEach((item) => {
-        const images = grouped.get(item.title) ?? [];
-        grouped.set(item.title, [...images, item.imageUrl]);
+        const title = item.title.trim();
+        const key = title.toLocaleLowerCase();
+        const images = grouped.get(key) ?? [];
+        if (item.imageUrl && !images.includes(item.imageUrl)) {
+          grouped.set(key, [...images, item.imageUrl]);
+        }
       });
 
-      this.studentCommittees = Array.from(grouped, ([title, images]) => ({
-        title,
-        description: `Student-led ${title.toLowerCase()} activities at UBS.`,
-        images,
-      }));
+      const mergedCommittees = this.studentCommittees.map((committee) => {
+        const uploadedImages =
+          grouped.get(committee.title.toLocaleLowerCase()) ?? [];
+        grouped.delete(committee.title.toLocaleLowerCase());
+
+        return {
+          ...committee,
+          images: uploadedImages.length
+            ? uploadedImages
+            : committee.images,
+        };
+      });
+
+      grouped.forEach((images, key) => {
+        const title =
+          communityItems.find(
+            (item) => item.title.trim().toLocaleLowerCase() === key,
+          )?.title.trim() ?? key;
+        mergedCommittees.push({
+          title,
+          description: `Student-led ${title.toLowerCase()} activities at UBS.`,
+          images,
+        });
+      });
+
+      this.studentCommittees = mergedCommittees;
     });
   }
 

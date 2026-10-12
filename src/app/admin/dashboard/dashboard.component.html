@@ -653,49 +653,227 @@
 
       <section *ngIf="activeSection === 'gallery'" class="panel">
         <div class="content-form-card">
-          <h3>Gallery Image</h3>
+          <h3>Create a gallery collection</h3>
+          <p class="form-help">
+            Choose a category or select Other to create a custom type, then
+            upload multiple images. Saved collections appear on the public
+            gallery page.
+          </p>
           <div class="form-grid two-col">
             <label>
-              <span>Title</span>
-              <input [(ngModel)]="newGalleryItem.title" type="text" />
-            </label>
-            <label>
-              <span>Category</span>
-              <select [(ngModel)]="newGalleryItem.category">
-                <option value="Campus">Campus</option>
-                <option value="Learning">Learning</option>
-                <option value="Heritage">Heritage</option>
-                <option value="People">People</option>
+              <span>Collection / category</span>
+              <select [(ngModel)]="selectedGalleryCategory">
+                <option value="" disabled>Select a category</option>
+                <option
+                  *ngFor="let category of galleryCategoryOptions"
+                  [value]="category"
+                >
+                  {{ category }}
+                </option>
+                <option [value]="otherGalleryCategoryValue">Other</option>
               </select>
             </label>
+            <label *ngIf="selectedGalleryCategory === otherGalleryCategoryValue">
+              <span>Custom category name</span>
+              <input
+                [(ngModel)]="customGalleryCategory"
+                type="text"
+                maxlength="80"
+                placeholder="e.g. Student Events"
+              />
+            </label>
             <label>
-              <span>Image</span>
+              <span>Image title (optional, for one image)</span>
+              <input
+                [(ngModel)]="newGalleryItem.title"
+                type="text"
+                placeholder="Leave blank to use the file name"
+              />
+            </label>
+            <label>
+              <span>Images</span>
               <div class="image-upload-box">
-                <input type="file" accept="image/*" (change)="onImageSelected($event, 'gallery')" id="gallery-image-upload" hidden />
-                <label class="upload-button" for="gallery-image-upload">Upload image</label>
-                <img *ngIf="newGalleryItem.imageUrl" [src]="newGalleryItem.imageUrl" alt="Gallery preview" class="image-preview" />
-                <span class="upload-text" *ngIf="!newGalleryItem.imageUrl">No image selected yet</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  (change)="onGalleryImagesSelected($event)"
+                  id="gallery-image-upload"
+                  hidden
+                />
+                <label class="upload-button" for="gallery-image-upload">
+                  Add images
+                </label>
+                <span class="upload-text" *ngIf="!galleryUploadPreviews.length">
+                  No images selected yet
+                </span>
+                <div class="gallery-upload-previews" *ngIf="galleryUploadPreviews.length">
+                  <div
+                    class="gallery-upload-preview"
+                    *ngFor="let image of galleryUploadPreviews; let i = index"
+                  >
+                    <img [src]="image.imageUrl" [alt]="image.fileName" />
+                    <span>{{ image.fileName }}</span>
+                    <button
+                      type="button"
+                      (click)="removeGalleryUpload(i)"
+                      [attr.aria-label]="'Remove ' + image.fileName"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
               </div>
             </label>
             <label>
-              <span>Alt Text</span>
+              <span>Alt text (optional)</span>
               <input [(ngModel)]="newGalleryItem.altText" type="text" />
             </label>
           </div>
-          <button class="primary-btn" type="button" (click)="saveGalleryItem()">Save gallery item</button>
+          <p class="form-error" *ngIf="galleryError" role="alert">
+            {{ galleryError }}
+          </p>
+          <button
+            class="primary-btn"
+            type="button"
+            [disabled]="gallerySaving"
+            (click)="saveGalleryItem()"
+          >
+            {{ gallerySaving ? 'Saving images…' : 'Save images to category' }}
+          </button>
         </div>
 
         <div class="list-card">
-          <h4>Gallery items</h4>
-          <ul class="content-list">
-            <li *ngFor="let item of gallery; let i = index">
-              <div>
-                <strong>{{ item.title }}</strong>
-                <small>{{ item.category }}</small>
+          <h4>Gallery collections</h4>
+          <p *ngIf="!galleryGroups.length">No gallery images have been added yet.</p>
+          <section class="gallery-admin-group" *ngFor="let group of galleryGroups">
+            <h5>{{ group.category }} <small>({{ group.items.length }} images)</small></h5>
+            <ul class="content-list">
+              <li *ngFor="let item of group.items">
+                <div>
+                  <strong>{{ item.title }}</strong>
+                  <small>{{ item.altText || item.category }}</small>
+                </div>
+                <button
+                  type="button"
+                  (click)="deleteGalleryItem(gallery.indexOf(item))"
+                >
+                  Remove image
+                </button>
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="content-form-card">
+          <h3>Add a gallery event</h3>
+          <p class="form-help">
+            Add an event title, description and photos. Saved events appear in
+            the “Gatherings that shape community” section on the gallery page.
+          </p>
+          <div class="form-grid two-col">
+            <label>
+              <span>Event title</span>
+              <input
+                [(ngModel)]="newGalleryEvent.title"
+                type="text"
+                maxlength="160"
+                placeholder="e.g. Foundation Day Celebration"
+              />
+            </label>
+            <label>
+              <span>Event description</span>
+              <textarea
+                [(ngModel)]="newGalleryEvent.description"
+                rows="4"
+                maxlength="1200"
+                placeholder="Describe the gathering and what it means to the UBS community"
+              ></textarea>
+            </label>
+            <label class="full-width">
+              <span>Event photos</span>
+              <div class="image-upload-box">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  (change)="onGalleryEventImagesSelected($event)"
+                  id="gallery-event-image-upload"
+                  hidden
+                />
+                <label class="upload-button" for="gallery-event-image-upload">
+                  Add event photos
+                </label>
+                <span
+                  class="upload-text"
+                  *ngIf="!galleryEventUploadPreviews.length"
+                >
+                  No event photos selected yet
+                </span>
+                <div
+                  class="gallery-upload-previews"
+                  *ngIf="galleryEventUploadPreviews.length"
+                >
+                  <div
+                    class="gallery-upload-preview"
+                    *ngFor="let image of galleryEventUploadPreviews; let i = index"
+                  >
+                    <img [src]="image.imageUrl" [alt]="image.fileName" />
+                    <span>{{ image.fileName }}</span>
+                    <button
+                      type="button"
+                      (click)="removeGalleryEventUpload(i)"
+                      [attr.aria-label]="'Remove ' + image.fileName"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
               </div>
-              <button type="button" (click)="deleteGalleryItem(i)">Remove</button>
-            </li>
-          </ul>
+            </label>
+          </div>
+          <p class="form-error" *ngIf="galleryEventError" role="alert">
+            {{ galleryEventError }}
+          </p>
+          <button
+            class="primary-btn"
+            type="button"
+            [disabled]="galleryEventSaving"
+            (click)="saveGalleryEvent()"
+          >
+            {{ galleryEventSaving ? 'Saving event…' : 'Save gallery event' }}
+          </button>
+        </div>
+
+        <div class="list-card">
+          <h4>Gallery events</h4>
+          <p *ngIf="!galleryEventGroups.length">
+            No gallery events have been added yet.
+          </p>
+          <section
+            class="gallery-admin-group"
+            *ngFor="let event of galleryEventGroups"
+          >
+            <h5>
+              {{ event.title }}
+              <small>({{ event.items.length }} photos)</small>
+            </h5>
+            <p class="form-help">{{ event.description }}</p>
+            <ul class="content-list">
+              <li *ngFor="let item of event.items">
+                <div>
+                  <strong>{{ item.title }}</strong>
+                  <small>Gallery event photo</small>
+                </div>
+                <button
+                  type="button"
+                  (click)="deleteGalleryItem(gallery.indexOf(item))"
+                >
+                  Remove photo
+                </button>
+              </li>
+            </ul>
+          </section>
         </div>
       </section>
 

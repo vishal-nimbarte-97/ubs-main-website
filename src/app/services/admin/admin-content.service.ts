@@ -143,6 +143,8 @@ export interface GalleryItem {
   isActive: boolean;
 }
 
+export const GALLERY_EVENT_CATEGORY = 'Gallery Event';
+
 export interface LiveStatus {
   isLive: boolean;
   channelUrl: string;
@@ -656,9 +658,6 @@ export class AdminContentService {
           ...(res ?? {}),
           imageUrl: this.normalizeApiImageUrl(res?.imageUrl ?? item.imageUrl),
         })),
-        catchError(() =>
-          of({ ...item, imageUrl: this.normalizeApiImageUrl(item.imageUrl) }),
-        ),
       );
   }
 

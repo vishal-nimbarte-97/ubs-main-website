@@ -1,19 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AdminContentService } from '../../services/admin/admin-content.service';
-
-type Category = 'All' | 'Campus' | 'Learning' | 'Heritage' | 'People';
+import {
+  AdminContentService,
+  GALLERY_EVENT_CATEGORY,
+} from '../../services/admin/admin-content.service';
 
 interface GalleryPhoto {
   src: string;
   alt: string;
   title: string;
-  category: Exclude<Category, 'All'>;
+  category: string;
+}
+
+interface GalleryCategoryCard {
+  title: string;
+  image: string;
+  photoCount: number;
 }
 
 interface CommitteeGalleryPhoto {
   title: string;
+  images: string[];
+}
+
+interface GalleryEvent {
+  title: string;
+  description: string;
   images: string[];
 }
 
@@ -25,19 +38,18 @@ interface CommitteeGalleryPhoto {
   styleUrl: './gallery.component.scss',
 })
 export class GalleryComponent implements OnInit {
-  readonly categories: Category[] = [
-    'All',
+  private readonly defaultCategories: string[] = [
     'Campus',
     'Learning',
     'Heritage',
     'People',
   ];
-  activeCategory: Category = 'All';
+  activeGalleryCategory: string | null = null;
   selectedIndex = -1;
   selectedCommitteeIndex = -1;
   selectedCommitteeImageIndex = 0;
 
-  readonly featuredEvents = [
+  private readonly fallbackFeaturedEvents: GalleryEvent[] = [
     {
       title: 'Foundation Day Celebration',
       description:
@@ -69,6 +81,7 @@ export class GalleryComponent implements OnInit {
       ],
     },
   ];
+  featuredEvents: GalleryEvent[] = this.fallbackFeaturedEvents;
 
   ubssfCommitteeGallery: CommitteeGalleryPhoto[] = [
     { title: 'Prayer Committee', images: ['assets/gallery/people-1.png', 'assets/gallery/people-4.png', 'assets/gallery/people-7.png'] },
@@ -311,15 +324,38 @@ export class GalleryComponent implements OnInit {
 
     this.adminContent.getGalleryItems().subscribe((items) => {
       const activeItems = items.filter((item) => item.isActive);
+      const eventItems = activeItems.filter(
+        (item) => item.category.trim() === GALLERY_EVENT_CATEGORY,
+      );
+
+      if (eventItems.length) {
+        const events = new Map<string, GalleryEvent>();
+        eventItems.forEach((item) => {
+          const event =
+            events.get(item.title) ??
+            ({
+              title: item.title,
+              description: item.altText,
+              images: [],
+            } satisfies GalleryEvent);
+          if (!event.images.includes(item.imageUrl)) {
+            event.images.push(item.imageUrl);
+          }
+          events.set(item.title, event);
+        });
+        this.featuredEvents = Array.from(events.values());
+      }
+
+      const galleryPhotos = activeItems.filter(
+        (item) => item.category.trim() !== GALLERY_EVENT_CATEGORY,
+      );
       const existingSources = new Set(this.photos.map((photo) => photo.src));
-      const addedPhotos = activeItems
+      const addedPhotos = galleryPhotos
         .map((item) => ({
           src: item.imageUrl,
           alt: item.altText || item.title,
           title: item.title,
-          category: this.categories.includes(item.category as Category)
-            ? (item.category as Exclude<Category, 'All'>)
-            : 'Campus',
+          category: item.category.trim() || 'Campus',
         }))
         .filter((photo) => {
           if (existingSources.has(photo.src)) return false;
@@ -332,21 +368,43 @@ export class GalleryComponent implements OnInit {
 
     this.adminContent.getStudentZoneItems().subscribe((items) => {
       const communityItems = items.filter(
-        (item) => item.isActive && item.category === 'UBSSF Community',
+        (item) =>
+          item.isActive && item.category.trim() === 'UBSSF Community',
       );
 
       if (!communityItems.length) return;
 
       const grouped = new Map<string, string[]>();
       communityItems.forEach((item) => {
-        const images = grouped.get(item.title) ?? [];
-        grouped.set(item.title, [...images, item.imageUrl]);
+        const key = item.title.trim().toLocaleLowerCase();
+        const images = grouped.get(key) ?? [];
+        if (item.imageUrl && !images.includes(item.imageUrl)) {
+          grouped.set(key, [...images, item.imageUrl]);
+        }
       });
 
-      this.ubssfCommitteeGallery = Array.from(grouped, ([title, images]) => ({
-        title,
-        images,
-      }));
+      const mergedCommittees = this.ubssfCommitteeGallery.map((committee) => {
+        const key = committee.title.toLocaleLowerCase();
+        const uploadedImages = grouped.get(key) ?? [];
+        grouped.delete(key);
+
+        return {
+          ...committee,
+          images: uploadedImages.length
+            ? uploadedImages
+            : committee.images,
+        };
+      });
+
+      grouped.forEach((images, key) => {
+        const title =
+          communityItems.find(
+            (item) => item.title.trim().toLocaleLowerCase() === key,
+          )?.title.trim() ?? key;
+        mergedCommittees.push({ title, images });
+      });
+
+      this.ubssfCommitteeGallery = mergedCommittees;
     });
   }
 
@@ -359,27 +417,59 @@ export class GalleryComponent implements OnInit {
     );
   }
 
-  get filteredPhotos(): GalleryPhoto[] {
-    return this.activeCategory === 'All'
-      ? this.photos
-      : this.photos.filter((photo) => photo.category === this.activeCategory);
+  get categoryNames(): string[] {
+    const customCategories = this.photos
+      .map((photo) => photo.category.trim())
+      .filter(
+        (category) =>
+          category &&
+          category !== GALLERY_EVENT_CATEGORY &&
+          !this.defaultCategories.includes(category),
+      );
+
+    return [...this.defaultCategories, ...new Set(customCategories)];
+  }
+
+  get categoryCards(): GalleryCategoryCard[] {
+    return this.categoryNames.map((category) => {
+      const categoryPhotos = this.photos.filter(
+        (photo) => photo.category === category,
+      );
+
+      return {
+        title: category,
+        image: categoryPhotos[0]?.src ?? '',
+        photoCount: categoryPhotos.length,
+      };
+    });
+  }
+
+  get categoryPhotos(): GalleryPhoto[] {
+    return this.activeGalleryCategory
+      ? this.photos.filter(
+          (photo) => photo.category === this.activeGalleryCategory,
+        )
+      : [];
   }
 
   get selectedPhoto(): GalleryPhoto | null {
     return this.selectedIndex >= 0 &&
-      this.selectedIndex < this.filteredPhotos.length
-      ? this.filteredPhotos[this.selectedIndex]
+      this.selectedIndex < this.categoryPhotos.length
+      ? this.categoryPhotos[this.selectedIndex]
       : null;
   }
 
-  selectCategory(category: Category): void {
-    // Reset the lightbox selection because indexes change with the filter.
-    this.activeCategory = category;
+  openCategoryGallery(category: string): void {
     this.selectedIndex = -1;
+    this.activeGalleryCategory = category;
+  }
+
+  closeCategoryGallery(): void {
+    this.activeGalleryCategory = null;
   }
 
   openLightbox(index: number): void {
-    // Open the selected filtered photo in the full-screen viewer.
+    // Open the selected category photo in the full-screen viewer.
     this.selectedIndex = index;
   }
 
@@ -393,13 +483,13 @@ export class GalleryComponent implements OnInit {
     if (this.selectedIndex > 0) {
       this.selectedIndex--;
     } else {
-      this.selectedIndex = this.filteredPhotos.length - 1; // wrap around
+      this.selectedIndex = this.categoryPhotos.length - 1; // wrap around
     }
   }
 
   nextPhoto(event?: Event): void {
     event?.stopPropagation();
-    if (this.selectedIndex < this.filteredPhotos.length - 1) {
+    if (this.selectedIndex < this.categoryPhotos.length - 1) {
       this.selectedIndex++;
     } else {
       this.selectedIndex = 0; // wrap around
@@ -449,10 +539,16 @@ export class GalleryComponent implements OnInit {
       if (event.key === 'ArrowRight') this.nextCommitteeImage();
       return;
     }
-    if (this.selectedIndex < 0) return;
-    if (event.key === 'Escape') this.closeLightbox();
-    if (event.key === 'ArrowLeft') this.previousPhoto();
-    if (event.key === 'ArrowRight') this.nextPhoto();
+    if (this.selectedIndex >= 0) {
+      if (event.key === 'Escape') this.closeLightbox();
+      if (event.key === 'ArrowLeft') this.previousPhoto();
+      if (event.key === 'ArrowRight') this.nextPhoto();
+      return;
+    }
+    if (event.key === 'Escape' && this.activeGalleryCategory) {
+      this.closeCategoryGallery();
+      return;
+    }
   }
 
   // Touch swipe support for the lightbox
