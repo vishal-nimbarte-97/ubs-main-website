@@ -24,7 +24,7 @@
           <div class="pioneer-image-wrap">
             <img [src]="pioneer.image" [alt]="pioneer.name" loading="lazy" />
             <div class="pioneer-image-info">
-              <span class="pioneer-period">{{ pioneer.period }}</span>
+              <span class="pioneer-period" *ngIf="pioneer.period">{{ pioneer.period }}</span>
               <h3>{{ pioneer.name }}</h3>
             </div>
           </div>
@@ -32,7 +32,7 @@
           <div class="pioneer-body">
             <p class="pioneer-role">{{ pioneer.title }}</p>
             <h3>{{ pioneer.name }}</h3>
-            <p>{{ pioneer.summary }}</p>
+            <p *ngIf="pioneer.summary">{{ pioneer.summary }}</p>
             <button type="button" class="read-more">View details</button>
           </div>
         </article>
