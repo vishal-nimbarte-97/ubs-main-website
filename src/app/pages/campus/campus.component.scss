@@ -340,6 +340,13 @@ blockquote {
   }
 }
 
+.day-strip__hero-photo.is-announcements,
+.day-strip__card-photo.is-announcements {
+  background-color: #527a72;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 .day-strip__hero-glow {
   position: absolute;
   inset: 0;

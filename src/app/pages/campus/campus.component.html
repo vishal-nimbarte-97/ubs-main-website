@@ -96,6 +96,7 @@
           class="day-strip__hero-photo"
           *ngFor="let moment of dayMoments; let i = index"
           [class.is-active]="i === activeDayIndex"
+          [class.is-announcements]="moment.title === 'Announcements'"
           [style.backgroundImage]="'url(' + moment.heroImg + ')'"
         ></div>
         <div class="day-strip__hero-glow"></div>
@@ -105,6 +106,9 @@
       <div class="day-strip__card">
         <div
           class="day-strip__card-photo"
+          [class.is-announcements]="
+            dayMoments[activeDayIndex].title === 'Announcements'
+          "
           [style.backgroundImage]="
             'url(' + dayMoments[activeDayIndex].img + ')'
           "
