@@ -87,7 +87,7 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
       heroImg: 'assets/campus/day-announcements.png',
     },
     {
-      time: '2:00–5:00 PM / 8:00–10:00 PM',
+      time: '2:00 PM – 5:00 PM\n8:00 PM – 10:00 PM',
       title: 'Library',
       desc: 'The Library is the intellectual and spiritual laboratory of our seminary, with more than 70,000 volumes covering all departments of theological curricula, alongside online resources including EBSCO, SAGE Journals, JSTOR Collection, and Global Digital Theological Library.',
       img: 'assets/campus/day-library.png',

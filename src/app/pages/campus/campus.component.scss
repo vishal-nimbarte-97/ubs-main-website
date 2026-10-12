@@ -401,6 +401,7 @@ blockquote {
   color: var(--navy);
   margin-bottom: 10px;
   text-transform: uppercase;
+  white-space: pre-line;
 }
 
 .day-strip__card-desc {
@@ -497,6 +498,8 @@ blockquote {
   color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.03em;
   transition: color 0.25s ease;
+  white-space: pre-line;
+  text-align: center;
 }
 
 .day-strip__point.is-active {
