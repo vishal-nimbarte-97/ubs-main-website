@@ -69,8 +69,8 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
       time: '8:10 AM – 12:55 PM',
       title: 'Classes',
       desc: 'Classes bring the community together for a morning of theological learning and formation.',
-      img: 'assets/campus/image_10.png', // was: .../DSC_0263.JPG
-      heroImg: 'assets/campus/image_7.jpg', // was: .../f454c22f66ec8accf2fcdaa4e2494093.JPG
+      img: 'assets/campus/image_16.jpeg', // was: .../DSC_0263.JPG
+      heroImg: 'assets/campus/image_16.jpeg', // was: .../f454c22f66ec8accf2fcdaa4e2494093.JPG
     },
     {
       time: '10:05 AM – 10:45 AM',
