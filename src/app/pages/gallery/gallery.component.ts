@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   AdminContentService,
   GALLERY_EVENT_CATEGORY,
+  GalleryItem,
 } from '../../services/admin/admin-content.service';
 
 interface GalleryPhoto {
@@ -48,6 +49,11 @@ export class GalleryComponent implements OnInit {
   selectedIndex = -1;
   selectedCommitteeIndex = -1;
   selectedCommitteeImageIndex = 0;
+
+  // "campus" and "Campus" are treated as one category
+  private categoryAliases = new Map<string, string>();
+  // when set, the committee lightbox shows this event's photos instead
+  private eventLightbox: CommitteeGalleryPhoto | null = null;
 
   private readonly fallbackFeaturedEvents: GalleryEvent[] = [
     {
@@ -317,6 +323,16 @@ export class GalleryComponent implements OnInit {
     private readonly route: ActivatedRoute,
   ) {}
 
+  private canonicalCategory(raw: string | null | undefined): string {
+    const name = (raw ?? '').trim() || 'Campus';
+    const key = name.toLowerCase();
+    if (!this.categoryAliases.has(key)) {
+      const known = this.defaultCategories.find((c) => c.toLowerCase() === key);
+      this.categoryAliases.set(key, known ?? name);
+    }
+    return this.categoryAliases.get(key)!;
+  }
+
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       this.selectedCommunityTitle = params.get('community')?.trim() ?? '';
@@ -324,41 +340,40 @@ export class GalleryComponent implements OnInit {
 
     this.adminContent.getGalleryItems().subscribe((items) => {
       const activeItems = items.filter((item) => item.isActive);
-      const eventItems = activeItems.filter(
-        (item) => item.category.trim() === GALLERY_EVENT_CATEGORY,
-      );
+      const isEvent = (item: GalleryItem) =>
+        (item.category ?? '').trim() === GALLERY_EVENT_CATEGORY;
+
+      // events: oldest photo first, so photos follow upload order
+      const eventItems = activeItems
+        .filter(isEvent)
+        .sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
 
       if (eventItems.length) {
         const events = new Map<string, GalleryEvent>();
         eventItems.forEach((item) => {
+          const title = item.title.trim();
+          const key = title.toLowerCase();
           const event =
-            events.get(item.title) ??
-            ({
-              title: item.title,
-              description: item.altText,
-              images: [],
-            } satisfies GalleryEvent);
-          if (!event.images.includes(item.imageUrl)) {
+            events.get(key) ?? { title, description: item.altText ?? '', images: [] };
+          if (item.imageUrl && !event.images.includes(item.imageUrl)) {
             event.images.push(item.imageUrl);
           }
-          events.set(item.title, event);
+          events.set(key, event);
         });
-        this.featuredEvents = Array.from(events.values());
+        this.featuredEvents = Array.from(events.values()).reverse(); // newest event first
       }
 
-      const galleryPhotos = activeItems.filter(
-        (item) => item.category.trim() !== GALLERY_EVENT_CATEGORY,
-      );
       const existingSources = new Set(this.photos.map((photo) => photo.src));
-      const addedPhotos = galleryPhotos
+      const addedPhotos = activeItems
+        .filter((item) => !isEvent(item))
         .map((item) => ({
           src: item.imageUrl,
           alt: item.altText || item.title,
           title: item.title,
-          category: item.category.trim() || 'Campus',
+          category: this.canonicalCategory(item.category),
         }))
         .filter((photo) => {
-          if (existingSources.has(photo.src)) return false;
+          if (!photo.src || existingSources.has(photo.src)) return false;
           existingSources.add(photo.src);
           return true;
         });
@@ -497,17 +512,26 @@ export class GalleryComponent implements OnInit {
   }
 
   get selectedCommittee(): CommitteeGalleryPhoto | null {
+    if (this.eventLightbox) return this.eventLightbox;
     return this.selectedCommitteeIndex >= 0
       ? this.ubssfCommitteeGallery[this.selectedCommitteeIndex]
       : null;
   }
 
   openCommitteeGallery(index: number): void {
+    this.eventLightbox = null;
     this.selectedCommitteeIndex = index;
     this.selectedCommitteeImageIndex = 0;
   }
 
+  openEventGallery(event: GalleryEvent, startIndex = 0): void {
+    this.eventLightbox = { title: event.title, images: event.images };
+    this.selectedCommitteeIndex = 0; // keeps the keyboard handler working
+    this.selectedCommitteeImageIndex = startIndex;
+  }
+
   closeCommitteeGallery(): void {
+    this.eventLightbox = null;
     this.selectedCommitteeIndex = -1;
     this.selectedCommitteeImageIndex = 0;
   }

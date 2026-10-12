@@ -628,36 +628,40 @@ export class AdminContentService {
       );
   }
 
+  private normalizeGalleryItem(item: GalleryItem): GalleryItem {
+    return {
+      ...item,
+      title: (item.title ?? '').trim(),
+      category: (item.category ?? '').trim() || 'Campus',
+      altText: item.altText ?? '',
+      imageUrl: this.normalizeApiImageUrl(item.imageUrl),
+    };
+  }
+
   getGalleryItems(): Observable<GalleryItem[]> {
     return this.http
       .get<GalleryItem[]>(API_URLS.gallery.getAll, this.getRequestOptions())
       .pipe(
         map((items) =>
-          Array.isArray(items)
-            ? items.map((item) => ({
-                ...item,
-                imageUrl: this.normalizeApiImageUrl(item.imageUrl),
-              }))
-            : [],
+          Array.isArray(items) ? items.map((item) => this.normalizeGalleryItem(item)) : [],
         ),
         catchError(() =>
-          of(this.fallbackGallery.map((item) => ({
-            ...item,
-            imageUrl: this.normalizeApiImageUrl(item.imageUrl),
-          }))),
+          of(this.fallbackGallery.map((item) => this.normalizeGalleryItem(item))),
         ),
       );
   }
-
+  
   saveGalleryItem(item: GalleryItem): Observable<GalleryItem> {
     return this.http
       .post<GalleryItem>(API_URLS.gallery.insert, item, this.getRequestOptions())
       .pipe(
-        map((res) => ({
-          ...item,
-          ...(res ?? {}),
-          imageUrl: this.normalizeApiImageUrl(res?.imageUrl ?? item.imageUrl),
-        })),
+        map((res) =>
+          this.normalizeGalleryItem({
+            ...item,
+            ...(res ?? {}),
+            imageUrl: res?.imageUrl ?? item.imageUrl,
+          }),
+        ),
       );
   }
 
@@ -665,10 +669,12 @@ export class AdminContentService {
     if (!id) {
       return of(true);
     }
-
-    return this.http
-      .post<boolean>(API_URLS.gallery.delete(id), undefined, this.getRequestOptions())
-      .pipe(catchError(() => of(true)));
+  
+    return this.http.post<boolean>(
+      API_URLS.gallery.delete(id),
+      undefined,
+      this.getRequestOptions(),
+    );
   }
 
   getStudentZoneItems(): Observable<GalleryItem[]> {

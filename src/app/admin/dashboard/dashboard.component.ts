@@ -5,7 +5,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { QuillModule, QuillModules } from 'ngx-quill';
 import { LiveStatusService } from '../../services/dashboard/live-status.service';
-import { forkJoin } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { SiteContentService } from '../../services/admin/site-content.service';
 import {
@@ -24,6 +23,9 @@ import { AdminShellComponent } from './components/admin-shell/admin-shell.compon
 import { AdminSidebarComponent, AdminSidebarItem } from './components/admin-sidebar/admin-sidebar.component';
 import { LiveBroadcastComponent } from './components/live-broadcast/live-broadcast.component';
 import { SafeRichTextPipe, sanitizeRichTextHtml } from '../../shared/pipes/safe-rich-text.pipe';
+
+import { Observable, forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 type SectionId =
   | 'overview'
@@ -947,7 +949,7 @@ export class DashboardComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const files = Array.from(input.files ?? []);
     input.value = '';
-
+  
     if (!files.length) return;
     const nonImages = files.filter((file) => !file.type.startsWith('image/'));
     if (nonImages.length) {
@@ -956,42 +958,22 @@ export class DashboardComponent implements OnInit {
         .join(', ')}.`;
       return;
     }
-
+  
     this.galleryError = '';
-    const reads = files.map(
-      (file) =>
-        new Promise<{ fileName: string; imageUrl: string }>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (typeof reader.result !== 'string') {
-              reject(new Error(`Unable to read ${file.name}.`));
-              return;
-            }
-            resolve({ fileName: file.name, imageUrl: reader.result });
-          };
-          reader.onerror = () =>
-            reject(new Error(`Unable to read ${file.name}.`));
-          reader.readAsDataURL(file);
-        }),
-    );
-
-    Promise.all(reads)
+    this.buildGalleryPreviews(files)
       .then((previews) => {
-        this.galleryUploadPreviews = [
-          ...this.galleryUploadPreviews,
-          ...previews,
-        ];
+        this.galleryUploadPreviews = [...this.galleryUploadPreviews, ...previews];
       })
       .catch((error: Error) => {
         this.galleryError = error.message;
       });
   }
-
+  
   onGalleryEventImagesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const files = Array.from(input.files ?? []);
     input.value = '';
-
+  
     if (!files.length) return;
     const nonImages = files.filter((file) => !file.type.startsWith('image/'));
     if (nonImages.length) {
@@ -1000,31 +982,11 @@ export class DashboardComponent implements OnInit {
         .join(', ')}.`;
       return;
     }
-
+  
     this.galleryEventError = '';
-    const reads = files.map(
-      (file) =>
-        new Promise<{ fileName: string; imageUrl: string }>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (typeof reader.result !== 'string') {
-              reject(new Error(`Unable to read ${file.name}.`));
-              return;
-            }
-            resolve({ fileName: file.name, imageUrl: reader.result });
-          };
-          reader.onerror = () =>
-            reject(new Error(`Unable to read ${file.name}.`));
-          reader.readAsDataURL(file);
-        }),
-    );
-
-    Promise.all(reads)
+    this.buildGalleryPreviews(files)
       .then((previews) => {
-        this.galleryEventUploadPreviews = [
-          ...this.galleryEventUploadPreviews,
-          ...previews,
-        ];
+        this.galleryEventUploadPreviews = [...this.galleryEventUploadPreviews, ...previews];
       })
       .catch((error: Error) => {
         this.galleryEventError = error.message;
@@ -1178,64 +1140,76 @@ export class DashboardComponent implements OnInit {
   }
 
   saveGalleryItem(): void {
-    const category =
+    const typed =
       this.selectedGalleryCategory === this.otherGalleryCategoryValue
         ? this.customGalleryCategory.trim()
         : this.selectedGalleryCategory.trim();
-    if (!category) {
+  
+    if (!typed) {
       this.galleryError =
         this.selectedGalleryCategory === this.otherGalleryCategoryValue
           ? 'Enter a name for your custom gallery category.'
           : 'Choose a gallery category.';
       return;
     }
+    if (typed.toLowerCase() === GALLERY_EVENT_CATEGORY.toLowerCase()) {
+      this.galleryError = 'That category name is reserved. Please choose a different name.';
+      return;
+    }
     if (!this.galleryUploadPreviews.length) {
       this.galleryError = 'Choose at least one image to add to this category.';
       return;
     }
-
+  
+    // "campus" -> "Campus": reuse the existing spelling instead of creating a duplicate group
+    const category =
+      this.galleryCategoryOptions.find((c) => c.toLowerCase() === typed.toLowerCase()) ?? typed;
+  
     const requestedTitle = this.newGalleryItem.title.trim();
     const requestedAltText = this.newGalleryItem.altText.trim();
-    const images = this.galleryUploadPreviews;
-    const requests = images.map((image) => {
+    const previews = this.galleryUploadPreviews;
+  
+    const payloads: GalleryItem[] = previews.map((image) => {
       const fileTitle = image.fileName
         .replace(/\.[^.]+$/, '')
         .replace(/[_-]+/g, ' ')
         .trim();
-      const title =
-        images.length === 1 && requestedTitle ? requestedTitle : fileTitle;
-
-      return this.adminContent.saveGalleryItem({
+      const title = previews.length === 1 && requestedTitle ? requestedTitle : fileTitle;
+  
+      return {
         title: title || 'Gallery image',
         category,
         imageUrl: image.imageUrl,
         altText: requestedAltText || title || 'UBS gallery image',
         isActive: true,
-      });
+      };
     });
-
+  
     this.galleryError = '';
     this.gallerySaving = true;
-    forkJoin(requests).subscribe({
-      next: (savedItems) => {
-        this.gallery = [...savedItems, ...this.gallery];
-        this.newGalleryItem = {
-          title: '',
-          category,
-          imageUrl: '',
-          altText: '',
-          isActive: true,
-        };
+  
+    this.saveAllGalleryItems(payloads).subscribe(({ results, firstError }) => {
+      const saved = results.filter((r): r is GalleryItem => r !== null);
+      const failedPreviews = previews.filter((_, i) => results[i] === null);
+  
+      this.gallery = [...saved, ...this.gallery];
+      if (saved.length) {
         this.selectedGalleryCategory = category;
         this.customGalleryCategory = '';
-        this.galleryUploadPreviews = [];
-        this.gallerySaving = false;
-      },
-      error: () => {
+      }
+  
+      // keep only the failed images in the upload box, so "Save" again retries just those
+      this.galleryUploadPreviews = failedPreviews;
+  
+      if (failedPreviews.length) {
         this.galleryError =
-          'Unable to save the selected gallery images. Please try again.';
-        this.gallerySaving = false;
-      },
+          `${saved.length} saved, ${failedPreviews.length} failed` +
+          (firstError ? ` (${firstError})` : '') +
+          '. The failed images are still in the upload box. Click save again to retry them.';
+      } else {
+        this.newGalleryItem = { title: '', category, imageUrl: '', altText: '', isActive: true };
+      }
+      this.gallerySaving = false;
     });
   }
 
@@ -1250,31 +1224,35 @@ export class DashboardComponent implements OnInit {
       this.galleryEventError = 'Choose at least one event image.';
       return;
     }
-
-    const requests = this.galleryEventUploadPreviews.map((image) =>
-      this.adminContent.saveGalleryItem({
-        title,
-        category: GALLERY_EVENT_CATEGORY,
-        imageUrl: image.imageUrl,
-        altText: description,
-        isActive: true,
-      }),
-    );
-
+  
+    const previews = this.galleryEventUploadPreviews;
+    const payloads: GalleryItem[] = previews.map((image) => ({
+      title,
+      category: GALLERY_EVENT_CATEGORY,
+      imageUrl: image.imageUrl,
+      altText: description,
+      isActive: true,
+    }));
+  
     this.galleryEventError = '';
     this.galleryEventSaving = true;
-    forkJoin(requests).subscribe({
-      next: (savedItems) => {
-        this.gallery = [...savedItems, ...this.gallery];
-        this.newGalleryEvent = { title: '', description: '' };
-        this.galleryEventUploadPreviews = [];
-        this.galleryEventSaving = false;
-      },
-      error: () => {
+  
+    this.saveAllGalleryItems(payloads).subscribe(({ results, firstError }) => {
+      const saved = results.filter((r): r is GalleryItem => r !== null);
+      const failedPreviews = previews.filter((_, i) => results[i] === null);
+  
+      this.gallery = [...saved, ...this.gallery];
+      this.galleryEventUploadPreviews = failedPreviews;
+  
+      if (failedPreviews.length) {
         this.galleryEventError =
-          'Unable to save this event. Please try again.';
-        this.galleryEventSaving = false;
-      },
+          `${saved.length} saved, ${failedPreviews.length} failed` +
+          (firstError ? ` (${firstError})` : '') +
+          '. The failed photos are still in the upload box. Click save again to retry them.';
+      } else {
+        this.newGalleryEvent = { title: '', description: '' };
+      }
+      this.galleryEventSaving = false;
     });
   }
 
@@ -1325,5 +1303,79 @@ export class DashboardComponent implements OnInit {
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/admin/login']);
+  }
+
+
+  private readFileAsDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () =>
+        typeof reader.result === 'string'
+          ? resolve(reader.result)
+          : reject(new Error(`Unable to read ${file.name}.`));
+      reader.onerror = () => reject(new Error(`Unable to read ${file.name}.`));
+      reader.readAsDataURL(file);
+    });
+  }
+  
+  // Resize to max 1920px and re-encode as JPEG (about 5 MB photo -> 300-600 KB)
+  private async compressImage(file: File, maxSize = 1920, quality = 0.82): Promise<string> {
+    // keep GIFs untouched so animations survive
+    if (file.type === 'image/gif') return this.readFileAsDataUrl(file);
+  
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+  
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+  
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error(`Unable to process ${file.name}.`));
+          return;
+        }
+        ctx.fillStyle = '#ffffff'; // transparent PNGs become white instead of black
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+  
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error(`Unable to read ${file.name}.`));
+      };
+      img.src = url;
+    });
+  }
+  
+  private buildGalleryPreviews(files: File[]): Promise<{ fileName: string; imageUrl: string }[]> {
+    return Promise.all(
+      files.map(async (file) => ({
+        fileName: file.name,
+        imageUrl: await this.compressImage(file),
+      })),
+    );
+  }
+  
+  // Saves every item; one failure never cancels the others.
+  private saveAllGalleryItems(
+    payloads: GalleryItem[],
+  ): Observable<{ results: (GalleryItem | null)[]; firstError: string }> {
+    let firstError = '';
+    return forkJoin(
+      payloads.map((payload) =>
+        this.adminContent.saveGalleryItem(payload).pipe(
+          catchError((err: { error?: { message?: string } }) => {
+            firstError ||= err?.error?.message ?? '';
+            return of(null);
+          }),
+        ),
+      ),
+    ).pipe(map((results) => ({ results, firstError })));
   }
 }

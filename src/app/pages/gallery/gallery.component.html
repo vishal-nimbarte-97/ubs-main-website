@@ -250,13 +250,22 @@
 
       <div class="events-grid">
         <article class="event-card" *ngFor="let event of featuredEvents">
-          <div class="event-card__images">
-            <img
-              *ngFor="let image of event.images"
-              [src]="image"
-              [alt]="event.title"
-              loading="lazy"
-            />
+          <div
+            class="event-card__images"
+            [style.--n]="event.images.length < 3 ? event.images.length : 3"
+          >
+            <button
+              *ngFor="let image of event.images | slice: 0 : 3; let i = index"
+              type="button"
+              class="event-card__photo"
+              [attr.aria-label]="'View photo ' + (i + 1) + ' of ' + event.title"
+              (click)="openEventGallery(event, i)"
+            >
+              <img [src]="image" [alt]="event.title" loading="lazy" />
+              <span class="event-card__more" *ngIf="i === 2 && event.images.length > 3">
+                +{{ event.images.length - 3 }}
+              </span>
+            </button>
           </div>
           <div class="event-card__content">
             <h3>{{ event.title }}</h3>

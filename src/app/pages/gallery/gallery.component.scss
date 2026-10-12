@@ -817,7 +817,7 @@
 
 .event-card__images {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -827,6 +827,40 @@
   height: 220px;
   object-fit: cover;
   border: 1px solid rgba(11, 37, 69, 0.08);
+}
+
+.event-card__photo {
+  position: relative;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.event-card__photo img {
+  transition: transform 0.4s ease;
+}
+
+.event-card__photo:hover img {
+  transform: scale(1.04);
+}
+
+.event-card__photo:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.event-card__more {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(11, 37, 69, 0.62);
+  color: var(--white);
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .event-card__content {
@@ -847,6 +881,7 @@
   color: var(--gray);
   font-size: 1rem;
   line-height: 1.85;
+  white-space: pre-line; /* keep line breaks typed in the admin textarea */
 }
 
 /* =========================================================
@@ -1224,10 +1259,6 @@
 
   .event-card {
     grid-template-columns: 1fr;
-  }
-
-  .event-card__images {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .lightbox {
