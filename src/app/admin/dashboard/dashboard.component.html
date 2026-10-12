@@ -249,7 +249,11 @@
             </label>
             <label>
               <span>Designation</span>
-              <input [(ngModel)]="newPerson.designation" type="text" />
+              <textarea
+                [(ngModel)]="newPerson.designation"
+                rows="2"
+                placeholder="One designation per line"
+              ></textarea>
             </label>
             <label>
               <span>Name</span>
@@ -299,7 +303,13 @@
               </div>
             </label>
             <div class="full-width notification-description-field">
-              <span>{{ newPerson.category === 'principal' ? 'Principal message / quote' : 'Short description' }}</span>
+              <span>{{
+                newPerson.category === 'principal'
+                  ? 'Principal message / quote'
+                  : newPerson.category === 'faculty'
+                    ? 'Additional designations (press Enter for each one)'
+                    : 'Short description'
+              }}</span>
               <quill-editor
                 class="notification-description-editor"
                 [(ngModel)]="newPerson.quote"
@@ -361,27 +371,27 @@
 
             <label *ngIf="newPerson.category === 'faculty'" class="full-width">
               <span>Qualification</span>
-              <textarea [(ngModel)]="facultyQualificationText" rows="3" placeholder="One item per line"></textarea>
+              <textarea [(ngModel)]="facultyQualificationText" rows="3" placeholder="One item per line (commas stay inside the same item)"></textarea>
             </label>
             <label *ngIf="newPerson.category === 'faculty'" class="full-width">
               <span>Specialization</span>
-              <textarea [(ngModel)]="facultySpecializationText" rows="3" placeholder="One item per line"></textarea>
+              <textarea [(ngModel)]="facultySpecializationText" rows="3" placeholder="One item per line (commas stay inside the same item)"></textarea>
             </label>
             <label *ngIf="newPerson.category === 'faculty'" class="full-width">
               <span>Books</span>
-              <textarea [(ngModel)]="facultyBooksText" rows="3" placeholder="One item per line"></textarea>
+              <textarea [(ngModel)]="facultyBooksText" rows="3" placeholder="One item per line (commas stay inside the same item)"></textarea>
             </label>
             <label *ngIf="newPerson.category === 'faculty'" class="full-width">
               <span>Research</span>
-              <textarea [(ngModel)]="facultyResearchText" rows="3" placeholder="One item per line"></textarea>
+              <textarea [(ngModel)]="facultyResearchText" rows="3" placeholder="One item per line (commas stay inside the same item)"></textarea>
             </label>
             <label *ngIf="newPerson.category === 'faculty'" class="full-width">
               <span>Articles</span>
-              <textarea [(ngModel)]="facultyArticlesText" rows="3" placeholder="One item per line"></textarea>
+              <textarea [(ngModel)]="facultyArticlesText" rows="3" placeholder="One item per line (commas stay inside the same item)"></textarea>
             </label>
             <label *ngIf="newPerson.category === 'faculty'" class="full-width">
               <span>Journals</span>
-              <textarea [(ngModel)]="facultyJournalsText" rows="3" placeholder="One item per line"></textarea>
+              <textarea [(ngModel)]="facultyJournalsText" rows="3" placeholder="One item per line (commas stay inside the same item)"></textarea>
             </label>
           </div>
           <button class="primary-btn" type="button" (click)="savePerson()">
@@ -398,20 +408,38 @@
         <div class="list-card">
           <h4>People list</h4>
           <p *ngIf="peopleError" role="alert">{{ peopleError }}</p>
-          <ul class="content-list">
-            <li *ngFor="let item of people; let i = index">
+        
+          <ul class="content-list" *ngIf="otherPeople.length">
+            <li *ngFor="let item of otherPeople">
               <div>
                 <strong>{{ item.name }}</strong>
                 <small>{{ item.designation }} · {{ item.category }}</small>
               </div>
-              <button
-                *ngIf="item.category === 'faculty'"
-                type="button"
-                (click)="editFaculty(item)"
-              >Edit</button>
-              <button type="button" (click)="deletePerson(i)">Remove</button>
+              <button type="button" (click)="deletePerson(people.indexOf(item))">Remove</button>
             </li>
           </ul>
+        
+          <section class="gallery-admin-group" *ngFor="let group of facultyGroups">
+            <h5>{{ group.department }} <small>({{ group.items.length }})</small></h5>
+            <ul class="content-list">
+              <li *ngFor="let item of group.items">
+                <div>
+                  <strong>{{ item.name }}</strong>
+                  <small>{{ item.designation }}</small>
+                </div>
+                <div class="row-actions">
+                  <button type="button" title="Move up"
+                          [disabled]="!canMoveFaculty(item, -1)"
+                          (click)="moveFaculty(item, -1)">↑</button>
+                  <button type="button" title="Move down"
+                          [disabled]="!canMoveFaculty(item, 1)"
+                          (click)="moveFaculty(item, 1)">↓</button>
+                  <button type="button" (click)="editFaculty(item)">Edit</button>
+                  <button type="button" (click)="deletePerson(people.indexOf(item))">Remove</button>
+                </div>
+              </li>
+            </ul>
+          </section>
         </div>
       </section>
 
@@ -494,7 +522,7 @@
                 </span>
               </div>
       
-              <div style="display: flex; gap: 6px; flex-shrink: 0;">
+              <div class="row-actions">
                 <button type="button" title="Move up"
                         [disabled]="!canMoveTuition(item, -1)"
                         (click)="moveTuitionRow(item, -1)">↑</button>

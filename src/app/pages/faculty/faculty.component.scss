@@ -461,29 +461,15 @@
 }
 
 .designation {
-  min-height: 24px;
-
   color: #111;
-
   font-size: 15px;
-
-  line-height: 1.55;
-
+  line-height: 1.45;
   font-weight: 650;
 }
-
-.additional-designation {
-  margin-top: 3px;
-
-  color: #333;
-
-  white-space: pre-line;
-
-  font-size: 14px;
-
-  line-height: 1.55;
-
-  font-weight: 600;
+.designation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 /* =========================================================
@@ -769,20 +755,6 @@
   line-height: 1.6;
 
   font-weight: 650;
-}
-
-.modal-additional {
-  margin: 3px 0 0;
-
-  color: var(--gray-800);
-
-  white-space: pre-line;
-
-  font-size: 14px;
-
-  line-height: 1.5;
-
-  font-weight: 600;
 }
 
 /* =========================================================

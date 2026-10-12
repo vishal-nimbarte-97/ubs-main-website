@@ -725,6 +725,13 @@ label span {
   flex: 1;
 }
 
+.content-list li > .row-actions {
+  flex: 0 0 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .content-list strong,
 .content-list span,
 .content-list small {

@@ -18,6 +18,8 @@ import {
   PublicationItem,
   SiteConfig,
   TuitionFeeRow,
+  FACULTY_DEPARTMENTS,
+  sortDepartments,
 } from '../../services/admin/admin-content.service';
 import { AdminShellComponent } from './components/admin-shell/admin-shell.component';
 import { AdminSidebarComponent, AdminSidebarItem } from './components/admin-sidebar/admin-sidebar.component';
@@ -231,14 +233,7 @@ export class DashboardComponent implements OnInit {
   publicationPdfFileName = '';
   publicationPdfError = '';
 
-  facultyDepartmentOptions = [
-    'Biblical Studies: Old Testament',
-    'Biblical Studies: New Testament',
-    'Christian Theology',
-    'History of Christianity',
-    'Christian Ministry',
-    'Missiology',
-  ];
+  facultyDepartmentOptions = [...FACULTY_DEPARTMENTS];
   customFacultyType = '';
 
   newTuitionRow: TuitionFeeRow = {
@@ -547,9 +542,14 @@ export class DashboardComponent implements OnInit {
 
   private parseTextList(value: string): string[] {
     return value
-      .split(/\n|,/) 
+      .split(/\r?\n/)
       .map((item) => item.trim())
       .filter((item) => item.length > 0);
+  }
+
+  private isBlankRichText(html?: string | null): boolean {
+    const text = (html ?? '').replace(/<[^>]*>/g, '').replace(/&nbsp;/gi, ' ').trim();
+    return !text || /^[-–—.•\s]*$/.test(text);
   }
 
   private resetFacultyTextFields(): void {
@@ -570,9 +570,17 @@ export class DashboardComponent implements OnInit {
         ? this.customFacultyType.trim()
         : this.facultyTypeSelection;
 
+    const quote = this.isBlankRichText(this.newPerson.quote)
+      ? ''
+      : sanitizeRichTextHtml(this.newPerson.quote, this.sanitizer, this.platformId);
+
     const person: PeopleProfile = {
       ...this.newPerson,
-      quote: sanitizeRichTextHtml(this.newPerson.quote, this.sanitizer, this.platformId),
+      quote,
+      // For faculty, the "Additional designations" editor is saved as additionalDesignation.
+      // Without this, edits made while updating a faculty were ignored.
+      additionalDesignation:
+        this.newPerson.category === 'faculty' ? quote : this.newPerson.additionalDesignation,
       bio: sanitizeRichTextHtml(this.newPerson.bio, this.sanitizer, this.platformId),
       category: this.newPerson.category || 'principal',
       department:
@@ -612,9 +620,13 @@ export class DashboardComponent implements OnInit {
       : this.adminContent.savePerson(person);
 
     save$.subscribe((res) => {
-      this.people = this.editingFacultyId !== null
-        ? this.people.map((item) => item.id === this.editingFacultyId ? res : item)
-        : [res, ...this.people];
+      if (this.editingFacultyId !== null) {
+        this.people = this.people.map((item) => item.id === this.editingFacultyId ? res : item);
+      } else if (res.category === 'faculty') {
+        this.people = [...this.people, res]; // new faculty goes last, same as in the database
+      } else {
+        this.people = [res, ...this.people];
+      }
       this.editingFacultyId = null;
       this.newPerson = {
         name: '',
@@ -718,6 +730,70 @@ export class DashboardComponent implements OnInit {
       this.people = this.people.filter((_, i) => i !== index);
     }, () => {
       this.peopleError = 'Unable to remove this profile. Please try again.';
+    });
+  }
+
+  // ---------------- Faculty grouping & reordering ----------------
+
+  private facultyDept(p: PeopleProfile): string {
+    return (p.department ?? '').trim() || 'Faculty';
+  }
+
+  get otherPeople(): PeopleProfile[] {
+    return this.people.filter((p) => p.category !== 'faculty');
+  }
+
+  get facultyGroups(): { department: string; items: PeopleProfile[] }[] {
+    const groups = new Map<string, PeopleProfile[]>();
+    this.people
+      .filter((p) => p.category === 'faculty')
+      .forEach((p) => {
+        const dept = this.facultyDept(p);
+        groups.set(dept, [...(groups.get(dept) ?? []), p]);
+      });
+    return sortDepartments(Array.from(groups.keys())).map((department) => ({
+      department,
+      items: groups.get(department)!,
+    }));
+  }
+
+  canMoveFaculty(item: PeopleProfile, direction: -1 | 1): boolean {
+    const dept = this.facultyDept(item);
+    const group = this.people.filter(
+      (p) => p.category === 'faculty' && this.facultyDept(p) === dept,
+    );
+    const pos = group.indexOf(item);
+    const target = pos + direction;
+    return pos !== -1 && target >= 0 && target < group.length;
+  }
+
+  moveFaculty(item: PeopleProfile, direction: -1 | 1): void {
+    if (!this.canMoveFaculty(item, direction)) return;
+
+    const dept = this.facultyDept(item);
+    const sameDept = this.people
+      .map((row, index) => ({ row, index }))
+      .filter((x) => x.row.category === 'faculty' && this.facultyDept(x.row) === dept);
+
+    const pos = sameDept.findIndex((x) => x.row === item);
+    const a = sameDept[pos].index;
+    const b = sameDept[pos + direction].index;
+
+    const previous = this.people;
+    const rows = [...this.people];
+    [rows[a], rows[b]] = [rows[b], rows[a]];
+    this.people = rows;
+    this.peopleError = '';
+
+    const ids = rows
+      .filter((r) => r.category === 'faculty' && r.id != null)
+      .map((r) => r.id!);
+
+    this.adminContent.reorderFaculty(ids).subscribe({
+      error: () => {
+        this.people = previous; // revert if the save fails
+        this.peopleError = 'Unable to save the new order. Please try again.';
+      },
     });
   }
 

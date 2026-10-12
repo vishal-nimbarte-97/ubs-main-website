@@ -16,6 +16,24 @@ export interface SiteConfig {
   youtubeChannelUrl: string;
 }
 
+export const FACULTY_DEPARTMENTS = [
+  'Biblical Studies: Old Testament',
+  'Biblical Studies: New Testament',
+  'Christian Theology',
+  'History of Christianity',
+  'Christian Ministry',
+  'Missiology',
+];
+
+
+export function sortDepartments(names: string[]): string[] {
+  const rank = (name: string) => {
+    const i = FACULTY_DEPARTMENTS.findIndex((d) => d.toLowerCase() === name.trim().toLowerCase());
+    return i === -1 ? FACULTY_DEPARTMENTS.length : i;
+  };
+  return [...names].sort((a, b) => rank(a) - rank(b)); // sort is stable
+}
+
 export type NotificationType = 'announcement' | 'news' | 'event';
 
 export interface NotificationItem {
@@ -712,6 +730,10 @@ export class AdminContentService {
         ),
         catchError(() => of([])),
       );
+  }
+
+  reorderFaculty(ids: number[]): Observable<boolean> {
+    return this.http.post<boolean>(API_URLS.faculty.reorder, ids, this.getRequestOptions());
   }
 
   getFacultyById(id: number): Observable<PeopleProfile> {

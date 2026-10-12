@@ -99,5 +99,6 @@ export const API_URLS = {
     insert: `${API_BASE_URL}/Faculty/Insert`,
     update: `${API_BASE_URL}/Faculty/Update`,
     delete: (id: number) => `${API_BASE_URL}/Faculty/Delete/${id}`,
+    reorder: `${API_BASE_URL}/Faculty/Reorder`,
   },
 };
