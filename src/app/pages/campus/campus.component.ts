@@ -87,7 +87,7 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
       heroImg: 'assets/campus/day-announcements.png',
     },
     {
-      time: '2:00–5:00 PM',
+      time: '2:00–5:00 PM / 8:00–10:00 PM',
       title: 'Library',
       desc: 'The Library is the intellectual and spiritual laboratory of our seminary, with more than 70,000 volumes covering all departments of theological curricula, alongside online resources including EBSCO, SAGE Journals, JSTOR Collection, and Global Digital Theological Library.',
       img: 'assets/campus/day-library.png',
@@ -99,13 +99,6 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
       desc: 'Books close and the grounds open up. Football, badminton and volleyball games run on the shared courts, bringing the community together to unwind.',
       img: 'assets/campus/image_11.jpg', // was: .../1_athyal_court.jpg
       heroImg: 'assets/campus/image_6.jpg', // was: .../c532653745b71fa500f5bc1228fcdab1.JPG
-    },
-    {
-      time: '8:00–10:00 PM',
-      title: 'Library',
-      desc: 'The Library is the intellectual and spiritual laboratory of our seminary, with more than 70,000 volumes covering all departments of theological curricula, alongside online resources including EBSCO, SAGE Journals, JSTOR Collection, and Global Digital Theological Library.',
-      img: 'assets/campus/day-library.png',
-      heroImg: 'assets/campus/day-library.png',
     },
   ];
 

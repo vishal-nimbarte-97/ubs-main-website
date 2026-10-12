@@ -718,37 +718,59 @@
 </main>
 
 <div *ngIf="bannerModalOpen" class="home-banner-backdrop" role="presentation" (click)="closeBannerModal()">
-  <section *ngIf="currentBanner as banner" class="home-banner-dialog" role="dialog" aria-modal="true"
+  <section *ngIf="currentBanner as banner" class="home-banner-dialog"
+    [class.is-zoomed]="bannerImageZoomed" role="dialog" aria-modal="true"
     aria-label="Featured banners" (click)="$event.stopPropagation()" (mouseenter)="pauseBannerRotation()"
     (mouseleave)="resumeBannerRotation()">
-    <button type="button" class="home-banner-close" aria-label="Close banners"
-      (click)="closeBannerModal()">&times;</button>
+    <div *ngIf="bannerImageZoomed" class="home-banner-fullscreen" (click)="toggleBannerImageZoom()">
+      <img [src]="banner.imageUrl" [alt]="banner.title || 'Union Biblical Seminary banner'" />
+    </div>
 
-    <div class="home-banner-slide" aria-live="polite">
-      <img class="home-banner-image" [src]="banner.imageUrl" [alt]="banner.title || 'Union Biblical Seminary banner'" />
-      <div class="home-banner-caption" *ngIf="banner.title || banner.description">
-        <div class="home-banner-copy" *ngIf="banner.title || banner.description">
-          <h2 *ngIf="banner.title">{{ banner.title }}</h2>
-          <div
-            *ngIf="banner.description"
-            class="home-banner-description rich-text-content"
-            [innerHTML]="banner.description | safeRichText"
-          ></div>
+    <ng-container *ngIf="!bannerImageZoomed">
+      <button type="button" class="home-banner-close" aria-label="Close banners"
+        (click)="closeBannerModal()">&times;</button>
+
+      <div class="home-banner-slide" aria-live="polite">
+        <button
+          type="button"
+          class="home-banner-zoom"
+          aria-label="Zoom in on banner"
+          (click)="toggleBannerImageZoom()"
+        >
+          <i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i>
+          Zoom in
+        </button>
+        <img
+          class="home-banner-image"
+          [src]="banner.imageUrl"
+          [alt]="banner.title || 'Union Biblical Seminary banner'"
+          aria-label="Click to view image full screen"
+          (click)="toggleBannerImageZoom()"
+        />
+        <div class="home-banner-caption" *ngIf="banner.title || banner.description">
+          <div class="home-banner-copy" *ngIf="banner.title || banner.description">
+            <h2 *ngIf="banner.title">{{ banner.title }}</h2>
+            <div
+              *ngIf="banner.description"
+              class="home-banner-description rich-text-content"
+              [innerHTML]="banner.description | safeRichText"
+            ></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="home-banner-controls" *ngIf="homeBanners.length > 1">
-      <button type="button" class="home-banner-arrow" aria-label="Previous banner"
-        (click)="showBanner(activeBannerIndex - 1)">‹</button>
-      <div class="home-banner-dots" aria-label="Choose a banner">
-        <button *ngFor="let item of homeBanners; let i = index" type="button" class="home-banner-dot"
-          [class.active]="i === activeBannerIndex" [attr.aria-label]="'Show banner ' + (i + 1)"
-          [attr.aria-current]="i === activeBannerIndex ? 'true' : null" (click)="showBanner(i)"></button>
+      <div class="home-banner-controls" *ngIf="homeBanners.length > 1">
+        <button type="button" class="home-banner-arrow" aria-label="Previous banner"
+          (click)="showBanner(activeBannerIndex - 1)">‹</button>
+        <div class="home-banner-dots" aria-label="Choose a banner">
+          <button *ngFor="let item of homeBanners; let i = index" type="button" class="home-banner-dot"
+            [class.active]="i === activeBannerIndex" [attr.aria-label]="'Show banner ' + (i + 1)"
+            [attr.aria-current]="i === activeBannerIndex ? 'true' : null" (click)="showBanner(i)"></button>
+        </div>
+        <button type="button" class="home-banner-arrow" aria-label="Next banner"
+          (click)="showBanner(activeBannerIndex + 1)">›</button>
       </div>
-      <button type="button" class="home-banner-arrow" aria-label="Next banner"
-        (click)="showBanner(activeBannerIndex + 1)">›</button>
-    </div>
+    </ng-container>
   </section>
 </div>
 

@@ -121,6 +121,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   homeBanners: BannerItem[] = [];
   activeBannerIndex = 0;
   bannerModalOpen = false;
+  bannerImageZoomed = false;
+  private bannerRotationPaused = false;
   private bannerTimer?: ReturnType<typeof setInterval>;
 
   /* ================= BLOG CAROUSEL ================= */
@@ -359,12 +361,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.activeBannerIndex =
       (index + this.homeBanners.length) % this.homeBanners.length;
+    this.bannerImageZoomed = false;
     this.restartBannerRotation();
   }
 
   closeBannerModal(): void {
     this.bannerModalOpen = false;
+    this.bannerImageZoomed = false;
+    this.bannerRotationPaused = false;
     this.stopBannerRotation();
+  }
+
+  toggleBannerImageZoom(): void {
+    this.bannerImageZoomed = !this.bannerImageZoomed;
+    if (this.bannerImageZoomed) {
+      this.stopBannerRotation();
+    } else if (!this.bannerRotationPaused) {
+      this.startBannerRotation();
+    }
   }
 
   openNotificationImage(notification: NotificationItem): void {
@@ -391,17 +405,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('document:keydown.escape')
   closeModalsOnEscape(): void {
-    if (this.bannerModalOpen) {
+    if (this.bannerImageZoomed) {
+      this.toggleBannerImageZoom();
+    } else if (this.bannerModalOpen) {
       this.closeBannerModal();
     }
     this.closeNotificationImage();
   }
 
   pauseBannerRotation(): void {
+    this.bannerRotationPaused = true;
     this.stopBannerRotation();
   }
 
   resumeBannerRotation(): void {
+    this.bannerRotationPaused = false;
     if (this.bannerModalOpen) {
       this.startBannerRotation();
     }
@@ -409,7 +427,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private startBannerRotation(): void {
     this.stopBannerRotation();
-    if (!this.isBrowser || !this.bannerModalOpen || this.homeBanners.length < 2) {
+    if (
+      !this.isBrowser ||
+      !this.bannerModalOpen ||
+      this.bannerImageZoomed ||
+      this.bannerRotationPaused ||
+      this.homeBanners.length < 2
+    ) {
       return;
     }
 
