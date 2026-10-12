@@ -108,19 +108,21 @@
     (click)="closeCategoryGallery()"
   >
     <div class="category-modal__panel" (click)="$event.stopPropagation()">
-      <button
-        type="button"
-        class="category-modal__close"
-        (click)="closeCategoryGallery()"
-        aria-label="Close category gallery"
-      >
-        &times;
-      </button>
+      <div class="category-modal__header">
+        <div class="category-modal__heading">
+          <div class="section-label">— LIFE AT UBS</div>
+          <h2>{{ category }} <span>Gallery</span></h2>
+          <p>{{ categoryPhotos.length }} moments from life at UBS.</p>
+        </div>
 
-      <div class="category-modal__heading">
-        <div class="section-label">— LIFE AT UBS</div>
-        <h2>{{ category }} <span>Gallery</span></h2>
-        <p>{{ categoryPhotos.length }} moments from life at UBS.</p>
+        <button
+          type="button"
+          class="category-modal__close"
+          (click)="closeCategoryGallery()"
+          aria-label="Close category gallery"
+        >
+          &times;
+        </button>
       </div>
 
       <div class="category-modal__gallery">
