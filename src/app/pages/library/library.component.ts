@@ -29,7 +29,7 @@ export class LibraryComponent implements OnInit {
   librarianProfile: PeopleProfile | null = null;
 
   readonly images = {
-    hero: 'assets/library/banner-library-stacks.png',
+    hero: 'assets/library/banner-library-stacks.jpeg',
     books: 'assets/library/collection-books.png',
     studySpace: 'assets/library/individual-study-space.png',
     rareBooks: 'assets/library/torah-scroll.png',
