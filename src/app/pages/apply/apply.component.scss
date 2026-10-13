@@ -512,9 +512,10 @@ em {
 
 .programme-card ul {
   display: grid;
-  gap: 0.38rem;
-  flex: 1;
-  margin: 0;
+  align-content: start;      /* keep rows packed at the top, no stretching */
+  gap: 0.5rem;
+  flex: 1;                   /* still pushes the button to the bottom */
+  margin: 0 0 1.25rem;       /* guaranteed space above the button */
   padding: 0;
   list-style: none;
   color: var(--muted);
@@ -524,10 +525,12 @@ em {
 
 .programme-card li {
   display: flex;
-  gap: 0.45rem;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .programme-card li::before {
+  flex-shrink: 0;
   color: var(--gold);
   content: "✓";
   font-weight: 900;
