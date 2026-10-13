@@ -29,17 +29,18 @@ export class LibraryComponent implements OnInit {
   librarianProfile: PeopleProfile | null = null;
 
   readonly images = {
-    hero: 'assets/library/hero-library.jpg',
-    books: 'assets/library/books.jpg',
-    studySpace: 'assets/library/study-space.jpg',
-    rareBooks: 'assets/library/rare-books.jpg',
+    hero: 'assets/library/banner-library-stacks.png',
+    books: 'assets/library/collection-books.png',
+    studySpace: 'assets/library/individual-study-space.png',
+    rareBooks: 'assets/library/torah-scroll.png',
     vision: 'assets/library/vision.jpg',
     librarian: 'assets/library/librarian.png',
-    reference: 'assets/library/reference.jpg',
-    archives: 'assets/library/archives.jpg',
-    newspaperZone: 'assets/library/newspaper-zone.jpg',
-    journalZone: 'assets/library/journal-zone.jpg',
-    coffeeTableZone: 'assets/library/coffee-table-zone.jpg',
+    reference: 'assets/library/reference-collection.png',
+    archives: 'assets/library/ubs-archives.png',
+    stackRooms: 'assets/library/stack-rooms.png',
+    newspaperZone: 'assets/library/newspaper-reading-area.png',
+    journalZone: 'assets/library/journal-reading-area.png',
+    coffeeTableZone: 'assets/library/coffee-table-reading-area.png',
   };
 
   constructor(private adminContentService: AdminContentService) {}

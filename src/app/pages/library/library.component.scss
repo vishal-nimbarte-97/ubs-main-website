@@ -56,8 +56,11 @@ html {
 .library-page > .archives-section {
   order: 9;
 }
-.library-page > .facilities-section {
+.library-page > .stack-rooms-section {
   order: 10;
+}
+.library-page > .facilities-section {
+  order: 11;
 }
 
 .container {
@@ -86,19 +89,8 @@ html {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 48%;
-  transform: scale(1.02);
-  animation: heroImageDrift 16s ease-in-out infinite alternate;
-}
-
-@keyframes heroImageDrift {
-  from {
-    transform: scale(1.02);
-  }
-  to {
-    transform: scale(1.1);
-  }
+  object-fit: contain;
+  object-position: center;
 }
 
 .hero-overlay {
@@ -439,13 +431,8 @@ h2 span {
   display: block;
   width: 100%;
   height: 390px;
-  object-fit: cover;
-  object-position: center 18%;
-  transition: transform 0.45s ease;
-}
-
-.intro-librarian-image:hover img {
-  transform: scale(1.04);
+  object-fit: contain;
+  object-position: center;
 }
 
 .intro-text {
@@ -571,22 +558,8 @@ h2 span {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  transition: 0.6s ease;
-}
-
-.highlight-card:hover .card-image img {
-  transform: scale(1.04);
-  filter: saturate(1.08) contrast(1.03);
-}
-
-.highlight-card:nth-child(2) .card-image img {
-  object-position: center 62%;
-}
-
-.highlight-card:nth-child(3) .card-image img {
-  object-position: center 50%;
 }
 
 .card-number {
@@ -672,11 +645,8 @@ h2 span {
   width: 100%;
   height: 520px;
 
-  object-fit: cover;
-  object-position: center 30%;
-  transition:
-    transform 0.55s ease,
-    filter 0.4s ease;
+  object-fit: contain;
+  object-position: center;
 }
 
 .librarian-image {
@@ -686,7 +656,6 @@ h2 span {
 .librarian-image:hover img,
 .collection-image:hover img,
 .archives-image:hover img {
-  transform: scale(1.06);
   filter: saturate(1.08) contrast(1.03);
 }
 
@@ -1093,11 +1062,8 @@ h2 span {
   width: 100%;
   height: 550px;
 
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  transition:
-    transform 0.55s ease,
-    filter 0.4s ease;
 }
 
 .floating-label {
@@ -1138,6 +1104,72 @@ h2 span {
   padding: 130px 0;
 }
 
+.stack-rooms-section {
+  padding: 130px 0;
+
+  background: var(--light);
+}
+
+.stack-rooms-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  align-items: center;
+  gap: 80px;
+}
+
+.stack-rooms-image {
+  overflow: hidden;
+}
+
+.stack-rooms-image img {
+  display: block;
+  width: 100%;
+  height: 620px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.stack-rooms-content > p {
+  margin: 28px 0;
+  color: var(--gray-600);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.stack-floor-list {
+  display: grid;
+  gap: 12px;
+}
+
+.stack-floor {
+  display: grid;
+  grid-template-columns: 145px 1fr;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.stack-floor > span {
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+
+.stack-floor h3 {
+  margin: 0 0 6px;
+  color: var(--navy);
+  font-size: 16px;
+}
+
+.stack-floor p {
+  margin: 0;
+  color: var(--gray-600);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
 .archives-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1157,11 +1189,8 @@ h2 span {
   width: 100%;
   height: 570px;
 
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  transition:
-    transform 0.55s ease,
-    filter 0.4s ease;
 }
 
 .archive-badge {
@@ -1358,10 +1387,19 @@ h2 span {
   .intro-grid,
   .librarian-grid,
   .collection-grid,
-  .archives-grid {
+  .archives-grid,
+  .stack-rooms-grid {
     grid-template-columns: 1fr 1fr;
 
     gap: 50px;
+  }
+
+  .stack-rooms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stack-rooms-image img {
+    height: 420px;
   }
 
   .highlight-grid {
@@ -1437,6 +1475,7 @@ h2 span {
   .policies-section,
   .collections-section,
   .archives-section,
+  .stack-rooms-section,
   .facilities-section {
     padding: 80px 0;
   }
@@ -1444,7 +1483,8 @@ h2 span {
   .intro-grid,
   .librarian-grid,
   .collection-grid,
-  .archives-grid {
+  .archives-grid,
+  .stack-rooms-grid {
     grid-template-columns: 1fr;
 
     gap: 45px;
@@ -1476,7 +1516,8 @@ h2 span {
 
   .librarian-image img,
   .collection-image img,
-  .archives-image img {
+  .archives-image img,
+  .stack-rooms-image img {
     height: 400px;
   }
 
@@ -1663,9 +1704,7 @@ h2 span {
 
   margin: 0 auto 8px;
 
-  overflow: hidden;
-
-  border-radius: 50%;
+  background: var(--light);
 }
 
 .zone-image img {
@@ -1674,14 +1713,8 @@ h2 span {
   width: 100%;
   height: 100%;
 
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-
-  transition: transform 0.4s ease;
-}
-
-.reading-zone-card:hover .zone-image img {
-  transform: scale(1.06);
 }
 
 .reading-zone-card h3 {
@@ -1713,7 +1746,7 @@ h2 span {
   display: block;
   width: 100%;
   max-height: 680px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .vision-section {
@@ -1766,7 +1799,7 @@ h2 span {
   width: 100%;
   height: 290px;
 
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 
