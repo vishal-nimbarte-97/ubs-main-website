@@ -435,30 +435,33 @@ export class GalleryComponent implements OnInit {
   }
 
   get categoryNames(): string[] {
-    const customCategories = this.photos
-      .map((photo) => photo.category.trim())
-      .filter(
-        (category) =>
-          category &&
-          category !== GALLERY_EVENT_CATEGORY &&
-          !this.defaultCategories.includes(category),
-      );
-
-    return [...this.defaultCategories, ...new Set(customCategories)];
+    // only categories that actually have photos
+    const used = new Set(
+      this.photos
+        .map((photo) => photo.category.trim())
+        .filter((category) => category && category !== GALLERY_EVENT_CATEGORY),
+    );
+  
+    const defaults = this.defaultCategories.filter((c) => used.has(c));
+    const custom = [...used].filter((c) => !this.defaultCategories.includes(c));
+  
+    return [...defaults, ...custom];
   }
 
   get categoryCards(): GalleryCategoryCard[] {
-    return this.categoryNames.map((category) => {
-      const categoryPhotos = this.photos.filter(
-        (photo) => photo.category === category,
-      );
-
-      return {
-        title: category,
-        image: categoryPhotos[0]?.src ?? '',
-        photoCount: categoryPhotos.length,
-      };
-    });
+    return this.categoryNames
+      .map((category) => {
+        const categoryPhotos = this.photos.filter(
+          (photo) => photo.category === category,
+        );
+  
+        return {
+          title: category,
+          image: categoryPhotos[0]?.src ?? '',
+          photoCount: categoryPhotos.length,
+        };
+      })
+      .filter((card) => card.photoCount > 0); // hides any card with 0 moments
   }
 
   get categoryPhotos(): GalleryPhoto[] {
