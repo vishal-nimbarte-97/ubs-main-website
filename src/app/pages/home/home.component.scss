@@ -1771,29 +1771,77 @@ body {
 
 /* List */
 
-.course-card ul {
-  list-style: none;
-  margin-top: auto;
+
+
+.course-card h3.course-title {
+  min-height: 2.6em;  // keeps titles on the same line even if one wraps
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.course-card li {
-  position: relative;
-  padding-left: 26px;
-  margin: 12px 0;
-  font-size: clamp(15px, 3.5vw, 18px);
-  transition: 0.3s;
+.course-card .btn {
+  margin-top: 25px;
 }
+
 
 .course-card:hover li {
   transform: translateX(8px);
 }
 
-.course-card li::before {
-  content: "✔";
-  position: absolute;
-  left: 0;
-  color: var(--white);
+/* ---- Journey cards: aligned like Academics/Apply ---- */
+.course-card {
+  display: flex;
+  flex-direction: column;
 }
+
+.course-card .badge {
+  align-self: flex-start;
+}
+
+.course-card h3.course-title {
+  min-height: 2.4em;          /* titles occupy the same space even if one wraps */
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.course-card ul {
+  display: grid;
+  align-content: start;       /* items packed at the top, same start height in every card */
+  gap: 0.6rem;
+  flex: 1;                    /* takes the free space and pushes the button down */
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+  min-height: 7.5rem;         /* room for 3 items so 2-item cards still match */
+}
+
+.course-card li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  font-size: clamp(15px, 3.5vw, 18px);
+  line-height: 1.4;
+}
+
+.course-card li::before {
+  content: "✓";
+  position: static;           /* cancels the old absolute positioning */
+  flex-shrink: 0;
+  color: var(--gold-light);
+  font-weight: 900;
+}
+
+.course-card .btn {
+  display: block;
+  width: 100%;
+  margin-top: auto;           /* every button sits on the same line at the bottom */
+}
+
 
 /* Button */
 
@@ -1897,6 +1945,12 @@ body {
   color: var(--white);
 }
 
+.principal-section .subtitle {
+  color: #fff;
+  opacity: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
 /* Overlay */
 
 .overlay {
@@ -1904,7 +1958,7 @@ body {
 
   inset: 0;
 
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.72);
 }
 
 /* Curves */
@@ -1977,11 +2031,12 @@ body {
 
   border-radius: 25px;
 
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(8, 20, 40, 0.65);
 
-  backdrop-filter: blur(0px);
+  backdrop-filter: blur(8px); 
 
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 
   text-align: left;
 
@@ -2163,6 +2218,13 @@ body {
 
     line-height: 1.6;
   }
+
+  .message-box-rich-quote,
+.message-box-rich-bio,
+.message-box li {
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
 
   .principal {
     flex-direction: column;

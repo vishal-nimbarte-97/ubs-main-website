@@ -682,25 +682,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       title: 'Prayer of Dedication',
       caption: "Students' wives for Joint-Venture with their partners",
       portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_6.png',
-      title: 'Historic Gathering',
-      caption: 'Founding Members',
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_6.png',
-      title: 'Campus Prayer',
-      caption: 'Faith & Fellowship',
-      portrait: true,
-    },
-    {
-      image: '../../assets/genesis-ubs/image_6.png',
-      title: 'Campus Prayer',
-      caption: 'Faith & Fellowship',
-      portrait: true,
-    },
+    }
   ];
 
   legacySlides: any[] = [];
