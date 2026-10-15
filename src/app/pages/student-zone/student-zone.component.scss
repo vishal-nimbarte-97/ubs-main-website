@@ -94,8 +94,9 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;    /* was: center */
 
+  padding-top: 90px;              /* controls how far from the top */
   padding-bottom: 40px;
 }
 
@@ -769,6 +770,10 @@ h2 span {
   .hero-bottom,
   .nav-inner {
     width: min(100% - 32px, 1180px);
+  }
+
+  .hero-content {
+    padding-top: 60px;
   }
 
   .hero {

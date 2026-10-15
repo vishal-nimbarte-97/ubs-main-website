@@ -246,15 +246,14 @@
 
 .about-hero {
   position: relative;
-
   min-height: 680px;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;      // was: center
   justify-content: center;
+  padding-top: 70px;            // pushes the text toward the top
 
   overflow: hidden;
-
   color: white;
 }
 
@@ -262,7 +261,7 @@
   position: absolute;
   inset: 0;
 
-  background-image: url("../../../assets/about/about-home.png");
+  background-image: url("../../../assets/about/UBSAboutus.jpg");
 
   background-size: cover;
   background-position: center;
@@ -330,17 +329,17 @@
   background: #f2d27a;
 }
 
-.hero-content p {
+.about-page .hero-content p {
   max-width: 760px;
-
   margin: auto;
+
+  color: #ffffff;                              // the missing colour
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);  // keeps it readable over the clouds
 
   font-size: clamp(16px, 2vw, 21px);
   line-height: 1.65;
-
   font-weight: 600;
   font-style: italic;
-
   text-transform: uppercase;
 }
 
@@ -1598,10 +1597,11 @@
 
   .about-hero {
     min-height: 590px;
+    padding-top: 50px;
   }
 
   .hero-background {
-    background-position: 58% center;
+    background-position: center 20%;   // try 0%, 10%, 20%, 30% until it looks right
   }
 
   .hero-overlay {
