@@ -97,8 +97,8 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
       time: '5:00 PM – 7:00 PM',
       title: 'Sports',
       desc: 'Books close and the grounds open up. Football, badminton and volleyball games run on the shared courts, bringing the community together to unwind.',
-      img: 'assets/campus/image_11.jpg', // was: .../1_athyal_court.jpg
-      heroImg: 'assets/campus/image_6.jpg', // was: .../c532653745b71fa500f5bc1228fcdab1.JPG
+      img: 'assets/campus/campus-sports.png',
+      heroImg: 'assets/campus/campus-sports.png',
     },
   ];
 
@@ -114,9 +114,9 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
         'A campus studio',
       ],
       images: [
-        'assets/campus/image_5.jpg',
-        'assets/campus/image_10.png',
-        'assets/campus/image_3.jpg',
+        'assets/campus/academic-classroom.png',
+        'assets/campus/academic-study.png',
+        'assets/campus/academic-chapel.png',
       ],
     },
     {
@@ -131,9 +131,9 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
         'On-site washing machines & refrigerator',
       ],
       images: [
-        'assets/campus/image_9.jpg', // was: Student_Housing_Render_Outside_Wide.jpg
-        'assets/campus/image_8.jpg',
-        'assets/campus/image_7.jpg',
+        'assets/campus/residential-volleyball.png',
+        'assets/campus/residential-playground.png',
+        'assets/campus/residential-football.png',
       ],
     },
     {
@@ -147,9 +147,9 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
         "Children's playground",
       ],
       images: [
-        'assets/campus/image_11.jpg',
-        'assets/campus/image_6.jpg',
-        'assets/campus/image_3.jpg',
+        'assets/campus/recreation-campus-courts.png',
+        'assets/campus/recreation-campus-building.png',
+        'assets/campus/recreation-shiloh.png',
       ],
     },
     {
@@ -163,9 +163,9 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
         '24/7 security with camera coverage',
       ],
       images: [
-        'assets/campus/image_5.jpg',
-        'assets/campus/image_11.jpg',
-        'assets/campus/image_2.jpg',
+        'assets/campus/wellness-garden-path.png',
+        'assets/campus/wellness-building.png',
+        'assets/campus/wellness-garden.png',
       ],
     },
   ];

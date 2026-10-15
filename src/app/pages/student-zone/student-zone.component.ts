@@ -17,14 +17,7 @@ interface StudentCommittee {
   styleUrls: ['./student-zone.component.scss'],
 })
 export class StudentZoneComponent implements OnInit {
-  /* =========================================================
-     HERO IMAGE
-     NOTE: placeholder pulled from the old asset folder —
-     swap for a proper campus/student photo when available.
-  ========================================================= */
-
-  heroImage =
-    'https://ubs.ac.in/Admin/assets/img/1e3ee61ebab8854164e856e232f821b0.jpg';
+  heroImage = 'assets/student-zone/student-zone-banner.jpg';
 
   ubssfObjectives = [
     'Promote Christian growth and encourage personal relationships with God and fellow students.',
