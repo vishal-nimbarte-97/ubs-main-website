@@ -39,16 +39,16 @@ export class FooterComponent {
       url: 'https://www.instagram.com/ubspune_officialpage?stkn=dDU3dW9pZWw3Z2w3',
       label: 'Instagram',
     },
-    {
-      icon: 'fa-brands fa-linkedin-in',
-      url: 'https://linkedin.com',
-      label: 'LinkedIn',
-    },
-    {
-      icon: 'fa-brands fa-twitter',
-      url: 'https://twitter.com',
-      label: 'Twitter',
-    },
+    // {
+    //   icon: 'fa-brands fa-linkedin-in',
+    //   url: 'https://linkedin.com',
+    //   label: 'LinkedIn',
+    // },
+    // {
+    //   icon: 'fa-brands fa-twitter',
+    //   url: 'https://twitter.com',
+    //   label: 'Twitter',
+    // },
     {
       icon: 'fa-brands fa-youtube',
       url: 'https://youtube.com/@unionbsmedia?si=XVYjCuTex7hP68TL',

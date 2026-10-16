@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     ['Welcome To UBS'],
     ['Servant-Leadership'],
     ['Become Part Of The'],
-    ['71-Year Legacy Of UBS'],
+    ['73-Year Legacy Of UBS'],
   ];
   activeTaglineIndex = 0;
   private taglineTimer?: ReturnType<typeof setInterval>;
