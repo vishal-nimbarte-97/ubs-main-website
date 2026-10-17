@@ -53,52 +53,52 @@
 /* =========================================================
    HERO
 ========================================================= */
-
 .history-hero {
   position: relative;
-
   min-height: 680px;
-
   display: flex;
   align-items: center;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(11, 37, 69, 0.88),
-      rgba(11, 37, 69, 0.62),
-      rgba(11, 37, 69, 0.22)
-    ),
-    url("../../../assets/history/banner-image.png");
-
-  background-position: center;
-  background-size: 100% 100%, 100% 100%;
-  background-repeat: no-repeat;
-
+  overflow: hidden;                       /* hides blurred edges */
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
   color: white;
+}
+
+.history-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../../../assets/history/banner-image.png") center / cover no-repeat;
+  filter: blur(5px);               /* was 14px */
+  transform: scale(1.05);  
+  z-index: 0;
 }
 
 .history-hero-overlay {
   position: absolute;
   inset: 0;
-
-  background: linear-gradient(180deg, transparent 60%, rgba(11, 37, 69, 0.52));
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(11, 37, 69, 0.8),
+    rgba(11, 37, 69, 0.55) 60%,
+    rgba(11, 37, 69, 0.35)
+  );
 }
 
 .hero-inner {
   position: relative;
   z-index: 2;
-
   min-height: 680px;
-
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 60px;
 }
 
 .hero-content {
-  max-width: 760px;
+  flex: 1 1 auto;
+  max-width: 640px;
 }
-
 .hero-label {
   display: inline-flex;
 
@@ -115,13 +115,41 @@
 
 .hero-content h1 {
   margin: 25px 0;
-
-  font-size: clamp(52px, 7vw, 88px);
+  font-size: clamp(44px, 6vw, 76px);
   line-height: 0.98;
-
   letter-spacing: -4px;
   font-weight: 800;
-  color: var(--ubs-white);
+  color: #fff !important;                       /* beats the global h1 colour */
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);  /* keeps it readable over the image */
+}
+
+.hero-content h1 span {
+  display: block;
+  color: var(--gold-light) !important;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
+}
+
+.hero-photo {
+  flex: 0 0 auto;
+  width: min(430px, 38%);
+  margin: 0;
+  padding: 12px;
+  background: #fff;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  transform: rotate(1.5deg);              /* optional: remove for a straight frame */
+}
+
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
+}
+
+/* the vertical "scroll to explore" would sit on top of the photo */
+.hero-scroll {
+  display: none;
 }
 
 .hero-content h1 span {
@@ -1507,6 +1535,19 @@
 @media (max-width: 700px) {
   .history-container {
     width: calc(100% - 30px);
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 35px;
+    padding: 60px 0;
+  }
+  
+  .hero-photo {
+    width: 100%;
+    transform: none;
   }
 
   /* HERO */

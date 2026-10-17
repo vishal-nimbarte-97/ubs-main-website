@@ -89,6 +89,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         'New Testament',
         'Christian Theology',
         'History of Christianity',
+        'Pastoral Care & Counselling',
         'Missiology',
       ],
       image: 'assets/apply/programme-1.jpg',
@@ -110,7 +111,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
     {
       title: 'Doctor of Theology (Senate)',
       details: [
-        'Old Testament',
         'New Testament',
         'Christian Theology',
         'History of Christianity',

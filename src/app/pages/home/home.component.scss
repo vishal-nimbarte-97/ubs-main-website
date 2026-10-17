@@ -1945,20 +1945,12 @@ body {
   color: var(--white);
 }
 
-.principal-section .subtitle {
-  color: #fff;
-  opacity: 1;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-}
-
 /* Overlay */
 
 .overlay {
   position: absolute;
-
   inset: 0;
-
-  background: rgba(0, 0, 0, 0.72);
+  background: rgba(0, 0, 0, 0.6);   /* back from 0.72 */
 }
 
 /* Curves */
@@ -2024,22 +2016,13 @@ body {
 
 .message-box {
   max-width: 850px;
-
-  margin: auto;
-
+  margin: 140px auto 0;     /* was: margin: auto; pushes the whole box down */
   padding: clamp(20px, 5vw, 45px);
-
   border-radius: 25px;
-
-  background: rgba(8, 20, 40, 0.65);
-
-  backdrop-filter: blur(8px); 
-
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(0px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   text-align: left;
-
   transition: 0.4s;
 }
 
@@ -2172,6 +2155,8 @@ body {
     padding: 35px;
   }
 
+  .message-box { margin-top: 160px; }
+
   .message-box h3,
   .message-box-rich-quote {
     font-size: 28px;
@@ -2189,6 +2174,8 @@ body {
   .principal-section {
     padding: 90px 0;
   }
+
+  
 
   .subtitle {
     font-size: 18px;
@@ -2218,13 +2205,6 @@ body {
 
     line-height: 1.6;
   }
-
-  .message-box-rich-quote,
-.message-box-rich-bio,
-.message-box li {
-  color: #fff;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-}
 
   .principal {
     flex-direction: column;

@@ -131,9 +131,9 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
         'On-site washing machines & refrigerator',
       ],
       images: [
-        'assets/campus/residential-volleyball.png',
-        'assets/campus/residential-playground.png',
-        'assets/campus/residential-football.png',
+        'assets/campus/recreation-campus-courts.png',
+        'assets/campus/recreation-campus-building.png',
+        'assets/campus/recreation-shiloh.png',
       ],
     },
     {
@@ -147,9 +147,9 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
         "Children's playground",
       ],
       images: [
-        'assets/campus/recreation-campus-courts.png',
-        'assets/campus/recreation-campus-building.png',
-        'assets/campus/recreation-shiloh.png',
+        'assets/campus/residential-volleyball.png',
+        'assets/campus/residential-playground.png',
+        'assets/campus/residential-football.png',
       ],
     },
     {
@@ -172,20 +172,18 @@ export class CampusComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Former "Events" photos now live here too, so they surface in the Gallery.
   galleryImages: string[] = [
-    'assets/campus/image_8.jpg',
-    'assets/campus/image_7.jpg',
-    'assets/campus/image_6.jpg',
-    'assets/campus/image_3.jpg',
-    'assets/campus/image_11.jpg',
-    'assets/campus/image_2.jpg',
-    'assets/campus/image_5.jpg',
-    'assets/campus/image_4.jpg',
-    'assets/campus/image_12.png',
-    'assets/campus/image_9.jpg',
-    'assets/campus/image_10.png',
-    'assets/campus/image_13.png',
-    'assets/campus/image_14.png',
-    'assets/campus/image_15.png',
+    'assets/Campus1/image1.jpg',
+    'assets/Campus1/image2.jpg',
+    'assets/Campus1/image3.jpg',
+    'assets/Campus1/image4.jpg',
+    'assets/Campus1/image5.jpg',
+    'assets/Campus1/image6.jpg',
+    'assets/Campus1/image7.jpg',
+    'assets/Campus1/image8.jpg',
+    'assets/Campus1/image9.jpg',
+    'assets/Campus1/image10.jpg',
+    'assets/Campus1/image11.jpg',
+    'assets/Campus1/image12.jpg'
   ];
 
   ngOnInit(): void {

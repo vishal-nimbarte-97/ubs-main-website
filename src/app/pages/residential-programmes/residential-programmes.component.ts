@@ -65,18 +65,18 @@ export class ResidentialProgrammesComponent implements OnInit {
         'Language requirements apply for Old Testament and New Testament tracks',
       ],
     },
-    {
-      name: 'Master of Divinity (M.Div.)',
-      type: 'Postgraduate',
-      duration: '3 years',
-      summary:
-        'Equips students for advanced pastoral leadership, preaching, theology, and contextual ministry with an emphasis on both scholarship and practical formation.',
-      points: [
-        'Biblical and theological foundations for leadership',
-        'Mission, pastoral care and church leadership training',
-        'Designed for those preparing for wider ministry responsibilities',
-      ],
-    },
+    // {
+    //   name: 'Master of Divinity (M.Div.)',
+    //   type: 'Postgraduate',
+    //   duration: '3 years',
+    //   summary:
+    //     'Equips students for advanced pastoral leadership, preaching, theology, and contextual ministry with an emphasis on both scholarship and practical formation.',
+    //   points: [
+    //     'Biblical and theological foundations for leadership',
+    //     'Mission, pastoral care and church leadership training',
+    //     'Designed for those preparing for wider ministry responsibilities',
+    //   ],
+    // },
     {
       name: 'Doctor of Theology (D.Th.)',
       type: 'Doctoral',
