@@ -8,3 +8,4 @@ export * from './calendar-events.data';
 export * from './news.data';
 export * from './blog-posts.data';
 export * from './testimonials.data';
+export * from './alumni.data';

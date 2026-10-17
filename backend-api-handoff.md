@@ -76,10 +76,91 @@ The frontend currently has register URL constants but does not call registration
 | Publications | `GET /Publications/GetAll` | `POST /Publications/Insert` | `POST /Publications/Delete/{id}` |
 | Gallery | `GET /Gallery/GetAll` | `POST /Gallery/Insert` | `POST /Gallery/Delete/{id}` |
 | Student Zone | `GET /StudentZoneGallery/GetAll` | `POST /StudentZoneGallery/Insert` | `POST /StudentZoneGallery/Delete/{id}` |
+| Alumni | `GET /Alumni/GetAll` | `POST /Alumni/Insert`, `POST /Alumni/Update` | `POST /Alumni/Delete/{id}` |
 
 All URLs above are relative to `/api`.
 
-The current frontend has no update/edit calls. If update support is added, add an Angular service method and dashboard edit UI together with the backend endpoint.
+The Alumni module supports create, update, and delete. Other modules may not have update/edit calls yet; add Angular service methods and dashboard edit UI together with any new backend update endpoint.
+
+### Alumni
+
+All paths below are relative to `/api`. The public Alumni page reads profiles from `GET /Alumni/GetAll`. The Dashboard uses the remaining endpoints to add, edit, and remove profiles. Admin mutations must accept and validate the bearer token sent in the `Authorization` header.
+
+#### Get all profiles
+
+```http
+GET /api/Alumni/GetAll
+Accept: application/json
+```
+
+Return a JSON array directly. The public page filters out profiles with `isActive: false`.
+
+```json
+[
+  {
+    "id": 42,
+    "name": "Rev. Example",
+    "title": "Alumni role",
+    "period": "1990–1994",
+    "image": "/uploads/alumni/example.webp",
+    "summary": "Short card summary.",
+    "details": "Full profile details.",
+    "introParagraphs": ["First paragraph.", "Second paragraph."],
+    "isActive": true
+  }
+]
+```
+
+#### Add a profile
+
+```http
+POST /api/Alumni/Insert
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+```
+
+#### Update a profile
+
+```http
+POST /api/Alumni/Update
+Authorization: Bearer <admin-token>
+Content-Type: application/json
+```
+
+Both operations accept this JSON profile shape. `id` is omitted when inserting and required when updating:
+
+```json
+{
+  "id": 42,
+  "name": "Rev. Example",
+  "title": "Alumni role",
+  "period": "1990–1994",
+  "image": "data:image/webp;base64,...",
+  "summary": "Short card summary.",
+  "details": "Full profile details.",
+  "introParagraphs": ["First paragraph.", "Second paragraph."],
+  "isActive": true
+}
+```
+
+The `image` value is the selected image as a base64 data URL (for example, `data:image/jpeg;base64,...`). Validate and store it safely, then return a public image URL in the saved profile response. `introParagraphs` is an array of strings; the admin form creates it from one paragraph per line.
+
+Create and update must return the saved profile object with its database-generated `id`, in the same shape as the GET response.
+
+#### Delete a profile
+
+```http
+POST /api/Alumni/Delete/{id}
+Authorization: Bearer <admin-token>
+```
+
+The frontend sends an empty request body. Return JSON boolean `true` on successful deletion:
+
+```json
+true
+```
+
+Return an appropriate non-2xx HTTP status for validation, authorization, or server errors. The public page continues showing sample profiles if the GET request fails or returns no active profiles. These are frontend API contracts; the backend endpoints must be implemented before admin changes persist.
 
 ---
 
@@ -703,6 +784,7 @@ The current Dashboard has no edit/update UI for existing records. Delete is the 
 | Residential programmes | Admissions fees, deadlines, contacts | Programme descriptions remain static |
 | Publications | Active publications | Static placeholder remains if API returns no items |
 | Gallery | Active Gallery records | Static gallery remains if API returns no items |
+| Alumni | Active Alumni profiles | Existing sample profiles remain if API fails or returns no active records |
 | Gallery UBSSF section | Active Student Zone records with `category = UBSSF Community` | Static committee image sets remain if no community records exist |
 | Student Zone | Active `UBSSF Community` records grouped by title | Static UBSSF committee content remains if no records exist |
 
@@ -716,7 +798,7 @@ The following areas are still primarily static and need separate APIs if full CM
 - Gallery featured events.
 - Student Zone committee descriptions and duties.
 - History page content and timeline.
-- About, Alumni, Apply, FAQ, and other informational page content.
+- About, Apply, FAQ, and other informational page content.
 
 ---
 
@@ -724,6 +806,7 @@ The following areas are still primarily static and need separate APIs if full CM
 
 The current frontend can send base64 data URLs for:
 
+- Alumni profile images.
 - People profile images.
 - Publication cover images.
 - Gallery images.

@@ -24,6 +24,7 @@ import {
 import { AdminShellComponent } from './components/admin-shell/admin-shell.component';
 import { AdminSidebarComponent, AdminSidebarItem } from './components/admin-sidebar/admin-sidebar.component';
 import { LiveBroadcastComponent } from './components/live-broadcast/live-broadcast.component';
+import { AlumniAdminComponent } from './components/alumni-admin/alumni-admin.component';
 import { SafeRichTextPipe, sanitizeRichTextHtml } from '../../shared/pipes/safe-rich-text.pipe';
 
 import { Observable, forkJoin, of } from 'rxjs';
@@ -36,6 +37,7 @@ type SectionId =
   | 'banners'
   | 'site-config'
   | 'people'
+  | 'alumni'
   | 'tuition'
   | 'admissions'
   | 'publications'
@@ -54,6 +56,7 @@ type SectionId =
     AdminShellComponent,
     AdminSidebarComponent,
     LiveBroadcastComponent,
+    AlumniAdminComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
@@ -293,6 +296,7 @@ export class DashboardComponent implements OnInit {
     { id: 'banners', label: 'Banners', icon: 'fa-images' },
     // { id: 'site-config', label: 'Site Config', icon: 'fa-gear' },
     { id: 'people', label: 'People', icon: 'fa-user' },
+    { id: 'alumni', label: 'Alumni', icon: 'fa-user-graduate' },
     { id: 'tuition', label: 'Tuition', icon: 'fa-indian-rupee-sign' },
     { id: 'admissions', label: 'Admissions', icon: 'fa-clipboard-check' },
     { id: 'publications', label: 'Publications', icon: 'fa-book' },

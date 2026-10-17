@@ -25,6 +25,8 @@
     (toggle)="toggleLive()"
   ></app-live-broadcast>
 
+  <app-alumni-admin *ngIf="activeSection === 'alumni'"></app-alumni-admin>
+
       <section *ngIf="activeSection === 'updates'" class="panel">
         <div class="content-form-card">
           <h3>Updates</h3>

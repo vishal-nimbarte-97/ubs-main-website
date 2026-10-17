@@ -6,6 +6,9 @@
       <h1>{{ alumniStory.title }}</h1>
       <div class="hero-divider"></div>
       <p>{{ alumniStory.subtitle }}</p>
+      <span class="sample-content-note" *ngIf="isShowingSampleData">
+        Sample alumni content is shown while live content is being connected.
+      </span>
     </div>
   </section>
 

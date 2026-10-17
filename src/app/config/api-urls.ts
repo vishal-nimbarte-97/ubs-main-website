@@ -101,4 +101,10 @@ export const API_URLS = {
     delete: (id: number) => `${API_BASE_URL}/Faculty/Delete/${id}`,
     reorder: `${API_BASE_URL}/Faculty/Reorder`,
   },
+  alumni: {
+    getAll: `${API_BASE_URL}/Alumni/GetAll`,
+    insert: `${API_BASE_URL}/Alumni/Insert`,
+    update: `${API_BASE_URL}/Alumni/Update`,
+    delete: (id: number) => `${API_BASE_URL}/Alumni/Delete/${id}`,
+  },
 };

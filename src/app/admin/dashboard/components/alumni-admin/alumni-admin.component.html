@@ -1,0 +1,93 @@
+<section class="alumni-admin panel">
+  <div class="content-form-card">
+    <h3>{{ editingId === null ? 'Add alumni profile' : 'Edit alumni profile' }}</h3>
+    <div class="form-grid two-col">
+      <label>
+        <span>Name</span>
+        <input [(ngModel)]="profileForm.name" type="text" />
+      </label>
+      <label>
+        <span>Title</span>
+        <input [(ngModel)]="profileForm.title" type="text" />
+      </label>
+      <label>
+        <span>Period</span>
+        <input [(ngModel)]="profileForm.period" type="text" />
+      </label>
+      <label>
+        <span>Image</span>
+        <div class="image-upload-box">
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onImageSelected($event)"
+            id="alumni-image-upload"
+            hidden
+          />
+          <label class="upload-button" for="alumni-image-upload">Upload image</label>
+          <img
+            *ngIf="profileForm.image"
+            [src]="profileForm.image"
+            [alt]="profileForm.name || 'Alumni image preview'"
+            class="image-preview"
+          />
+          <span class="upload-text" *ngIf="!profileForm.image">No image selected yet</span>
+        </div>
+      </label>
+      <label class="full-width">
+        <span>Summary</span>
+        <textarea [(ngModel)]="profileForm.summary" rows="2"></textarea>
+      </label>
+      <label class="full-width">
+        <span>Details</span>
+        <textarea [(ngModel)]="profileForm.details" rows="3"></textarea>
+      </label>
+      <label class="full-width">
+        <span>Story paragraphs (one per line)</span>
+        <textarea [(ngModel)]="introParagraphsText" rows="3"></textarea>
+      </label>
+      <label>
+        <span>Status</span>
+        <select [(ngModel)]="profileForm.isActive">
+          <option [ngValue]="true">Visible</option>
+          <option [ngValue]="false">Hidden</option>
+        </select>
+      </label>
+    </div>
+    <p *ngIf="errorMessage" role="alert">{{ errorMessage }}</p>
+    <p *ngIf="successMessage">{{ successMessage }}</p>
+    <button
+      class="primary-btn"
+      type="button"
+      (click)="saveProfile()"
+      [disabled]="isSaving || isReadingImage"
+    >
+      {{
+        isReadingImage
+          ? 'Reading image…'
+          : isSaving
+            ? 'Saving…'
+            : editingId === null
+              ? 'Save alumni'
+              : 'Update alumni'
+      }}
+    </button>
+    <button *ngIf="editingId !== null" type="button" (click)="resetForm()">Cancel edit</button>
+  </div>
+
+  <div class="list-card">
+    <h4>Alumni profiles</h4>
+    <p *ngIf="isLoading">Loading alumni profiles…</p>
+    <p *ngIf="!isLoading && !profiles.length">No alumni profiles found.</p>
+    <ul class="content-list" *ngIf="profiles.length">
+      <li *ngFor="let profile of profiles">
+        <div>
+          <strong>{{ profile.name }}</strong>
+          <small>{{ profile.title }}<span *ngIf="!profile.isActive"> · Hidden</span></small>
+        </div>
+        <button type="button" (click)="editProfile(profile)">Edit</button>
+        <button type="button" (click)="deleteProfile(profile)">Remove</button>
+      </li>
+    </ul>
+  </div>
+</section>
