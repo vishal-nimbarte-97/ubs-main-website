@@ -219,25 +219,30 @@
 }
 
 
-.pioneer-image-info {
-  position: absolute;
-  left: 18px;
-  right: 18px;
-  bottom: 18px;
-  background: linear-gradient(180deg, rgba(10, 17, 26, 0.1), rgba(10, 17, 26, 0.82));
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 14px;
-  padding: 14px 16px;
-  backdrop-filter: blur(2px);
+.pioneer-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 360px;            // was 300px, slightly taller so faces are cropped less
+  overflow: hidden;
+  background: #f4efe8;
 }
 
-.pioneer-image-info h3 {
-  margin: 6px 0 0;
-  font-size: clamp(18px, 2vw, 26px);
-  line-height: 1.2;
-  color: #fff;
+.pioneer-image-wrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;        // was contain
+  object-position: center top;  // keeps faces in view when a photo is cropped
 }
 
+.pioneer-modal__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        // was contain
+  object-position: center top;
+  background: #f4efe8;
+}
 .pioneer-body {
   flex: 1;
   display: flex;
@@ -360,9 +365,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .pioneer-image-wrap {
-    height: 280px;
-  }
+  .pioneer-image-wrap { height: 340px; }
 
   .pioneer-modal__dialog {
     grid-template-columns: 1fr;
@@ -382,9 +385,7 @@
     min-height: 420px;
   }
 
-  .pioneer-image-wrap {
-    height: 260px;
-  }
+  .pioneer-image-wrap { height: 320px; }
 
   .pioneer-body {
     padding: 20px 18px 18px;
