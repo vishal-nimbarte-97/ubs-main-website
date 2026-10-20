@@ -80,7 +80,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
       title: 'Bachelor of Divinity (Senate)',
       details: ['3 year Programme', '2 year Upg. Programme'],
       image: 'assets/apply/programme-3.jpg',
-      downloadUrl: 'https://ubs.ac.in/index.php/Apply/download_program_pdf/1',
+      downloadUrl:
+        'assets/application-pdfs/UBS%20BD%20Application%20Form%202027-28.pdf',
     },
     {
       title: 'Master of Theology (Senate)',
@@ -93,7 +94,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
         'Missiology',
       ],
       image: 'assets/apply/programme-1.jpg',
-      downloadUrl: 'https://ubs.ac.in/index.php/Apply/download_program_pdf/2',
+      downloadUrl:
+        'assets/application-pdfs/UBS%20MTh%20Application%20Form%202027-28%20Senate.pdf',
     },
     {
       title: 'Master of Theology (ATA)',
@@ -106,7 +108,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
         'Missiology',
       ],
       image: 'assets/apply/programme-2.jpg',
-      downloadUrl: 'https://ubs.ac.in/index.php/Apply/download_program_pdf/7',
+      downloadUrl:
+        'assets/application-pdfs/UBS%20MTh%20Application%20Form%202027-28%20ATA.pdf',
     },
     {
       title: 'Doctor of Theology (Senate)',
@@ -116,7 +119,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
         'History of Christianity',
       ],
       image: 'assets/apply/programme-5.png',
-      downloadUrl: 'https://ubs.ac.in/index.php/Apply/download_program_pdf/8',
+      downloadUrl:
+        'assets/application-pdfs/UBS%20DTh%20Application%20Form%202027-28%20Senate.pdf',
     },
     {
       title: 'Master of Divinity (ATA)',
@@ -140,7 +144,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
       title: 'Centre for Children Ministry',
       details: ['June – November', 'Comprehensive Training'],
       image: 'assets/apply/programme-9.jpg',
-      downloadUrl: 'https://ubs.ac.in/index.php/Apply/download_program_pdf/12',
+      downloadUrl: 'assets/application-pdfs/UBS%20CCM%20Application%20Form%202027.pdf',
     },
   ];
 }
