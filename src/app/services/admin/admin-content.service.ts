@@ -101,6 +101,14 @@ export interface FacultyApiProfile {
   journals?: string[] | null;
 }
 
+export interface StaffProfile {
+  id?: number;
+  name: string;
+  designation: string;
+  department: string;
+  imageUrl: string;
+  isActive: boolean;
+}
 export interface EnquiryRequest {
   name: string;
   email: string;
@@ -774,6 +782,47 @@ export class AdminContentService {
     );
   }
 
+  getStaff(): Observable<StaffProfile[]> {
+    return this.http
+      .get<StaffProfile[]>(API_URLS.staff.getAll, this.getRequestOptions())
+      .pipe(
+        map((rows) => (Array.isArray(rows) ? rows.map((r) => this.normalizeStaff(r)) : [])),
+        catchError(() => of([] as StaffProfile[])),
+      );
+  }
+  
+  saveStaff(staff: StaffProfile): Observable<StaffProfile> {
+    return this.http
+      .post<StaffProfile>(API_URLS.staff.insert, staff, this.getRequestOptions())
+      .pipe(map((res) => this.normalizeStaff({ ...staff, ...(res ?? {}) })));
+  }
+  
+  updateStaff(staff: StaffProfile): Observable<StaffProfile> {
+    return this.http
+      .post<StaffProfile>(API_URLS.staff.update, staff, this.getRequestOptions())
+      .pipe(map((res) => this.normalizeStaff({ ...staff, ...(res ?? {}) })));
+  }
+  
+  deleteStaff(id?: number): Observable<boolean> {
+    if (!id) return of(true);
+    return this.http.post<boolean>(API_URLS.staff.delete(id), undefined, this.getRequestOptions());
+  }
+  
+  reorderStaff(ids: number[]): Observable<boolean> {
+    return this.http.post<boolean>(API_URLS.staff.reorder, ids, this.getRequestOptions());
+  }
+  
+  private normalizeStaff(s: StaffProfile): StaffProfile {
+    return {
+      ...s,
+      name: (s.name ?? '').trim(),
+      designation: (s.designation ?? '').trim(),
+      department: (s.department ?? '').trim(),
+      imageUrl: s.imageUrl ?? '',
+      isActive: s.isActive ?? true,
+    };
+  }
+
   getFile(fileId: string): Observable<Blob> {
     return this.http.get(API_URLS.files.get(fileId), {
       ...this.getRequestOptions(),
@@ -799,5 +848,11 @@ export class AdminContentService {
           return true;
         }),
       );
+  }
+
+  getVisitorCount(): Observable<number> {
+    return this.http
+      .get<{ totalVisitors: number }>(API_URLS.visits.count, this.getRequestOptions())
+      .pipe(map((res) => res?.totalVisitors ?? 0));
   }
 }

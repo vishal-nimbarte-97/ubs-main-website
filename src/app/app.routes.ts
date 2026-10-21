@@ -25,6 +25,7 @@ export const routes: Routes = [
   { path: 'campus', component: CampusComponent },
   { path: 'administration', component: AdministrationComponent },
   { path: 'faculty', component: FacultyComponent },
+  {path: 'staff',loadComponent: () => import('./pages/staff/staff.component').then((m) => m.StaffComponent),},
   { path: 'library', component: LibraryComponent },
   { path: 'student-zone', component: StudentZoneComponent },
   { path: 'gallery', component: GalleryComponent },

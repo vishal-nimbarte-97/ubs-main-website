@@ -107,4 +107,15 @@ export const API_URLS = {
     update: `${API_BASE_URL}/Alumni/Update`,
     delete: (id: number) => `${API_BASE_URL}/Alumni/Delete/${id}`,
   },
+  staff: {
+    getAll: `${API_BASE_URL}/Staff/GetAll`,
+    insert: `${API_BASE_URL}/Staff/Insert`,
+    update: `${API_BASE_URL}/Staff/Update`,
+    delete: (id: number) => `${API_BASE_URL}/Staff/Delete/${id}`,
+    reorder: `${API_BASE_URL}/Staff/Reorder`,
+  },
+  visits: {
+    track: `${API_BASE_URL}/Visit/Track`,
+    count: `${API_BASE_URL}/Visit/Count`,
+  },
 };

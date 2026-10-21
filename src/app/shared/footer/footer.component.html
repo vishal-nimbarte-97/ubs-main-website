@@ -71,10 +71,14 @@
   </div>
 
   <div class="footer-bottom">
-    <div class="wrap">
+    <div class="wrap footer-bottom-inner">
       <p class="footer-copyright">
-        Copyright © {{ currentYear }} Union Biblical Seminary. All rights
-        reserved.
+        Copyright © {{ currentYear }} Union Biblical Seminary. All rights reserved.
+      </p>
+  
+      <p class="footer-credit">
+        Designed &amp; Developed by
+        <a [href]="developer.url" target="_blank" rel="noopener">{{ developer.name }}</a>
       </p>
     </div>
   </div>

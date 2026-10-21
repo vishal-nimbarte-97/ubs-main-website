@@ -1,0 +1,40 @@
+<div class="staff-page">
+    <section class="staff-hero">
+      <div class="hero-content">
+        <span class="hero-small-title">UNION BIBLICAL SEMINARY</span>
+        <h1>Our Staff</h1>
+        <p>Meet the team that supports our seminary community every day.</p>
+      </div>
+    </section>
+  
+    <main class="staff-container">
+      <p class="empty-note" *ngIf="!loading && !groups.length">Staff details will be updated soon.</p>
+  
+      <section class="department-section" *ngFor="let group of groups">
+        <div class="department-header">
+          <span class="department-line"></span>
+          <h2>{{ group.name }}</h2>
+          <span class="department-line"></span>
+        </div>
+  
+        <div class="staff-grid">
+          <article class="staff-card" *ngFor="let member of group.staff">
+            <div class="staff-image-wrapper">
+              <img
+                [src]="member.imageUrl || 'assets/images/faculty/default-faculty.jpg'"
+                [alt]="member.name"
+                class="staff-image"
+                loading="lazy"
+                (error)="imageError($event)"
+              />
+            </div>
+            <div class="staff-content">
+              <h3>{{ member.name }}</h3>
+              <div class="staff-designation">{{ member.designation }}</div>
+              <div class="staff-department">{{ member.department }}</div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>

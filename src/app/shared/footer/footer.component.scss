@@ -252,9 +252,30 @@
   background: rgba(0, 0, 0, 0.15);
 }
 
-.footer-bottom .wrap {
+.footer-bottom-inner {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+}
+
+.footer-credit {
+  margin: 0;
+  color: #93a3c4;
+  font-size: 0.85rem;
+
+  a {
+    color: var(--gold);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--white);
+      text-decoration: underline;
+    }
+  }
 }
 
 .footer-copyright {
@@ -294,6 +315,12 @@
 
   .footer-brand h3 {
     white-space: normal;
+  }
+
+  .footer-bottom-inner {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
   }
 }
 
