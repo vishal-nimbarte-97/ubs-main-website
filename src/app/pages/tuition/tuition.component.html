@@ -56,7 +56,12 @@
                 <tbody>
                   <tr *ngFor="let row of table.rows">
                     <th scope="row">{{ row.course }}</th>
-                    <td *ngFor="let cell of row.values">{{ cell }}</td>
+                    <td
+                      *ngFor="let cell of row.values; let j = index"
+                      [attr.data-label]="table.columns[j + 1]"
+                    >
+                      {{ cell }}
+                    </td>
                   </tr>
                 </tbody>
               </table>

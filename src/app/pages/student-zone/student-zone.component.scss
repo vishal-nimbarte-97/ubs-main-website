@@ -565,8 +565,14 @@ h2 span {
   grid-row: span 2;
 }
 
+.committee-gallery-item.main + .committee-gallery-item:last-child {
+  grid-column: 1 / -1;
+}
+
 .committee-gallery-item img {
   display: block;
+  position: absolute;
+  inset: 0;
 
   width: 100%;
   height: 100%;
@@ -770,7 +776,13 @@ h2 span {
   }
 
   .hero-content {
-    padding-top: 60px;
+    /* clear the fixed site header (~64px) so the label isn't hidden under it */
+    padding-top: 104px;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 2px;
   }
 
   .hero {
@@ -854,10 +866,75 @@ h2 span {
     padding: 24px;
   }
 
+  /* Gallery: big photo on top, remaining photos underneath.
+     Every tile has an explicit aspect-ratio so no image can collapse. */
   .committee-gallery {
-    grid-template-rows: 170px 92px;
-    grid-auto-rows: unset;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-rows: auto;
     gap: 8px;
+  }
+
+  .committee-gallery-item {
+    aspect-ratio: 4 / 3;
+  }
+
+  .committee-gallery-item.main {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    aspect-ratio: 16 / 11;
+  }
+
+  .committee-gallery-item.main + .committee-gallery-item:last-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* HERO: don't crop a landscape group photo into a tall strip.
+     Label sits on navy above the photo, photo shows in full ratio. */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    background: var(--navy);
+  }
+
+  .hero-content {
+    order: 1;
+    height: auto;
+    padding-top: 96px;      /* clears fixed site header */
+    padding-bottom: 20px;
+  }
+
+  .hero-image {
+    order: 2;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero-image img {
+    object-position: center 25%;   /* keep faces in frame */
+    animation: none;
+    transform: none;
+  }
+
+  .hero-overlay {
+    display: none;
+  }
+
+  .hero-bottom {
+    order: 3;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: min(100% - 32px, 1180px);
+    padding: 18px 0;
+    border-top: 0;
   }
 
   .committee-content h3 {
