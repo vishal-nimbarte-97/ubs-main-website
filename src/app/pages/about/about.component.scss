@@ -424,7 +424,8 @@
 .highlight-card {
   display: grid;
 
-  grid-template-columns: 55px 80px 1fr;
+  grid-template-columns: 40px minmax(70px, auto) 1fr;
+  column-gap: 16px;
 
   align-items: center;
 
@@ -1713,7 +1714,8 @@
   }
 
   .highlight-card {
-    grid-template-columns: 45px 65px 1fr;
+    grid-template-columns: 40px minmax(60px, auto) 1fr;
+    column-gap: 14px;
 
     padding: 18px;
   }
@@ -1885,9 +1887,16 @@
   }
 
   .highlight-card {
-    grid-template-columns: 40px 55px 1fr;
+    grid-template-columns: 36px minmax(54px, auto) 1fr;
+    column-gap: 12px;
 
     padding: 15px;
+  }
+
+  .highlight-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
   }
 
   .highlight-card strong {

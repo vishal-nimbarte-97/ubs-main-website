@@ -55,4 +55,9 @@ export class FooterComponent {
       label: 'YouTube',
     },
   ];
+
+  developer = {
+    name: 'Xplorelogic Technologies Pvt LTD',
+    url: 'https://xplorelogic.com',
+  };
 }

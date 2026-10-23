@@ -445,6 +445,94 @@
         </div>
       </section>
 
+      <section *ngIf="activeSection === 'staff'" class="panel">
+        <div class="content-form-card">
+          <h3>{{ editingStaffId !== null ? 'Edit Staff' : 'Add Staff' }}</h3>
+          <div class="form-grid two-col">
+            <label>
+              <span>Name</span>
+              <input [(ngModel)]="newStaff.name" type="text" placeholder="Full name" />
+            </label>
+            <label>
+              <span>Designation</span>
+              <input [(ngModel)]="newStaff.designation" type="text" placeholder="e.g. Accountant" />
+            </label>
+            <label class="full-width">
+              <span>Department</span>
+              <input
+                [(ngModel)]="newStaff.department"
+                type="text"
+                list="staff-departments"
+                placeholder="Pick an existing department or type a new one"
+              />
+              <datalist id="staff-departments">
+                <option *ngFor="let d of staffDepartmentOptions" [value]="d"></option>
+              </datalist>
+            </label>
+            <label class="full-width">
+              <span>Image</span>
+              <div class="image-upload-box">
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="onStaffImageSelected($event)"
+                  id="staff-image-upload"
+                  hidden
+                />
+                <label class="upload-button" for="staff-image-upload">Upload image</label>
+                <img *ngIf="newStaff.imageUrl" [src]="newStaff.imageUrl" alt="Staff preview" class="image-preview" />
+                <span class="upload-text" *ngIf="staffImageFileName">{{ staffImageFileName }}</span>
+                <span class="upload-text" *ngIf="!newStaff.imageUrl">No image selected yet</span>
+                <button *ngIf="newStaff.imageUrl" class="danger-btn" type="button" (click)="clearStaffImage()">
+                  Remove image
+                </button>
+              </div>
+            </label>
+            <label>
+              <span>Status</span>
+              <select [(ngModel)]="newStaff.isActive">
+                <option [ngValue]="true">Active</option>
+                <option [ngValue]="false">Inactive</option>
+              </select>
+            </label>
+          </div>
+      
+          <p class="form-error" *ngIf="staffError" role="alert">{{ staffError }}</p>
+      
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="primary-btn" type="button" [disabled]="staffSaving" (click)="saveStaff()">
+              {{ staffSaving ? 'Saving…' : editingStaffId !== null ? 'Update staff' : 'Save staff' }}
+            </button>
+            <button *ngIf="editingStaffId !== null" class="danger-btn" type="button" (click)="cancelStaffEdit()">
+              Cancel edit
+            </button>
+          </div>
+        </div>
+      
+        <div class="list-card">
+          <h4>Staff list</h4>
+          <p *ngIf="!staff.length">No staff have been added yet.</p>
+      
+          <section class="gallery-admin-group" *ngFor="let group of staffGroups">
+            <h5>{{ group.department }} <small>({{ group.items.length }})</small></h5>
+            <ul class="content-list">
+              <li *ngFor="let item of group.items">
+                <div>
+                  <strong>{{ item.name }}</strong>
+                  <small>{{ item.designation }}{{ item.isActive ? '' : ' · Inactive' }}</small>
+                </div>
+                <div class="row-actions">
+                  <button type="button" title="Move up" [disabled]="!canMoveStaff(item, -1)" (click)="moveStaff(item, -1)">↑</button>
+                  <button type="button" title="Move down" [disabled]="!canMoveStaff(item, 1)" (click)="moveStaff(item, 1)">↓</button>
+                  <button type="button" (click)="editStaff(item)">Edit</button>
+                  <button type="button" (click)="deleteStaff(item)">Remove</button>
+                </div>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </section>
+
       <section *ngIf="activeSection === 'tuition'" class="panel">
         <div class="content-form-card">
           <h3>{{ editingTuitionId !== null ? 'Edit Tuition & Fees' : 'Tuition & Fees' }}</h3>
@@ -984,6 +1072,18 @@
             </li>
           </ul>
         </div>
+      </section>
+
+      <section *ngIf="activeSection === 'visitors'" class="panel">
+        <div class="overview-grid">
+          <div class="overview-card">
+            <span class="overview-label">Total website visitors</span>
+            <span class="overview-value" style="font-size: 2.4rem;">
+              {{ visitorCount === null ? '…' : (visitorCount | number) }}
+            </span>
+          </div>
+        </div>
+        <p class="form-error" *ngIf="visitorError" role="alert">{{ visitorError }}</p>
       </section>
 
       <!-- Student Zone module is temporarily unused.

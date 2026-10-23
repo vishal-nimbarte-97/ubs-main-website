@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { LoadingService } from './services/loading/loading.service';
+import { VisitTrackerService } from './services/visit-tracker.service';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +21,11 @@ export class AppComponent implements OnInit {
   isAdminDashboardRoute = false;
   readonly loadingVisible$ = this.loadingService.visible$;
 
-  constructor(private router: Router, private loadingService: LoadingService) {}
+  constructor(private router: Router, private loadingService: LoadingService,private visitTracker: VisitTrackerService) {}
 
   ngOnInit(): void {
     this.updateRouteState(this.router.url);
+    this.visitTracker.start();
 
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))

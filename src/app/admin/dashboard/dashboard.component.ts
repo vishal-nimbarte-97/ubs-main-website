@@ -20,6 +20,7 @@ import {
   TuitionFeeRow,
   FACULTY_DEPARTMENTS,
   sortDepartments,
+  StaffProfile
 } from '../../services/admin/admin-content.service';
 import { AdminShellComponent } from './components/admin-shell/admin-shell.component';
 import { AdminSidebarComponent, AdminSidebarItem } from './components/admin-sidebar/admin-sidebar.component';
@@ -43,7 +44,9 @@ type SectionId =
   | 'publications'
   | 'gallery'
   | 'community'
-  | 'student-zone';
+  | 'student-zone'
+  | 'staff'
+  | 'visitors';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -289,6 +292,18 @@ export class DashboardComponent implements OnInit {
     'Days of Challenge Committee',
   ];
 
+  private emptyStaff(): StaffProfile {
+    return { name: '', designation: '', department: '', imageUrl: '', isActive: true };
+  }
+  
+
+  staff: StaffProfile[] = [];
+  staffError = '';
+  staffSaving = false;
+  editingStaffId: number | null = null;
+  staffImageFileName = '';
+  newStaff: StaffProfile = this.emptyStaff();
+
   sections: AdminSidebarItem[] = [
     // { id: 'overview', label: 'Overview', icon: 'fa-gauge-high' },
     { id: 'live', label: 'Live Broadcast', icon: 'fa-video' },
@@ -296,6 +311,7 @@ export class DashboardComponent implements OnInit {
     { id: 'banners', label: 'Banners', icon: 'fa-images' },
     // { id: 'site-config', label: 'Site Config', icon: 'fa-gear' },
     { id: 'people', label: 'People', icon: 'fa-user' },
+    { id: 'staff', label: 'Staff', icon: 'fa-users' },
     { id: 'alumni', label: 'Alumni', icon: 'fa-user-graduate' },
     { id: 'tuition', label: 'Tuition', icon: 'fa-indian-rupee-sign' },
     { id: 'admissions', label: 'Admissions', icon: 'fa-clipboard-check' },
@@ -303,6 +319,7 @@ export class DashboardComponent implements OnInit {
     { id: 'gallery', label: 'Gallery', icon: 'fa-images' },
     { id: 'community', label: 'Community', icon: 'fa-people-group' },
     // { id: 'student-zone', label: 'Student Zone', icon: 'fa-school' },
+    { id: 'visitors', label: 'Visitors', icon: 'fa-chart-line' },
   ];
 
   activeSection: SectionId = 'live';
@@ -330,6 +347,7 @@ export class DashboardComponent implements OnInit {
   setSection(id: SectionId): void {
     this.activeSection = id;
     this.sidebarOpen = false;
+    if (id === 'visitors') this.loadVisitorCount();
   }
 
   onSidebarSelect(id: string): void {
@@ -388,6 +406,8 @@ export class DashboardComponent implements OnInit {
         (item) => item.category === 'UBSSF Community',
       );
     });
+
+    this.adminContent.getStaff().subscribe((res) => (this.staff = res));
   }
 
   toggleLive(): void {
@@ -1458,4 +1478,146 @@ export class DashboardComponent implements OnInit {
       ),
     ).pipe(map((results) => ({ results, firstError })));
   }
+
+  get staffDepartmentOptions(): string[] {
+    return Array.from(new Set(this.staff.map((s) => s.department.trim()).filter(Boolean)));
+  }
+  
+  get staffGroups(): { department: string; items: StaffProfile[] }[] {
+    const groups = new Map<string, StaffProfile[]>();
+    this.staff.forEach((s) => {
+      const dept = s.department.trim() || 'Staff';
+      groups.set(dept, [...(groups.get(dept) ?? []), s]);
+    });
+    return Array.from(groups, ([department, items]) => ({ department, items }));
+  }
+
+  async onStaffImageSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    this.staffError = '';
+    if (!file) return;
+  
+    if (!file.type.startsWith('image/')) {
+      this.staffError = 'Please select an image file.';
+      return;
+    }
+    try {
+      this.newStaff.imageUrl = await this.compressImage(file);
+      this.staffImageFileName = file.name;
+    } catch (e) {
+      this.staffError = e instanceof Error ? e.message : 'The selected image could not be read.';
+    }
+  }
+  
+  clearStaffImage(): void {
+    this.newStaff.imageUrl = '';
+    this.staffImageFileName = '';
+  }
+  
+  saveStaff(): void {
+    const s = this.newStaff;
+    if (!s.name.trim() || !s.designation.trim() || !s.department.trim()) {
+      this.staffError = 'Name, designation and department are required.';
+      return;
+    }
+  
+    this.staffError = '';
+    this.staffSaving = true;
+    const payload: StaffProfile = {
+      ...s,
+      name: s.name.trim(),
+      designation: s.designation.trim(),
+      department: s.department.trim(),
+    };
+  
+    const save$ = this.editingStaffId !== null
+      ? this.adminContent.updateStaff({ ...payload, id: this.editingStaffId })
+      : this.adminContent.saveStaff(payload);
+  
+    save$.subscribe({
+      next: (res) => {
+        this.staff = this.editingStaffId !== null
+          ? this.staff.map((item) => (item.id === this.editingStaffId ? res : item))
+          : [...this.staff, res]; // new staff goes last, same as in the database
+        this.cancelStaffEdit();
+        this.staffSaving = false;
+      },
+      error: (err) => {
+        this.staffError = err?.error?.message || 'Unable to save this staff member. Please try again.';
+        this.staffSaving = false;
+      },
+    });
+  }
+  
+  editStaff(item: StaffProfile): void {
+    this.editingStaffId = item.id ?? null;
+    this.newStaff = { ...item };
+    this.staffImageFileName = '';
+    this.staffError = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
+  cancelStaffEdit(): void {
+    this.editingStaffId = null;
+    this.newStaff = this.emptyStaff();
+    this.staffImageFileName = '';
+    this.staffError = '';
+  }
+  
+  deleteStaff(item: StaffProfile): void {
+    this.staffError = '';
+    this.adminContent.deleteStaff(item.id).subscribe({
+      next: () => {
+        this.staff = this.staff.filter((s) => s.id !== item.id);
+        if (this.editingStaffId === item.id) this.cancelStaffEdit();
+      },
+      error: () => (this.staffError = 'Unable to remove this staff member. Please try again.'),
+    });
+  }
+  
+  // Move up (-1) / down (+1) within the same department
+  canMoveStaff(item: StaffProfile, direction: -1 | 1): boolean {
+    const group = this.staff.filter((s) => s.department === item.department);
+    const pos = group.indexOf(item);
+    const target = pos + direction;
+    return pos !== -1 && target >= 0 && target < group.length;
+  }
+  
+  moveStaff(item: StaffProfile, direction: -1 | 1): void {
+    if (!this.canMoveStaff(item, direction)) return;
+  
+    const sameDept = this.staff
+      .map((row, index) => ({ row, index }))
+      .filter((x) => x.row.department === item.department);
+  
+    const pos = sameDept.findIndex((x) => x.row === item);
+    const a = sameDept[pos].index;
+    const b = sameDept[pos + direction].index;
+  
+    const previous = this.staff;
+    const rows = [...this.staff];
+    [rows[a], rows[b]] = [rows[b], rows[a]];
+    this.staff = rows;
+    this.staffError = '';
+  
+    this.adminContent.reorderStaff(rows.map((r) => r.id!)).subscribe({
+      error: () => {
+        this.staff = previous; // revert if the save fails
+        this.staffError = 'Unable to save the new order. Please try again.';
+      },
+    });
+  }
+
+  visitorCount: number | null = null;
+visitorError = '';
+
+loadVisitorCount(): void {
+  this.visitorError = '';
+  this.adminContent.getVisitorCount().subscribe({
+    next: (count) => (this.visitorCount = count),
+    error: () => (this.visitorError = 'Unable to load the visitor count. Please try again.'),
+  });
+}
 }
