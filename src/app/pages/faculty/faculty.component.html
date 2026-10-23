@@ -100,16 +100,16 @@
   ====================================================== -->
 
   <div
-    class="faculty-modal-backdrop"
+    class="faculty-modal-backdrop app-modal"
     *ngIf="selectedFaculty as faculty"
     (click)="closeFaculty()"
   >
-    <div class="faculty-modal" (click)="stopPropagation($event)">
+    <div class="faculty-modal app-modal__panel" (click)="stopPropagation($event)">
       <!-- Close Button -->
 
       <button
         type="button"
-        class="modal-close"
+        class="modal-close app-modal__close"
         aria-label="Close"
         (click)="closeFaculty()"
       >

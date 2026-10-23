@@ -61,12 +61,12 @@
 
   <div
     *ngIf="selectedPublication && selectedPdfUrl"
-    class="publication-pdf-overlay"
+    class="publication-pdf-overlay app-modal"
     role="presentation"
     (click)="closePublicationPdf()"
   >
     <section
-      class="publication-pdf-dialog"
+      class="publication-pdf-dialog app-modal__panel"
       role="dialog"
       aria-modal="true"
       [attr.aria-label]="'PDF for ' + selectedPublication.title"
@@ -74,7 +74,7 @@
     >
       <header class="publication-pdf-header">
         <h2>{{ selectedPublication.title }}</h2>
-        <button type="button" class="publication-pdf-close" (click)="closePublicationPdf()" aria-label="Close PDF viewer">
+        <button type="button" class="publication-pdf-close app-modal__close" (click)="closePublicationPdf()" aria-label="Close PDF viewer">
           &times;
         </button>
       </header>

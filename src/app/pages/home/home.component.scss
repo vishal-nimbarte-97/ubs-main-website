@@ -3752,9 +3752,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: min(100%, 1400px);      // was 900px
-  max-height: 96vh;              // was 90vh
-  max-height: 96dvh;
+  width: min(95vw, 87.5rem);
+  max-height: 90vh;
+  max-height: 90dvh;
   overflow: auto;
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 12px;
@@ -3765,8 +3765,9 @@ body {
 .notification-image-dialog img {
   display: block;
   width: 100%;
-  max-height: 88vh;              // was 82vh
-  max-height: 88dvh;
+  max-width: 100%;
+  max-height: 82vh;
+  max-height: 82dvh;
   object-fit: contain;
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -3844,12 +3845,12 @@ body {
 
   .notification-image-dialog {
     width: 100%;
-    max-height: 98dvh;
+    max-height: 90dvh;
     border-radius: 8px;
   }
 
   .notification-image-dialog img {
-    max-height: 90dvh;
+    max-height: 82dvh;
   }
 }
 

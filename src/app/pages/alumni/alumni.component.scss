@@ -301,28 +301,32 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 24px;
+  padding: clamp(0.5rem, 2.5vw, 1.5rem);
 }
 
 .pioneer-modal__dialog {
   position: relative;
-  width: min(880px, 100%);
+  width: min(55rem, 95vw);
+  max-height: 90vh;
+  max-height: 90dvh;
   background: #fff;
   border-radius: 24px;
-  overflow: hidden;
+  overflow: auto;
   display: grid;
   grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
 }
 
 .pioneer-modal__image {
-  min-height: 100%;
+  min-width: 0;
 }
 
 .pioneer-modal__image img {
   display: block;
   width: 100%;
-  height: 100%;
+  max-height: 45vh;
+  max-height: 45dvh;
+  height: auto;
   object-fit: contain;
   background: #f4efe8;
 }
@@ -349,8 +353,8 @@
   position: absolute;
   top: 14px;
   right: 16px;
-  width: 38px;
-  height: 38px;
+  width: 2.5rem;
+  height: 2.5rem;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.9);
@@ -394,6 +398,20 @@
   .pioneer-modal__content {
     padding: 28px 20px 24px;
   }
+
+  .pioneer-modal__dialog {
+    width: 95vw;
+    border-radius: 16px;
+  }
+
+  .pioneer-modal__image {
+    min-height: 0;
+  }
+
+  .pioneer-modal__image img {
+    max-height: 35vh;
+    max-height: 35dvh;
+  }
 }
 
 @media (max-width: 992px) {
@@ -423,5 +441,4 @@
   .alumni-story__image-wrap img {
     height: 350px;
   }
-
 }

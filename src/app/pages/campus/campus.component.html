@@ -176,11 +176,11 @@
   </section>
 
   <!-- Facility popup modal -->
-  <div class="facility-modal" *ngIf="activeFacility" (click)="closeFacility()">
-    <div class="facility-modal__panel" (click)="$event.stopPropagation()">
+  <div class="facility-modal app-modal" *ngIf="activeFacility" (click)="closeFacility()">
+    <div class="facility-modal__panel app-modal__panel" (click)="$event.stopPropagation()">
       <button
         type="button"
-        class="facility-modal__close"
+        class="facility-modal__close app-modal__close"
         (click)="closeFacility()"
         aria-label="Close"
       >
@@ -192,7 +192,7 @@
           class="facility-modal__photo"
           *ngFor="let img of activeFacility.images"
         >
-          <img [src]="img" [alt]="activeFacility.heading" loading="lazy" />
+          <img class="app-modal__image" [src]="img" [alt]="activeFacility.heading" loading="lazy" />
         </div>
       </div>
 

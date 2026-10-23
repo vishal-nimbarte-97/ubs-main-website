@@ -104,11 +104,11 @@
     </div>
   </section>
 
-  <div *ngIf="selectedNotificationImage as notification" class="notification-image-backdrop" role="presentation"
+  <div *ngIf="selectedNotificationImage as notification" class="notification-image-backdrop app-modal" role="presentation"
     (click)="closeNotificationImage()">
-    <section class="notification-image-dialog" role="dialog" aria-modal="true"
+    <section class="notification-image-dialog app-modal__panel" role="dialog" aria-modal="true"
       [attr.aria-label]="'Image for ' + notification.title" (click)="$event.stopPropagation()">
-      <button type="button" class="notification-image-close" aria-label="Close image"
+      <button type="button" class="notification-image-close app-modal__close" aria-label="Close image"
         (click)="closeNotificationImage()">&times;</button>
       <div class="notification-image-stage" [class.is-loading]="notificationImageLoading">
         <div *ngIf="notificationImageLoading" class="notification-image-loader" role="status" aria-live="polite">
@@ -118,7 +118,7 @@
         <p *ngIf="notificationImageError" class="notification-image-error" role="alert">
           This image could not be loaded. Please try again later.
         </p>
-        <img [src]="notification.imageUrl" [alt]="notification.title || 'Notification image'"
+        <img class="app-modal__image" [src]="notification.imageUrl" [alt]="notification.title || 'Notification image'"
           [class.is-loaded]="!notificationImageLoading && !notificationImageError"
           [class.zoomed]="notificationImageZoomed"
           [attr.aria-hidden]="notificationImageLoading || notificationImageError"
@@ -711,17 +711,17 @@
   </section> -->
 </main>
 
-<div *ngIf="bannerModalOpen" class="home-banner-backdrop" role="presentation" (click)="closeBannerModal()">
-  <section *ngIf="currentBanner as banner" class="home-banner-dialog"
+<div *ngIf="bannerModalOpen" class="home-banner-backdrop app-modal" role="presentation" (click)="closeBannerModal()">
+<section *ngIf="currentBanner as banner" class="home-banner-dialog app-modal__panel"
     [class.is-zoomed]="bannerImageZoomed" role="dialog" aria-modal="true"
     aria-label="Featured banners" (click)="$event.stopPropagation()" (mouseenter)="pauseBannerRotation()"
     (mouseleave)="resumeBannerRotation()">
     <div *ngIf="bannerImageZoomed" class="home-banner-fullscreen" (click)="toggleBannerImageZoom()">
-      <img [src]="banner.imageUrl" [alt]="banner.title || 'Union Biblical Seminary banner'" />
+      <img class="app-modal__image" [src]="banner.imageUrl" [alt]="banner.title || 'Union Biblical Seminary banner'" />
     </div>
 
     <ng-container *ngIf="!bannerImageZoomed">
-      <button type="button" class="home-banner-close" aria-label="Close banners"
+      <button type="button" class="home-banner-close app-modal__close" aria-label="Close banners"
         (click)="closeBannerModal()">&times;</button>
 
       <div class="home-banner-slide" aria-live="polite">

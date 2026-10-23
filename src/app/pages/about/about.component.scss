@@ -1459,7 +1459,7 @@
   z-index: 20;
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: clamp(0.5rem, 2.5vw, 1.25rem);
   background: rgba(21, 21, 21, 0.72);
 }
 
@@ -1468,7 +1468,7 @@
   display: grid;
   grid-template-columns: minmax(220px, 0.85fr) 1fr;
   gap: 30px;
-  width: min(760px, 100%);
+  width: min(47.5rem, 95vw);
   max-height: min(620px, 90vh);
   overflow: auto;
   padding: 26px;
@@ -1477,10 +1477,14 @@
 }
 
 .timeline-dialog img {
+  display: block;
+  max-width: 100%;
+  max-height: 40vh;
+  max-height: 40dvh;
   width: 100%;
-  height: 100%;
-  min-height: 220px;
-  object-fit: cover;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
 }
 .timeline-dialog > div {
   align-self: center;
@@ -1509,14 +1513,28 @@
   top: 10px;
   right: 10px;
   z-index: 1;
-  width: 34px;
-  height: 34px;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 0;
   background: var(--white);
   color: var(--dark);
   cursor: pointer;
   font-size: 25px;
   line-height: 1;
+}
+
+@media (max-width: 576px) {
+  .timeline-dialog {
+    width: 95vw;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    padding: 3.5rem 1rem 1rem;
+  }
+
+  .timeline-dialog img {
+    width: 100%;
+    max-height: 35dvh;
+  }
 }
 
 /* =========================================================

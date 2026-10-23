@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   AdminContentService,
@@ -39,6 +47,12 @@ interface GalleryEvent {
   styleUrl: './gallery.component.scss',
 })
 export class GalleryComponent implements OnInit {
+  @ViewChild('committeeThumbnailContainer')
+  private committeeThumbnailContainer?: ElementRef<HTMLDivElement>;
+
+  @ViewChildren('committeeThumbnail')
+  private committeeThumbnails?: QueryList<ElementRef<HTMLButtonElement>>;
+
   private readonly defaultCategories: string[] = [
     'Campus',
     'Learning',
@@ -548,6 +562,7 @@ export class GalleryComponent implements OnInit {
       this.selectedCommitteeImageIndex > 0
         ? this.selectedCommitteeImageIndex - 1
         : images.length - 1;
+    this.scrollSelectedCommitteeThumbnailIntoView();
   }
 
   nextCommitteeImage(event?: Event): void {
@@ -557,6 +572,43 @@ export class GalleryComponent implements OnInit {
       this.selectedCommitteeImageIndex < images.length - 1
         ? this.selectedCommitteeImageIndex + 1
         : 0;
+    this.scrollSelectedCommitteeThumbnailIntoView();
+  }
+
+  selectCommitteeImage(index: number, event: Event): void {
+    event.stopPropagation();
+    this.selectedCommitteeImageIndex = index;
+    this.scrollSelectedCommitteeThumbnailIntoView();
+  }
+
+  onCommitteeTouchStart(event: TouchEvent): void {
+    this.touchStartX = event.touches[0]?.clientX ?? 0;
+  }
+
+  onCommitteeTouchEnd(event: TouchEvent): void {
+    const endX = event.changedTouches[0]?.clientX ?? this.touchStartX;
+    const delta = endX - this.touchStartX;
+    if (Math.abs(delta) < 50) return;
+    if (delta > 0) this.previousCommitteeImage();
+    else this.nextCommitteeImage();
+  }
+
+  private scrollSelectedCommitteeThumbnailIntoView(): void {
+    const index = this.selectedCommitteeImageIndex;
+    setTimeout(() => {
+      const container = this.committeeThumbnailContainer?.nativeElement;
+      const thumbnail = this.committeeThumbnails?.get(index)?.nativeElement;
+      if (!container || !thumbnail) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const thumbnailRect = thumbnail.getBoundingClientRect();
+      const left =
+        thumbnailRect.left -
+        containerRect.left +
+        container.scrollLeft -
+        (container.clientWidth - thumbnail.clientWidth) / 2;
+      container.scrollTo({ left, behavior: 'smooth' });
+    });
   }
 
   @HostListener('document:keydown', ['$event'])

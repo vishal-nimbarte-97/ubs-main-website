@@ -74,9 +74,10 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.35) 0%,
-    rgba(0, 0, 0, 0) 30%
+    180deg,
+    rgba(11, 37, 69, 0.48) 0%,
+    rgba(11, 37, 69, 0.12) 48%,
+    rgba(11, 37, 69, 0.68) 100%
   );
 }
 
@@ -101,12 +102,16 @@
   display: flex;
   align-items: center;
   gap: 14px;
-
-  color: var(--gold);
+  width: fit-content;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(11, 37, 69, 0.84);
+  color: var(--gold-light);
 
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .hero-label .line {
@@ -219,6 +224,9 @@
   align-items: center;
 
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(11, 37, 69, 0.82);
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 .hero-bottom div:first-child {
@@ -630,6 +638,7 @@ h2 span {
   align-items: center;
   gap: 9px;
   margin-top: 22px;
+  min-height: 44px;
   color: var(--navy);
   font-size: 14px;
   font-weight: 700;
@@ -757,6 +766,16 @@ h2 span {
   }
 }
 
+@media (max-width: 850px) {
+  .section-heading {
+    display: block;
+  }
+
+  .section-heading > p {
+    margin-top: 20px;
+  }
+}
+
 /* =========================================================
    MOBILE
 ========================================================= */
@@ -774,8 +793,42 @@ h2 span {
   }
 
   .hero {
-    min-height: 560px;
-    height: min(760px, 88svh);
+    height: auto;
+    min-height: 0;
+  }
+
+  .hero-image {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    aspect-ratio: 1920 / 675;
+    background: var(--navy);
+  }
+
+  .hero-image img {
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+    animation: none;
+  }
+
+  .hero-overlay {
+    inset: 0 0 auto;
+    aspect-ratio: 1920 / 675;
+    background: linear-gradient(
+      to bottom,
+      rgba(11, 37, 69, 0.55),
+      rgba(11, 37, 69, 0.12) 55%,
+      rgba(11, 37, 69, 0.48)
+    );
+  }
+
+  .hero-content {
+    position: absolute;
+    inset: 0 0 auto;
+    height: auto;
+    padding-top: 28px;
+    padding-bottom: 0;
   }
 
   .hero h1 {
@@ -801,10 +854,30 @@ h2 span {
   }
 
   .hero-bottom {
+    position: relative;
+    inset: auto;
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    padding: 14px 0;
+    padding-right: 16px;
+    padding-left: 16px;
+    gap: 8px;
+    border-top: 0;
+    background: var(--navy);
+  }
 
-    gap: 12px;
+  .hero-bottom strong {
+    font-size: 20px;
+  }
+
+  .hero-bottom div:first-child {
+    gap: 8px;
+  }
+
+  .hero-bottom span,
+  .scroll-indicator {
+    font-size: 10px;
   }
 
   .nav-inner {
@@ -901,6 +974,51 @@ h2 span {
   .final-cta .primary-btn {
     width: min(100%, 320px);
     justify-content: space-between;
+  }
+}
+
+@media (max-width: 400px) {
+  .container,
+  .hero-content {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .hero {
+    min-height: 0;
+  }
+
+  .hero-content {
+    padding-top: 20px;
+  }
+
+  .hero-label {
+    gap: 9px;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .hero-label .line {
+    width: 28px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  .committee-row {
+    padding: 18px;
+  }
+
+  .committee-gallery {
+    grid-template-rows: 145px 80px;
+  }
+
+  .council-details {
+    padding: 18px;
+  }
+
+  .final-cta {
+    padding: 72px 14px;
   }
 }
 

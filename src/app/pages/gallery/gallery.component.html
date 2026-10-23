@@ -101,14 +101,14 @@
   </section>
 
   <div
-    class="category-modal"
+    class="category-modal app-modal"
     *ngIf="activeGalleryCategory as category"
     role="dialog"
     aria-modal="true"
     [attr.aria-label]="category + ' gallery'"
     (click)="closeCategoryGallery()"
   >
-    <div class="category-modal__panel" (click)="$event.stopPropagation()">
+    <div class="category-modal__panel app-modal__panel" (click)="$event.stopPropagation()">
       <div class="category-modal__header">
         <div class="category-modal__heading">
           <div class="section-label">— LIFE AT UBS</div>
@@ -118,7 +118,7 @@
 
         <button
           type="button"
-          class="category-modal__close"
+          class="category-modal__close app-modal__close"
           (click)="closeCategoryGallery()"
           aria-label="Close category gallery"
         >
@@ -134,7 +134,7 @@
           [attr.aria-label]="'View ' + photo.title"
           (click)="openLightbox(i)"
         >
-          <img [src]="photo.src" [alt]="photo.alt" loading="lazy" />
+          <img class="app-modal__image" [src]="photo.src" [alt]="photo.alt" loading="lazy" />
           <span>{{ photo.title }}</span>
         </button>
       </div>
@@ -311,7 +311,7 @@
   ========================== -->
   <div
     *ngIf="selectedPhoto"
-    class="lightbox"
+    class="lightbox app-modal"
     role="dialog"
     aria-modal="true"
     [attr.aria-label]="selectedPhoto.title"
@@ -321,7 +321,7 @@
   >
     <button
       type="button"
-      class="lightbox__close"
+      class="lightbox__close app-modal__close"
       (click)="closeLightbox()"
       aria-label="Close image viewer"
     >
@@ -338,7 +338,7 @@
     </button>
 
     <figure class="lightbox__figure" (click)="$event.stopPropagation()">
-      <img [src]="selectedPhoto.src" [alt]="selectedPhoto.alt" />
+      <img class="app-modal__image" [src]="selectedPhoto.src" [alt]="selectedPhoto.alt" />
       <figcaption>
         <span class="lightbox__counter"
           >{{ selectedIndex + 1 }} / {{ categoryPhotos.length }}</span
@@ -360,59 +360,65 @@
 
   <div
     *ngIf="selectedCommittee as committee"
-    class="committee-lightbox"
+    class="committee-lightbox app-modal"
     role="dialog"
     aria-modal="true"
     [attr.aria-label]="committee.title"
     (click)="closeCommitteeGallery()"
   >
-    <button
-      type="button"
-      class="committee-lightbox__close"
-      aria-label="Close committee gallery"
-      (click)="closeCommitteeGallery()"
-    >
-      &times;
-    </button>
-
-    <button
-      type="button"
-      class="committee-lightbox__nav committee-lightbox__nav--previous"
-      aria-label="Previous committee image"
-      (click)="previousCommitteeImage($event)"
-    >
-      &#10094;
-    </button>
-
     <figure class="committee-lightbox__figure" (click)="$event.stopPropagation()">
-      <img
-        [src]="committee.images[selectedCommitteeImageIndex]"
-        [alt]="committee.title"
-      />
+      <button
+        type="button"
+        class="committee-lightbox__close app-modal__close"
+        aria-label="Close committee gallery"
+        (click)="closeCommitteeGallery()"
+      >
+        &times;
+      </button>
+
+      <div class="committee-lightbox__image-stage">
+        <button
+          type="button"
+          class="committee-lightbox__nav committee-lightbox__nav--previous"
+          aria-label="Previous committee image"
+          (click)="previousCommitteeImage($event)"
+        >
+          &#10094;
+        </button>
+        <img
+          class="app-modal__image"
+          [src]="committee.images[selectedCommitteeImageIndex]"
+          [alt]="committee.title"
+          (touchstart)="onCommitteeTouchStart($event)"
+          (touchend)="onCommitteeTouchEnd($event)"
+        />
+        <button
+          type="button"
+          class="committee-lightbox__nav committee-lightbox__nav--next"
+          aria-label="Next committee image"
+          (click)="nextCommitteeImage($event)"
+        >
+          &#10095;
+        </button>
+      </div>
+
       <figcaption>
         <strong>{{ committee.title }}</strong>
         <span>{{ selectedCommitteeImageIndex + 1 }} / {{ committee.images.length }}</span>
       </figcaption>
-      <div class="committee-lightbox__thumbs">
+      <div #committeeThumbnailContainer class="committee-lightbox__thumbs">
         <button
           *ngFor="let image of committee.images; let i = index"
+          #committeeThumbnail
           type="button"
           [class.is-active]="i === selectedCommitteeImageIndex"
           [attr.aria-label]="'Show image ' + (i + 1)"
-          (click)="selectedCommitteeImageIndex = i"
+          (click)="selectCommitteeImage(i, $event)"
         >
           <img [src]="image" [alt]="committee.title + ' thumbnail ' + (i + 1)" />
         </button>
       </div>
     </figure>
 
-    <button
-      type="button"
-      class="committee-lightbox__nav committee-lightbox__nav--next"
-      aria-label="Next committee image"
-      (click)="nextCommitteeImage($event)"
-    >
-      &#10095;
-    </button>
   </div>
 </div>

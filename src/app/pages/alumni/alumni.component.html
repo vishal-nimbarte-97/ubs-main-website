@@ -40,20 +40,20 @@
     </div>
   </section>
 
-  <div class="pioneer-modal" *ngIf="selectedPioneer" (click)="closePioneer()">
+  <div class="pioneer-modal app-modal" *ngIf="selectedPioneer" (click)="closePioneer()">
     <div
-      class="pioneer-modal__dialog"
+      class="pioneer-modal__dialog app-modal__panel"
       role="dialog"
       aria-modal="true"
       aria-labelledby="pioneer-title"
       (click)="$event.stopPropagation()"
     >
-      <button type="button" class="close-btn" (click)="closePioneer()" aria-label="Close details">
+      <button type="button" class="close-btn app-modal__close" (click)="closePioneer()" aria-label="Close details">
         ×
       </button>
 
       <div class="pioneer-modal__image">
-        <img [src]="selectedPioneer.image" [alt]="selectedPioneer.name" />
+        <img class="app-modal__image" [src]="selectedPioneer.image" [alt]="selectedPioneer.name" />
       </div>
 
       <div class="pioneer-modal__content">

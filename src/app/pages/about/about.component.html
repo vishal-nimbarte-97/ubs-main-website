@@ -354,12 +354,12 @@
   </section> -->
 
   <div
-    class="timeline-dialog-backdrop"
+    class="timeline-dialog-backdrop app-modal"
     *ngIf="selectedTimelineEvent"
     (click)="closeTimelineEvent()"
   >
     <section
-      class="timeline-dialog"
+      class="timeline-dialog app-modal__panel"
       role="dialog"
       aria-modal="true"
       [attr.aria-label]="selectedTimelineEvent.title"
@@ -367,13 +367,14 @@
     >
       <button
         type="button"
-        class="dialog-close"
+        class="dialog-close app-modal__close"
         aria-label="Close story"
         (click)="closeTimelineEvent()"
       >
         &times;
       </button>
       <img
+        class="app-modal__image"
         [src]="selectedTimelineEvent.image"
         [alt]="selectedTimelineEvent.title"
       />
