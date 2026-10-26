@@ -164,7 +164,7 @@ This is the shared module for Principal, Librarian, and Faculty profiles. The
 frontend uses the same model for all three categories and selects the public
 content by the `category` value.
 
-Base URL currently used by the frontend: `http://ubsapi.xplorelogic.in/api`
+Base URL currently used by the frontend: `https://erpapi.xplorelogic.in/UBS/api`
 
 #### Endpoints currently called by the frontend
 

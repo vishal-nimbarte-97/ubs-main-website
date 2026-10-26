@@ -13,7 +13,7 @@
 Production API base URL currently configured in Angular:
 
 ```text
-http://ubsapi.xplorelogic.in/api
+https://erpapi.xplorelogic.in/UBS/api
 ```
 
 Local API base URL configured in Angular:

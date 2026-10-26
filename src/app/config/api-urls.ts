@@ -1,4 +1,4 @@
-export const API_ROOT_URL = 'http://ubsapi.xplorelogic.in';
+export const API_ROOT_URL = 'https://erpapi.xplorelogic.in/UBS';
 export const API_BASE_URL = `${API_ROOT_URL}/api`;
 export const API_BASE_URL_LOCAL = 'https://localhost:7257/api';
 

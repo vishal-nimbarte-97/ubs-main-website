@@ -34,7 +34,7 @@ describe('AuthService', () => {
       expect(sessionStorage.getItem('ubs-admin-token')).toBe('abc123');
     });
 
-    const req = httpMock.expectOne('http://ubsapi.xplorelogic.in/api/Auth/Login');
+    const req = httpMock.expectOne('https://erpapi.xplorelogic.in/UBS/api/Auth/Login');
     expect(req.request.method).toBe('POST');
     req.flush({ isSuccess: true, message: 'Login successful', token: 'abc123' });
   });
