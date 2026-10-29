@@ -204,3 +204,8 @@
   @media (max-width: 1100px) and (min-width: 701px) {
     .staff-card { flex-basis: calc((100% - 28px) / 2); }
   }
+
+  .staff-image-wrapper {
+    background: #e9edf2;   // blank background, change to any colour you like
+    // keep your existing width / height / aspect-ratio / overflow rules
+  }

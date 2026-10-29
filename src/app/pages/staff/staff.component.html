@@ -21,11 +21,12 @@
           <article class="staff-card" *ngFor="let member of group.staff">
             <div class="staff-image-wrapper">
               <img
-                [src]="member.imageUrl || 'assets/images/faculty/default-faculty.jpg'"
+                *ngIf="member.imageUrl && !failedImages.has(member.imageUrl)"
+                [src]="member.imageUrl"
                 [alt]="member.name"
                 class="staff-image"
                 loading="lazy"
-                (error)="imageError($event)"
+                (error)="imageError(member.imageUrl)"
               />
             </div>
             <div class="staff-content">

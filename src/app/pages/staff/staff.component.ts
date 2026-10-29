@@ -17,6 +17,7 @@ interface StaffGroup {
 export class StaffComponent implements OnInit {
   groups: StaffGroup[] = [];
   loading = true;
+  failedImages = new Set<string>();
 
   constructor(private adminContent: AdminContentService) {}
 
@@ -35,7 +36,7 @@ export class StaffComponent implements OnInit {
     });
   }
 
-  imageError(event: Event): void {
-    (event.target as HTMLImageElement).src = 'assets/images/faculty/default-faculty.jpg';
+  imageError(url: string): void {
+    this.failedImages.add(url);
   }
 }

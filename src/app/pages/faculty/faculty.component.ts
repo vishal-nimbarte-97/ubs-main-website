@@ -190,10 +190,9 @@ export class FacultyComponent implements OnInit {
   stopPropagation(event: Event): void {
     event.stopPropagation();
   }
-
+  failedImages = new Set<string>();
   /** Replace an unavailable faculty image with the default portrait. */
-  imageError(event: Event): void {
-    const imageElement = event.target as HTMLImageElement;
-    imageElement.src = 'assets/images/faculty/default-faculty.jpg';
+  imageError(url: string): void {
+    this.failedImages.add(url);
   }
 }

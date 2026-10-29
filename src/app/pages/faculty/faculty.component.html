@@ -42,10 +42,11 @@
 
           <div class="faculty-image-wrapper">
             <img
+              *ngIf="faculty.image && !failedImages.has(faculty.image)"
               [src]="faculty.image"
               [alt]="faculty.name"
-              class="faculty-image"
-              (error)="imageError($event)"
+              class="faculty-image"   
+              (error)="imageError(faculty.image)"
             />
 
             <div class="image-overlay">
@@ -121,11 +122,12 @@
       <div class="modal-header">
         <div class="modal-image-wrapper">
           <img
-            [src]="faculty.image"
-            [alt]="faculty.name"
-            class="modal-image"
-            (error)="imageError($event)"
-          />
+          *ngIf="faculty.image && !failedImages.has(faculty.image)"
+          [src]="faculty.image"
+          [alt]="faculty.name"
+          class="faculty-image"   
+          (error)="imageError(faculty.image)"
+        />
         </div>
 
         <div class="modal-title">
